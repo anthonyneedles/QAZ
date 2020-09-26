@@ -1,0 +1,376 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title "QAZ External"
+Date "2020-09-26"
+Rev "v1.0"
+Comp "Anthony Needles"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F98A26F
+P 5250 3300
+AR Path="/5F98A26F" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A26F" Ref="#PWR031"  Part="1" 
+F 0 "#PWR031" H 5250 3150 50  0001 C CNN
+F 1 "+3.3V" H 5265 3473 50  0000 C CNN
+F 2 "" H 5250 3300 50  0001 C CNN
+F 3 "" H 5250 3300 50  0001 C CNN
+	1    5250 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A275
+P 6150 3500
+AR Path="/5F98A275" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A275" Ref="#PWR035"  Part="1" 
+F 0 "#PWR035" H 6150 3250 50  0001 C CNN
+F 1 "GND" H 6155 3327 50  0001 C CNN
+F 2 "" H 6150 3500 50  0001 C CNN
+F 3 "" H 6150 3500 50  0001 C CNN
+	1    6150 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F98A27E
+P 6200 2000
+AR Path="/5F98A27E" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A27E" Ref="#PWR036"  Part="1" 
+F 0 "#PWR036" H 6200 1850 50  0001 C CNN
+F 1 "+3.3V" H 6215 2173 50  0000 C CNN
+F 2 "" H 6200 2000 50  0001 C CNN
+F 3 "" H 6200 2000 50  0001 C CNN
+	1    6200 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A284
+P 6200 2100
+AR Path="/5F98A284" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A284" Ref="#PWR037"  Part="1" 
+F 0 "#PWR037" H 6200 1850 50  0001 C CNN
+F 1 "GND" H 6205 1927 50  0001 C CNN
+F 2 "" H 6200 2100 50  0001 C CNN
+F 3 "" H 6200 2100 50  0001 C CNN
+	1    6200 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 5F98A28C
+P 5250 3600
+AR Path="/5F98A28C" Ref="R?"  Part="1" 
+AR Path="/5F96C310/5F98A28C" Ref="R13"  Part="1" 
+F 0 "R13" H 5400 3550 50  0000 R CNN
+F 1 "10k" H 5450 3650 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 5250 3600 50  0001 C CNN
+F 3 "~" H 5250 3600 50  0001 C CNN
+	1    5250 3600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 5F98A292
+P 6150 3100
+AR Path="/5F98A292" Ref="R?"  Part="1" 
+AR Path="/5F96C310/5F98A292" Ref="R14"  Part="1" 
+F 0 "R14" H 6300 3050 50  0000 R CNN
+F 1 "10k" H 6350 3150 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 6150 3100 50  0001 C CNN
+F 3 "~" H 6150 3100 50  0001 C CNN
+	1    6150 3100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6150 3200 6150 3300
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F98A299
+P 6150 3000
+AR Path="/5F98A299" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A299" Ref="#PWR034"  Part="1" 
+F 0 "#PWR034" H 6150 2850 50  0001 C CNN
+F 1 "+3.3V" H 6100 3150 50  0000 C CNN
+F 2 "" H 6150 3000 50  0001 C CNN
+F 3 "" H 6150 3000 50  0001 C CNN
+	1    6150 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A29F
+P 5250 3700
+AR Path="/5F98A29F" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A29F" Ref="#PWR032"  Part="1" 
+F 0 "#PWR032" H 5250 3450 50  0001 C CNN
+F 1 "GND" H 5255 3527 50  0001 C CNN
+F 2 "" H 5250 3700 50  0001 C CNN
+F 3 "" H 5250 3700 50  0001 C CNN
+	1    5250 3700
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5450 3500
+$Comp
+L Connector_Generic:Conn_02x02_Top_Bottom CN?
+U 1 1 5F98A2AE
+P 5750 2000
+AR Path="/5F98A2AE" Ref="CN?"  Part="1" 
+AR Path="/5F96C310/5F98A2AE" Ref="CN3"  Part="1" 
+F 0 "CN3" H 5800 2100 50  0000 C CNN
+F 1 "2x2 2.54mm" H 5800 1800 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical" H 5750 2000 50  0001 C CNN
+F 3 "~" H 5750 2000 50  0001 C CNN
+	1    5750 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6050 2100 6200 2100
+Wire Wire Line
+	6050 2000 6200 2000
+Text Notes 4850 2750 0    50   ~ 0
+SWD Header
+Wire Notes Line
+	4950 2300 4950 1750
+Wire Notes Line
+	6400 1750 6400 2300
+Text Notes 5000 1750 0    50   ~ 0
+Serial Debugger Header
+$Comp
+L QAZ:USB2.0_TYPE_C CN?
+U 1 1 5F98A2C3
+P 5400 5550
+AR Path="/5F98A2C3" Ref="CN?"  Part="1" 
+AR Path="/5F96C310/5F98A2C3" Ref="CN1"  Part="1" 
+F 0 "CN1" H 5750 6615 50  0000 C CNN
+F 1 "USB2.0_TYPE_C" H 5750 6524 50  0000 C CNN
+F 2 "QAZ:USB_C_GCT_USB4085" H 5850 6700 50  0001 C CNN
+F 3 "" H 4850 5900 50  0001 C CNN
+	1    5400 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5F98A2C9
+P 5050 4750
+AR Path="/5F98A2C9" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A2C9" Ref="#PWR030"  Part="1" 
+F 0 "#PWR030" H 5050 4600 50  0001 C CNN
+F 1 "+5V" H 5065 4923 50  0000 C CNN
+F 2 "" H 5050 4750 50  0001 C CNN
+F 3 "" H 5050 4750 50  0001 C CNN
+	1    5050 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5F98A2D1
+P 6450 4750
+AR Path="/5F98A2D1" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A2D1" Ref="#PWR038"  Part="1" 
+F 0 "#PWR038" H 6450 4600 50  0001 C CNN
+F 1 "+5V" H 6465 4923 50  0000 C CNN
+F 2 "" H 6450 4750 50  0001 C CNN
+F 3 "" H 6450 4750 50  0001 C CNN
+	1    6450 4750
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6250 5250
+NoConn ~ 5250 5250
+Wire Wire Line
+	5250 5350 5150 5350
+Wire Wire Line
+	5150 5350 5150 5450
+Wire Wire Line
+	5150 5450 5250 5450
+Wire Wire Line
+	5150 5450 5150 5700
+Wire Wire Line
+	5150 5700 5750 5700
+Connection ~ 5150 5450
+Wire Wire Line
+	6250 5350 6350 5350
+Wire Wire Line
+	6350 5350 6350 5450
+Wire Wire Line
+	6350 5700 5750 5700
+Connection ~ 5750 5700
+Wire Wire Line
+	6250 5450 6350 5450
+Connection ~ 6350 5450
+Wire Wire Line
+	6350 5450 6350 5700
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A2F4
+P 5750 5700
+AR Path="/5F98A2F4" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A2F4" Ref="#PWR033"  Part="1" 
+F 0 "#PWR033" H 5750 5450 50  0001 C CNN
+F 1 "GND" H 5755 5527 50  0001 C CNN
+F 2 "" H 5750 5700 50  0001 C CNN
+F 3 "" H 5750 5700 50  0001 C CNN
+	1    5750 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5250 5150 4950 5150
+$Comp
+L Device:R_Small_US R?
+U 1 1 5F98A2FB
+P 4950 5350
+AR Path="/5F98A2FB" Ref="R?"  Part="1" 
+AR Path="/5F96C310/5F98A2FB" Ref="R12"  Part="1" 
+F 0 "R12" H 5100 5300 50  0000 R CNN
+F 1 "5.1k" H 5200 5400 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 4950 5350 50  0001 C CNN
+F 3 "~" H 4950 5350 50  0001 C CNN
+	1    4950 5350
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A302
+P 4950 5450
+AR Path="/5F98A302" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A302" Ref="#PWR029"  Part="1" 
+F 0 "#PWR029" H 4950 5200 50  0001 C CNN
+F 1 "GND" H 4955 5277 50  0001 C CNN
+F 2 "" H 4950 5450 50  0001 C CNN
+F 3 "" H 4950 5450 50  0001 C CNN
+	1    4950 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6250 5150 6550 5150
+$Comp
+L Device:R_Small_US R?
+U 1 1 5F98A30A
+P 6550 5350
+AR Path="/5F98A30A" Ref="R?"  Part="1" 
+AR Path="/5F96C310/5F98A30A" Ref="R15"  Part="1" 
+F 0 "R15" H 6700 5300 50  0000 R CNN
+F 1 "5.1k" H 6800 5400 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 6550 5350 50  0001 C CNN
+F 3 "~" H 6550 5350 50  0001 C CNN
+	1    6550 5350
+	1    0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F98A311
+P 6550 5450
+AR Path="/5F98A311" Ref="#PWR?"  Part="1" 
+AR Path="/5F96C310/5F98A311" Ref="#PWR039"  Part="1" 
+F 0 "#PWR039" H 6550 5200 50  0001 C CNN
+F 1 "GND" H 6555 5277 50  0001 C CNN
+F 2 "" H 6550 5450 50  0001 C CNN
+F 3 "" H 6550 5450 50  0001 C CNN
+	1    6550 5450
+	-1   0    0    -1  
+$EndComp
+Text Notes 4650 4350 0    50   ~ 0
+USB
+Wire Notes Line
+	4650 4350 4650 5900
+Wire Notes Line
+	4650 5900 6850 5900
+Wire Notes Line
+	4650 4350 6850 4350
+Text HLabel 5350 2000 0    50   Output ~ 0
+DBG_RX
+Text HLabel 5350 2100 0    50   Input ~ 0
+DBG_TX
+Wire Wire Line
+	5550 2000 5350 2000
+Wire Wire Line
+	5550 2100 5350 2100
+Wire Notes Line
+	6400 2300 4950 2300
+Wire Notes Line
+	4950 1750 6400 1750
+Text HLabel 6150 3300 2    50   Output ~ 0
+SWDIO
+Text HLabel 6150 3400 2    50   Output ~ 0
+nRESET
+Wire Wire Line
+	5950 3500 6150 3500
+Wire Wire Line
+	5950 3300 6150 3300
+Wire Wire Line
+	5950 3400 6150 3400
+Wire Wire Line
+	5450 3300 5250 3300
+Wire Wire Line
+	5450 3400 5250 3400
+Text HLabel 5250 3400 0    50   BiDi ~ 0
+SWCLK
+Wire Wire Line
+	5250 3400 5250 3500
+Wire Notes Line
+	6600 3850 6600 2750
+Wire Notes Line
+	4850 2750 4850 3850
+Wire Notes Line
+	6600 3850 4850 3850
+Wire Notes Line
+	4850 2750 6600 2750
+Wire Wire Line
+	6250 4950 6450 4950
+Wire Wire Line
+	6250 5050 6450 5050
+Wire Wire Line
+	6450 4850 6450 4750
+Wire Wire Line
+	6250 4850 6450 4850
+Wire Wire Line
+	6250 4750 6450 4750
+Connection ~ 6450 4750
+Wire Wire Line
+	5250 4750 5050 4750
+Wire Wire Line
+	5050 4850 5050 4750
+Wire Wire Line
+	5050 4850 5250 4850
+Connection ~ 5050 4750
+Wire Wire Line
+	6550 5150 6550 5250
+Wire Wire Line
+	4950 5150 4950 5250
+$Comp
+L Connector_Generic:Conn_02x03_Top_Bottom CN?
+U 1 1 5F98A2A8
+P 5650 3400
+AR Path="/5F98A2A8" Ref="CN?"  Part="1" 
+AR Path="/5F96C310/5F98A2A8" Ref="CN2"  Part="1" 
+F 0 "CN2" H 5700 3600 50  0000 C CNN
+F 1 "2x3 2.54mm" H 5700 3200 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical" H 5650 3400 50  0001 C CNN
+F 3 "~" H 5650 3400 50  0001 C CNN
+	1    5650 3400
+	1    0    0    -1  
+$EndComp
+Text HLabel 6450 5050 2    50   BiDi ~ 0
+USB_D-
+Text HLabel 6450 4950 2    50   BiDi ~ 0
+USB_D+
+Wire Wire Line
+	5250 5050 5050 5050
+Wire Wire Line
+	5250 4950 5050 4950
+Text HLabel 5050 5050 0    50   BiDi ~ 0
+USB_D-
+Text HLabel 5050 4950 0    50   BiDi ~ 0
+USB_D+
+Wire Notes Line
+	6850 4350 6850 5900
+$EndSCHEMATC

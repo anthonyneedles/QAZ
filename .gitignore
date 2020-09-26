@@ -4,3 +4,6 @@
 /build/obj
 
 /doc
+
+*.zip
+*.tar
