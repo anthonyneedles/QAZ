@@ -4,14 +4,14 @@ TARGET = QAZ
 
 CXX_SRC =
 
-C_SRC   =
+C_SRC   = clock.c hb.c main.c time_slice.c
 
-A_SRC	  = 
+S_SRC	  = startup_stm32f042.s
 
 INC     = ./CMSIS/Include                     \
 					./CMSIS/Device/ST/STM32F0xx/Include
 
-HARDWARE   = QAZ_NUMPAD   # QAZ_KEYBOARD or QAZ_NUMPAD
+HARDWARE   = 
 BUILD_TYPE = DEBUG        # DEBUG or RELEASE
 CLK_SOURCE = EXT_CRYSTAL  # EXT_CRYSTAL or HSI_48
 
@@ -29,8 +29,8 @@ OCD_DIR := $(BLD_DIR)/openocd
 BIN = $(BIN_DIR)/$(TARGET).bin
 ELF = $(BIN_DIR)/$(TARGET).elf
 
-OBJ = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.o) $(C_SRC:%.c=$(OBJ_DIR)/%.o) $(A_SRC:%.S=$(OBJ_DIR)/%.o)
-DEP = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(A_SRC:%.S=$(DEP_DIR)/%.d)
+OBJ = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.o) $(C_SRC:%.c=$(OBJ_DIR)/%.o) $(S_SRC:%.s=$(OBJ_DIR)/%.o)
+DEP = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(S_SRC:%.s=$(DEP_DIR)/%.d)
 
 LST = $(LOG_DIR)/$(TARGET).lst
 MAP = $(LOG_DIR)/$(TARGET).map
@@ -74,6 +74,8 @@ OD = $(PREFIX)objdump
 
 RE = $(PREFIX)readelf
 
+SZ = $(PREFIX)size
+
 LD = $(PREFIX)g++
 LDFLAGS  = -T $(BLD_DIR)/stm32f042k6.ld --specs=nosys.specs
 LDFLAGS += -Wl,-Map,$(MAP),-gc-sections
@@ -96,6 +98,7 @@ $(BIN): $(ELF) | $(BIN_DIR)
 $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@ from $^:")
 		$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
+		$(SZ) $(ELF)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
@@ -105,7 +108,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIR) $(DEP_DIR)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.S | $(OBJ_DIR) $(DEP_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIR) $(DEP_DIR)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
