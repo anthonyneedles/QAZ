@@ -15,11 +15,13 @@
 #include "time_slice.h"
 #include "clock.h"
 #include "hb.h"
+#include "debug.h"
 
 int main(void)
 {
     // inits - specifically ordered
     ClockInit();
+    DebugInit();
     TimeSliceInit();
 
     // inits - no required order

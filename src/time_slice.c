@@ -21,8 +21,9 @@
 
 #include <stdbool.h>
 
-#include "stm32f0xx.h"
+#include "debug.h"
 #include "macros.h"
+#include "stm32f0xx.h"
 
 // find number of loops needed to meet a given period
 #define CALCULATE_LOOPS(period_ms) (period_ms/LOOP_PERIOD_MS)
@@ -72,13 +73,12 @@ void TimeSliceInit(void)
     if (st_error == 0U) {
 		    // 0U = Systick timer successfully loaded
 		    systickInitFlag = true;
-
-        //DbgPrintf("SysTick Wait Task Initialized\r\n");
+        DbgPrintf("Initialized: TimeSlice\r\n");
 	  } else {
 		    // 1U = Reload value impossible
 		    systickInitFlag = false;
-
-        //DbgPrintf("ERROR: SysTick load failed!\n\r");
+        DbgPrintf("ERROR: SysTick load failed!\r\n");
+        DBG_ASSERT(FORCE_ASSERT);
 	  }
 }
 
@@ -92,8 +92,9 @@ void TimeSliceInit(void)
  */
 void TimeSliceLoop(void)
 {
+    DbgPrintf("Starting timeslice loop...\r\n");
+    
     while (1) {
-        // TODO: toggle a debug port to check timing accuracy/precision 
         timeSliceManagerTask();
 
         // handle each task counter, and call task function if desired # of loops reached
@@ -135,8 +136,8 @@ void timeSliceManagerTask(void)
         is_first_entry = 0;
     } else if (!systickInitFlag) {
         // failure in init, we got a problem
-        //DbgPrintf("SysTick Init Failure\n\r");
-        while (1) {}
+        DbgPrintf("ERROR: SysTick can't run, init failure\n\r");
+        DBG_ASSERT(FORCE_ASSERT);
     } else {
         if (current_tick >= last_tick) {
             // find the time we spent in the loop so far
@@ -144,14 +145,14 @@ void timeSliceManagerTask(void)
         } else {
             // likely tick overflow
             elapsed_ticks = current_tick + (UINT32_MAX - last_tick);
-            //printf("INFO: likely tick overflow, OK\r\n");
+            DbgPrintf("INFO: Likely tick overflow, OK\r\n");
         }
 
         if (elapsed_ticks <= LOOP_PERIOD_MS) {
             // wait out the remaining time in the loop period
             while ((systickCurrentMSCount - last_tick) < LOOP_PERIOD_MS) {}
         } else {
-            //printf("ERROR: loop overran by %lums\r\n", elapsed_ticks - LOOP_PERIOD_MS);
+            DbgPrintf("WARNING: Loop overran by %lums\r\n", elapsed_ticks - LOOP_PERIOD_MS);
         }
     }
 

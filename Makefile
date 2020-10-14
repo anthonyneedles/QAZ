@@ -4,7 +4,11 @@ TARGET = QAZ
 
 CXX_SRC =
 
-C_SRC   = clock.c hb.c main.c time_slice.c
+C_SRC   = main.c       \
+				  clock.c      \
+					debug.c      \
+					time_slice.c \
+		      hb.c
 
 S_SRC	  = startup_stm32f042.s
 
@@ -86,6 +90,9 @@ SFFLAGS  = write
 SF_ADDR  = 0x08000000
 
 # Build Rules ##################################################################
+
+.PHONY: all
+all: $(TARGET)
 
 .PHONY: $(TARGET)
 $(TARGET): $(BIN) $(ELF) $(ROM) $(LOG)

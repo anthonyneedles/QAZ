@@ -13,6 +13,7 @@
 
 #include "hb.h"
 
+#include "debug.h"
 #include "stm32f0xx.h"
 
 #define HB_LED_ON()  (HB_LED_PORT->ODR |=  (1UL << HB_LED_NUM))
@@ -30,14 +31,14 @@
  */
 void HeartbeatInit(void)
 {
-    //DbgPrintf("LED Hearbeat Task Initialized\r\n");
-
     // enable HB LED GPIO port clock
     RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 
     // set HB LED as GPIO output
     HB_LED_PORT->MODER = ((HB_LED_PORT->MODER & ~(0x3UL << (HB_LED_NUM * 2)))
             | (OUTPUT << (HB_LED_NUM * 2)));
+    
+    DbgPrintf("Initialized: Heartbeat\r\n");
 }
 
 /**

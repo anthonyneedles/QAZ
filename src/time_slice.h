@@ -17,13 +17,13 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#ifndef INC_TIME_SLICE_H_
-#define INC_TIME_SLICE_H_
+#ifndef __TIME_SLICE_H_
+#define __TIME_SLICE_H_
 
 #include "hb.h"
 
 // period at which the loop will execute. try to make as large as possible
-#define LOOP_PERIOD_MS (50u)
+#define LOOP_PERIOD_MS (5u)
 
 // table for defining tasks. used in many x-macros. each task definition requires:
 //     period_ms - period the task will execute. shall be multiple of LOOP_PERIOD_MS
@@ -66,4 +66,4 @@ void TimeSliceLoop(void);
  */
 void SysTick_Handler(void);
 
-#endif /* INC_TIME_SLICE_H_ */
+#endif /* __TIME_SLICE_H_ */

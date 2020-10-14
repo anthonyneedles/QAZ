@@ -8,8 +8,8 @@
  * @license   GNU GPL v3 (see LICENSE)
  */
 
-#ifndef INC_STATIC_ASSERT_H_
-#define INC_STATIC_ASSERT_H_
+#ifndef __STATIC_ASSERT_H_
+#define __STATIC_ASSERT_H_
 
 // combining arguments after expansion
 #define GLUE(a,b) __GLUE(a,b)
@@ -23,4 +23,4 @@
 // bypassing warnings
 #define UNUSED(x) ((void)(x))
 
-#endif /* INC_STATIC_ASSERT_H_ */
+#endif /* __STATIC_ASSERT_H_ */

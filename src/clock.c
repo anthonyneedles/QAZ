@@ -96,7 +96,6 @@ void ClockInit(void)
             | (2UL << GPIO_MODER_MODER8_Pos));
 
     // set for high speed 
-    // TODO: needed?
     GPIOA->OSPEEDR = ((GPIOA->OSPEEDR & ~GPIO_OSPEEDR_OSPEEDR8_Msk)
             | (3UL << GPIO_OSPEEDR_OSPEEDR8_Pos));
 
