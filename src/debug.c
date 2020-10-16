@@ -133,13 +133,19 @@ void DbgPrintf(const char *fmt_ptr, ...)
               break;
 
           case 'd' :
-              // decimal specifier
+              // signed decimal specifier
               sint_arg = va_arg(arg, int);
               if (sint_arg < 0) {
                   sint_arg = -sint_arg;
                   debugPutChar('-');
               }
               debugPutString(debugExpandNum((unsigned)sint_arg, 10, width));
+              break;
+          
+          case 'u' :
+              // unsigned decimal specifier
+              uint_arg = va_arg(arg, unsigned);
+              debugPutString(debugExpandNum(uint_arg, 10, width));
               break;
 
           case 'o':

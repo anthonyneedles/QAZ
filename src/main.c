@@ -16,6 +16,7 @@
 #include "clock.h"
 #include "hb.h"
 #include "debug.h"
+#include "key_matrix.h"
 
 int main(void)
 {
@@ -26,6 +27,7 @@ int main(void)
 
     // inits - no required order
     HeartbeatInit();
+    KeyMatrixInit();
 
     // enter the loop - no return
     TimeSliceLoop();

@@ -23,4 +23,7 @@
 // bypassing warnings
 #define UNUSED(x) ((void)(x))
 
+// number of elements in an array
+#define N_ELEMENTS(x) (sizeof(x)/sizeof(x[0]))
+
 #endif /* __STATIC_ASSERT_H_ */

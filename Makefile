@@ -8,7 +8,8 @@ C_SRC   = main.c       \
 				  clock.c      \
 					debug.c      \
 					time_slice.c \
-		      hb.c
+		      hb.c         \
+					key_matrix.c
 
 S_SRC	  = startup_stm32f042.s
 
