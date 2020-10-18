@@ -9,7 +9,8 @@ C_SRC   = main.c       \
 					debug.c      \
 					time_slice.c \
 		      hb.c         \
-					key_matrix.c
+					key_matrix.c \
+					i2c.c
 
 S_SRC	  = startup_stm32f042.s
 

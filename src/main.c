@@ -17,6 +17,7 @@
 #include "hb.h"
 #include "debug.h"
 #include "key_matrix.h"
+#include "i2c.h"
 
 int main(void)
 {
@@ -28,6 +29,7 @@ int main(void)
     // inits - no required order
     HeartbeatInit();
     KeyMatrixInit();
+    I2CInit();
 
     // enter the loop - no return
     TimeSliceLoop();
