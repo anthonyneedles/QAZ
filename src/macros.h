@@ -1,6 +1,6 @@
 /**
  * @file      macros.h
- * @brief     Holds useful utility macros 
+ * @brief     Holds useful utility macros
  *
  * @author    Anthony Needles
  * @date      2020/10/12

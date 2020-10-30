@@ -10,7 +10,8 @@ C_SRC   = main.c       \
 					time_slice.c \
 		      hb.c         \
 					key_matrix.c \
-					i2c.c
+					i2c.c        \
+					rgb_led.c
 
 S_SRC	  = startup_stm32f042.s
 

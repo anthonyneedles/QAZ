@@ -78,7 +78,7 @@ void DebugInit(void)
  *
  * @brief Sends formatted string over USART1
  *
- * When DEBUG, this function will expand the given format string with the variable args. The 
+ * When DEBUG, this function will expand the given format string with the variable args. The
  * expanded string will then be output on USART1 TX.
  *
  * Format specifiers:
@@ -112,7 +112,7 @@ void DbgPrintf(const char *fmt_ptr, ...)
           // handle format specifiers
           fmt_ptr++;
           width = 0;
-          
+
           // if there is a '0n', we now have a specified width
           if (IS_WIDTH_SPECIFIER(*fmt_ptr, *(fmt_ptr + 1))) {
               width = *(fmt_ptr + 1) - '0';
@@ -141,7 +141,7 @@ void DbgPrintf(const char *fmt_ptr, ...)
               }
               debugPutString(debugExpandNum((unsigned)sint_arg, 10, width));
               break;
-          
+
           case 'u' :
               // unsigned decimal specifier
               uint_arg = va_arg(arg, unsigned);
@@ -233,14 +233,14 @@ static void debugPutString(const char *data)
  * @brief Expand a number into string representation
  *
  * Takes the absolute value of the number to expand (if negative, the '-' prints before this) and
- * fills a buffer with the string reperesentation of that number, in the given base . 
- * 
+ * fills a buffer with the string reperesentation of that number, in the given base .
+ *
  * It does this starting at the end of the output buffer (placing a '\0' to terminate the string),
- * then working towards the start (going from least significant digit to most significant digit). 
+ * then working towards the start (going from least significant digit to most significant digit).
  *
  * After all digits are populated, a pointer to the start of this string in the buffer is
  * returned (again, null terminated).
- * 
+ *
  * If a nonzero width is given, the output string will be atleast that size, padded with '0's.
  *
  * @param[in] num   absolute value of number to expand
@@ -253,13 +253,13 @@ static char *debugExpandNum(unsigned num, int base, int width)
 {
   // number-to-character array
 	static const char num_chars[]= "0123456789ABCDEF";
-  
+
   // output buffer, +1 for the null. a pointer to somewhere in this buffer is returned
 	static char buffer[MAX_EXPAND_CHARACTERS + 1];
 
   // pointer to where we are in buffer. start at the end and work towards the start
 	char *expand_ptr =  &buffer[MAX_EXPAND_CHARACTERS];
-  
+
   // the return char array will be interpreted as a string, so put a null at the end
 	*expand_ptr = '\0';
 

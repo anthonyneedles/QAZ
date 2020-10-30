@@ -6,7 +6,7 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles
  * @license   GNU GPL v3 (see LICENSE)
- * 
+ *
  * Holds any user clock configuration that should be applied before any other user initialization
  * or project execution. Set CLK_SOURCE in the Makefile to select the clock.
  */
@@ -80,7 +80,7 @@ void ClockInit(void)
     #error No valid clock source defined!
 #endif
 
-    // enable Prefetch Buffer and set Flash latency 
+    // enable Prefetch Buffer and set Flash latency
     FLASH->ACR = FLASH_ACR_PRFTBE | FLASH_ACR_LATENCY;
 
     // select SYSCLK as MCO output
@@ -95,7 +95,7 @@ void ClockInit(void)
 	  GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER8_Msk)
             | (2UL << GPIO_MODER_MODER8_Pos));
 
-    // set for high speed 
+    // set for high speed
     GPIOA->OSPEEDR = ((GPIOA->OSPEEDR & ~GPIO_OSPEEDR_OSPEEDR8_Msk)
             | (3UL << GPIO_OSPEEDR_OSPEEDR8_Pos));
 

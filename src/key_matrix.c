@@ -79,7 +79,7 @@ keys_t keyMatrixScan(void);
 
 /**
  * KeyMatrixInit
- * 
+ *
  * @brief Initializes columns/rows
  *
  * Takes the given row/columns gpio definitions and inits them as needed.
@@ -92,7 +92,7 @@ void KeyMatrixInit(void)
     RCC->AHBENR |= RCC_AHBENR_GPIO##port##EN;                                             \
     GPIO##port->MODER =                                                                   \
         ((GPIO##port->MODER & ~GPIO_MODER_MODER##pin##_Msk) | GPIO_MODER_MODER##pin##_0); \
-    GPIO##port->OTYPER |= GPIO_OTYPER_OT_##pin;                                           
+    GPIO##port->OTYPER |= GPIO_OTYPER_OT_##pin;
     COL_TABLE(COL)
 #undef COL
 
@@ -101,11 +101,13 @@ void KeyMatrixInit(void)
     RCC->AHBENR |= RCC_AHBENR_GPIO##port##EN;                                             \
     GPIO##port->PUPDR =                                                                   \
         ((GPIO##port->PUPDR & ~GPIO_PUPDR_PUPDR##pin##_Msk) | GPIO_PUPDR_PUPDR##pin##_0); \
-    GPIO##port->MODER &= ~GPIO_MODER_MODER##pin##_Msk; 
+    GPIO##port->MODER &= ~GPIO_MODER_MODER##pin##_Msk;
     ROW_TABLE(ROW)
 #undef ROW
 
     key_in = NO_KEY;
+
+    DbgPrintf("Initialized: Key Matrix\r\n");
 }
 
 /**

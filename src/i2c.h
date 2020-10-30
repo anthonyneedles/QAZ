@@ -6,8 +6,8 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles
  * @license   GNU GPL v3 (see LICENSE)
- * 
- * This source file handles all I2C communications. Configured for 10kHz SCL frequency. 
+ *
+ * This source file handles all I2C communications. Configured for 100kHz SCL frequency.
  *
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
  */
@@ -18,26 +18,26 @@
 #include "stdint.h"
 
 /**
- * I2CInit 
+ * I2CInit
  *
- * @brief Initialization function for I2C module
+ * @brief Initializes I2C module
  *
- * Enables clocks for I2C1 pins as well as I2C1 module. GPIO configured as open drain with no pull 
- * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select 
- * I2C1 SCL and SDA. Timing configuration constant is generated via STM32CubeMX for target I2C 
- * frequency of 10kHz. Clock stretching disabled.
+ * Enables clocks for I2C1 pins as well as I2C1 module. GPIO configured as open drain with no pull
+ * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select
+ * I2C1 SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
+ * disabled.
  */
 void I2CInit(void);
 
 /**
- * I2CMasterTx 
+ * I2CMasterTx
  *
  * @brief Master transmit function for I2C
  *
- * Handles master transmission of data to slave. Clears current slave address and number of bytes 
+ * Handles master transmission of data to slave. Clears current slave address and number of bytes
  * to be sent values from CR2 register, then populates with passed values. Also, AUTOEND is enabled
  * (stop condition is automatically generated when number of bytes is reached. Start condition is
- * initiated. Data is loaded into transmit data register when register is ready. Data array is 
+ * initiated. Data is loaded into transmit data register when register is ready. Data array is
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
  *

@@ -17,7 +17,7 @@
 #include "hb.h"
 #include "debug.h"
 #include "key_matrix.h"
-#include "i2c.h"
+#include "rgb_led.h"
 
 int main(void)
 {
@@ -29,10 +29,10 @@ int main(void)
     // inits - no required order
     HeartbeatInit();
     KeyMatrixInit();
-    I2CInit();
+    RGBLEDInit();
 
     // enter the loop - no return
     TimeSliceLoop();
-    
+
     while(1) {}
 }

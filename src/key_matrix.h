@@ -22,7 +22,7 @@
 #define COL_TABLE(COL) \
     COL(A, 15) \
     COL(B,  3) \
-    COL(B,  6) 
+    COL(B,  6)
 
 // input GPIO rows. each row has:
 //     port - the port (A, B, C, D, ...)
@@ -30,14 +30,14 @@
 #define ROW_TABLE(ROW) \
     ROW(B,  4) \
     ROW(B,  5) \
-    ROW(B,  7) 
+    ROW(B,  7)
 
 // key symbol table. callback function will use this symbol. each key has:
 //     symbol - the symbol for the key. make it simple.
 #define KEY_TABLE(KEY) \
      KEY(1) KEY(2) KEY(3) \
      KEY(4) KEY(5) KEY(6) \
-     KEY(7) KEY(8) KEY(9) 
+     KEY(7) KEY(8) KEY(9)
 
 // macro expand enumeration value for each key with name KEY_*
 typedef enum {

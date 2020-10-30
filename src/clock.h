@@ -6,7 +6,7 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles
  * @license   GNU GPL v3 (see LICENSE)
- * 
+ *
  * Holds any user clock configuration that should be applied before any other user initialization
  * or project execution. Set CLK_SOURCE in the Makefile to select the clock.
  */

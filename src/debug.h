@@ -6,9 +6,9 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles
  * @license   GNU GPL v3 (see LICENSE)
- * 
+ *
  * Holds any debug functionality that will effectively "not do anything" if BUILD_TYPE is not set
- * to DEBUG (in top level Makefile), in order to remove code size and processor time dedicated to 
+ * to DEBUG (in top level Makefile), in order to remove code size and processor time dedicated to
  * debug.
  */
 
@@ -17,17 +17,17 @@
 
 #if defined(DEBUG)
 
-// similar to assert() in standard library. if expr is false, the assert fails, and the 
+// similar to assert() in standard library. if expr is false, the assert fails, and the
 // line/file/expr is printed, and the program stops
 #define DBG_ASSERT(expr) ((expr) ? ((void)0) : DebugAssertFailed(__FILE__, __LINE__, #expr))
 #define FORCE_ASSERT (0)
 
 /**
  * DebugInit()
- * 
+ *
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
  *
- * When DEBUG, enables USART1 (and corresponding pins) for UART transmission at 115200 baud. 
+ * When DEBUG, enables USART1 (and corresponding pins) for UART transmission at 115200 baud.
  * PA9 = TX, PA10 = RX. Only using TX for now.
  */
 void DebugInit(void);
@@ -37,7 +37,7 @@ void DebugInit(void);
  *
  * @brief Sends formatted string over USART1 (only for DEBUG)
  *
- * When DEBUG, this function will expand the given format string with the variable args. The 
+ * When DEBUG, this function will expand the given format string with the variable args. The
  * expanded string will then be output on USART1 TX.
  *
  * Format specifiers:
