@@ -12,6 +12,8 @@
 
 #include "rgb_led.h"
 
+#include <stdbool.h>
+
 #include "debug.h"
 #include "i2c.h"
 #include "lp500x_regs.h"
@@ -27,6 +29,18 @@
 #define R_RGB(rgb_code) ((rgb_code & 0x00FF0000UL) >> 16)
 #define G_RGB(rgb_code) ((rgb_code & 0x0000FF00UL) >>  8)
 #define B_RGB(rgb_code) ((rgb_code & 0x000000FFUL))
+
+#define LOWEST_ACTIVE_BRIGHTNESS (0x05)
+#define BRIGHT_STEPS (5)
+
+static bool breathing_profile = false;
+
+// brighness level, max of BRIGHT_STEPS - 1
+static unsigned bright_idx = 2;
+
+static const uint32_t colors[] = {
+    COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
+};
 
 /**
  * RGBLEDInit
@@ -57,7 +71,7 @@ void RGBLEDInit(void)
         CHIP_EN,
         LOG_SCALE_EN | POWER_SAVE_EN | AUTO_INCR_EN | PWM_DITHER_EN,
         LED2_BANK_EN | LED1_BANK_EN | LED0_BANK_EN,
-        BRIGHTNESS_PERCENT(50),
+        BRIGHTNESS_PERCENT(bright_idx*25),
     };
     I2CMasterTx(I2C_ADDR, sizeof(init_data), init_data);
 
@@ -105,41 +119,88 @@ void RGBLEDBankSetBrightness(uint8_t val)
 /**
  * RGBLEDTask
  *
- * @brief Demo task for "breathing" effect, cycling colors with 8 key
+ * @brief Task for updating LED brightness.
+ *
+ * Changes depending on the chosen profile.
  */
 void RGBLEDTask(void)
 {
-    static int ramp_up = 1;
-    static uint8_t brightness = 0x07;
-    static unsigned ncolor = 0;
-    static const uint32_t colors[] = {
-        COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
-    };
+    static bool ramp_up = 1;
+    static uint8_t brightness = LOWEST_ACTIVE_BRIGHTNESS;
 
-    RGBLEDBankSetBrightness(brightness);
-
-    if (ramp_up) {
-        if (brightness == 0x80) {
-            ramp_up = 0;
+    if (bright_idx > 0) {
+        if (breathing_profile) {
+            // the breathing profile, down and up in brightness
+            if (ramp_up) {
+                if (brightness >= BRIGHTNESS_PERCENT(bright_idx*100/BRIGHT_STEPS)) {
+                    ramp_up = 0;
+                } else {
+                    brightness++;
+                }
+            } else {
+                if (brightness <= LOWEST_ACTIVE_BRIGHTNESS) {
+                    ramp_up = 1;
+                } else {
+                    brightness--;
+                }
+            }
         } else {
-            brightness++;
+            // static brightness depending on setting
+            brightness = BRIGHTNESS_PERCENT(bright_idx*100/BRIGHT_STEPS);
         }
+
+        RGBLEDBankSetBrightness(brightness);
     } else {
-        if (brightness == 0x07) {
-            ramp_up = 1;
-        } else {
-            brightness--;
-        }
-    }
-
-    switch (KeyMatrixGetKey())
-    {
-        case KEY_8:
-            ncolor = (ncolor >= (N_ELEMENTS(colors) - 1)) ? 0 : ncolor + 1;
-            RGBLEDBankSetColor(colors[ncolor]);
-            break;
-        default:
-            break;
+        RGBLEDBankSetBrightness(0);
     }
 }
 
+/**
+ * KeyMatrixCallback_BRTUP
+ *
+ * @brief BRTUP key callback
+ *
+ * Increases brightness setting up
+ */
+void KeyMatrixCallback_BRTUP(void)
+{
+    bright_idx = (bright_idx >= BRIGHT_STEPS - 1) ? BRIGHT_STEPS - 1 : bright_idx + 1;
+}
+
+/**
+ * KeyMatrixCallback_BRTDN
+ *
+ * @brief BRTDN key callback
+ *
+ * Increases brightness setting down
+ */
+void KeyMatrixCallback_BRTDN(void)
+{
+    bright_idx = (bright_idx == 0) ? 0 : bright_idx - 1;
+}
+
+/**
+ * KeyMatrixCallback_COLOR
+ *
+ * @brief COLOR key callback
+ *
+ * Cycles through colors
+ */
+void KeyMatrixCallback_COLOR(void)
+{
+    static unsigned color_idx = 0;
+    color_idx = (color_idx >= (N_ELEMENTS(colors) - 1)) ? 0 : color_idx + 1;
+    RGBLEDBankSetColor(colors[color_idx]);
+}
+
+/**
+ * KeyMatrixCallback_PROF
+ *
+ * @brief PROF key callback
+ *
+ * Cycles through coloring profiles
+ */
+void KeyMatrixCallback_PROF(void)
+{
+    breathing_profile = (breathing_profile) ? false : true;
+}

@@ -15,10 +15,12 @@
 
 #include <stdint.h>
 
-#define RGB_LED_TASK_PERIOD_MS (20)
+#define RGB_LED_TASK_PERIOD_MS (25)
 
+// percent to 256 value
 #define BRIGHTNESS_PERCENT(x) (((0xffUL*(x))/100) & 0xffUL)
 
+// RGB color codes
 #define COLOR_WHITE   (0xffffffUL)
 #define COLOR_RED     (0xff0000UL)
 #define COLOR_GREEN   (0x00ff00UL)
@@ -66,8 +68,46 @@ void RGBLEDBankSetBrightness(uint8_t val);
 /**
  * RGBLEDTask
  *
- * @brief Demo task for "breathing" effect, cycling colors with 8 key
+ * @brief Task for updating LED brightness.
+ *
+ * Changes depending on the chosen profile.
  */
 void RGBLEDTask(void);
+
+/**
+ * KeyMatrixCallback_BRTUP
+ *
+ * @brief BRTUP key callback
+ *
+ * Increases brightness setting up
+ */
+void KeyMatrixCallback_BRTUP(void);
+
+/**
+ * KeyMatrixCallback_BRTDN
+ *
+ * @brief BRTDN key callback
+ *
+ * Increases brightness setting down
+ */
+void KeyMatrixCallback_BRTDN(void);
+
+/**
+ * KeyMatrixCallback_COLOR
+ *
+ * @brief COLOR key callback
+ *
+ * Cycles through colors
+ */
+void KeyMatrixCallback_COLOR(void);
+
+/**
+ * KeyMatrixCallback_PROF
+ *
+ * @brief PROF key callback
+ *
+ * Cycles through coloring profiles
+ */
+void KeyMatrixCallback_PROF(void);
 
 #endif /* __RGB_LED_H */

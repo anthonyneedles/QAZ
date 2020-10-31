@@ -90,10 +90,8 @@ void I2CInit(void)
  * @param[in] num_bytes Number of bytes of data that is desired to be sent
  * @param[in] tx_data   Pointer to 8-bit data array of desired transmit data
  */
-void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data)
+void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr)
 {
-	uint8_t *tx_data_ptr = tx_data;
-
 	I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
 	I2C1->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
           ((uint32_t)num_bytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);

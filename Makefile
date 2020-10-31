@@ -18,7 +18,6 @@ S_SRC	  = startup_stm32f042.s
 INC     = ./CMSIS/Include                     \
 					./CMSIS/Device/ST/STM32F0xx/Include
 
-HARDWARE   = 
 BUILD_TYPE = DEBUG        # DEBUG or RELEASE
 CLK_SOURCE = EXT_CRYSTAL  # EXT_CRYSTAL or HSI_48
 

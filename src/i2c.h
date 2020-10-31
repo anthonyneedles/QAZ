@@ -45,7 +45,7 @@ void I2CInit(void);
  * @param[in] num_bytes Number of bytes of data that is desired to be sent
  * @param[in] tx_data   Pointer to 8-bit data array of desired transmit data
  */
-void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data);
+void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr);
 
 /**
  * I2CSetOwnAddr

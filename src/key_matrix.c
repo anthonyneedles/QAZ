@@ -15,33 +15,52 @@
 
 #include "key_matrix.h"
 
+#include <stdbool.h>
+
 #include "debug.h"
 #include "macros.h"
 #include "stm32f0xx.h"
+#include "usb_hid_usages.h"
 
 #define NUM_COLS (sizeof(col)/sizeof(col[0]))
 #define NUM_ROWS (sizeof(row)/sizeof(row[0]))
 
 // index into key symbol array for corresponding symbol
-#define KEY_SYMBOL(col, row) (keys[row*NUM_COLS + col])
+#define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
+#define FN_KEY(col, row)   (fn_keys[row*NUM_COLS + col])
 
 // SET/CLR does not mean driving the column 3.3V/GND, but rather (respectively)
 // activating/deactivating it. Since the inputs are pulled HIGH, and the outputs
 // are open drain, SET/CLR corresponds to (respectively) GND/HIGH-Z
-#define SET_PIN(col) ((col.port)->ODR &= ~(1UL << col.pin))
-#define CLR_PIN(col) ((col.port)->ODR |=  (1UL << col.pin))
+#define SET_COL(col) ((col.port)->ODR &= ~(1UL << col.pin))
+#define CLR_COL(col) ((col.port)->ODR |=  (1UL << col.pin))
 
 // Row inputs are pulled HIGH, and active LOW, this will evaulate to '1' if the
 // row is active (LOW) and '0' if the row is inactive (HIGH)
-#define READ_PIN(row) (!((row.port)->IDR &= (1UL << row.pin)))
-#define PIN_SET (1)
-#define PIN_CLR (0)
+#define READ_ROW(row) (!((row.port)->IDR &= (1UL << row.pin)))
+#define ROW_SET (1)
+#define ROW_CLR (0)
 
+// state of callback keys, so we only call the callback function once per press
 typedef enum {
-    IDLE,
-    VERIFY_KEY,
-    VERIFED_KEY,
-} debounce_state_t;
+    KEYUP = 0,
+    PRESSED,
+    UP_CHECK,
+} callback_state_t;
+
+// states for each of the callback keys
+typedef struct {
+#define K(symbol) callback_state_t symbol;
+    CALLBACK_KEY_TABLE(K)
+#undef K
+} callback_states_t;
+
+// the buffer when reading the keys when scanning
+typedef struct {
+    key_layer_t buf[KEY_BUF_SIZE];
+    bool is_fn;
+    int idx;
+} key_buf_t;
 
 // attributes for each gpio used
 typedef struct {
@@ -63,19 +82,28 @@ static const gpio_t row[] = {
 #undef ROW
 };
 
-// macro expand key symbol array. this holds every KEY_* enumeration value corresponding to every
-// key, in order (for N columns and M rows):
+// macro expand base key symbol array. this holds every KEY_* enumeration value corresponding to
+// every key, in order (for N columns and M rows):
 //   col0_row0, col1_row0, ..., colN_row0, col0_row1, col1_row1, ... colN_rowM
-static const keys_t keys[NUM_COLS*NUM_ROWS] = {
-#define KEY(symbol) KEY_##symbol,
-        KEY_TABLE(KEY)
-#undef KEY
+static const keys_t base_keys[NUM_COLS*NUM_ROWS] = {
+#define K(symbol) HID_USAGE_KEYBOARD_##symbol,
+        BASE_TABLE(K)
+#undef K
 };
 
-// buffer for current validated key
-static keys_t key_in;
+static const keys_t fn_keys[NUM_COLS*NUM_ROWS] = {
+#define K(symbol) HID_USAGE_KEYBOARD_##symbol,
+        FN_TABLE(K)
+#undef K
+};
 
-keys_t keyMatrixScan(void);
+// buffer for current validated key, after checking for FN
+static keys_t keys_in[KEY_BUF_SIZE];
+
+// all callback key states
+static callback_states_t callback_states = { 0 };
+
+void keyMatrixScan(key_buf_t *keybuf);
 
 /**
  * KeyMatrixInit
@@ -83,7 +111,7 @@ keys_t keyMatrixScan(void);
  * @brief Initializes columns/rows
  *
  * Takes the given row/columns gpio definitions and inits them as needed.
- * The inputs need a pulldown or else they will float.
+ * The inputs need a pullup or else they will float.
  */
 void KeyMatrixInit(void)
 {
@@ -105,109 +133,116 @@ void KeyMatrixInit(void)
     ROW_TABLE(ROW)
 #undef ROW
 
-    key_in = NO_KEY;
-
     DbgPrintf("Initialized: Key Matrix\r\n");
 }
 
 /**
  * KeyMatrixTask
  *
- * @brief Verifies key presses
+ * @brief Calls key scan routine, fills key code buffer, calls callbacks
  *
- * Implements key debouncing state machine to verify key presses.
- *
- * The delay from a key press and the verification of said key has a maximum time of double the
- * task period.
+ * This task will scan the physical keys each task period. The output key_in buffer will hold the
+ * actual keycodes for this set, either the base keys of fn keys (if FN key also pressed). If any
+ * of the callback keys are newly pressed, the callbacks get called, otherwise their states get
+ * updated accordingly.
  */
 void KeyMatrixTask(void)
 {
-    static debounce_state_t state = IDLE;
-    static keys_t last_key = NO_KEY;
+    key_buf_t keybuf;
+    keys_t key;
 
-    keys_t cur_key = keyMatrixScan();
+    // clear our key buffer and key_in buffer
+    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+        keys_in[i]          = KEY(NOEVT);
+        keybuf.buf[i].base = KEY(NOEVT);
+        keybuf.buf[i].fn   = KEY(NOEVT);
+    }
+    keybuf.idx   = 0;
+    keybuf.is_fn = false;
 
-    switch (state) {
-    case IDLE:
-        if (cur_key != NO_KEY) {
-            state = VERIFY_KEY;
-        }
-        break;
-    case VERIFY_KEY:
-        if (cur_key == last_key) {
-            key_in = cur_key;
-            state = VERIFED_KEY;
+    // fill buffer with pressed keys
+    keyMatrixScan(&keybuf);
+
+    for (int i = 0; i < keybuf.idx; ++i) {
+        // find the keycode for the given key layer in buffer
+        if (keybuf.is_fn) {
+            key = keybuf.buf[i].fn;
         } else {
-            state = IDLE;
+            key = keybuf.buf[i].base;
         }
-        break;
-    case VERIFED_KEY:
-        if (cur_key != last_key) {
-            state = IDLE;
+
+        // call any callback functions only if key just pressed. update state as PRESSED
+        switch (key) {
+    #define K(symbol)                              \
+        case KEY(symbol):                          \
+            if (callback_states.symbol == KEYUP) { \
+                KeyMatrixCallback_##symbol();      \
+            }                                      \
+            callback_states.symbol = PRESSED;      \
+            break;
+        CALLBACK_KEY_TABLE(K)
+    #undef K
+        default:
+            break;
         }
-        break;
-    default:
-        state = IDLE;
-        break;
+
+        // non-user keys get put into the key_in buffer
+        if ((int16_t)key >= 0) {
+            keys_in[i] = key;
+        }
     }
 
-    last_key = cur_key;
+    // if the key is pressed, the next time through we check if its pressed again. if the state
+    // is still UP_CHECK, then we know the key has been released
+    #define K(symbol)                                    \
+        if (callback_states.symbol == PRESSED) {         \
+            callback_states.symbol = UP_CHECK;           \
+        } else if (callback_states.symbol == UP_CHECK) { \
+            callback_states.symbol = KEYUP;              \
+        }
+        CALLBACK_KEY_TABLE(K)
+    #undef K
 }
 
-/**
- * KeyMatrixGetKey
- *
- * @brief Returns key in key buffer
- *
- * Also clears the key in the key buffer, so that keys will need to be re-pressed in order to be
- * be registered multiple times.
- *
- * @return validated key press
- */
-keys_t KeyMatrixGetKey(void) {
-    keys_t key = key_in;
-    key_in = NO_KEY;
-    return key;
-}
-
-/**
+/*
  * keyMatrixScan
  *
  * @brief Scans the key matrix to detect key presses
  *
  * Will set each column and read each row for each column. This allows detection of individual
- * keys. If a key is found, it's returned.
+ * keys. If a key is found, its layer is pushed into the key buffer.
  *
- * The first key press seen is the one 'detected'. This means that
- *
- * Ghosting is not accounted for in software.
- *
- * @return detected key press key enum
+ * @param[in,out] keybuf buffer/info to fill
  */
-keys_t keyMatrixScan(void)
+void keyMatrixScan(key_buf_t *keybuf)
 {
-    keys_t key = NO_KEY;
-
     // ensure all columns are off
     for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
-        CLR_PIN(col[ncol]);
+        CLR_COL(col[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
-        SET_PIN(col[ncol]);
+        SET_COL(col[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < (int)NUM_ROWS; ++nrow) {
-            int state = READ_PIN(row[nrow]);
-            if (state == PIN_SET) {
-                key = KEY_SYMBOL(ncol, nrow);
-                DbgPrintf("(%d,%d)\r\n", ncol, nrow);
+            int state = READ_ROW(row[nrow]);
+            if (state == ROW_SET) {
+                // found pressed key...
+                keybuf->buf[keybuf->idx].base = BASE_KEY(ncol, nrow);
+                if (keybuf->buf[keybuf->idx].base == KEY(FN)) {
+                    keybuf->is_fn = true;
+                } else {
+                    keybuf->buf[keybuf->idx].fn = FN_KEY(ncol, nrow);
+                    keybuf->idx++;
+                    if (keybuf->idx >= KEY_BUF_SIZE) {
+                        break;
+                    }
+                }
             }
         }
 
-        CLR_PIN(col[ncol]);
+        CLR_COL(col[ncol]);
     }
-
-    return key;
 }

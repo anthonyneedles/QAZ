@@ -25,7 +25,7 @@
 #include "rgb_led.h"
 
 // period at which the loop will execute. try to make as large as possible
-#define LOOP_PERIOD_MS (5u)
+#define LOOP_PERIOD_MS (25u)
 
 // table for defining tasks. used in many x-macros. each task definition requires:
 //     period_ms - period the task will execute. shall be multiple of LOOP_PERIOD_MS
