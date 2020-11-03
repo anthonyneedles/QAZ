@@ -31,6 +31,7 @@ DEP_DIR := $(BLD_DIR)/dep
 LOG_DIR := $(BLD_DIR)/log
 OBJ_DIR := $(BLD_DIR)/obj
 OCD_DIR := $(BLD_DIR)/openocd
+BSH_DIR := $(BLD_DIR)/scripts
 
 BIN = $(BIN_DIR)/$(TARGET).bin
 ELF = $(BIN_DIR)/$(TARGET).elf
@@ -148,6 +149,10 @@ flash: $(BIN)
 		@echo $(call hdr_print,"Flashing $^ at $(SF_ADDR)")
 		$(SF) $(SFFLAGS) $(BIN) $(SF_ADDR)
 
+.PHONY: tmux
+tmux:
+		sh $(BSH_DIR)/tmux-bootstrap.sh $(TARGET)
+
 .PHONY: help
 help:
 		@echo ""
@@ -160,3 +165,5 @@ help:
 		@echo "flash"
 		@echo "  Flash binary at $(SF_ADDR), make '$(TARGET)' if no binary"
 		@echo ""
+		@echo "tmux"
+		@echo "  Run tmux bootstrap (only if '$(TARGET)' session doesn't already exist)"

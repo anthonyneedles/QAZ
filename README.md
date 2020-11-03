@@ -1,6 +1,6 @@
 # QAZ
 
-*STM32F042K6 Firmware for my 'QAZ' keyboard/keypad.*
+*STM32F042K6 Firmware for my 'QAZ' keyboard*
 
 1. [About This Project](#about-this-project)
     1. [File Structure](#file-structure)
@@ -23,7 +23,7 @@ be too easy. Well there is a maker space at my work that has an acrylic
 engraver and pcb fabricator. So I started this project as a way to see how
 cheaply (not counting keycaps and switches) I could make a keyboard. This is
 also my first personal embedded software project done entirely from command
-line and in C++.
+line and in C/C++.
 
 This firmware uses:
 - `arm-none-eabi-gcc` for C/Assembly compilation
@@ -41,12 +41,14 @@ This firmware uses:
     │   └── architecture specifc headers, linker script
     │
     ├── build/
-    │   │ 
     │   ├── bin/
     │   │   └── .bin, .hex, .elf files, from linker
     │   │ 
     │   ├── dep/
     │   │   └── .d source file dependencies, from gcc
+    │   │ 
+    │   ├── log/
+    │   │   └── listings, symbol tables, mappings
     │   │ 
     │   ├── obj/
     │   │   └── .o object files, from gcc
@@ -54,19 +56,24 @@ This firmware uses:
     │   └── openocd/
     │       └── .cfg for stlink/stm32f0x
     │
+    ├── CMSIS/
+    │   └── Cortex Microcontroller Software Interface Standard HAL
+    │
     ├── hardware/
-    │   │ 
     │   ├── layers/
     │   │   └── .svg board layers 
     │   │ 
     │   └── pcb/
-    │       └── Kicad project, BOM
+    │       └── Kicad projects, BOMs
+    │
+    ├── scripts/
+    │   └── useful project scripts
     │
     └── src/
         └── all source files
 ```
 
-The `bin/`, `dep/`, and `obj/` directories are not tracked, and get made when the
+The `bin/`, `dep/`, `log/`, and `obj/` directories are not tracked, and get made when the
 project is built. The files in these directories are removed when the project
 is cleaned.
 
@@ -91,6 +98,8 @@ handles all building commands. These are the available commands:
 **qaz** - Build complete software target
 
 **flash** - Flash binary at 0x08000000, make blink if no binary
+
+**tmux** - Launch tmux bootstrap shell script (only if 'QAZ' session doesn't already exist)
 
 **help** - Display the above
 
