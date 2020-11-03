@@ -26,6 +26,7 @@
 #define __KEY_MATRIX_H_
 
 #include <stdint.h>
+#include "stm32f0xx.h"
 
 #define KEY_MATRIX_TASK_PERIOD_MS (50U)
 
@@ -65,7 +66,7 @@
 
 // weak callbacks for each of the callback keys. these are called ONCE PER BUTTON PRESS. the user
 // must release then repress the key for a second call
-#define K(symbol) __attribute((weak)) void KeyMatrixCallback_##symbol(void);
+#define K(symbol) __WEAK void KeyMatrixCallback_##symbol(void);
 CALLBACK_KEY_TABLE(K)
 #undef K
 

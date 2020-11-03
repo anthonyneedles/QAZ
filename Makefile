@@ -11,11 +11,11 @@ C_SRC   = main.c       \
 		      hb.c         \
 					key_matrix.c \
 					i2c.c        \
-					rgb_led.c
+					rgb_led.c    
 
 S_SRC	  = startup_stm32f042.s
 
-INC     = ./CMSIS/Include                     \
+INC     = ./CMSIS/Core/Include                 \
 					./CMSIS/Device/ST/STM32F0xx/Include
 
 BUILD_TYPE = DEBUG        # DEBUG or RELEASE
