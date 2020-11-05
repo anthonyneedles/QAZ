@@ -119,6 +119,19 @@ X TP 1 0 0 50 U 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
+# TestPoint_Thruhole_1.0mm
+#
+DEF TestPoint_Thruhole_1.0mm TP 0 40 N N 1 F N
+F0 "TP" 0 150 50 H V C CNN
+F1 "TestPoint_Thruhole_1.0mm" 0 -150 50 H I C CNN
+F2 "QAZ:TestPoint_Thruhole_1.0mm" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+C 0 75 25 0 1 0 N
+X TP 1 0 0 50 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
 # USB2.0_TYPE_C
 #
 DEF USB2.0_TYPE_C CN 0 40 Y Y 1 F N
