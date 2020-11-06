@@ -18,6 +18,7 @@
 #include "debug.h"
 #include "key_matrix.h"
 #include "rgb_led.h"
+#include "usb.h"
 
 int main(void)
 {
@@ -30,6 +31,7 @@ int main(void)
     HeartbeatInit();
     KeyMatrixInit();
     RGBLEDInit();
+    USBInit();
 
     // enter the loop - no return
     TimeSliceLoop();

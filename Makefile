@@ -11,7 +11,8 @@ C_SRC   = main.c       \
 		      hb.c         \
 					key_matrix.c \
 					i2c.c        \
-					rgb_led.c    
+					rgb_led.c    \
+					usb.c
 
 S_SRC	  = startup_stm32f042.s
 
@@ -55,7 +56,7 @@ PREFIX      = arm-none-eabi-
 
 ARCH_FLAGS  = -mcpu=cortex-m0 -mthumb -msoft-float
 
-BUILD_FLAGS = $(HARDWARE) $(BUILD_TYPE) $(CLK_SOURCE)  
+BUILD_FLAGS = $(BUILD_TYPE) $(CLK_SOURCE)
 
 CC = $(PREFIX)gcc
 CCFLAGS  = -std=gnu99 -ggdb3 -O2 -Wall -Wextra
