@@ -36,4 +36,6 @@ void USBInit(void);
  */
 void USB_IRQHandler(void);
 
+void USBTask(void);
+
 #endif /* __USB_H */

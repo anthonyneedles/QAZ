@@ -23,6 +23,7 @@
 #include "hb.h"
 #include "key_matrix.h"
 #include "rgb_led.h"
+#include "usb.h"
 
 // period at which the loop will execute. try to make as large as possible
 #define LOOP_PERIOD_MS (10U)
@@ -33,7 +34,8 @@
 #define TASK_TABLE(TASK) \
     TASK(HB_TASK_PERIOD_MS,         HeartbeatTask) \
     TASK(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask) \
-    TASK(RGB_LED_TASK_PERIOD_MS,    RGBLEDTask)
+    TASK(RGB_LED_TASK_PERIOD_MS,    RGBLEDTask)    \
+    TASK(1000,    USBTask)
 
 /**
  * TimeSliceInit

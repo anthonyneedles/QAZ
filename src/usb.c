@@ -56,6 +56,7 @@
 
 // SETUP packet bRequest
 #define REQ_GET_DESC (0x06U)
+#define REQ_GET_STAT (0x00U)
 #define REQ_SET_ADDR (0x05U)
 #define REQ_SET_CFG  (0x09U)
 #define REQ_SET_IDLE (0x0AU)
@@ -67,29 +68,27 @@
 #define REQ_OUT_CLS_ITF (REQ_DIR_OUT | REQ_TYP_CLS | REQ_RCP_ITF)
 #define REQ_OUT_STD_DEV (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_DEV)
 
-// Obtains endpoint register for ep identifier 'epn'
-#define EP_REG(epn) (*((&USB->EP0R) + (epn << 2U)))
+//  -------------------------------------------------------------------
+// | THIS MOMUMENT MARKS THE SPOT AT WHICH I WAS STUCK FOR A LONG TIME |
+// |       UNTIL I REALIZED I FORGOT THIS WAS POINTER ARITHMETIC       |
+// |      AND HAD "2U" INSTEAD OF "1U", SO EP1 WAS NOT BEING SET       |
+//  -------------------------------------------------------------------
+#define EP_REG(epn) (*((&USB->EP0R) + (epn << 1U)))
 
 // Combines SETUP packet bRequest/bmRequestType fields
 #define REQ(type, req) (((uint16_t)(type) << 8) | ((uint16_t)(req) & 0xFF))
 
+// Set the TX_STATUS EP register bits (they are toggle-bits)
 #define SET_TX_STATUS(epn, status) \
     (EP_REG(epn) = (EP_REG(epn) ^ (status & USB_EPTX_STAT)) & (USB_EPREG_MASK | USB_EPTX_STAT));
 
+// Set the RX_STATUS EP register bits (they are toggle-bits)
 #define SET_RX_STATUS(epn, status) \
     (EP_REG(epn) = (EP_REG(epn) ^ (status & USB_EPRX_STAT)) & (USB_EPREG_MASK | USB_EPRX_STAT));
 
-#define PRINT_EPNR(x) \
-    DbgPrintf("[%04x: %x %x %x  %x %x %x  %x %x %x  %x]\n", x, \
-        (x & 0x8000) >> 15, (x & 0x4000) >> 14, (x & 0x3000) >> 12, \
-        (x & 0x0800) >> 11, (x & 0x0600) >> 9,  (x & 0x0100) >> 8, \
-        (x & 0x0080) >> 7,  (x & 0x0040) >> 6,  (x & 0x0030) >> 4, \
-        (x & 0x000F));
-
-#define PRINT_SETUP(x) \
-    DbgPrintf("%02x %02x %04x %04x %04x ", setup_pkt.bmRequestType,\
-        setup_pkt.bRequest, setup_pkt.wValue, \
-        setup_pkt.wIndex, setup_pkt.wLength);
+#define PRINT_SETUP(pkt) \
+    DbgPrintf("%02x %02x %04x %04x %04x ", pkt.bmRequestType, pkt.bRequest, pkt.wValue, \
+        pkt.wIndex, pkt.wLength);
 
 // SETUP packet as it will appear in memory
 typedef struct __PACKED {
@@ -113,25 +112,28 @@ typedef struct {
     buf_desc_t bd_ep[NUM_EP];
 } buf_desc_table_t;
 
+// The buffer descriptor table itself, at the given offset
 static volatile buf_desc_table_t *const BDT =
     (buf_desc_table_t *const)(USB_PMAADDR + BDT_OFFSET);
 
+// EP0 tx buffer in the PMA memory space
 static volatile uint8_t *const ep0_tx =
     (volatile uint8_t *const)(USB_PMAADDR + TX0_ADDR);
 
+// EP0 rx buffer in the PMA memory space
 static volatile uint8_t *const ep0_rx =
     (volatile uint8_t *const)(USB_PMAADDR + RX0_ADDR);
 
+// EP1 tx buffer in the PMA memory space
 static volatile uint8_t *const ep1_tx =
     (volatile uint8_t *const)(USB_PMAADDR + TX1_ADDR);
 
 static void usb_reset(void);
 static void usb_ep0_init(void);
+static void usb_ep1_init(void);
 static void usb_ep0_setup(void);
-static void usb_read(uint8_t *in_buf);
-static void usb_write(const uint8_t *out_buf, uint16_t len);
-
-static bool usb_configured = false;
+static void usb_ep0_read(uint8_t *in_buf);
+static void usb_write(int ep, const uint8_t *out_buf, uint16_t len);
 
 /*
  * USBInit
@@ -143,20 +145,8 @@ static bool usb_configured = false;
  */
 void USBInit(void)
 {
-    // Enable GPIOA clocking
-    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
-
-    // PA15 into AF mode
-    GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER15_Msk)
-            | GPIO_MODER_MODER15_1);
-
-    // PA15 fast output speed
-    GPIOA->OSPEEDR = ((GPIOA->OSPEEDR & ~GPIO_OSPEEDR_OSPEEDR15_Msk)
-            | GPIO_OSPEEDR_OSPEEDR15);
-
-    // PA15 into AF5 (USB_NOE)
-    GPIOA->AFR[1] = ((GPIOA->AFR[1] & ~GPIO_AFRH_AFSEL15_Msk)
-            | (5U << GPIO_AFRH_AFSEL15_Pos));
+    // Disble embedded pullup on DP
+    USB->BCDR &= ~USB_BCDR_DPPU;
 
     // Set USB clock source from PLL, enable USB clocking
     RCC->CFGR3   |= RCC_CFGR3_USBSW;
@@ -174,10 +164,10 @@ void USBInit(void)
     // Clear peripheral reset
     USB->CNTR = USB_CNTR_FRES;
 
-    // Clear interrupts
+    // Clear interrupt register
     USB->ISTR = 0;
 
-    // Enable USB interrupts
+    // Clear any existing USB interrupts
     NVIC_ClearPendingIRQ(USB_IRQn);
 
     // Enable USB interrupts
@@ -192,6 +182,19 @@ void USBInit(void)
     DbgPrintf("Initialized: USB\r\n");
 }
 
+// TODO: remove, there will be no usb task
+void USBTask(void)
+{
+    static int task_cnt = 0;
+    task_cnt++;
+
+    // move mouse pointer down and to the right 40 pixels every 4s
+    if ((task_cnt %= 4) == 0) {
+        const uint8_t data[] = { 0x00, 100, 100, 0x00 };
+        usb_write(1, data, sizeof(data));
+    }
+}
+
 /*
  * usb_ep0_init
  *
@@ -203,11 +206,11 @@ static void usb_ep0_init(void)
 {
     EP_REG(0) = USB_EP_CONTROL | (0 & USB_EPADDR_FIELD);
 
-    // Set our TX and RX PMA addresses
+    // set our TX and RX PMA addresses
     BDT->bd_ep[0].tx_addr = TX0_ADDR;
     BDT->bd_ep[0].rx_addr = RX0_ADDR;
 
-    // Set max # of bytes to RX (64)
+    // set max # of bytes to RX (64)
     BDT->bd_ep[0].rx_size = RX0_CNT;
 
     SET_RX_STATUS(0, USB_EP_RX_VALID);
@@ -216,7 +219,7 @@ static void usb_ep0_init(void)
 /*
  * usb_ep1_init
  *
- * @brief Initialize endpoint 1 as control endpoint
+ * @brief Initialize endpoint 1 as interrupt endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission only.
  */
@@ -224,21 +227,23 @@ static void usb_ep1_init(void)
 {
     EP_REG(1) = USB_EP_INTERRUPT | (1 & USB_EPADDR_FIELD);
 
-    // Set our TX and RX PMA addresses
+    // set our TX and RX PMA addresses
     BDT->bd_ep[1].tx_addr = TX1_ADDR;
-    BDT->bd_ep[1].tx_size = 8;
+    BDT->bd_ep[1].tx_size = 4;
+
+    // we NAK until we get something to send
+    SET_TX_STATUS(1, USB_EP_TX_NAK);
 }
 
 /*
- * usb_read
+ * usb_ep0_read
  *
  * @brief Read RX byte count sized block from PMA into input buffer and set RX STATUS to VALID
  *
  * @param[in, out] buf output buffer that is filled with received data
  */
-static void usb_read(uint8_t *buf) {
+static void usb_ep0_read(uint8_t *buf) {
     int rx_size = BDT->bd_ep[0].rx_size & USB_CNT_RX_MSK;
-    //DbgPrintf("%02x BYTES ", rx_size);
 
     for (int i = 0; i < rx_size; ++i) {
         buf[i] = ep0_rx[i];
@@ -252,18 +257,33 @@ static void usb_read(uint8_t *buf) {
  *
  * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
  *
+ * Due to a bug when writing bytes into the PMA, only halfword accesses work. So @len will
+ * need to always be even (and @buf an even number of bytes).
+ *
+ * Only works because MCU architecture and USB protocol is little endian.
+ *
  * @param[in] buf input buffer that contains data to be tranmitted
  * @param[in] len number of bytes in @buf
  */
-static void usb_write(const uint8_t *buf, uint16_t len) {
-    BDT->bd_ep[0].tx_size = len;
-    //DbgPrintf("%02x BYTES ", len);
+static void usb_write(int ep, const uint8_t *buf, uint16_t len) {
+    BDT->bd_ep[ep].tx_size = len;
 
-    for (int i = 0; i < len/2; ++i) {
-        ((uint16_t *)ep0_tx)[i] = ((uint16_t *)buf)[i];
+    switch (ep) {
+    case 0:
+        for (int i = 0; i < len/2; ++i) {
+            ((uint16_t *)ep0_tx)[i] = ((uint16_t *)buf)[i];
+        }
+        break;
+    case 1:
+        for (int i = 0; i < len/2; ++i) {
+            ((uint16_t *)ep1_tx)[i] = ((uint16_t *)buf)[i];
+        }
+        break;
+    default:
+        return;
     }
 
-    SET_TX_STATUS(0, USB_EP_TX_VALID);
+    SET_TX_STATUS(ep, USB_EP_TX_VALID);
 }
 
 /*
@@ -278,45 +298,37 @@ static void usb_write(const uint8_t *buf, uint16_t len) {
 static void usb_ep0_setup(void)
 {
     usb_setup_packet_t setup_pkt;
-    usb_read((uint8_t *)&setup_pkt);
+
+    // get the setup packet contents
+    usb_ep0_read((uint8_t *)&setup_pkt);
     PRINT_SETUP(setup_pkt);
 
-    // Determine request type, and proceed accordingly
+    // determine request type, and proceed accordingly
     switch(REQ(setup_pkt.bmRequestType, setup_pkt.bRequest)) {
+
+    // handle both device and interface get descriptor
     case REQ(REQ_IN_STD_DEV, REQ_GET_DESC):
+    case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
         DbgPrintf("GET DESC ");
 
         if (setup_pkt.wValue == 0x100) {
             DbgPrintf("DEV ");
-            usb_write(USBDesc_Device, setup_pkt.wLength);
+            usb_write(0, USBDesc_Device, setup_pkt.wLength);
         } else if (setup_pkt.wValue == 0x200) {
             DbgPrintf("CFG ");
-            usb_write(USBDesc_Config, setup_pkt.wLength);
+            usb_write(0, USBDesc_Config, setup_pkt.wLength);
         } else if (setup_pkt.wValue == 0x300) {
             DbgPrintf("STR0 ");
-            usb_write(USBDesc_Lang, sizeof(USBDesc_Lang));
+            usb_write(0, USBDesc_Lang, sizeof(USBDesc_Lang));
         } else if (setup_pkt.wValue == 0x301) {
             DbgPrintf("STR1 ");
-            usb_write(USBDesc_Manufact, sizeof(USBDesc_Manufact));
+            usb_write(0, USBDesc_Manufact, sizeof(USBDesc_Manufact));
         } else if (setup_pkt.wValue == 0x302) {
             DbgPrintf("STR2 ");
-            usb_write(USBDesc_Product, sizeof(USBDesc_Product));
-        } else {
-            // Stall for unknown descriptors
-            DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
-            SET_RX_STATUS(0, USB_EP_RX_STALL);
-            SET_TX_STATUS(0, USB_EP_TX_STALL);
-        }
-        break;
-
-    case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
-        DbgPrintf("GET DESC ");
-
-        if (setup_pkt.wValue == 0x2200) {
+            usb_write(0, USBDesc_Product, sizeof(USBDesc_Product));
+        } else if (setup_pkt.wValue == 0x2200) {
             DbgPrintf("RPT ");
-            usb_write(USBDesc_HIDReport, sizeof(USBDesc_HIDReport));
-            usb_configured = true;
-            SET_TX_STATUS(1, USB_EP_TX_NAK);
+            usb_write(0, USBDesc_HIDReport, sizeof(USBDesc_HIDReport));
         } else {
             // Stall for unknown descriptors
             DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
@@ -325,21 +337,18 @@ static void usb_ep0_setup(void)
         }
         break;
 
+    // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
         DbgPrintf("SET IDLE ");
-        usb_write(0, 0);
+        usb_write(0, 0, 0);
         break;
 
-    case REQ(REQ_OUT_CLS_ITF, REQ_SET_RPT):
-        DbgPrintf("SET RPT ");
-        usb_write(0, 0);
-        break;
-
+    // device has been addressed
     case REQ(REQ_OUT_STD_DEV, REQ_SET_ADDR):
         DbgPrintf("SET ADDR ");
 
         // Send 0 length packet with address 0
-        usb_write(0, 0);
+        usb_write(0, 0, 0);
 
         // TODO: determine required delay
         LOOP_DELAY(500);
@@ -349,11 +358,21 @@ static void usb_ep0_setup(void)
         SET_RX_STATUS(0, USB_EP_RX_VALID);
         break;
 
+    // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
         DbgPrintf("SET CFG (%x) ", setup_pkt.wValue);
-        usb_write(0, 0);
-        SET_TX_STATUS(1, USB_EP_TX_VALID);
+        usb_write(0, 0, 0);
+        usb_ep1_init();
         break;
+
+    // our device has now been configured, can use ep1 now
+    case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
+    {
+        const uint8_t status[] = { 0x01, 0x00}; // self powered
+        DbgPrintf("GET STAT ");
+        usb_write(0, status, sizeof(status));
+        break;
+    }
 
     default:
         DbgPrintf("UNKNOWN REQUEST ");
@@ -371,19 +390,18 @@ static void usb_ep0_setup(void)
  */
 static void usb_reset(void)
 {
-    // Clear interrupts
+    // clear interrupts
     USB->ISTR = 0;
 
-    // Set our BDT offset in PMA
+    // set our BDT offset in PMA
     USB->BTABLE = BDT_OFFSET;
 
     usb_ep0_init();
-    usb_ep1_init();
 
-    // Enable reset/transfer interrupts
+    // enable reset/transfer interrupts
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM | USB_CNTR_RESETM;
 
-    // Enable device with address 0
+    // enable device with address 0
     USB->DADDR = USB_DADDR_EF;
 }
 
@@ -399,9 +417,8 @@ void USB_IRQHandler(void)
     uint16_t ep_reg;
     uint16_t int_reg = USB->ISTR;
     uint16_t int_ep = (int_reg & USB_ISTR_EP_ID);
-    char c = (int_reg & USB_ISTR_DIR) ? 'R' : 'T';
 
-    DbgPrintf("INT %x %c: ", int_reg & 0x000F, c);
+    DbgPrintf("> EP%d %s: ", int_ep, (int_reg & USB_ISTR_DIR) ? "IN " : "OUT");
 
     if (int_reg & USB_ISTR_PMAOVR) {
         USB->ISTR = ~USB_ISTR_PMAOVR;
@@ -424,9 +441,9 @@ void USB_IRQHandler(void)
     }
 
     if (int_reg & USB_ISTR_RESET) {
+        usb_reset();
         USB->ISTR = ~USB_ISTR_RESET;
         DbgPrintf("RESET ");
-        usb_reset();
     }
 
     if (int_reg & USB_ISTR_SOF) {
