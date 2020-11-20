@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="336.802mm"
+   height="127.251mm"
+   viewBox="0.000 0.000 336.802 127.251"
+   version="1.1"
+   id="svg2541"
+   sodipodi:docname="open_layer_v1.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata2547">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2545" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     id="namedview2543"
+     showgrid="false"
+     inkscape:zoom="13.411342"
+     inkscape:cx="93.030412"
+     inkscape:cy="421.37651"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2541" />
+  <path
+     id="polygon2517"
+     style="fill:none;stroke:#000000;stroke-width:0.1889125;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 176.04672,12.001 H 324.801 v 103.25 H 12 V 12.001 h 110.67444 v -7 H 7 L 6.844,5.007 6.688,5.025 6.534,5.056 6.382,5.098 6.235,5.153 6.093,5.218 5.956,5.295 5.825,5.382 5.702,5.48 5.586,5.586 5.48,5.702 5.382,5.825 5.295,5.956 5.218,6.093 5.153,6.235 5.098,6.382 5.056,6.534 5.025,6.688 5.007,6.844 5,7.001 v 113.25 l 0.007,0.157 0.018,0.156 0.031,0.154 0.042,0.152 0.055,0.147 0.065,0.142 0.077,0.137 0.087,0.131 0.098,0.123 0.106,0.116 0.116,0.106 0.123,0.098 0.131,0.087 0.137,0.077 0.142,0.065 0.147,0.055 0.152,0.042 0.154,0.031 0.156,0.018 0.156,0.006 h 322.801 l 0.157,-0.006 0.156,-0.018 0.154,-0.031 0.152,-0.042 0.147,-0.055 0.142,-0.065 0.137,-0.077 0.131,-0.087 0.123,-0.098 0.116,-0.106 0.106,-0.116 0.098,-0.123 0.087,-0.131 0.077,-0.137 0.065,-0.142 0.055,-0.147 0.042,-0.152 0.031,-0.154 0.018,-0.156 0.007,-0.156 L 331.801,7.001 331.795,6.844 331.777,6.688 331.746,6.534 331.704,6.382 331.649,6.235 331.584,6.093 331.507,5.956 331.42,5.825 331.322,5.702 331.216,5.586 331.1,5.48 330.977,5.382 330.846,5.295 330.709,5.218 330.567,5.153 330.42,5.098 330.268,5.056 330.114,5.025 329.958,5.007 329.801,5 H 176.04672 Z"
+     sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+     inkscape:connector-curvature="0" />
+  <polygon
+     points="7.663,117.599 7.348,117.914 7.145,118.311 7.075,118.751 7.145,119.192 7.348,119.589 7.663,119.904 8.059,120.107 8.5,120.176 8.941,120.107 9.338,119.904 9.653,119.589 9.856,119.192 9.925,118.751 9.856,118.311 9.653,117.914 9.338,117.599 8.941,117.396 8.5,117.327 8.059,117.396 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2519"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="87.613,117.599 87.298,117.914 87.095,118.311 87.026,118.751 87.095,119.192 87.298,119.589 87.613,119.904 88.01,120.107 88.451,120.176 88.891,120.107 89.288,119.904 89.604,119.589 89.806,119.192 89.876,118.751 89.806,118.311 89.604,117.914 89.288,117.599 88.891,117.396 88.451,117.327 88.01,117.396 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2521"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="167.563,117.599 167.248,117.914 167.046,118.311 166.976,118.751 167.046,119.192 167.248,119.589 167.563,119.904 167.961,120.107 168.401,120.176 168.841,120.107 169.239,119.904 169.554,119.589 169.756,119.192 169.826,118.751 169.756,118.311 169.554,117.914 169.239,117.599 168.841,117.396 168.401,117.327 167.961,117.396 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2523"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="247.514,117.599 247.198,117.914 246.996,118.311 246.926,118.751 246.996,119.192 247.198,119.589 247.514,119.904 247.911,120.107 248.351,120.176 248.792,120.107 249.189,119.904 249.504,119.589 249.707,119.192 249.776,118.751 249.707,118.311 249.504,117.914 249.189,117.599 248.792,117.396 248.351,117.327 247.911,117.396 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2525"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="327.464,117.599 327.149,117.914 326.946,118.311 326.877,118.751 326.946,119.192 327.149,119.589 327.464,119.904 327.861,120.107 328.302,120.176 328.742,120.107 329.139,119.904 329.454,119.589 329.657,119.192 329.727,118.751 329.657,118.311 329.454,117.914 329.139,117.599 328.742,117.396 328.302,117.327 327.861,117.396 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2527"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="7.663,62.473 7.348,62.788 7.145,63.186 7.075,63.626 7.145,64.066 7.348,64.463 7.663,64.779 8.059,64.981 8.5,65.051 8.941,64.981 9.338,64.779 9.653,64.463 9.856,64.066 9.925,63.626 9.856,63.186 9.653,62.788 9.338,62.473 8.941,62.271 8.5,62.201 8.059,62.271 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2529"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="327.464,62.473 327.149,62.788 326.946,63.186 326.877,63.626 326.946,64.066 327.149,64.463 327.464,64.779 327.861,64.981 328.302,65.051 328.742,64.981 329.139,64.779 329.454,64.463 329.657,64.066 329.727,63.626 329.657,63.186 329.454,62.788 329.139,62.473 328.742,62.271 328.302,62.201 327.861,62.271 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2531"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="7.663,7.348 7.348,7.663 7.145,8.059 7.075,8.501 7.145,8.941 7.348,9.338 7.663,9.653 8.059,9.856 8.5,9.926 8.941,9.856 9.338,9.653 9.653,9.338 9.856,8.941 9.925,8.501 9.856,8.059 9.653,7.663 9.338,7.348 8.941,7.145 8.5,7.076 8.059,7.145 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2533"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="327.464,7.348 327.149,7.663 326.946,8.059 326.877,8.501 326.946,8.941 327.149,9.338 327.464,9.653 327.861,9.856 328.302,9.926 328.742,9.856 329.139,9.653 329.454,9.338 329.657,8.941 329.727,8.501 329.657,8.059 329.454,7.663 329.139,7.348 328.742,7.145 328.302,7.076 327.861,7.145 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2535"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="247.514,7.348 247.198,7.663 246.996,8.059 246.926,8.501 246.996,8.941 247.198,9.338 247.514,9.653 247.911,9.856 248.351,9.926 248.792,9.856 249.189,9.653 249.504,9.338 249.707,8.941 249.776,8.501 249.707,8.059 249.504,7.663 249.189,7.348 248.792,7.145 248.351,7.076 247.911,7.145 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2537"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     points="87.613,7.348 87.298,7.663 87.095,8.059 87.026,8.501 87.095,8.941 87.298,9.338 87.613,9.653 88.01,9.856 88.451,9.926 88.891,9.856 89.288,9.653 89.604,9.338 89.806,8.941 89.876,8.501 89.806,8.059 89.604,7.663 89.288,7.348 88.891,7.145 88.451,7.076 88.01,7.145 "
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     id="polygon2539"
+     transform="matrix(-1,0,0,1,336.802,0)" />
+  <polygon
+     transform="matrix(-1,0,0,1,270.76336,-1.2207206e-4)"
+     id="polygon2539-6"
+     style="fill:none;stroke:#000000;stroke-width:0.05mm"
+     points="87.298,9.338 87.613,9.653 88.01,9.856 88.451,9.926 88.891,9.856 89.288,9.653 89.604,9.338 89.806,8.941 89.876,8.501 89.806,8.059 89.604,7.663 89.288,7.348 88.891,7.145 88.451,7.076 88.01,7.145 87.613,7.348 87.298,7.663 87.095,8.059 87.026,8.501 87.095,8.941 " />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333359px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:'Consolas, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+     x="11.868514"
+     y="9.6570015"
+     id="text903"><tspan
+       sodipodi:role="line"
+       id="tspan901"
+       x="11.868514"
+       y="9.6570015"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333359px;font-family:Consolas;-inkscape-font-specification:'Consolas, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458335">v1</tspan></text>
+</svg>
