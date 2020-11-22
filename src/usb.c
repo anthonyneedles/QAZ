@@ -340,9 +340,9 @@ static void usb_ep0_setup(void)
 
         // Send 0 length packet with address 0
         usb_write(0, 0);
-        for (volatile int i = 0; i < 500;) {
-            i++;
-        }
+
+        // TODO: determine required delay
+        LOOP_DELAY(500);
 
         // Set device address to new address
         USB->DADDR |= setup_pkt.wValue & USB_DADDR_ADD;

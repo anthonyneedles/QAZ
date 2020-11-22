@@ -36,7 +36,7 @@
 static bool breathing_profile = false;
 
 // brighness level, max of BRIGHT_STEPS - 1
-static unsigned bright_idx = 2;
+static unsigned bright_idx = 1;
 
 static const uint32_t colors[] = {
     COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
@@ -75,7 +75,7 @@ void RGBLEDInit(void)
     };
     I2CMasterTx(I2C_ADDR, sizeof(init_data), init_data);
 
-    RGBLEDBankSetColor(COLOR_WHITE);
+    RGBLEDBankSetColor(COLOR_BLUE);
 
     DbgPrintf("Initialized: RGB LED\r\n");
 }
@@ -93,9 +93,9 @@ void RGBLEDBankSetColor(uint32_t rgb_code)
 {
     uint8_t data[4];
     data[0] = BANK_A_COLOR_R;
-    data[1] = G_RGB(rgb_code);  // BANK A = Green
-    data[2] = B_RGB(rgb_code);  // BANK B = Blue
-    data[3] = R_RGB(rgb_code);  // BANK C = Red
+    data[1] = R_RGB(rgb_code);  // BANK A = Red
+    data[2] = G_RGB(rgb_code);  // BANK B = Green
+    data[3] = B_RGB(rgb_code);  // BANK C = Blue
     I2CMasterTx(I2C_ADDR, sizeof(data), data);
 }
 

@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 
-#define RGB_LED_TASK_PERIOD_MS (25)
+#define RGB_LED_TASK_PERIOD_MS (50u)
 
 // percent to 256 value
 #define BRIGHTNESS_PERCENT(x) (((0xffUL*(x))/100) & 0xffUL)

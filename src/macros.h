@@ -26,4 +26,7 @@
 // number of elements in an array
 #define N_ELEMENTS(x) (sizeof(x)/sizeof(x[0]))
 
+// for-loop delay. must measure actual delay for "accuracy"
+#define LOOP_DELAY(loops) for (volatile int loop_cnt = 0; loop_cnt < loops; ++loop_cnt);
+
 #endif /* __STATIC_ASSERT_H_ */

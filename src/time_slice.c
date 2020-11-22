@@ -151,8 +151,10 @@ void timeSliceManagerTask(void)
         if (elapsed_ticks <= LOOP_PERIOD_MS) {
             // wait out the remaining time in the loop period
             while ((systickCurrentMSCount - last_tick) < LOOP_PERIOD_MS) {}
+            current_tick = systickCurrentMSCount;
         } else {
-            DbgPrintf("WARNING: Loop overran by %ums\r\n", elapsed_ticks - LOOP_PERIOD_MS);
+            DbgPrintf("WARNING: Loop overran by %ums (%d %d %d)\r\n",
+                    elapsed_ticks - LOOP_PERIOD_MS, current_tick, last_tick, elapsed_ticks);
         }
     }
 

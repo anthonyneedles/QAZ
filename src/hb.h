@@ -14,10 +14,10 @@
 #ifndef __HB_H
 #define __HB_H
 
-#define HB_TASK_PERIOD_MS (1000)
+#define HB_TASK_PERIOD_MS (500)
 
 // HB driving GPIO port
-#define HB_LED_NUM  (13)
+#define HB_LED_NUM  (3)
 #define HB_LED_PORT (GPIOB)
 
 /**

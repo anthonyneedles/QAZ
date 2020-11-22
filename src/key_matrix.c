@@ -32,8 +32,8 @@
 // SET/CLR does not mean driving the column 3.3V/GND, but rather (respectively)
 // activating/deactivating it. Since the inputs are pulled HIGH, and the outputs
 // are open drain, SET/CLR corresponds to (respectively) GND/HIGH-Z
-#define SET_COL(col) ((col.port)->ODR &= ~(1UL << col.pin))
-#define CLR_COL(col) ((col.port)->ODR |=  (1UL << col.pin))
+#define ACTIVATE_COL(col)   ((col.port)->ODR &= ~(1UL << col.pin))
+#define DEACTIVATE_COL(col) ((col.port)->ODR |=  (1UL << col.pin))
 
 // Row inputs are pulled HIGH, and active LOW, this will evaulate to '1' if the
 // row is active (LOW) and '0' if the row is inactive (HIGH)
@@ -218,12 +218,12 @@ void keyMatrixScan(key_buf_t *keybuf)
 {
     // ensure all columns are off
     for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
-        CLR_COL(col[ncol]);
+        DEACTIVATE_COL(col[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
-        SET_COL(col[ncol]);
+        ACTIVATE_COL(col[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < (int)NUM_ROWS; ++nrow) {
@@ -243,6 +243,9 @@ void keyMatrixScan(key_buf_t *keybuf)
             }
         }
 
-        CLR_COL(col[ncol]);
+        DEACTIVATE_COL(col[ncol]);
+
+        // ~10us delay. allows row to pull back up to VCC
+        LOOP_DELAY(40);
     }
 }
