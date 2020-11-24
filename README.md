@@ -33,13 +33,12 @@ This firmware uses:
 - `openocd` for STLink control and gdb interfacing
 - `st-flash` for flashing (and not debugging)
 
+This project is only supported to be operated in Debian-based systems.
+
 ### File Structure
 
 ```
 └── QAZ/
-    ├── arch/
-    │   └── architecture specifc headers, linker script
-    │
     ├── build/
     │   ├── bin/
     │   │   └── .bin, .hex, .elf files, from linker
@@ -53,21 +52,21 @@ This firmware uses:
     │   ├── obj/
     │   │   └── .o object files, from gcc
     │   │ 
-    │   └── openocd/
-    │       └── .cfg for stlink/stm32f0x
+    │   ├── openocd/
+    │   │   └── .cfg for stlink/stm32f0x
+    │   │
+    │   └── scripts/
+    │       └── useful project scripts
     │
     ├── CMSIS/
     │   └── Cortex Microcontroller Software Interface Standard HAL
     │
     ├── hardware/
-    │   ├── layers/
-    │   │   └── .svg board layers 
+    │   ├── common/
+    │   │   └── hardware utility used by both (e.g. KiCad libraries) 
     │   │ 
-    │   └── pcb/
-    │       └── Kicad projects, BOMs
-    │
-    ├── scripts/
-    │   └── useful project scripts
+    │   └── QAZ_*/
+    │       └── PCB/case layer subdirectories for each QAZ configuration
     │
     └── src/
         └── all source files
@@ -75,7 +74,7 @@ This firmware uses:
 
 The `bin/`, `dep/`, `log/`, and `obj/` directories are not tracked, and get made when the
 project is built. The files in these directories are removed when the project
-is cleaned.
+is cleaned with `make clean`.
 
 ### Dependencies
 

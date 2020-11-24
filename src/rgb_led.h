@@ -15,19 +15,30 @@
 
 #include <stdint.h>
 
-#define RGB_LED_TASK_PERIOD_MS (50u)
+#define RGB_LED_TASK_PERIOD_MS (10U)
 
 // percent to 256 value
 #define BRIGHTNESS_PERCENT(x) (((0xffUL*(x))/100) & 0xffUL)
 
+// RGB values to 24-bit color code
+#define RGB_CODE(red, blue, green) \
+    (uint32_t)((((uint32_t)(red)   << 16) & 0xff0000UL) | \
+               (((uint32_t)(green) <<  8) & 0x00ff00UL) | \
+               (((uint32_t)(blue))        & 0x0000ffUL))
+
+// 24-bit color code to RGB values
+#define R_RGB(rgb_code) (((uint32_t)(rgb_code) & 0xff0000UL) >> 16)
+#define G_RGB(rgb_code) (((uint32_t)(rgb_code) & 0x00ff00UL) >>  8)
+#define B_RGB(rgb_code) (((uint32_t)(rgb_code) & 0x0000ffUL))
+
 // RGB color codes
-#define COLOR_WHITE   (0xffffffUL)
-#define COLOR_RED     (0xff0000UL)
-#define COLOR_GREEN   (0x00ff00UL)
-#define COLOR_BLUE    (0x0000ffUL)
-#define COLOR_CYAN    (0x00ffffUL)
-#define COLOR_MAGENTA (0xff00ffUL)
-#define COLOR_YELLOW  (0xffff00UL)
+#define COLOR_WHITE   RGB_CODE(0xff, 0xff, 0xff)
+#define COLOR_RED     RGB_CODE(0xff, 0x00, 0x00)
+#define COLOR_GREEN   RGB_CODE(0x00, 0xff, 0x00)
+#define COLOR_BLUE    RGB_CODE(0x00, 0x00, 0xff)
+#define COLOR_CYAN    RGB_CODE(0x00, 0xff, 0xff)
+#define COLOR_MAGENTA RGB_CODE(0xff, 0x00, 0xff)
+#define COLOR_YELLOW  RGB_CODE(0xff, 0xff, 0x00)
 
 /**
  * RGBLEDInit

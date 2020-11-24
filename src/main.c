@@ -18,7 +18,7 @@
 #include "debug.h"
 #include "key_matrix.h"
 #include "rgb_led.h"
-// #include "usb.h"
+#include "usb.h"
 
 int main(void)
 {

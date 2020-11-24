@@ -25,22 +25,59 @@
 
 #define LED_EN GPIO(B, 2)
 
-// extracting color from RGB code
-#define R_RGB(rgb_code) ((rgb_code & 0x00FF0000UL) >> 16)
-#define G_RGB(rgb_code) ((rgb_code & 0x0000FF00UL) >>  8)
-#define B_RGB(rgb_code) ((rgb_code & 0x000000FFUL))
+// converts brightness index to percent, then percent to 256 value
+#define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
 
-#define LOWEST_ACTIVE_BRIGHTNESS (0x05)
-#define BRIGHT_STEPS (5)
+// every n loops to update breathing profile, to make it go slower
+// TODO: set profile speeds from user input
+#define N_LOOP_UPDATE_BREATHING (3)
 
-static bool breathing_profile = false;
+// lowest brightness that the breathing profile will go down to
+#define LOWEST_BREATHING_BRIGHTNESS (0x02)
 
-// brighness level, max of BRIGHT_STEPS - 1
-static unsigned bright_idx = 1;
+// amount decremented/incremented each rainbow profile step
+#define RAINBOW_COLOR_STEPS (5)
 
-static const uint32_t colors[] = {
+// number of different brightness levels to cycle through
+#define BRIGHTNESS_LEVELS (5)
+
+typedef enum {
+    PROFILE_SOLID,
+    PROFILE_BREATHING,
+    PROFILE_RAINBOW,
+} color_profile_t;
+
+typedef enum {
+    BLUE_UP,
+    RED_DOWN,
+    GREEN_UP,
+    BLUE_DOWN,
+    RED_UP,
+    GREEN_DOWN,
+} rainbow_state_t;
+
+typedef struct {
+    int bright_idx;
+    int color_idx;
+    color_profile_t profile;
+} rgb_ctrl_t;
+
+static const uint32_t COLORS[] = {
     COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
 };
+
+static const color_profile_t PROFILES[] = {
+    PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
+};
+
+static rgb_ctrl_t rgb = {
+    .bright_idx = 1,
+    .color_idx  = 0,
+    .profile    = PROFILE_SOLID,
+};
+
+static void profile_breathing(void);
+static void profile_rainbow(void);
 
 /**
  * RGBLEDInit
@@ -65,17 +102,17 @@ void RGBLEDInit(void)
 
     I2CInit();
 
-    // init config registers, starting at DEVICE_CONFIG_0
+    // init config registers, starting at DEVICE_CONFIG_0 register
     const uint8_t init_data[] = {
         DEVICE_CONFIG0_R,
         CHIP_EN,
         LOG_SCALE_EN | POWER_SAVE_EN | AUTO_INCR_EN | PWM_DITHER_EN,
         LED2_BANK_EN | LED1_BANK_EN | LED0_BANK_EN,
-        BRIGHTNESS_PERCENT(bright_idx*25),
+        BRIGHTNESS_PERCENT(rgb.bright_idx*25),
     };
     I2CMasterTx(I2C_ADDR, sizeof(init_data), init_data);
 
-    RGBLEDBankSetColor(COLOR_BLUE);
+    RGBLEDBankSetColor(COLOR_WHITE);
 
     DbgPrintf("Initialized: RGB LED\r\n");
 }
@@ -119,39 +156,140 @@ void RGBLEDBankSetBrightness(uint8_t val)
 /**
  * RGBLEDTask
  *
- * @brief Task for updating LED brightness.
+ * @brief Task for updating RGB LEDs.
  *
- * Changes depending on the chosen profile.
+ * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
  */
 void RGBLEDTask(void)
 {
-    static bool ramp_up = 1;
-    static uint8_t brightness = LOWEST_ACTIVE_BRIGHTNESS;
-
-    if (bright_idx > 0) {
-        if (breathing_profile) {
-            // the breathing profile, down and up in brightness
-            if (ramp_up) {
-                if (brightness >= BRIGHTNESS_PERCENT(bright_idx*100/BRIGHT_STEPS)) {
-                    ramp_up = 0;
-                } else {
-                    brightness++;
-                }
-            } else {
-                if (brightness <= LOWEST_ACTIVE_BRIGHTNESS) {
-                    ramp_up = 1;
-                } else {
-                    brightness--;
-                }
-            }
-        } else {
-            // static brightness depending on setting
-            brightness = BRIGHTNESS_PERCENT(bright_idx*100/BRIGHT_STEPS);
+    if (rgb.bright_idx > 0) {
+        switch (rgb.profile) {
+        case PROFILE_SOLID:
+            RGBLEDBankSetColor(COLORS[rgb.color_idx]);
+            RGBLEDBankSetBrightness(BRIGHTNESS_INDEX(rgb.bright_idx));
+            break;
+        case PROFILE_BREATHING:
+            profile_breathing();
+            break;
+        case PROFILE_RAINBOW:
+            profile_rainbow();
+            break;
+        default:
+            DbgPrintf("ERROR: Invalid RGB LED profile (%d)\r\n", rgb.profile);
+            rgb.profile = PROFILE_SOLID;
+            break;
         }
-
-        RGBLEDBankSetBrightness(brightness);
     } else {
         RGBLEDBankSetBrightness(0);
+    }
+}
+
+/**
+ * profile_breathing
+ *
+ * @brief Controls LED brightness for "breathing" profile
+ *
+ * Ramps brightness level all the way up, then all the way down, over and over. Since the LED driver
+ * brightness is in logarithmic mode, this should result in a (roughly) linear brightness change.
+ */
+static void profile_breathing(void)
+{
+    static uint8_t brightness = 0;
+    static bool    ramp_up    = true;
+    static int     loop_cnt   = 0;
+
+    RGBLEDBankSetColor(COLORS[rgb.color_idx]);
+
+    if (loop_cnt < N_LOOP_UPDATE_BREATHING - 1) {
+        loop_cnt++;
+        return;
+    } else {
+        loop_cnt = 0;
+    }
+
+    if (ramp_up) {
+        if (brightness >= BRIGHTNESS_INDEX(rgb.bright_idx)) {
+            ramp_up = false;
+        } else {
+            brightness++;
+        }
+    } else {
+        if (brightness <= LOWEST_BREATHING_BRIGHTNESS) {
+            ramp_up = true;
+        } else {
+            brightness--;
+        }
+    }
+
+    RGBLEDBankSetBrightness(brightness);
+}
+
+/**
+ * profile_rainbow
+ *
+ * @brief Controls LED color for "rainbow" profile
+ *
+ * Since color is handled with RGB codes rather than HSV/HSL, cycling through "all" colors is a
+ * little awkward. The state machine will cycle through increasing/decreasing each color intensity,
+ * which works well enough.
+ */
+static void profile_rainbow(void)
+{
+    static uint8_t red   = 0xff;
+    static uint8_t green = 0x00;
+    static uint8_t blue  = 0x00;
+    static rainbow_state_t rainbow_state = BLUE_UP;
+
+    RGBLEDBankSetColor(RGB_CODE(red, green, blue));
+    RGBLEDBankSetBrightness(BRIGHTNESS_INDEX(rgb.bright_idx));
+
+    switch (rainbow_state) {
+    case BLUE_UP:
+        if (blue == 0xff) {
+            rainbow_state = RED_DOWN;
+        } else {
+            blue += 5;
+        }
+        break;
+    case RED_DOWN:
+        if (red == 0x00) {
+            rainbow_state = GREEN_UP;
+        } else {
+            red -= 5;
+        }
+        break;
+    case GREEN_UP:
+        if (green == 0xff) {
+            rainbow_state = BLUE_DOWN;
+        } else {
+            green += 5;
+        }
+        break;
+    case BLUE_DOWN:
+        if (blue == 0x00) {
+            rainbow_state = RED_UP;
+        } else {
+            blue -= 5;
+        }
+        break;
+    case RED_UP:
+        if (red == 0xff) {
+            rainbow_state = GREEN_DOWN;
+        } else {
+            red += 5;
+        }
+        break;
+    case GREEN_DOWN:
+        if (green == 0x00) {
+            rainbow_state = BLUE_UP;
+        } else {
+            green -= 5;
+        }
+        break;
+    default:
+        DbgPrintf("ERROR: Invalid rainbow profile state (%d)\r\n", rainbow_state);
+        rainbow_state = BLUE_UP;
+        break;
     }
 }
 
@@ -160,11 +298,11 @@ void RGBLEDTask(void)
  *
  * @brief BRTUP key callback
  *
- * Increases brightness setting up
+ * Increases brightness setting up. Saturates at max.
  */
 void KeyMatrixCallback_BRTUP(void)
 {
-    bright_idx = (bright_idx >= BRIGHT_STEPS - 1) ? BRIGHT_STEPS - 1 : bright_idx + 1;
+    rgb.bright_idx = NEXT_LINEAR_INDEX(rgb.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -172,11 +310,11 @@ void KeyMatrixCallback_BRTUP(void)
  *
  * @brief BRTDN key callback
  *
- * Increases brightness setting down
+ * Increases brightness setting down. Saturates at min.
  */
 void KeyMatrixCallback_BRTDN(void)
 {
-    bright_idx = (bright_idx == 0) ? 0 : bright_idx - 1;
+    rgb.bright_idx = PREV_LINEAR_INDEX(rgb.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -188,9 +326,7 @@ void KeyMatrixCallback_BRTDN(void)
  */
 void KeyMatrixCallback_COLOR(void)
 {
-    static unsigned color_idx = 0;
-    color_idx = (color_idx >= (N_ELEMENTS(colors) - 1)) ? 0 : color_idx + 1;
-    RGBLEDBankSetColor(colors[color_idx]);
+    rgb.color_idx = NEXT_CIRCULAR_INDEX(rgb.color_idx, N_ELEMENTS(COLORS));
 }
 
 /**
@@ -202,5 +338,5 @@ void KeyMatrixCallback_COLOR(void)
  */
 void KeyMatrixCallback_PROF(void)
 {
-    breathing_profile = (breathing_profile) ? false : true;
+    rgb.profile = NEXT_CIRCULAR_INDEX(rgb.profile, N_ELEMENTS(PROFILES));
 }
