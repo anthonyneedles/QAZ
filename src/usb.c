@@ -128,12 +128,12 @@ static volatile uint8_t *const ep0_rx =
 static volatile uint8_t *const ep1_tx =
     (volatile uint8_t *const)(USB_PMAADDR + TX1_ADDR);
 
-static void usb_reset(void);
-static void usb_ep0_init(void);
-static void usb_ep1_init(void);
-static void usb_ep0_setup(void);
-static void usb_ep0_read(uint8_t *in_buf);
-static void usb_write(int ep, const uint8_t *out_buf, uint16_t len);
+static void usbReset(void);
+static void usbEP0Init(void);
+static void usbEP1Init(void);
+static void usbEP0Setup(void);
+static void usbEP0Read(uint8_t *in_buf);
+static void usbWrite(int ep, const uint8_t *out_buf, uint16_t len);
 
 /*
  * USBInit
@@ -191,18 +191,18 @@ void USBTask(void)
     // move mouse pointer down and to the right 40 pixels every 4s
     if ((task_cnt %= 4) == 0) {
         const uint8_t data[] = { 0x00, 100, 100, 0x00 };
-        usb_write(1, data, sizeof(data));
+        usbWrite(1, data, sizeof(data));
     }
 }
 
 /*
- * usb_ep0_init
+ * usbEP0Init
  *
  * @brief Initialize endpoint 0 as control endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission and reception.
  */
-static void usb_ep0_init(void)
+static void usbEP0Init(void)
 {
     EP_REG(0) = USB_EP_CONTROL | (0 & USB_EPADDR_FIELD);
 
@@ -217,13 +217,13 @@ static void usb_ep0_init(void)
 }
 
 /*
- * usb_ep1_init
+ * usbEP1Init
  *
  * @brief Initialize endpoint 1 as interrupt endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission only.
  */
-static void usb_ep1_init(void)
+static void usbEP1Init(void)
 {
     EP_REG(1) = USB_EP_INTERRUPT | (1 & USB_EPADDR_FIELD);
 
@@ -236,13 +236,13 @@ static void usb_ep1_init(void)
 }
 
 /*
- * usb_ep0_read
+ * usbEP0Read
  *
  * @brief Read RX byte count sized block from PMA into input buffer and set RX STATUS to VALID
  *
  * @param[in, out] buf output buffer that is filled with received data
  */
-static void usb_ep0_read(uint8_t *buf) {
+static void usbEP0Read(uint8_t *buf) {
     int rx_size = BDT->bd_ep[0].rx_size & USB_CNT_RX_MSK;
 
     for (int i = 0; i < rx_size; ++i) {
@@ -253,7 +253,7 @@ static void usb_ep0_read(uint8_t *buf) {
 }
 
 /*
- * usb_write
+ * usbWrite
  *
  * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
  *
@@ -265,7 +265,7 @@ static void usb_ep0_read(uint8_t *buf) {
  * @param[in] buf input buffer that contains data to be tranmitted
  * @param[in] len number of bytes in @buf
  */
-static void usb_write(int ep, const uint8_t *buf, uint16_t len) {
+static void usbWrite(int ep, const uint8_t *buf, uint16_t len) {
     BDT->bd_ep[ep].tx_size = len;
 
     switch (ep) {
@@ -287,7 +287,7 @@ static void usb_write(int ep, const uint8_t *buf, uint16_t len) {
 }
 
 /*
- * usb_ep0_setup
+ * usbEP0Setup
  *
  * @brief Handle SETUP packet
  *
@@ -295,14 +295,14 @@ static void usb_write(int ep, const uint8_t *buf, uint16_t len) {
  * (control ep) are set, indicating a SETUP packet has been received. This is read into a buffer,
  * then the request contained in the packet is handled.
  */
-static void usb_ep0_setup(void)
+static void usbEP0Setup(void)
 {
     int ret = -1;
     usb_setup_packet_t setup_pkt;
     usb_desc_t         desc;
 
     // get the setup packet contents
-    usb_ep0_read((uint8_t *)&setup_pkt);
+    usbEP0Read((uint8_t *)&setup_pkt);
     PRINT_SETUP(setup_pkt);
 
     // determine request type, and proceed accordingly
@@ -315,23 +315,23 @@ static void usb_ep0_setup(void)
 
         if (setup_pkt.wValue == 0x100) {
             DbgPrintf("DEV ");
-            ret = USBGetDescriptor(DESCRIPTOR_DEVICE,    &desc);
+            ret = USBGetDescriptor(DESCRIPTOR_DEVICE_ID,    &desc);
         } else if (setup_pkt.wValue == 0x200) {
             DbgPrintf("CFG ");
-            ret = USBGetDescriptor(DESCRIPTOR_CONFIG,    &desc);
-            desc.size = setup_pkt.wLength; // host requests different sizes
+            ret = USBGetDescriptor(DESCRIPTOR_CONFIG_ID,    &desc);
+            desc.size = setup_pkt.wLength; // host requests different cfg desc sizes
         } else if (setup_pkt.wValue == 0x300) {
             DbgPrintf("STR0 ");
-            ret = USBGetDescriptor(DESCRIPTOR_LANG,      &desc);
+            ret = USBGetDescriptor(DESCRIPTOR_LANG_ID,      &desc);
         } else if (setup_pkt.wValue == 0x301) {
             DbgPrintf("STR1 ");
-            ret = USBGetDescriptor(DESCRIPTOR_MANUFACT,  &desc);
+            ret = USBGetDescriptor(DESCRIPTOR_MANUFACT_ID,  &desc);
         } else if (setup_pkt.wValue == 0x302) {
             DbgPrintf("STR2 ");
-            ret = USBGetDescriptor(DESCRIPTOR_PRODUCT,   &desc);
+            ret = USBGetDescriptor(DESCRIPTOR_PRODUCT_ID,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
             DbgPrintf("RPT ");
-            ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT, &desc);
+            ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT_ID, &desc);
         } else {
             // Stall for unknown descriptors
             DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
@@ -340,14 +340,14 @@ static void usb_ep0_setup(void)
         }
 
         if (ret >= 0) {
-            usb_write(0, desc.buf_ptr, desc.size);
+            usbWrite(0, desc.buf_ptr, desc.size);
         }
         break;
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
         DbgPrintf("SET IDLE ");
-        usb_write(0, 0, 0);
+        usbWrite(0, 0, 0);
         break;
 
     // device has been addressed
@@ -355,7 +355,7 @@ static void usb_ep0_setup(void)
         DbgPrintf("SET ADDR ");
 
         // Send 0 length packet with address 0
-        usb_write(0, 0, 0);
+        usbWrite(0, 0, 0);
 
         // TODO: determine required delay
         LOOP_DELAY(500);
@@ -368,8 +368,8 @@ static void usb_ep0_setup(void)
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
         DbgPrintf("SET CFG (%x) ", setup_pkt.wValue);
-        usb_write(0, 0, 0);
-        usb_ep1_init();
+        usbWrite(0, 0, 0);
+        usbEP1Init();
         break;
 
     // host request status
@@ -377,7 +377,7 @@ static void usb_ep0_setup(void)
     {
         const uint8_t status[] = { 0x01, 0x00}; // self powered
         DbgPrintf("GET STAT ");
-        usb_write(0, status, sizeof(status));
+        usbWrite(0, status, sizeof(status));
         break;
     }
 
@@ -388,14 +388,14 @@ static void usb_ep0_setup(void)
 }
 
 /*
- * usb_reset
+ * usbReset
  *
  * @brief Handle RESET request
  *
  * Called when reset interrupt recieved. Restores peripheral to known starting state, with address
  * 0. Only EP0 (control ep) is initialized. SETUP packets should follow.
  */
-static void usb_reset(void)
+static void usbReset(void)
 {
     // clear interrupts
     USB->ISTR = 0;
@@ -403,7 +403,7 @@ static void usb_reset(void)
     // set our BDT offset in PMA
     USB->BTABLE = BDT_OFFSET;
 
-    usb_ep0_init();
+    usbEP0Init();
 
     // enable reset/transfer interrupts
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM | USB_CNTR_RESETM;
@@ -448,7 +448,7 @@ void USB_IRQHandler(void)
     }
 
     if (int_reg & USB_ISTR_RESET) {
-        usb_reset();
+        usbReset();
         USB->ISTR = ~USB_ISTR_RESET;
         DbgPrintf("RESET ");
     }
@@ -476,7 +476,7 @@ void USB_IRQHandler(void)
 
             if (ep_reg & USB_EP_SETUP) {
                 DbgPrintf("SETUP ");
-                usb_ep0_setup();
+                usbEP0Setup();
             }
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_RX;
         }

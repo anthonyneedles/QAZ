@@ -16,7 +16,7 @@
 #include "debug.h"
 #include "macros.h"
 
-static const uint8_t USBDesc_Device[] = {
+static const uint8_t DESCRIPTOR_DEVICE[] = {
       18U,        //  0/1 bLength
        1U,        //  1/1 bDescriptorType        Device
     0x00U, 0x02U, //  2/2 bcdUSB                 USB 2.0
@@ -34,7 +34,7 @@ static const uint8_t USBDesc_Device[] = {
 };
 
 // TODO: boot protocol
-static const uint8_t USBDesc_Config[] = {
+static const uint8_t DESCRIPTOR_CONFIG[] = {
 // Configuration Descriptor
        9U,        //  0/1 bLength
        2U,        //  1/1 bDescriptorType        Configuration
@@ -71,13 +71,13 @@ static const uint8_t USBDesc_Config[] = {
      10U,         //  6/1 bInterval              10 ms
 };
 
-static const uint8_t USBDesc_Lang[] = {
+static const uint8_t DESCRIPTOR_LANG[] = {
        4U,        //  0/1 bLength                2 + 2*2
        3U,        //  1/1 bDescriptorType        String
     0x09U, 0x04U, //  2/2 wLANGID[0]             English (US)
 };
 
-static const uint8_t USBDesc_Manufact[] = {
+static const uint8_t DESCRIPTOR_MANUFACT[] = {
       30U,        //  0/1 bLength                2 + 14*2
        3U,        //  1/1 bDescriptorType        String
       'a', 0x00U, //  2/2 wString
@@ -96,7 +96,7 @@ static const uint8_t USBDesc_Manufact[] = {
       's', 0x00U, // 28/2
 };
 
-static const uint8_t USBDesc_Product[] = {
+static const uint8_t DESCRIPTOR_PRODUCT[] = {
       26U,        //  0/1 bLength                2 + 14*2
        3U,        //  1/1 bDescriptorType        String
       'q', 0x00U, //  2/2 wString
@@ -113,7 +113,7 @@ static const uint8_t USBDesc_Product[] = {
       'd', 0x00U, // 24/2
 };
 
-static const uint8_t USBDesc_HIDReport[] = {
+static const uint8_t DESCRIPTOR_HIDREPORT[] = {
     0x05, 0x01,
     0x09, 0x02,
     0xA1, 0x01,
@@ -179,12 +179,12 @@ typedef struct {
 
 // Descriptor table, with an entry for each descriptor
 static const usb_desc_entry_t desc_table[] = {
-    { DESCRIPTOR_DEVICE,    { USBDesc_Device,    sizeof(USBDesc_Device)    } },
-    { DESCRIPTOR_CONFIG,    { USBDesc_Config,    sizeof(USBDesc_Config)    } },
-    { DESCRIPTOR_LANG,      { USBDesc_Lang,      sizeof(USBDesc_Lang)      } },
-    { DESCRIPTOR_MANUFACT,  { USBDesc_Manufact,  sizeof(USBDesc_Manufact)  } },
-    { DESCRIPTOR_PRODUCT,   { USBDesc_Product,   sizeof(USBDesc_Product)   } },
-    { DESCRIPTOR_HIDREPORT, { USBDesc_HIDReport, sizeof(USBDesc_HIDReport) } },
+    { DESCRIPTOR_DEVICE_ID,    { DESCRIPTOR_DEVICE,    sizeof(DESCRIPTOR_DEVICE)    } },
+    { DESCRIPTOR_CONFIG_ID,    { DESCRIPTOR_CONFIG,    sizeof(DESCRIPTOR_CONFIG)    } },
+    { DESCRIPTOR_LANG_ID,      { DESCRIPTOR_LANG,      sizeof(DESCRIPTOR_LANG)      } },
+    { DESCRIPTOR_MANUFACT_ID,  { DESCRIPTOR_MANUFACT,  sizeof(DESCRIPTOR_MANUFACT)  } },
+    { DESCRIPTOR_PRODUCT_ID,   { DESCRIPTOR_PRODUCT,   sizeof(DESCRIPTOR_PRODUCT)   } },
+    { DESCRIPTOR_HIDREPORT_ID, { DESCRIPTOR_HIDREPORT, sizeof(DESCRIPTOR_HIDREPORT) } },
 };
 
 /*

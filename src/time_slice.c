@@ -44,7 +44,7 @@ typedef struct {
 } task_loop_cnts_t;
 
 // create loop counter structure, init each value so all tasks enter the first time around
-static task_loop_cnts_t loopCounts = {
+static task_loop_cnts_t loop_counts = {
 #define TASK(period_ms, task_func) \
     .task_func = CALCULATE_LOOPS(period_ms),
     TASK_TABLE(TASK)
@@ -53,8 +53,8 @@ static task_loop_cnts_t loopCounts = {
 
 #define CLKCYCLES_PER_MS 48000U
 
-static volatile int systickCurrentMSCount = 0U;
-static bool systickInitFlag = 0U;
+static volatile int current_ms_cnt = 0U;
+static bool init_flag = 0U;
 
 void timeSliceManagerTask(void);
 
@@ -72,11 +72,11 @@ void TimeSliceInit(void)
 
     if (st_error == 0U) {
 		    // 0U = Systick timer successfully loaded
-		    systickInitFlag = true;
+		    init_flag = true;
         DbgPrintf("Initialized: TimeSlice\r\n");
 	  } else {
 		    // 1U = Reload value impossible
-		    systickInitFlag = false;
+		    init_flag = false;
         DbgPrintf("ERROR: SysTick load failed!\r\n");
         DBG_ASSERT(FORCE_ASSERT);
 	  }
@@ -99,11 +99,11 @@ void TimeSliceLoop(void)
 
         // handle each task counter, and call task function if desired # of loops reached
 #define TASK(period_ms, task_func) \
-        if (loopCounts.task_func >= CALCULATE_LOOPS(period_ms)) { \
-            loopCounts.task_func = 0;                             \
-            task_func();                                          \
-        }                                                         \
-        loopCounts.task_func++;
+        if (loop_counts.task_func >= CALCULATE_LOOPS(period_ms)) { \
+            loop_counts.task_func = 0;                             \
+            task_func();                                           \
+        }                                                          \
+        loop_counts.task_func++;
         TASK_TABLE(TASK)
 #undef TASK
     }
@@ -126,15 +126,15 @@ void timeSliceManagerTask(void)
 {
     uint32_t elapsed_ticks;
     static uint32_t last_tick = 0;
-    static int is_first_entry = 1;
+    static bool is_first_entry = true;
 
     // copy value now, can change at any time
-    uint32_t current_tick = systickCurrentMSCount;
+    uint32_t current_tick = current_ms_cnt;
 
     if (is_first_entry) {
         // we want to skip the first entry
-        is_first_entry = 0;
-    } else if (!systickInitFlag) {
+        is_first_entry = false;
+    } else if (!init_flag) {
         // failure in init, we got a problem
         DbgPrintf("ERROR: SysTick can't run, init failure\n\r");
         DBG_ASSERT(FORCE_ASSERT);
@@ -150,8 +150,8 @@ void timeSliceManagerTask(void)
 
         if (elapsed_ticks <= LOOP_PERIOD_MS) {
             // wait out the remaining time in the loop period
-            while ((systickCurrentMSCount - last_tick) < LOOP_PERIOD_MS) {}
-            current_tick = systickCurrentMSCount;
+            while ((current_ms_cnt - last_tick) < LOOP_PERIOD_MS) {}
+            current_tick = current_ms_cnt;
         } else {
             DbgPrintf("WARNING: Loop overran by %ums\r\n", elapsed_ticks - LOOP_PERIOD_MS);
         }
@@ -170,5 +170,5 @@ void timeSliceManagerTask(void)
  */
 void SysTick_Handler(void)
 {
-	systickCurrentMSCount++;
+	current_ms_cnt++;
 }

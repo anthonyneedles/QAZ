@@ -62,22 +62,25 @@ typedef struct {
     color_profile_t profile;
 } rgb_ctrl_t;
 
+// colors to cycles through (in order)
 static const uint32_t COLORS[] = {
     COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
 };
 
+// profiles to cycles through (in order)
 static const color_profile_t PROFILES[] = {
     PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
+// rgb control structure
 static rgb_ctrl_t rgb = {
     .bright_idx = 1,
     .color_idx  = 0,
     .profile    = PROFILE_SOLID,
 };
 
-static void profile_breathing(void);
-static void profile_rainbow(void);
+static void rgbledProfileBreathing(void);
+static void rgbledProfileRainbow(void);
 
 /**
  * RGBLEDInit
@@ -169,10 +172,10 @@ void RGBLEDTask(void)
             RGBLEDBankSetBrightness(BRIGHTNESS_INDEX(rgb.bright_idx));
             break;
         case PROFILE_BREATHING:
-            profile_breathing();
+            rgbledProfileBreathing();
             break;
         case PROFILE_RAINBOW:
-            profile_rainbow();
+            rgbledProfileRainbow();
             break;
         default:
             DbgPrintf("ERROR: Invalid RGB LED profile (%d)\r\n", rgb.profile);
@@ -185,14 +188,14 @@ void RGBLEDTask(void)
 }
 
 /**
- * profile_breathing
+ * rgbledProfileBreathing
  *
  * @brief Controls LED brightness for "breathing" profile
  *
  * Ramps brightness level all the way up, then all the way down, over and over. Since the LED driver
  * brightness is in logarithmic mode, this should result in a (roughly) linear brightness change.
  */
-static void profile_breathing(void)
+static void rgbledProfileBreathing(void)
 {
     static uint8_t brightness = 0;
     static bool    ramp_up    = true;
@@ -225,7 +228,7 @@ static void profile_breathing(void)
 }
 
 /**
- * profile_rainbow
+ * rgbledProfileRainbow
  *
  * @brief Controls LED color for "rainbow" profile
  *
@@ -233,7 +236,7 @@ static void profile_breathing(void)
  * little awkward. The state machine will cycle through increasing/decreasing each color intensity,
  * which works well enough.
  */
-static void profile_rainbow(void)
+static void rgbledProfileRainbow(void)
 {
     static uint8_t red   = 0xff;
     static uint8_t green = 0x00;
