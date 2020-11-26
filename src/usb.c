@@ -297,7 +297,9 @@ static void usb_write(int ep, const uint8_t *buf, uint16_t len) {
  */
 static void usb_ep0_setup(void)
 {
+    int ret = -1;
     usb_setup_packet_t setup_pkt;
+    usb_desc_t         desc;
 
     // get the setup packet contents
     usb_ep0_read((uint8_t *)&setup_pkt);
@@ -313,27 +315,32 @@ static void usb_ep0_setup(void)
 
         if (setup_pkt.wValue == 0x100) {
             DbgPrintf("DEV ");
-            usb_write(0, USBDesc_Device, setup_pkt.wLength);
+            ret = USBGetDescriptor(DESCRIPTOR_DEVICE,    &desc);
         } else if (setup_pkt.wValue == 0x200) {
             DbgPrintf("CFG ");
-            usb_write(0, USBDesc_Config, setup_pkt.wLength);
+            ret = USBGetDescriptor(DESCRIPTOR_CONFIG,    &desc);
+            desc.size = setup_pkt.wLength; // host requests different sizes
         } else if (setup_pkt.wValue == 0x300) {
             DbgPrintf("STR0 ");
-            usb_write(0, USBDesc_Lang, sizeof(USBDesc_Lang));
+            ret = USBGetDescriptor(DESCRIPTOR_LANG,      &desc);
         } else if (setup_pkt.wValue == 0x301) {
             DbgPrintf("STR1 ");
-            usb_write(0, USBDesc_Manufact, sizeof(USBDesc_Manufact));
+            ret = USBGetDescriptor(DESCRIPTOR_MANUFACT,  &desc);
         } else if (setup_pkt.wValue == 0x302) {
             DbgPrintf("STR2 ");
-            usb_write(0, USBDesc_Product, sizeof(USBDesc_Product));
+            ret = USBGetDescriptor(DESCRIPTOR_PRODUCT,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
             DbgPrintf("RPT ");
-            usb_write(0, USBDesc_HIDReport, sizeof(USBDesc_HIDReport));
+            ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT, &desc);
         } else {
             // Stall for unknown descriptors
             DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
             SET_RX_STATUS(0, USB_EP_RX_STALL);
             SET_TX_STATUS(0, USB_EP_TX_STALL);
+        }
+
+        if (ret >= 0) {
+            usb_write(0, desc.buf_ptr, desc.size);
         }
         break;
 
@@ -365,7 +372,7 @@ static void usb_ep0_setup(void)
         usb_ep1_init();
         break;
 
-    // our device has now been configured, can use ep1 now
+    // host request status
     case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
     {
         const uint8_t status[] = { 0x01, 0x00}; // self powered

@@ -94,7 +94,7 @@ typedef uint16_t keys_t;
 #define KEY(x) ((keys_t)(HID_USAGE_KEYBOARD_##x))
 
 // keys that can be detected at once
-#define KEY_BUF_SIZE (8)
+#define KEY_BUF_SIZE (6)
 
 // each physical key has 'base' key, and a 'fn' key. which is considered 'pressed' depends on if
 // the FN key is pressed

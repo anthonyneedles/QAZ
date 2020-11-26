@@ -12,7 +12,8 @@ C_SRC   = main.c       \
 					key_matrix.c \
 					i2c.c        \
 					rgb_led.c    \
-					usb.c
+					usb.c        \
+					usb_descriptors.c
 
 S_SRC	  = startup_stm32f042.s
 
