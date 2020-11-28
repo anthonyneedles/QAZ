@@ -54,19 +54,21 @@
 #define REQ_RCP_ITF  (0x01U)
 #define REQ_RCP_EP   (0x02U)
 
-// SETUP packet bRequest
-#define REQ_GET_DESC (0x06U)
-#define REQ_GET_STAT (0x00U)
-#define REQ_SET_ADDR (0x05U)
-#define REQ_SET_CFG  (0x09U)
-#define REQ_SET_IDLE (0x0AU)
-#define REQ_SET_RPT  (0x09U)
-
 // Entire bmRequestType field
 #define REQ_IN_STD_DEV  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_DEV)
 #define REQ_IN_STD_ITF  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_ITF)
 #define REQ_OUT_CLS_ITF (REQ_DIR_OUT | REQ_TYP_CLS | REQ_RCP_ITF)
 #define REQ_OUT_STD_DEV (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_DEV)
+#define REQ_OUT_STD_EP  (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_EP)
+
+// SETUP packet bRequest
+#define REQ_GET_STAT (0x00U)
+#define REQ_CLR_STAT (0x01U)
+#define REQ_SET_ADDR (0x05U)
+#define REQ_GET_DESC (0x06U)
+#define REQ_SET_CFG  (0x09U)
+#define REQ_SET_IDLE (0x0AU)
+#define REQ_SET_RPT  (0x09U)
 
 //  -------------------------------------------------------------------
 // | THIS MOMUMENT MARKS THE SPOT AT WHICH I WAS STUCK FOR A LONG TIME |
@@ -133,12 +135,11 @@ static void usbEP0Init(void);
 static void usbEP1Init(void);
 static void usbEP0Setup(void);
 static void usbEP0Read(uint8_t *in_buf);
-static void usbWrite(int ep, const uint8_t *out_buf, uint16_t len);
 
 /*
  * USBInit
  *
- * @brief: Performs USB port, clock, and peripheral initialization
+ * @brief Performs USB port, clock, and peripheral initialization
  *
  * USB port is used in startup (for DFU), so the ports come up configured. Host detects device upon
  * DP pullup enable.
@@ -182,17 +183,39 @@ void USBInit(void)
     DbgPrintf("Initialized: USB\r\n");
 }
 
-// TODO: remove, there will be no usb task
-void USBTask(void)
+/*
+ * USBWrite
+ *
+ * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
+ *
+ * Due to a bug when writing bytes into the PMA, only halfword accesses work. So @len will
+ * need to always be even (and @buf an even number of bytes).
+ *
+ * Only works because MCU architecture and USB protocol is little endian.
+ *
+ * @param[in] buf input buffer that contains data to be tranmitted
+ * @param[in] len number of bytes in @buf
+ */
+void USBWrite(int ep, const uint8_t *buf, uint16_t len)
 {
-    static int task_cnt = 0;
-    task_cnt++;
+    BDT->bd_ep[ep].tx_size = len;
 
-    // move mouse pointer down and to the right 40 pixels every 4s
-    if ((task_cnt %= 4) == 0) {
-        const uint8_t data[] = { 0x00, 100, 100, 0x00 };
-        usbWrite(1, data, sizeof(data));
+    switch (ep) {
+    case 0:
+        for (int i = 0; i < len/2; ++i) {
+            ((uint16_t *)ep0_tx)[i] = ((uint16_t *)buf)[i];
+        }
+        break;
+    case 1:
+        for (int i = 0; i < len/2; ++i) {
+            ((uint16_t *)ep1_tx)[i] = ((uint16_t *)buf)[i];
+        }
+        break;
+    default:
+        return;
     }
+
+    SET_TX_STATUS(ep, USB_EP_TX_VALID);
 }
 
 /*
@@ -253,40 +276,6 @@ static void usbEP0Read(uint8_t *buf) {
 }
 
 /*
- * usbWrite
- *
- * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
- *
- * Due to a bug when writing bytes into the PMA, only halfword accesses work. So @len will
- * need to always be even (and @buf an even number of bytes).
- *
- * Only works because MCU architecture and USB protocol is little endian.
- *
- * @param[in] buf input buffer that contains data to be tranmitted
- * @param[in] len number of bytes in @buf
- */
-static void usbWrite(int ep, const uint8_t *buf, uint16_t len) {
-    BDT->bd_ep[ep].tx_size = len;
-
-    switch (ep) {
-    case 0:
-        for (int i = 0; i < len/2; ++i) {
-            ((uint16_t *)ep0_tx)[i] = ((uint16_t *)buf)[i];
-        }
-        break;
-    case 1:
-        for (int i = 0; i < len/2; ++i) {
-            ((uint16_t *)ep1_tx)[i] = ((uint16_t *)buf)[i];
-        }
-        break;
-    default:
-        return;
-    }
-
-    SET_TX_STATUS(ep, USB_EP_TX_VALID);
-}
-
-/*
  * usbEP0Setup
  *
  * @brief Handle SETUP packet
@@ -319,7 +308,9 @@ static void usbEP0Setup(void)
         } else if (setup_pkt.wValue == 0x200) {
             DbgPrintf("CFG ");
             ret = USBGetDescriptor(DESCRIPTOR_CONFIG_ID,    &desc);
-            desc.size = setup_pkt.wLength; // host requests different cfg desc sizes
+
+            // TODO: Windows gives 255 for "compatability reasons"
+            desc.size = (setup_pkt.wLength == 0xff) ? desc.size : setup_pkt.wLength;
         } else if (setup_pkt.wValue == 0x300) {
             DbgPrintf("STR0 ");
             ret = USBGetDescriptor(DESCRIPTOR_LANG_ID,      &desc);
@@ -331,7 +322,13 @@ static void usbEP0Setup(void)
             ret = USBGetDescriptor(DESCRIPTOR_PRODUCT_ID,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
             DbgPrintf("RPT ");
-            ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT_ID, &desc);
+
+            // TODO: why the hell does Windows request twice the size
+            if (setup_pkt.wLength == 0x80) {
+                ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT_ID, &desc);
+                USBWrite(0, desc.buf_ptr, desc.size);
+                LOOP_DELAY(1000);
+            }
         } else {
             // Stall for unknown descriptors
             DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
@@ -340,14 +337,18 @@ static void usbEP0Setup(void)
         }
 
         if (ret >= 0) {
-            usbWrite(0, desc.buf_ptr, desc.size);
+            USBWrite(0, desc.buf_ptr, desc.size);
         }
         break;
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
         DbgPrintf("SET IDLE ");
-        usbWrite(0, 0, 0);
+        break;
+
+    // this is a class-specific request
+    case REQ(REQ_OUT_CLS_ITF, REQ_SET_RPT):
+        DbgPrintf("SET RPT ");
         break;
 
     // device has been addressed
@@ -355,10 +356,10 @@ static void usbEP0Setup(void)
         DbgPrintf("SET ADDR ");
 
         // Send 0 length packet with address 0
-        usbWrite(0, 0, 0);
+        USBWrite(0, 0, 0);
 
         // TODO: determine required delay
-        LOOP_DELAY(500);
+        LOOP_DELAY(1000);
 
         // Set device address to new address
         USB->DADDR |= setup_pkt.wValue & USB_DADDR_ADD;
@@ -368,18 +369,23 @@ static void usbEP0Setup(void)
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
         DbgPrintf("SET CFG (%x) ", setup_pkt.wValue);
-        usbWrite(0, 0, 0);
+        USBWrite(0, 0, 0);
         usbEP1Init();
         break;
 
     // host request status
     case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
     {
-        const uint8_t status[] = { 0x01, 0x00}; // self powered
+        const uint8_t status[] = { 0x01, 0x00 }; // self powered
         DbgPrintf("GET STAT ");
-        usbWrite(0, status, sizeof(status));
+        USBWrite(0, status, sizeof(status));
         break;
     }
+
+    // clearing an endpoint feature (always ENDPOINT_HALT)
+    case REQ(REQ_OUT_STD_EP, REQ_CLR_STAT):
+        DbgPrintf("CLR STAT ");
+        break;
 
     default:
         DbgPrintf("UNKNOWN REQUEST ");

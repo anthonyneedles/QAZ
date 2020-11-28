@@ -28,7 +28,7 @@
 #include <stdint.h>
 #include "stm32f0xx.h"
 
-#define KEY_MATRIX_TASK_PERIOD_MS (50u)
+#define KEY_MATRIX_TASK_PERIOD_MS (20u)
 
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
@@ -64,19 +64,19 @@
 //     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define BASE_TABLE(K) \
      K(ESC)   K(1)     K(2)     K(3)     K(4)     K(5)     K(6)     K(7)     K(8)     K(9)     K(0)     K(DASH)  K(EQUAL) K(BKSPC) K(GRAVE) \
-     K(TAB)   K(Q)     K(W)     K(E)     K(R)     K(T)     K(Y)     K(U)     K(I)     K(O)     K(P)     K(LBRKT) K(RBRKT) K(BSLSH) K(DELET) \
-     K(CPLCK) K(A)     K(S)     K(D)     K(F)     K(G)     K(H)     K(J)     K(K)     K(L)     K(SEMI)  K(QUOTE) K(NONE)  K(ENTER) K(PGEUP) \
-     K(LSHFT) K(Z)     K(X)     K(C)     K(V)     K(B)     K(N)     K(M)     K(COMMA) K(PRIOD) K(FSLSH) K(RSHFT) K(NONE)  K(UARRW) K(PGEDN) \
-     K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(SPACE) K(NONE)  K(NONE)  K(RALT)  K(RCTRL) K(FN)    K(LARRW) K(NONE)  K(DARRW) K(RARRW)
+     K(TAB)   K(Q)     K(W)     K(E)     K(R)     K(T)     K(Y)     K(U)     K(I)     K(O)     K(P)     K(LBRKT) K(RBRKT) K(BSLSH) K(PGEUP) \
+     K(CPLCK) K(A)     K(S)     K(D)     K(F)     K(G)     K(H)     K(J)     K(K)     K(L)     K(SEMI)  K(QUOTE) K(NONE)  K(ENTER) K(PGEDN) \
+     K(LSHFT) K(Z)     K(X)     K(C)     K(V)     K(B)     K(N)     K(M)     K(COMMA) K(PRIOD) K(FSLSH) K(RSHFT) K(NONE)  K(UARRW) K(DELET) \
+     K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(SPACE) K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(LARRW) K(NONE)  K(DARRW) K(RARRW)
 
 // fn key symbol table - for when the FN key is pressed
 //     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define FN_TABLE(K) \
      K(NONE)  K(F1)    K(F2)    K(F3)    K(F4)    K(F5)    K(F6)    K(F7)    K(F8)    K(F9)    K(F10)   K(F11)   K(F12)   K(NONE)  K(PROF)  \
-     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(COLOR) \
      K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTUP) \
      K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTDN) \
-     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(NONE)  K(NONE)  K(NONE)
+     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(VOLUP) K(COLOR) \
+     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(NONE)  K(NONE)  K(VOLDN) K(NONE)
 
 // which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
@@ -124,5 +124,14 @@ void KeyMatrixInit(void);
  * updated accordingly.
  */
 void KeyMatrixTask(void);
+
+/*
+ * KeyMatrixGetKeyBuffer
+ *
+ * @brief Fills input buffer with current key buffer
+ *
+ * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)
+ */
+void KeyMatrixGetKeyBuffer(keys_t *key_buf);
 
 #endif /* __KEY_MATRIX_H_ */

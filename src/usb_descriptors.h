@@ -18,6 +18,16 @@
 
 #include "stm32f0xx.h"
 
+// Bits in modifier byte in HID report
+#define MODIFIER_LCTRL_MSK  (0x01)
+#define MODIFIER_LSHIFT_MSK (0x02)
+#define MODIFIER_LALT_MSK   (0x04)
+#define MODIFIER_LGUI_MSK   (0x08)
+#define MODIFIER_RCTRL_MSK  (0x10)
+#define MODIFIER_RSHIFT_MSK (0x20)
+#define MODIFIER_RALT_MSK   (0x40)
+#define MODIFIER_RGUI_MSK   (0x80)
+
 // Each valid descriptor gets an ID
 typedef enum {
     DESCRIPTOR_DEVICE_ID,

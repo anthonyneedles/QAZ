@@ -153,7 +153,7 @@ void KeyMatrixTask(void)
 
     // clear our key buffer and key_in buffer
     for (int i = 0; i < KEY_BUF_SIZE; ++i) {
-        keys_in[i]          = KEY(NOEVT);
+        keys_in[i]         = KEY(NOEVT);
         keybuf.buf[i].base = KEY(NOEVT);
         keybuf.buf[i].fn   = KEY(NOEVT);
     }
@@ -202,6 +202,22 @@ void KeyMatrixTask(void)
         }
         CALLBACK_KEY_TABLE(K)
     #undef K
+}
+
+/*
+ * KeyMatrixGetKeyBuffer
+ *
+ * @brief Fills input buffer with current key buffer
+ *
+ * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)
+ */
+void KeyMatrixGetKeyBuffer(keys_t *keybuf)
+{
+    DBG_ASSERT(keybuf);
+
+    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+        keybuf[i] = keys_in[i];
+    }
 }
 
 /*

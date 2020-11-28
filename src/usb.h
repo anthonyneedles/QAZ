@@ -17,6 +17,10 @@
 #ifndef __USB_H
 #define __USB_H
 
+#include <stdint.h>
+
+#define USB_TASK_PERIOD_MS (20U)
+
 /*
  * USBInit
  *
@@ -28,6 +32,21 @@
 void USBInit(void);
 
 /*
+ * USBWrite
+ *
+ * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
+ *
+ * Due to a bug when writing bytes into the PMA, only halfword accesses work. So @len will
+ * need to always be even (and @buf an even number of bytes).
+ *
+ * Only works because MCU architecture and USB protocol is little endian.
+ *
+ * @param[in] buf input buffer that contains data to be tranmitted
+ * @param[in] len number of bytes in @buf
+ */
+void USBWrite(int ep, const uint8_t *buf, uint16_t len);
+
+/*
  * USB_IRQHandler
  *
  * @brief Handle USB events
@@ -35,7 +54,5 @@ void USBInit(void);
  * Routes module function based on received interrupts. Most are ignored, except RESET and CTR.
  */
 void USB_IRQHandler(void);
-
-void USBTask(void);
 
 #endif /* __USB_H */

@@ -30,10 +30,10 @@
 
 // every n loops to update breathing profile, to make it go slower
 // TODO: set profile speeds from user input
-#define N_LOOP_UPDATE_BREATHING (3)
+#define N_LOOP_UPDATE_BREATHING (2)
 
 // lowest brightness that the breathing profile will go down to
-#define LOWEST_BREATHING_BRIGHTNESS (0x02)
+#define LOWEST_BREATHING_BRIGHTNESS (0x10)
 
 // amount decremented/incremented each rainbow profile step
 #define RAINBOW_COLOR_STEPS (5)
@@ -62,19 +62,19 @@ typedef struct {
     color_profile_t profile;
 } rgb_ctrl_t;
 
-// colors to cycles through (in order)
+// colors to cycle through
 static const uint32_t COLORS[] = {
     COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
 };
 
-// profiles to cycles through (in order)
+// profiles to cycle through
 static const color_profile_t PROFILES[] = {
     PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
 // rgb control structure
 static rgb_ctrl_t rgb = {
-    .bright_idx = 1,
+    .bright_idx = 4,
     .color_idx  = 0,
     .profile    = PROFILE_SOLID,
 };
