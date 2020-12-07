@@ -87,6 +87,10 @@ void USBHIDTask(void)
  *
  * The report buffer has been defined in the report descriptor that was requested from the device
  * by the host (handled in the usb driver).
+ *
+ * Technically we don't need to include the key codes for modifier keys (e.g. LCTRL = 0xE0) since
+ * drivers just ignore them, but we do anyways because it would involve more logic and we wouldn't
+ * gain anything from excluding them.
  */
 static void usbhidSendReport(void)
 {
@@ -96,28 +100,28 @@ static void usbhidSendReport(void)
     for (int i = 0; i < KEY_BUF_SIZE; ++i) {
         switch (key_buf.curr[i]) {
         case KEY(LCTRL):
-            report.modifiers |= MODIFIER_RCTRL_MSK;
-            break;
-        case KEY(LSHFT):
-            report.modifiers |= MODIFIER_RSHIFT_MSK;
-            break;
-        case KEY(LALT):
-            report.modifiers |= MODIFIER_RALT_MSK;
-            break;
-        case KEY(LGUI):
-            report.modifiers |= MODIFIER_RGUI_MSK;
-            break;
-        case KEY(RCTRL):
             report.modifiers |= MODIFIER_LCTRL_MSK;
             break;
-        case KEY(RSHFT):
+        case KEY(LSHFT):
             report.modifiers |= MODIFIER_LSHIFT_MSK;
             break;
-        case KEY(RALT):
+        case KEY(LALT):
             report.modifiers |= MODIFIER_LALT_MSK;
             break;
-        case KEY(RGUI):
+        case KEY(LGUI):
             report.modifiers |= MODIFIER_LGUI_MSK;
+            break;
+        case KEY(RCTRL):
+            report.modifiers |= MODIFIER_RCTRL_MSK;
+            break;
+        case KEY(RSHFT):
+            report.modifiers |= MODIFIER_RSHIFT_MSK;
+            break;
+        case KEY(RALT):
+            report.modifiers |= MODIFIER_RALT_MSK;
+            break;
+        case KEY(RGUI):
+            report.modifiers |= MODIFIER_RGUI_MSK;
             break;
         default:
             break;
