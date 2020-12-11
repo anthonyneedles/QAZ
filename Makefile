@@ -107,10 +107,12 @@ $(TARGET): $(BIN) $(ELF) $(ROM) $(LOG)
 $(BIN): $(ELF) | $(BIN_DIR)
 		@echo $(call hdr_print,"Creating $@ from $^:")
 		$(CP) $(CPFLAGS) $(ELF) $(BIN)
+		sh $(BSH_DIR)/git-hash-name-copy.sh $(BIN)
 
 $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@ from $^:")
 		$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
+		sh $(BSH_DIR)/git-hash-name-copy.sh $(ELF)
 		$(SZ) $(ELF)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)

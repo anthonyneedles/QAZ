@@ -1,5 +1,16 @@
 #!/bin/sh
 
+###############################################################################
+# tmux-bootstrap.sh
+#
+# Creates new tmux session with given name, then opens various screens useful
+# for debugging the project. Stops if sessions with name already exists.
+#
+# Args: $1 = name of the new session
+###############################################################################
+
+[ -z "$1" ] && echo "No argument supplied" && exit 1
+
 PROJECT_ROOT="$(cd $(dirname "$0"); pwd)/.."
 SESSION="$1"
 
