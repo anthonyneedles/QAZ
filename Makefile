@@ -18,11 +18,24 @@ C_SRC   = main.c       \
 
 S_SRC	  = startup_stm32f042.s
 
-INC     = ./CMSIS/Core/Include                 \
-					./CMSIS/Device/ST/STM32F0xx/Include
+INC     = ./CMSIS/Core/Include                \
+					./CMSIS/Device/ST/STM32F0xx/Include \
+					./src
 
-BUILD_TYPE = DEBUG        # DEBUG or RELEASE
-CLK_SOURCE = EXT_CRYSTAL  # EXT_CRYSTAL or HSI_48
+# The type of build we want:
+#   DEBUG   - All print statements
+#   RELEASE - No print statements, greatly reduces .text section size
+BUILD_TYPE = DEBUG      
+
+# The board we are using, dictating pinouts
+#   BSP_QAZ_65    - QAZ 65% board
+#   BSP_TESTBOARD - QAZ Testboard
+BSP = BSP_QAZ_65
+
+# The source of our system clock (all result in 48MHz SYSCLK):
+#   EXT_CRYSTAL - 8MHz crystal supplying external oscillator
+#   HSI_48      - Internal 48MHz oscillator
+CLK_SOURCE = EXT_CRYSTAL
 
 # Paths and Output #############################################################
 
@@ -58,7 +71,7 @@ PREFIX      = arm-none-eabi-
 
 ARCH_FLAGS  = -mcpu=cortex-m0 -mthumb -msoft-float
 
-BUILD_FLAGS = $(BUILD_TYPE) $(CLK_SOURCE)
+BUILD_FLAGS = $(BUILD_TYPE) $(CLK_SOURCE) $(BSP)
 
 CC = $(PREFIX)gcc
 CCFLAGS  = -std=gnu99 -ggdb3 -O2 -Wall -Wextra

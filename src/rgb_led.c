@@ -23,8 +23,6 @@
 
 #define I2C_ADDR (0x14)
 
-#define LED_EN GPIO(B, 2)
-
 // converts brightness index to percent, then percent to 256 value
 #define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
 
@@ -101,6 +99,7 @@ void RGBLEDInit(void)
     GPIO##port->MODER  = (GPIO##port->MODER & ~GPIO_MODER_MODER##pin##_Msk) \
                          | GPIO_MODER_MODER##pin##_0;                       \
     GPIO##port->ODR |= 1UL << pin;
+    LED_EN_PIN
 #undef GPIO
 
     I2CInit();
