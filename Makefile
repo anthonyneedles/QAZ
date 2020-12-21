@@ -4,19 +4,19 @@ TARGET = QAZ
 
 CXX_SRC =
 
-C_SRC   = main.c       \
-				  clock.c      \
-					debug.c      \
-					time_slice.c \
-		      hb.c         \
-					key_matrix.c \
-					i2c.c        \
-					rgb_led.c    \
-					usb.c        \
-					usb_hid.c    \
-					usb_descriptors.c
+C_SRC   = core/main.c                  \
+				  core/clock.c                 \
+					core/time_slice.c            \
+					comms/i2c.c                  \
+					qaz/key_matrix.c             \
+					qaz/rgb_led.c                \
+					usb/usb.c                    \
+					usb/usb_hid.c                \
+					usb/usb_descriptors.c        \
+					util/debug.c                 \
+		      util/hb.c                             
 
-S_SRC	  = startup_stm32f042.s
+S_SRC	  = core/startup_stm32f042.s
 
 INC     = ./CMSIS/Core/Include                \
 					./CMSIS/Device/ST/STM32F0xx/Include \
@@ -39,18 +39,24 @@ CLK_SOURCE = EXT_CRYSTAL
 
 # Paths and Output #############################################################
 
+ALL_SRC := $(CXX_SRC) $(C_SRC) $(S_SRC)
+
 BLD_DIR := ./build
 SRC_DIR := ./src
 
-BIN_DIR := $(BLD_DIR)/bin
-DEP_DIR := $(BLD_DIR)/dep
-LOG_DIR := $(BLD_DIR)/log
 OBJ_DIR := $(BLD_DIR)/obj
+DEP_DIR := $(BLD_DIR)/dep
+BIN_DIR := $(BLD_DIR)/bin
+LOG_DIR := $(BLD_DIR)/log
 OCD_DIR := $(BLD_DIR)/openocd
 BSH_DIR := $(BLD_DIR)/scripts
 
 BIN = $(BIN_DIR)/$(TARGET).bin
 ELF = $(BIN_DIR)/$(TARGET).elf
+
+# list of every subdir in src/ but with dep/obj dir prefixes
+OBJ_DIRS := $(sort $(addprefix $(OBJ_DIR)/, $(dir $(ALL_SRC))))
+DEP_DIRS := $(sort $(addprefix $(DEP_DIR)/, $(dir $(ALL_SRC))))
 
 OBJ = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.o) $(C_SRC:%.c=$(OBJ_DIR)/%.o) $(S_SRC:%.s=$(OBJ_DIR)/%.o)
 DEP = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(S_SRC:%.s=$(DEP_DIR)/%.d)
@@ -61,7 +67,7 @@ ODS = $(LOG_DIR)/$(TARGET)-od.sym
 RES = $(LOG_DIR)/$(TARGET)-re.sym
 LOG = $(LST) $(MAP) $(ODS) $(RES)
 
-CLEAN = $(BIN_DIR)/* $(DEP_DIR)/* $(LOG_DIR)/* $(OBJ_DIR)/*
+CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR)
 
 hdr_print = "\n\033[1;38;5;174m$(1)\033[0m"
 
@@ -128,21 +134,21 @@ $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		sh $(BSH_DIR)/git-hash-name-copy.sh $(ELF)
 		$(SZ) $(ELF)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIRS) $(DEP_DIRS)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIR) $(DEP_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIRS) $(DEP_DIRS)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIR) $(DEP_DIR)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIRS) $(DEP_DIRS)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
-$(BIN_DIR) $(OBJ_DIR) $(DEP_DIR) $(LOG_DIR):
+$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR):
 		@echo $(call hdr_print,"Making dir $@")
-		mkdir $@
+		@mkdir --parents $@
 
 $(LOG): $(ELF) | $(LOG_DIR)
 		@echo $(call hdr_print,"Making log files: $(LOG)")
@@ -160,7 +166,7 @@ log: $(LOG)
 .PHONY: clean
 clean:
 		@echo $(call hdr_print,"Cleaning $(CLEAN)")
-		@rm -f $(CLEAN)
+		@rm -rf $(CLEAN)
 
 .PHONY: flash
 flash: $(BIN)

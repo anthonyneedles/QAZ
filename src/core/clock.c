@@ -11,7 +11,7 @@
  * or project execution. Set CLK_SOURCE in the Makefile to select the clock.
  */
 
-#include "clock.h"
+#include "core/clock.h"
 
 #include "stm32f0xx.h"
 

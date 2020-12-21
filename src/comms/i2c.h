@@ -12,10 +12,10 @@
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
  */
 
-#ifndef __I2C_H_
-#define __I2C_H_
+#ifndef __COMMS_I2C_H_
+#define __COMMS_I2C_H_
 
-#include "stdint.h"
+#include <stdint.h>
 
 /**
  * I2CInit
@@ -59,4 +59,4 @@ void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr);
  */
 void I2CSetOwnAddr(uint8_t addr);
 
-#endif /* __I2C_H_ */
+#endif /* __COMMS_I2C_H_ */

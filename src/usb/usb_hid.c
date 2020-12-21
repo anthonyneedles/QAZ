@@ -9,17 +9,17 @@
  *
  * This module will use the USB driver to send keycodes to the USB host.
  */
-#include "usb_hid.h"
+#include "usb/usb_hid.h"
 
 #include <stdint.h>
 
-#include "debug.h"
-#include "key_matrix.h"
-#include "macros.h"
+#include  "qaz/key_matrix.h"
 #include "stm32f0xx.h"
-#include "usb.h"
-#include "usb_descriptors.h"
-#include "usb_hid_usages.h"
+#include "usb/usb.h"
+#include "usb/usb_descriptors.h"
+#include "usb/usb_hid_usages.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 #define INTERRUPT_EPN (1)
 

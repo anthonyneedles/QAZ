@@ -17,13 +17,13 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#ifndef __TIME_SLICE_H_
-#define __TIME_SLICE_H_
+#ifndef __CORE_TIME_SLICE_H_
+#define __CORE_TIME_SLICE_H_
 
-#include "hb.h"
-#include "key_matrix.h"
-#include "rgb_led.h"
-#include "usb_hid.h"
+#include "qaz/key_matrix.h"
+#include "qaz/rgb_led.h"
+#include "usb/usb_hid.h"
+#include "util/hb.h"
 
 // period at which the loop will execute. try to make as large as possible
 #define LOOP_PERIOD_MS (10U)
@@ -72,4 +72,4 @@ void TimeSliceLoop(void);
  */
 void SysTick_Handler(void);
 
-#endif /* __TIME_SLICE_H_ */
+#endif /* __CORE_TIME_SLICE_H_ */

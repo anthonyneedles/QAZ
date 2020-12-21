@@ -17,13 +17,13 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#include "time_slice.h"
+#include "core/time_slice.h"
 
 #include <stdbool.h>
 
-#include "debug.h"
-#include "macros.h"
 #include "stm32f0xx.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 // find number of loops needed to meet a given period
 #define CALCULATE_LOOPS(period_ms) (period_ms/LOOP_PERIOD_MS)

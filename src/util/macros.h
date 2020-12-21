@@ -8,8 +8,8 @@
  * @license   GNU GPL v3 (see LICENSE)
  */
 
-#ifndef __STATIC_ASSERT_H_
-#define __STATIC_ASSERT_H_
+#ifndef __UTIL_STATIC_ASSERT_H_
+#define __UTIL_STATIC_ASSERT_H_
 
 // combining arguments after expansion
 #define GLUE(a,b) __GLUE(a,b)
@@ -41,4 +41,4 @@
 // for-loop delay. must measure actual delay for "accuracy"
 #define LOOP_DELAY(loops) for (volatile int loop_cnt = 0; loop_cnt < loops; ++loop_cnt);
 
-#endif /* __STATIC_ASSERT_H_ */
+#endif /* __UTIL_STATIC_ASSERT_H_ */

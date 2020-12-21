@@ -11,10 +11,10 @@
  * The information for a descriptor can then be obtained via API.
  */
 
-#include "usb_descriptors.h"
+#include "usb/usb_descriptors.h"
 
-#include "debug.h"
-#include "macros.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 static const uint8_t DESCRIPTOR_DEVICE[] = {
       18,       // bLength

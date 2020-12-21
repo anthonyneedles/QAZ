@@ -13,14 +13,13 @@
  * where X is the symbol given in KEY_TABLE.
  */
 
-#include "key_matrix.h"
+#include "qaz/key_matrix.h"
 
 #include <stdbool.h>
 
-#include "debug.h"
-#include "macros.h"
-#include "stm32f0xx.h"
-#include "usb_hid_usages.h"
+#include "usb/usb_hid_usages.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 #define NUM_COLS (sizeof(col)/sizeof(col[0]))
 #define NUM_ROWS (sizeof(row)/sizeof(row[0]))

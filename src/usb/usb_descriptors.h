@@ -11,8 +11,8 @@
  * The information for a descriptor can then be obtained via API.
  */
 
-#ifndef __USB_DESCRIPTORS_H
-#define __USB_DESCRIPTORS_H
+#ifndef __USB_USB_DESCRIPTORS_H
+#define __USB_USB_DESCRIPTORS_H
 
 #include <stdint.h>
 
@@ -70,4 +70,4 @@ typedef struct __PACKED {
  */
 int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc);
 
-#endif /* __USB_DESCRIPTORS_H */
+#endif /* __USB_USB_DESCRIPTORS_H */

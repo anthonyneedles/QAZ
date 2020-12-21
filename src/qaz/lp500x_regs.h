@@ -5,8 +5,8 @@
  * @brief   LP500x LED Driver RGB regiser map
  */
 
-#ifndef __LP500X_REGS_H_
-#define __LP500X_REGS_H_
+#ifndef __QAZ_LP500X_REGS_H_
+#define __QAZ_LP500X_REGS_H_
 
 #define DEVICE_CONFIG0_R       (0x00)
 #define   CHIP_EN                (0x40)
@@ -45,4 +45,4 @@
 #define OUT11_COLOR_R          (0x16)
 #define RESET_R                (0x17)
 
-#endif /* __LP500X_REGS_H_ */
+#endif /* __QAZ_LP500X_REGS_H_ */

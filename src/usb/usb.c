@@ -14,14 +14,14 @@
  * Endpoint 1 -> Interrupt, TX only
  */
 
-#include "usb.h"
+#include "usb/usb.h"
 
 #include <stdbool.h>
 
-#include "debug.h"
-#include "macros.h"
 #include "stm32f0xx.h"
-#include "usb_descriptors.h"
+#include "usb/usb_descriptors.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 // Total number of EPs used
 #define NUM_EP (2)
@@ -71,7 +71,7 @@
 #define REQ_SET_RPT  (0x09U)
 
 //  -------------------------------------------------------------------
-// | THIS MOMUMENT MARKS THE SPOT AT WHICH I WAS STUCK FOR A LONG TIME |
+// |    THIS MONUMENT MARKS THE SPOT AT WHICH I WAS STUCK FOR WEEKS    |
 // |       UNTIL I REALIZED I FORGOT THIS WAS POINTER ARITHMETIC       |
 // |      AND HAD "2U" INSTEAD OF "1U", SO EP1 WAS NOT BEING SET       |
 //  -------------------------------------------------------------------

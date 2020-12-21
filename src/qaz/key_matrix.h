@@ -22,8 +22,8 @@
  *   user keys, such as changing the RGB LED color, brightness, etc.
  */
 
-#ifndef __KEY_MATRIX_H_
-#define __KEY_MATRIX_H_
+#ifndef __QAZ_KEY_MATRIX_H_
+#define __QAZ_KEY_MATRIX_H_
 
 #include <stdint.h>
 
@@ -84,4 +84,4 @@ void KeyMatrixTask(void);
  */
 void KeyMatrixGetKeyBuffer(keys_t *key_buf);
 
-#endif /* __KEY_MATRIX_H_ */
+#endif /* __QAZ_KEY_MATRIX_H_ */

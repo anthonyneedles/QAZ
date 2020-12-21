@@ -11,12 +11,12 @@
  * to DEBUG, in order to remove code size and processor time dedicated to debug.
  */
 
-#include "debug.h"
+#include "util/debug.h"
 
 #include <stdarg.h>
 
-#include "macros.h"
 #include "stm32f0xx.h"
+#include "util/macros.h"
 
 #if defined(DEBUG)
 

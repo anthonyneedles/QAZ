@@ -12,13 +12,13 @@
  * https://github.com/anthonyneedles/QAZ
  */
 
-#include "time_slice.h"
-#include "clock.h"
-#include "hb.h"
-#include "debug.h"
-#include "key_matrix.h"
-#include "rgb_led.h"
-#include "usb_hid.h"
+#include "core/clock.h"
+#include "core/time_slice.h"
+#include "qaz/key_matrix.h"
+#include "qaz/rgb_led.h"
+#include "usb/usb_hid.h"
+#include "util/debug.h"
+#include "util/hb.h"
 
 int main(void)
 {

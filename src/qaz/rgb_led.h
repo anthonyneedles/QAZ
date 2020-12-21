@@ -1,5 +1,5 @@
 /**
- * @file      rgb_led.c
+ * @file      rgb_led.h
  * @brief     RGB LED driver
  *
  * @author    Anthony Needles
@@ -10,8 +10,8 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#ifndef __RGB_LED_H
-#define __RGB_LED_H
+#ifndef __QAZ_RGB_LED_H
+#define __QAZ_RGB_LED_H
 
 #include <stdint.h>
 
@@ -123,4 +123,4 @@ void KeyMatrixCallback_COLOR(void);
  */
 void KeyMatrixCallback_PROF(void);
 
-#endif /* __RGB_LED_H */
+#endif /* __QAZ_RGB_LED_H */

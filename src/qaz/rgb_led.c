@@ -10,16 +10,16 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#include "rgb_led.h"
+#include "qaz/rgb_led.h"
 
 #include <stdbool.h>
 
-#include "debug.h"
-#include "i2c.h"
-#include "lp500x_regs.h"
-#include "key_matrix.h"
-#include "macros.h"
+#include "comms/i2c.h"
+#include "qaz/key_matrix.h"
+#include "qaz/lp500x_regs.h"
 #include "stm32f0xx.h"
+#include "util/debug.h"
+#include "util/macros.h"
 
 #define I2C_ADDR (0x14)
 

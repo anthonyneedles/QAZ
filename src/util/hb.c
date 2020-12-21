@@ -11,10 +11,10 @@
  * hanging and/or violating timeslice scheduling.
  */
 
-#include "hb.h"
+#include "util/hb.h"
 
-#include "debug.h"
 #include "stm32f0xx.h"
+#include "util/debug.h"
 
 #define HB_LED_ON()  (HB_LED_PORT->ODR |=  (1UL << HB_LED_NUM))
 #define HB_LED_OFF() (HB_LED_PORT->ODR &= ~(1UL << HB_LED_NUM))
