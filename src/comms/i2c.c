@@ -16,10 +16,7 @@
 
 #include "comms/i2c.h"
 
-#include "stm32f0xx.h"
 #include "util/debug.h"
-
-#define SELF_ADDR (0x53)
 
 #define GPIO_AFRH_AFSEL10_AF1 (0x1u << GPIO_AFRH_AFSEL10_Pos)
 #define GPIO_AFRH_AFSEL11_AF1 (0x1u << GPIO_AFRH_AFSEL11_Pos)
@@ -35,14 +32,28 @@
  *
  * @brief Initializes I2C module
  *
- * Enables clocks for I2C1 pins as well as I2C1 module. GPIO configured as open drain with no pull
+ * Enables clocks for I2C pins as well as I2C module. GPIO configured as open drain with no pull
  * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select
- * I2C1 SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
+ * I2C SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
  * disabled.
+ *
+ * @param[in] i2c handle for i2c to init
+ * @return I2C_SUCCCESS - successfully initialized i2c
+ *         I2C_FAILURE  - failed i2c init (already initialized)
  */
-void I2CInit(void)
+i2c_status_t I2CInit(i2c_handle_t *i2c)
 {
-    I2C1->CR1 &= ~I2C_CR1_PE;
+    if (!i2c) {
+        DBG_ASSERT(FORCE_ASSERT);
+        return I2C_FAILURE;
+    }
+
+    if (i2c->state != I2C_RESET) {
+        DbgPrintf("I2C init error, not in I2C_RESET (%p)\r\n", i2c->regs);
+        return I2C_FAILURE;
+    }
+
+    i2c->regs->CR1 &= ~I2C_CR1_PE;
 
     // enable I2C1 clocking with SYSCLK
     RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
@@ -66,16 +77,21 @@ void I2CInit(void)
     GPIOB->AFR[1] &= ~(GPIO_AFRH_AFSEL10_Msk | GPIO_AFRH_AFSEL11_Msk);
     GPIOB->AFR[1] |=  (GPIO_AFRH_AFSEL10_AF1 | GPIO_AFRH_AFSEL11_AF1);
 
-    I2C1->TIMINGR = TIMING_CONFIG;
-    I2C1->CR1 |= I2C_CR1_PE;
+    i2c->regs->TIMINGR = TIMING_CONFIG;
+    i2c->regs->CR1 |= I2C_CR1_PE;
 
-    I2CSetOwnAddr(SELF_ADDR);
+    // set own address
+    i2c->regs->OAR1 &= ~(I2C_OAR1_OA1EN_Msk);
+    i2c->regs->OAR1 &= ~(I2C_OAR1_OA1_Msk);
+    i2c->regs->OAR1 |= (((uint32_t)i2c->self_addr << 1U) | I2C_OAR1_OA1EN);
 
-    DbgPrintf("Initialized: I2C\r\n");
+    i2c->state = I2C_READY;
+
+    return I2C_SUCCESS;
 }
 
 /**
- * I2CMasterTx
+ * I2CWriteMasterBlocking
  *
  * @brief Master transmit function for I2C
  *
@@ -86,44 +102,38 @@ void I2CInit(void)
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
  *
- * @param[in] addr      Address of target slave
- * @param[in] num_bytes Number of bytes of data that is desired to be sent
- * @param[in] tx_data   Pointer to 8-bit data array of desired transmit data
+ * @param[in] i2c  handle for i2c to init
+ * @param[in] addr address of target slave
+ * @param[in] data buffer to transmit
+ * @param[in] n    number of bytes to transmit
+ * @return I2C_SUCCCESS - successfully initialized i2c
+ *         I2C_FAILURE  - failed i2c init (already initialized)
  */
-void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr)
+i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n)
 {
-    DBG_ASSERT(tx_data_ptr);
+    if (!i2c || !data || (n <= 0)) {
+        DBG_ASSERT(FORCE_ASSERT);
+        return I2C_FAILURE;
+    }
 
-    I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-    I2C1->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
-            ((uint32_t)num_bytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
+    if (i2c->state != I2C_READY) {
+        DbgPrintf("I2C write error, not in I2C_READY (%p)\r\n", i2c->regs);
+        return I2C_FAILURE;
+    }
 
-    while (num_bytes > 0) {
+    i2c->regs->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
+    i2c->regs->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
+            ((uint32_t)n << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
+
+    for (int i = 0; i < n; ++i) {
         while (TX_REG_EMPTY_FLAG != SET) {}
-        I2C1->TXDR = *tx_data_ptr;
-        tx_data_ptr++;
-        num_bytes--;
+        i2c->regs->TXDR = data[i];
     }
 
     while(STOP_COND_GEN_FLAG != SET){}
-    I2C1->ICR |= (I2C_ICR_STOPCF);
+    i2c->regs->ICR |= (I2C_ICR_STOPCF);
 
-    I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
-}
+    i2c->regs->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
 
-/**
- * I2CSetOwnAddr
- *
- * @brief Sets 7-bit address of MCU for slave ability (only OA1)
- *
- * First, OA1 (own address #1) enable is cleared as it must be 0 to set an address. Current address
- * field is then cleared. Passed address is then loaded into 7-bit address field in OA1 register.
- *
- * @param[in] addr Desired 7-bit address
- */
-void I2CSetOwnAddr(uint8_t addr)
-{
-    I2C1->OAR1 &= ~(I2C_OAR1_OA1EN_Msk);
-    I2C1->OAR1 &= ~(I2C_OAR1_OA1_Msk);
-    I2C1->OAR1 |= (((uint32_t)addr << 1U) | I2C_OAR1_OA1EN);
+    return I2C_SUCCESS;
 }

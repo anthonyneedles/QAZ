@@ -12,21 +12,31 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#include "comms/i2c.h"
-
-#include "stm32f0xx.h"
+#include "comms/uart.h"
 
 #include "util/debug.h"
 
 /**
  * UARTInit
  *
- * @brief Enables USART1 for TX at 115200 on pin PA9.
+ * @brief Enables USART for TX at 115200 baud, 8-N-1.
  *
- * PA9 = TX, PA10 = RX. Only using TX for now.
+ * @param[in] uart handle for uart to init
+ * @return UART_SUCCCESS - successfully initialized uart
+ *         UART_FAILURE  - failed uart init (already initialized)
  */
-void UARTInit(void)
+uart_status_t UARTInit(uart_handle_t *uart)
 {
+    if (!uart) {
+        DBG_ASSERT(FORCE_ASSERT);
+        return UART_FAILURE;
+    }
+
+    if (uart->state != UART_RESET) {
+        DbgPrintf("UART init error, not in UART_RESET (%p)\r\n", uart->regs);
+        return UART_FAILURE;
+    }
+
     // Enable clock for GPIOA and USART1
     RCC->AHBENR  |= RCC_AHBENR_GPIOAEN;
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
@@ -45,30 +55,48 @@ void UARTInit(void)
             | GPIO_OSPEEDR_OSPEEDR9);
 
     // Enable transmitting
-    USART1->CR1 = USART_CR1_TE;
+    uart->regs->CR1 = USART_CR1_TE;
 
     // Set baudrate to 115200
-    USART1->BRR = 0x1A1;
+    uart->regs->BRR = 0x1A1;
 
     // Enable USART1
-    USART1->CR1 |= USART_CR1_UE;
+    uart->regs->CR1 |= USART_CR1_UE;
 
-    DbgPrintf("Initialized: UART\r\n");
+    uart->state = UART_READY;
+
+    return UART_SUCCESS;
 }
 
 /**
  * UARTWriteBlocking
  *
- * @brief Sends data over USART1, blocking
+ * @brief Sends data over USART, blocking on write ready
  *
- * Blocks until USART1 is ready to transmit, then pushes character onto output buffer.
+ * Blocks until USART is ready to transmit, then pushes character onto output buffer.
+ *
+ * @param[in] uart handle for uart to write with
+ * @param[in] data buffer to transmit
+ * @param[in] n    number of bytes to transmit
+ * @return UART_SUCCCESS - successful uart write
+ *         UART_FAILURE  - failed uart write (not ready, invalid buf)
  */
-void UARTWriteBlocking(const uint8_t *data, int n)
+uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n)
 {
-    DBG_ASSERT(data);
+    if (!uart || !data || (n <= 0)) {
+        DBG_ASSERT(FORCE_ASSERT);
+        return UART_FAILURE;
+    }
+
+    if (uart->state != UART_READY) {
+        DbgPrintf("UART write error, not in UART_READY (%p)\r\n", uart->regs);
+        return UART_FAILURE;
+    }
 
     for (int i = 0; i < n; ++i) {
-        while ((USART1->ISR & USART_ISR_TXE) == 0);
-        USART1->TDR = data[i];
+        while ((uart->regs->ISR & USART_ISR_TXE) == 0);
+        uart->regs->TDR = data[i];
     }
+
+    return UART_SUCCESS;
 }

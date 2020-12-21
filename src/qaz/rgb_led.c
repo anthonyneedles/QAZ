@@ -77,6 +77,13 @@ static rgb_ctrl_t rgb = {
     .profile    = PROFILE_SOLID,
 };
 
+// our handle to the i2c we use to communicate with LED controller
+static i2c_handle_t i2c_handle = {
+    .regs      = RGB_LED_I2C,
+    .state     = I2C_RESET,
+    .self_addr = 0x53,
+};
+
 static void rgbledProfileBreathing(void);
 static void rgbledProfileRainbow(void);
 
@@ -102,7 +109,7 @@ void RGBLEDInit(void)
     LED_EN_PIN
 #undef GPIO
 
-    I2CInit();
+    I2CInit(&i2c_handle);
 
     // init config registers, starting at DEVICE_CONFIG_0 register
     const uint8_t init_data[] = {
@@ -112,7 +119,7 @@ void RGBLEDInit(void)
         LED2_BANK_EN | LED1_BANK_EN | LED0_BANK_EN,
         BRIGHTNESS_PERCENT(rgb.bright_idx*25),
     };
-    I2CMasterTx(I2C_ADDR, sizeof(init_data), init_data);
+    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, init_data, sizeof(init_data));
 
     RGBLEDBankSetColor(COLOR_WHITE);
 
@@ -135,7 +142,7 @@ void RGBLEDBankSetColor(uint32_t rgb_code)
     data[1] = R_RGB(rgb_code);  // BANK A = Red
     data[2] = G_RGB(rgb_code);  // BANK B = Green
     data[3] = B_RGB(rgb_code);  // BANK C = Blue
-    I2CMasterTx(I2C_ADDR, sizeof(data), data);
+    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, data, sizeof(data));
 }
 
 /**
@@ -152,7 +159,7 @@ void RGBLEDBankSetBrightness(uint8_t val)
     uint8_t data[2];
     data[0] = BANK_BRIGHTNESS_R;
     data[1] = val;
-    I2CMasterTx(I2C_ADDR, sizeof(data), data);
+    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, data, sizeof(data));
 }
 
 /**

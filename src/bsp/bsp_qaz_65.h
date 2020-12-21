@@ -69,4 +69,10 @@
 // RGB LED enable pin
 #define LED_EN_PIN GPIO(B, 2)
 
+// USART used for sending debug messages
+#define DEBUG_UART USART1
+
+// I2C used for talking to the LED controller
+#define RGB_LED_I2C I2C1
+
 #endif /* __BSP_BSP_QAZ_65_H_ */

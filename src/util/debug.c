@@ -15,8 +15,8 @@
 
 #include <stdarg.h>
 
+#include "bsp/bsp.h"
 #include "comms/uart.h"
-#include "stm32f0xx.h"
 #include "util/macros.h"
 
 #if defined(DEBUG)
@@ -26,6 +26,12 @@
 
 // maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
 #define MAX_EXPAND_CHARACTERS (50)
+
+// our handle to the uart we use to send debug messages
+static uart_handle_t uart_handle = {
+    .regs  = DEBUG_UART,
+    .state = UART_RESET,
+};
 
 static void debugPutChar(char data);
 static void debugPutString(const char *data);
@@ -38,7 +44,7 @@ static char *debugExpandNum(unsigned num, int base, int width);
  */
 void DebugInit(void)
 {
-    UARTInit();
+    UARTInit(&uart_handle);
 
     DbgPrintf("\r\n=== QAZ ===\r\n");
     DbgPrintf("Initialized: Debug\r\n");
@@ -164,7 +170,8 @@ void DbgPrintf(const char *fmt_ptr, ...)
  * @param[in] base expression line number
  * @param[in] expr expression string
  */
-void DebugAssertFailed(char *file, int line, char *expr) {
+void DebugAssertFailed(char *file, int line, char *expr) 
+{
     DbgPrintf("\r\nERROR: ASSERTION FAILED!\r\n");
     DbgPrintf("EXPR: %s\r\n", expr);
     DbgPrintf("LINE: %d\r\n", line);
@@ -181,7 +188,7 @@ void DebugAssertFailed(char *file, int line, char *expr) {
  */
 static void debugPutChar(char data)
 {
-    UARTWriteBlocking(&data, 1);
+    UARTWriteBlocking(&uart_handle, &data, 1);
 }
 
 /**

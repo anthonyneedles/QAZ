@@ -17,20 +17,45 @@
 
 #include <stdint.h>
 
+#include "stm32f0xx.h"
+
+// status code returned by I2C API
+typedef enum {
+    I2C_SUCCESS,
+    I2C_FAILURE,
+} i2c_status_t;
+
+// state of a given I2C instance
+typedef enum {
+    I2C_RESET = 0,
+    I2C_READY,
+} i2c_state_t;
+
+// handle for an I2C instance, holds control information
+typedef struct {
+    I2C_TypeDef *regs;
+    i2c_state_t state;
+    uint8_t self_addr;
+} i2c_handle_t;
+
 /**
  * I2CInit
  *
  * @brief Initializes I2C module
  *
- * Enables clocks for I2C1 pins as well as I2C1 module. GPIO configured as open drain with no pull
+ * Enables clocks for I2C pins as well as I2C module. GPIO configured as open drain with no pull
  * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select
- * I2C1 SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
+ * I2C SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
  * disabled.
+ *
+ * @param[in] i2c handle for i2c to init
+ * @return I2C_SUCCCESS - successfully initialized i2c
+ *         I2C_FAILURE  - failed i2c init (already initialized)
  */
-void I2CInit(void);
+i2c_status_t I2CInit(i2c_handle_t *i2c);
 
 /**
- * I2CMasterTx
+ * I2CWriteMasterBlocking
  *
  * @brief Master transmit function for I2C
  *
@@ -41,22 +66,13 @@ void I2CInit(void);
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
  *
- * @param[in] addr      Address of target slave
- * @param[in] num_bytes Number of bytes of data that is desired to be sent
- * @param[in] tx_data   Pointer to 8-bit data array of desired transmit data
+ * @param[in] i2c  handle for i2c to init
+ * @param[in] addr address of target slave
+ * @param[in] data buffer to transmit
+ * @param[in] n    number of bytes to transmit
+ * @return I2C_SUCCCESS - successfully initialized i2c
+ *         I2C_FAILURE  - failed i2c init (already initialized)
  */
-void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr);
-
-/**
- * I2CSetOwnAddr
- *
- * @brief Sets 7-bit address of MCU for slave ability (only OA1)
- *
- * First, OA1 (own address #1) enable is cleared as it must be 0 to set an address. Current address
- * field is then cleared. Passed address is then loaded into 7-bit address field in OA1 register.
- *
- * @param[in] addr Desired 7-bit address
- */
-void I2CSetOwnAddr(uint8_t addr);
+i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n);
 
 #endif /* __COMMS_I2C_H_ */
