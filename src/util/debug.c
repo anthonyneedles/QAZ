@@ -15,6 +15,7 @@
 
 #include <stdarg.h>
 
+#include "comms/uart.h"
 #include "stm32f0xx.h"
 #include "util/macros.h"
 
@@ -34,40 +35,10 @@ static char *debugExpandNum(unsigned num, int base, int width);
  * DebugInit
  *
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
- *
- * When DEBUG, enables USART1 (and corresponding pins) for UART transmission at 115200 baud.
- * PA9 = TX, PA10 = RX. Only using TX for now.
  */
 void DebugInit(void)
 {
-    // Enable clock for GPIOA and USART1
-    RCC->AHBENR  |= RCC_AHBENR_GPIOAEN;
-    RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
-
-    // Set debug tx port into alt function mode
-    GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER9_Msk)
-            | GPIO_MODER_MODER9_1);
-
-    // Set alternate function 1 (USART1_TX)
-    GPIOA->AFR[1] = ((GPIOA->AFR[1] & ~GPIO_AFRH_AFSEL9_Msk)
-            | (1UL << GPIO_AFRH_AFSEL9_Pos));
-
-    // Set pullup
-    GPIOA->PUPDR = ((GPIOA->PUPDR  & ~GPIO_PUPDR_PUPDR9_Msk)
-            | GPIO_PUPDR_PUPDR9_0);
-
-    // Fast output
-    GPIOA->OSPEEDR = ((GPIOA->OSPEEDR  & ~GPIO_OSPEEDR_OSPEEDR9_Msk)
-            | GPIO_OSPEEDR_OSPEEDR9);
-
-    // Enable transmitting
-    USART1->CR1 = USART_CR1_TE;
-
-    // Set baudrate to 115200
-    USART1->BRR = 0x1A1;
-
-    // Enable USART1
-    USART1->CR1 |= USART_CR1_UE;
+    UARTInit();
 
     DbgPrintf("\r\n=== QAZ ===\r\n");
     DbgPrintf("Initialized: Debug\r\n");
@@ -99,84 +70,86 @@ void DebugInit(void)
  */
 void DbgPrintf(const char *fmt_ptr, ...)
 {
-	int      sint_arg;
-  unsigned uint_arg;
-	char    *str_arg;
-  int      width;
+    DBG_ASSERT(fmt_ptr);
 
-	va_list arg;
-	va_start(arg, fmt_ptr);
+    int      sint_arg;
+    unsigned uint_arg;
+    char    *str_arg;
+    int      width;
 
-	for (; *fmt_ptr != '\0'; ++fmt_ptr) {
-      if ( *fmt_ptr == '%' ) {
-          // handle format specifiers
-          fmt_ptr++;
-          width = 0;
+    va_list arg;
+    va_start(arg, fmt_ptr);
 
-          // if there is a '0n', we now have a specified width
-          if (IS_WIDTH_SPECIFIER(*fmt_ptr, *(fmt_ptr + 1))) {
-              width = *(fmt_ptr + 1) - '0';
-              fmt_ptr += 2;
-          }
+    for (; *fmt_ptr != '\0'; ++fmt_ptr) {
+        if ( *fmt_ptr == '%' ) {
+            // handle format specifiers
+            fmt_ptr++;
+            width = 0;
 
-          switch (*fmt_ptr) {
-          case 'c' :
-              // character specifier (char promoted to int)
-              sint_arg = va_arg(arg, int);
-              debugPutChar(sint_arg);
-              break;
+            // if there is a '0n', we now have a specified width
+            if (IS_WIDTH_SPECIFIER(*fmt_ptr, *(fmt_ptr + 1))) {
+                width = *(fmt_ptr + 1) - '0';
+                fmt_ptr += 2;
+            }
 
-          case 's':
-              // string specifier
-              str_arg = va_arg(arg, char *);
-              debugPutString(str_arg);
-              break;
+            switch (*fmt_ptr) {
+            case 'c' :
+                // character specifier (char promoted to int)
+                sint_arg = va_arg(arg, int);
+                debugPutChar(sint_arg);
+                break;
 
-          case 'd' :
-              // signed decimal specifier
-              sint_arg = va_arg(arg, int);
-              if (sint_arg < 0) {
-                  sint_arg = -sint_arg;
-                  debugPutChar('-');
-              }
-              debugPutString(debugExpandNum((unsigned)sint_arg, 10, width));
-              break;
+            case 's':
+                // string specifier
+                str_arg = va_arg(arg, char *);
+                debugPutString(str_arg);
+                break;
 
-          case 'u' :
-              // unsigned decimal specifier
-              uint_arg = va_arg(arg, unsigned);
-              debugPutString(debugExpandNum(uint_arg, 10, width));
-              break;
+            case 'd' :
+                // signed decimal specifier
+                sint_arg = va_arg(arg, int);
+                if (sint_arg < 0) {
+                    sint_arg = -sint_arg;
+                    debugPutChar('-');
+                }
+                debugPutString(debugExpandNum((unsigned)sint_arg, 10, width));
+                break;
 
-          case 'o':
-              // octal specifier
-              uint_arg = va_arg(arg, unsigned int);
-              debugPutString(debugExpandNum(uint_arg, 8, width));
-              break;
+            case 'u' :
+                // unsigned decimal specifier
+                uint_arg = va_arg(arg, unsigned);
+                debugPutString(debugExpandNum(uint_arg, 10, width));
+                break;
 
-          case 'x':
-              // hexadecimal specifier
-              uint_arg = va_arg(arg, unsigned int);
-              debugPutString(debugExpandNum(uint_arg, 16, width));
-              break;
+            case 'o':
+                // octal specifier
+                uint_arg = va_arg(arg, unsigned int);
+                debugPutString(debugExpandNum(uint_arg, 8, width));
+                break;
 
-          case 'p':
-              // p specifier (width always 8)
-              uint_arg = va_arg(arg, unsigned int);
-              debugPutString(debugExpandNum(uint_arg, 16, 8));
-              break;
+            case 'x':
+                // hexadecimal specifier
+                uint_arg = va_arg(arg, unsigned int);
+                debugPutString(debugExpandNum(uint_arg, 16, width));
+                break;
 
-          default:
-              debugPutChar(*fmt_ptr);
-              break;
-          }
-      } else {
-          // print and 'normal' character
-          debugPutChar(*fmt_ptr);
-      }
-	}
+            case 'p':
+                // p specifier (width always 8)
+                uint_arg = va_arg(arg, unsigned int);
+                debugPutString(debugExpandNum(uint_arg, 16, 8));
+                break;
 
-	va_end(arg);
+            default:
+                debugPutChar(*fmt_ptr);
+                break;
+            }
+        } else {
+            // print and 'normal' character
+            debugPutChar(*fmt_ptr);
+        }
+    }
+
+    va_end(arg);
 }
 
 /**
@@ -199,7 +172,6 @@ void DebugAssertFailed(char *file, int line, char *expr) {
     while (1) {}
 }
 
-
 /**
  * debugPutChar
  *
@@ -209,8 +181,7 @@ void DebugAssertFailed(char *file, int line, char *expr) {
  */
 static void debugPutChar(char data)
 {
-    while ((USART1->ISR & USART_ISR_TXE) == 0);
-    USART1->TDR = (uint8_t)data;
+    UARTWriteBlocking(&data, 1);
 }
 
 /**
@@ -222,6 +193,8 @@ static void debugPutChar(char data)
  */
 static void debugPutString(const char *data)
 {
+    DBG_ASSERT(data);
+
     for (int i = 0; data[i] != '\0'; ++i) {
         debugPutChar(data[i]);
     }

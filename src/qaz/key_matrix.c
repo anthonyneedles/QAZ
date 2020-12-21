@@ -231,6 +231,8 @@ void KeyMatrixGetKeyBuffer(keys_t *keybuf)
  */
 void keyMatrixScan(key_buf_t *keybuf)
 {
+    DBG_ASSERT(keybuf);
+
     // ensure all columns are off
     for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
         DEACTIVATE_COL(col[ncol]);

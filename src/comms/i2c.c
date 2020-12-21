@@ -42,36 +42,36 @@
  */
 void I2CInit(void)
 {
-	I2C1->CR1 &= ~I2C_CR1_PE;
+    I2C1->CR1 &= ~I2C_CR1_PE;
 
-  // enable I2C1 clocking with SYSCLK
-  RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
-  RCC->CFGR3   |= RCC_CFGR3_I2C1SW;
+    // enable I2C1 clocking with SYSCLK
+    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+    RCC->CFGR3   |= RCC_CFGR3_I2C1SW;
 
-  // enable HB LED GPIO port clock
-  RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+    // enable HB LED GPIO port clock
+    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 
-  // set to SCL/SDA pints to alternate mode
-	GPIOB->MODER  &= ~(GPIO_MODER_MODER10_Msk | GPIO_MODER_MODER11_Msk);
-	GPIOB->MODER  |=  (GPIO_MODER_MODER10_1   | GPIO_MODER_MODER11_1);
+    // set to SCL/SDA pints to alternate mode
+    GPIOB->MODER  &= ~(GPIO_MODER_MODER10_Msk | GPIO_MODER_MODER11_Msk);
+    GPIOB->MODER  |=  (GPIO_MODER_MODER10_1   | GPIO_MODER_MODER11_1);
 
-  GPIOB->MODER  &= ~GPIO_MODER_MODER2_Msk;
-	GPIOB->MODER  |=  GPIO_MODER_MODER2_0;
-  GPIOB->ODR |=  (1UL << 2);
+    GPIOB->MODER  &= ~GPIO_MODER_MODER2_Msk;
+    GPIOB->MODER  |=  GPIO_MODER_MODER2_0;
+    GPIOB->ODR |=  (1UL << 2);
 
-  // set to SCL/SDA pins to open drain
-	GPIOB->OTYPER |= (GPIO_OTYPER_OT_10 | GPIO_OTYPER_OT_10);
+    // set to SCL/SDA pins to open drain
+    GPIOB->OTYPER |= (GPIO_OTYPER_OT_10 | GPIO_OTYPER_OT_10);
 
-  // set to SCL/SDA pins to Alternate Function 1
-	GPIOB->AFR[1] &= ~(GPIO_AFRH_AFSEL10_Msk | GPIO_AFRH_AFSEL11_Msk);
-	GPIOB->AFR[1] |=  (GPIO_AFRH_AFSEL10_AF1 | GPIO_AFRH_AFSEL11_AF1);
+    // set to SCL/SDA pins to Alternate Function 1
+    GPIOB->AFR[1] &= ~(GPIO_AFRH_AFSEL10_Msk | GPIO_AFRH_AFSEL11_Msk);
+    GPIOB->AFR[1] |=  (GPIO_AFRH_AFSEL10_AF1 | GPIO_AFRH_AFSEL11_AF1);
 
-	I2C1->TIMINGR = TIMING_CONFIG;
-	I2C1->CR1 |= I2C_CR1_PE;
+    I2C1->TIMINGR = TIMING_CONFIG;
+    I2C1->CR1 |= I2C_CR1_PE;
 
-  I2CSetOwnAddr(SELF_ADDR);
+    I2CSetOwnAddr(SELF_ADDR);
 
-  DbgPrintf("Initialized: I2C\r\n");
+    DbgPrintf("Initialized: I2C\r\n");
 }
 
 /**
@@ -92,21 +92,23 @@ void I2CInit(void)
  */
 void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr)
 {
-	I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-	I2C1->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
-          ((uint32_t)num_bytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
+    DBG_ASSERT(tx_data_ptr);
 
-	while (num_bytes > 0) {
-		while (TX_REG_EMPTY_FLAG != SET) {}
-    I2C1->TXDR = *tx_data_ptr;
-		tx_data_ptr++;
-		num_bytes--;
-	}
+    I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
+    I2C1->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
+            ((uint32_t)num_bytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
 
-  while(STOP_COND_GEN_FLAG != SET){}
-	I2C1->ICR |= (I2C_ICR_STOPCF);
+    while (num_bytes > 0) {
+        while (TX_REG_EMPTY_FLAG != SET) {}
+        I2C1->TXDR = *tx_data_ptr;
+        tx_data_ptr++;
+        num_bytes--;
+    }
 
-	I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
+    while(STOP_COND_GEN_FLAG != SET){}
+    I2C1->ICR |= (I2C_ICR_STOPCF);
+
+    I2C1->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
 }
 
 /**
@@ -121,7 +123,7 @@ void I2CMasterTx(uint8_t addr, uint8_t num_bytes, const uint8_t *tx_data_ptr)
  */
 void I2CSetOwnAddr(uint8_t addr)
 {
-	I2C1->OAR1 &= ~(I2C_OAR1_OA1EN_Msk);
-	I2C1->OAR1 &= ~(I2C_OAR1_OA1_Msk);
-	I2C1->OAR1 |= (((uint32_t)addr << 1U) | I2C_OAR1_OA1EN);
+    I2C1->OAR1 &= ~(I2C_OAR1_OA1EN_Msk);
+    I2C1->OAR1 &= ~(I2C_OAR1_OA1_Msk);
+    I2C1->OAR1 |= (((uint32_t)addr << 1U) | I2C_OAR1_OA1EN);
 }

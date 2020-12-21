@@ -23,12 +23,9 @@
 #define FORCE_ASSERT (0)
 
 /**
- * DebugInit()
+ * DebugInit
  *
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
- *
- * When DEBUG, enables USART1 (and corresponding pins) for UART transmission at 115200 baud.
- * PA9 = TX, PA10 = RX. Only using TX for now.
  */
 void DebugInit(void);
 

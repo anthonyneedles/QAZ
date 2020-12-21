@@ -8,6 +8,7 @@ C_SRC   = core/main.c                  \
 				  core/clock.c                 \
 					core/time_slice.c            \
 					comms/i2c.c                  \
+					comms/uart.c                 \
 					qaz/key_matrix.c             \
 					qaz/rgb_led.c                \
 					usb/usb.c                    \
@@ -25,7 +26,7 @@ INC     = ./CMSIS/Core/Include                \
 # The type of build we want:
 #   DEBUG   - All print statements
 #   RELEASE - No print statements, greatly reduces .text section size
-BUILD_TYPE = DEBUG      
+BUILD_TYPE = DEBUG
 
 # The board we are using, dictating pinouts
 #   BSP_QAZ_65    - QAZ 65% board
@@ -84,7 +85,7 @@ CCFLAGS  = -std=gnu99 -ggdb3 -O2 -Wall -Wextra
 CCFLAGS += -ffunction-sections -fdata-sections
 CCFLAGS += -MMD -MP -MF $(DEP_DIR)/$*.d
 CCFLAGS += $(foreach i, $(BUILD_FLAGS), -D$(i))
-CCFLAGS += $(foreach d, $(INC),         -I$(d))
+CCFLAGS += $(foreach d, $(INC), -I$(d))
 CCFLAGS += $(ARCH_FLAGS)
 
 CXX = $(PREFIX)g++
@@ -93,7 +94,7 @@ CXXFLAGS += -fno-rtti -fno-exceptions
 CXXFLAGS += -ffunction-sections -fdata-sections
 CXXFLAGS += -MMD -MP -MF $(DEP_DIR)/$*.d
 CXXFLAGS += $(foreach i, $(BUILD_FLAGS), -D$(i))
-CXXFLAGS += $(foreach d, $(INC),         -I$(d))
+CXXFLAGS += $(foreach d, $(INC), -I$(d))
 CXXFLAGS += $(ARCH_FLAGS)
 
 CP = $(PREFIX)objcopy
