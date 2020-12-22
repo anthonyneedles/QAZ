@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ###############################################################################
-# git-hash-name-copy.sh
+# git-hash-bin-copy.sh
 #
 # Copies given files with a new name of style "old-name_X_Y", where X = 'C' for 
 # a clean repo or 'D' for a dirty repo, and Y is the short git hash.

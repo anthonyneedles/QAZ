@@ -1,5 +1,5 @@
 /**
- * @file    bsp_testboard.h
+ * @file    bsp_qaz_testboard.h
  * @author  Anthony Needles
  * @date    2020/12/20
  * @brief   BSP for the QAZ testboard
@@ -7,8 +7,8 @@
  * Definitions specfic to the QAZ testboard.
  */
 
-#ifndef __BSP_BSP_TESTBOARD_H_
-#define __BSP_BSP_TESTBOARD_H_
+#ifndef __BSP_BSP_QAZ_TESTBOARD_H_
+#define __BSP_BSP_QAZ_TESTBOARD_H_
 
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
@@ -75,4 +75,4 @@
 // I2C used for talking to the LED controller
 #define RGB_LED_I2C I2C1
 
-#endif /* __BSP_BSP_TESTBOARD_H_ */
+#endif /* __BSP_BSP_QAZ_TESTBOARD_H_ */

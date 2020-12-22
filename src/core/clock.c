@@ -25,8 +25,6 @@
  */
 void ClockInit(void)
 {
-#if defined(EXT_CRYSTAL)
-
     // enable Clock Security System and High Speed External clock
     RCC->CR |= (RCC_CR_CSSON | RCC_CR_HSEON);
 
@@ -56,29 +54,6 @@ void ClockInit(void)
 
     // set system clock mux to PLL (SYSCLK is now 48MHz)
     RCC->CFGR = ((RCC->CFGR & ~RCC_CFGR_SW_Msk) | RCC_CFGR_SW_PLL);
-
-#elif defined(HSI_48)
-
-    // enable HSI48 clock
-    RCC->CR2 |= RCC_CR2_HSI48ON;
-
-    // wait for HSI48 to stabilize
-    while ((RCC->CR2 & RCC_CR2_HSI48RDY_Msk) != RCC_CR2_HSI48RDY) {}
-
-    // ensure APB and AHB prescalers are correct
-    RCC->CFGR = ((RCC->CFGR & ~(RCC_CFGR_PPRE_Msk | RCC_CFGR_HPRE_Msk))
-            | RCC_CFGR_PPRE_DIV1
-            | RCC_CFGR_HPRE_DIV1);
-
-    // switch system clock to HSI48
-    RCC->CFGR = ((RCC->CFGR & ~RCC_CFGR_SW_Msk) | RCC_CFGR_SW_HSI48);
-
-    // wait for system clock to switch to HSI48
-    while ((RCC->CFGR & RCC_CFGR_SWS_Msk) != RCC_CFGR_SWS_HSI48) {}
-
-#else
-    #error No valid clock source defined!
-#endif
 
     // enable Prefetch Buffer and set Flash latency
     FLASH->ACR = FLASH_ACR_PRFTBE | FLASH_ACR_LATENCY;

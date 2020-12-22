@@ -29,14 +29,9 @@ INC     = ./CMSIS/Core/Include                \
 BUILD_TYPE = DEBUG
 
 # The board we are using, dictating pinouts
-#   BSP_QAZ_65    - QAZ 65% board
-#   BSP_TESTBOARD - QAZ Testboard
-BSP = BSP_QAZ_65
-
-# The source of our system clock (all result in 48MHz SYSCLK):
-#   EXT_CRYSTAL - 8MHz crystal supplying external oscillator
-#   HSI_48      - Internal 48MHz oscillator
-CLK_SOURCE = EXT_CRYSTAL
+#   QAZ_65        - QAZ 65% board
+#   QAZ_TESTBOARD - QAZ Testboard
+BOARD = QAZ_65
 
 # Paths and Output #############################################################
 
@@ -50,7 +45,7 @@ DEP_DIR := $(BLD_DIR)/dep
 BIN_DIR := $(BLD_DIR)/bin
 LOG_DIR := $(BLD_DIR)/log
 OCD_DIR := $(BLD_DIR)/openocd
-BSH_DIR := $(BLD_DIR)/scripts
+SRP_DIR := $(BLD_DIR)/scripts
 
 BIN = $(BIN_DIR)/$(TARGET).bin
 ELF = $(BIN_DIR)/$(TARGET).elf
@@ -78,7 +73,7 @@ PREFIX      = arm-none-eabi-
 
 ARCH_FLAGS  = -mcpu=cortex-m0 -mthumb -msoft-float
 
-BUILD_FLAGS = $(BUILD_TYPE) $(CLK_SOURCE) $(BSP)
+BUILD_FLAGS = $(BUILD_TYPE) $(BOARD)
 
 CC = $(PREFIX)gcc
 CCFLAGS  = -std=gnu99 -ggdb3 -O2 -Wall -Wextra
@@ -127,12 +122,12 @@ $(TARGET): $(BIN) $(ELF) $(ROM) $(LOG)
 $(BIN): $(ELF) | $(BIN_DIR)
 		@echo $(call hdr_print,"Creating $@ from $^:")
 		$(CP) $(CPFLAGS) $(ELF) $(BIN)
-		sh $(BSH_DIR)/git-hash-name-copy.sh $(BIN)
+		sh $(SRP_DIR)/git-hash-bin-copy.sh $(BIN)
 
 $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@ from $^:")
 		$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
-		sh $(BSH_DIR)/git-hash-name-copy.sh $(ELF)
+		sh $(SRP_DIR)/git-hash-bin-copy.sh $(ELF)
 		$(SZ) $(ELF)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIRS) $(DEP_DIRS)
@@ -161,9 +156,6 @@ $(LOG): $(ELF) | $(LOG_DIR)
 
 # Utility Rules ################################################################
 
-.PHONY: log
-log: $(LOG)
-
 .PHONY: clean
 clean:
 		@echo $(call hdr_print,"Cleaning $(CLEAN)")
@@ -176,7 +168,7 @@ flash: $(BIN)
 
 .PHONY: tmux
 tmux:
-		sh $(BSH_DIR)/tmux-bootstrap.sh $(TARGET)
+		sh $(SRP_DIR)/tmux-bootstrap.sh $(TARGET)
 
 .PHONY: help
 help:

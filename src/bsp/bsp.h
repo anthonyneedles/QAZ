@@ -10,11 +10,11 @@
 #ifndef __BSP_BSP_H_
 #define __BSP_BSP_H_
 
-#if defined(BSP_QAZ_65)
+#if defined(QAZ_65)
 
 #include "bsp/bsp_qaz_65.h"
 
-#elif defined(BSP_TESTBOARD)
+#elif defined(QAZ_TESTBOARD)
 
 #include "bsp/bsp_testboard.h"
 
