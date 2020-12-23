@@ -35,5 +35,5 @@ int main(void)
     // enter the loop - no return
     TimeSliceLoop();
 
-    while(1) {}
+    while (1) {}
 }

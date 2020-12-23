@@ -11,8 +11,8 @@
  * debug.
  */
 
-#ifndef __UTIL_DEBUG_H
-#define __UTIL_DEBUG_H
+#ifndef UTIL_DEBUG_H_
+#define UTIL_DEBUG_H_
 
 #if defined(DEBUG)
 
@@ -71,4 +71,4 @@ void DebugAssertFailed(char *file, int line, char *expr);
 
 #endif
 
-#endif /* __UTIL_DEBUG_H */
+#endif  // UTIL_DEBUG_H_

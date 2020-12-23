@@ -16,8 +16,8 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#ifndef __CORE_TIME_SLICE_H_
-#define __CORE_TIME_SLICE_H_
+#ifndef CORE_TIME_SLICE_H_
+#define CORE_TIME_SLICE_H_
 
 #include "qaz/key_matrix.h"
 #include "qaz/rgb_led.h"
@@ -60,4 +60,4 @@ void TimeSliceLoop(void);
  */
 void SysTick_Handler(void);
 
-#endif /* __CORE_TIME_SLICE_H_ */
+#endif  // CORE_TIME_SLICE_H_

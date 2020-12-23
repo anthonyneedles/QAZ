@@ -89,7 +89,7 @@ uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n)
     }
 
     for (int i = 0; i < n; ++i) {
-        while ((uart->regs->ISR & USART_ISR_TXE) == 0);
+        while ((uart->regs->ISR & USART_ISR_TXE) == 0) {}
         uart->regs->TDR = data[i];
     }
 

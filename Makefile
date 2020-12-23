@@ -111,6 +111,9 @@ SF = st-flash
 SFFLAGS  = write
 SF_ADDR  = 0x08000000
 
+LINTFLAGS  = --linelength=100 --recursive --root $(SRC_DIR)
+LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-readability/casting,-runtime/references
+
 # Build Rules ##################################################################
 
 .PHONY: all
@@ -165,6 +168,10 @@ clean:
 .PHONY: doc | $(DOC_DIR)
 doc:
 		doxygen
+
+.PHONY: lint
+lint:
+	$(SRP_DIR)/cpplint.py $(LINTFLAGS) $(SRC_DIR)/*
 
 .PHONY: flash
 flash: $(BIN)

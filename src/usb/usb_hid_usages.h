@@ -9,8 +9,8 @@
  * HID usages keys to be sent to the USB HID host
  */
 
-#ifndef __USB_USB_HID_USAGES_H
-#define __USB_USB_HID_USAGES_H
+#ifndef USB_USB_HID_USAGES_H_
+#define USB_USB_HID_USAGES_H_
 
 // Keyboard/Keypad Page (0x07)
 
@@ -128,4 +128,4 @@
 #define HID_USAGE_KEYBOARD_VOLUP (0x80)
 #define HID_USAGE_KEYBOARD_VOLDN (0x81)
 
-#endif /* __USB_USB_HID_USAGES_H */
+#endif  // USB_USB_HID_USAGES_H_

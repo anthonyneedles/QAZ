@@ -10,8 +10,8 @@
  * or project execution. Set CLK_SOURCE in the Makefile to select the clock.
  */
 
-#ifndef __CORE_CLOCK_H
-#define __CORE_CLOCK_H
+#ifndef CORE_CLOCK_H_
+#define CORE_CLOCK_H_
 
 /**
  * @brief Init system clock
@@ -21,4 +21,4 @@
  */
 void ClockInit(void);
 
-#endif /* __CORE_CLOCK_H */
+#endif  // CORE_CLOCK_H_

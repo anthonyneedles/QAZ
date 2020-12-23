@@ -9,8 +9,8 @@
  * Loads BSP header depending on the $BSP macro (set in user-definitions section in Makefile)
  */
 
-#ifndef __BSP_BSP_H_
-#define __BSP_BSP_H_
+#ifndef BSP_BSP_H_
+#define BSP_BSP_H_
 
 #if defined(QAZ_65)
 
@@ -26,4 +26,4 @@
 
 #endif
 
-#endif /* __BSP_BSP_H_ */
+#endif  // BSP_BSP_H_

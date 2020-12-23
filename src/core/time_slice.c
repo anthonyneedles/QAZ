@@ -20,9 +20,9 @@
 
 #include <stdbool.h>
 
-#include "stm32f0xx.h"
 #include "util/debug.h"
 #include "util/macros.h"
+#include "stm32f0xx.h"  // NOLINT
 
 // find number of loops needed to meet a given period
 #define CALCULATE_LOOPS(period_ms) (period_ms/LOOP_PERIOD_MS)
@@ -68,15 +68,15 @@ void TimeSliceInit(void)
     uint32_t st_error = SysTick_Config(CLKCYCLES_PER_MS);
 
     if (st_error == 0U) {
-		    // 0U = Systick timer successfully loaded
-		    init_flag = true;
+        // 0U = Systick timer successfully loaded
+        init_flag = true;
         DbgPrintf("Initialized: TimeSlice\r\n");
-	  } else {
-		    // 1U = Reload value impossible
-		    init_flag = false;
+    } else {
+        // 1U = Reload value impossible
+        init_flag = false;
         DbgPrintf("ERROR: SysTick load failed!\r\n");
         DBG_ASSERT(FORCE_ASSERT);
-	  }
+      }
 }
 
 /**
@@ -161,5 +161,5 @@ void timeSliceManagerTask(void)
  */
 void SysTick_Handler(void)
 {
-	current_ms_cnt++;
+    current_ms_cnt++;
 }

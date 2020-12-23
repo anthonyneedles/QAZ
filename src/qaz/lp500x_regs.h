@@ -7,8 +7,8 @@
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
-#ifndef __QAZ_LP500X_REGS_H_
-#define __QAZ_LP500X_REGS_H_
+#ifndef QAZ_LP500X_REGS_H_
+#define QAZ_LP500X_REGS_H_
 
 #define DEVICE_CONFIG0_R       (0x00)
 #define   CHIP_EN                (0x40)
@@ -47,4 +47,4 @@
 #define OUT11_COLOR_R          (0x16)
 #define RESET_R                (0x17)
 
-#endif /* __QAZ_LP500X_REGS_H_ */
+#endif  // QAZ_LP500X_REGS_H_

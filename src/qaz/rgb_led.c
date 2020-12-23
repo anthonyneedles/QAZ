@@ -16,9 +16,9 @@
 #include "comms/i2c.h"
 #include "qaz/key_matrix.h"
 #include "qaz/lp500x_regs.h"
-#include "stm32f0xx.h"
 #include "util/debug.h"
 #include "util/macros.h"
+#include "stm32f0xx.h"  // NOLINT
 
 #define I2C_ADDR (0x14)
 

@@ -12,8 +12,8 @@
 
 #include "util/hb.h"
 
-#include "stm32f0xx.h"
 #include "util/debug.h"
+#include "stm32f0xx.h"  // NOLINT
 
 #define HB_LED_ON()  (HB_LED_PORT->ODR |=  (1UL << HB_LED_NUM))
 #define HB_LED_OFF() (HB_LED_PORT->ODR &= ~(1UL << HB_LED_NUM))

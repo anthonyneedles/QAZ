@@ -21,7 +21,7 @@
 #if defined(DEBUG)
 
 // checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
-#define IS_WIDTH_SPECIFIER(x,y) ((x == '0') && (y >= '0' && y <= '8'))
+#define IS_WIDTH_SPECIFIER(x, y) ((x == '0') && (y >= '0' && y <= '8'))
 
 // maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
 #define MAX_EXPAND_CHARACTERS (50)
@@ -163,7 +163,7 @@ void DbgPrintf(const char *fmt_ptr, ...)
  * @param[in] base expression line number
  * @param[in] expr expression string
  */
-void DebugAssertFailed(char *file, int line, char *expr) 
+void DebugAssertFailed(char *file, int line, char *expr)
 {
     DbgPrintf("\r\nERROR: ASSERTION FAILED!\r\n");
     DbgPrintf("EXPR: %s\r\n", expr);
@@ -218,35 +218,35 @@ static void debugPutString(const char *data)
  */
 static char *debugExpandNum(unsigned num, int base, int width)
 {
-  // number-to-character array
-	static const char num_chars[]= "0123456789ABCDEF";
+    // number-to-character array
+    static const char num_chars[]= "0123456789ABCDEF";
 
-  // output buffer, +1 for the null. a pointer to somewhere in this buffer is returned
-	static char buffer[MAX_EXPAND_CHARACTERS + 1];
+    // output buffer, +1 for the null. a pointer to somewhere in this buffer is returned
+    static char buffer[MAX_EXPAND_CHARACTERS + 1];
 
-  // pointer to where we are in buffer. start at the end and work towards the start
-	char *expand_ptr =  &buffer[MAX_EXPAND_CHARACTERS];
+    // pointer to where we are in buffer. start at the end and work towards the start
+    char *expand_ptr =  &buffer[MAX_EXPAND_CHARACTERS];
 
-  // the return char array will be interpreted as a string, so put a null at the end
-	*expand_ptr = '\0';
+    // the return char array will be interpreted as a string, so put a null at the end
+    *expand_ptr = '\0';
 
-  // convert input num to character, starting with least significant digit
-	do {
-    expand_ptr--;
-		*expand_ptr = num_chars[num%base];
-		num /= base;
-    width--;
-	} while ((num != 0) && (expand_ptr != buffer));
+    // convert input num to character, starting with least significant digit
+    do {
+        expand_ptr--;
+        *expand_ptr = num_chars[num%base];
+        num /= base;
+        width--;
+    } while ((num != 0) && (expand_ptr != buffer));
 
-  // fill with zeros if we haven't hit the desired width yet
-  while ((width > 0) && (expand_ptr != buffer)) {
-    expand_ptr--;
-    *expand_ptr = '0';
-    width--;
-  }
+    // fill with zeros if we haven't hit the desired width yet
+    while ((width > 0) && (expand_ptr != buffer)) {
+        expand_ptr--;
+        *expand_ptr = '0';
+        width--;
+    }
 
-  // return the start of the chunk of the null-terminated buffer we filled with our expansion
-	return expand_ptr;
+    // return the start of the chunk of the null-terminated buffer we filled with our expansion
+    return expand_ptr;
 }
 
 #endif

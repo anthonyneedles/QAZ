@@ -10,8 +10,8 @@
  * hanging and/or violating timeslice scheduling.
  */
 
-#ifndef __UTIL_HB_H
-#define __UTIL_HB_H
+#ifndef UTIL_HB_H_
+#define UTIL_HB_H_
 
 #include "bsp/bsp.h"
 
@@ -32,4 +32,4 @@ void HeartbeatInit(void);
  */
 void HeartbeatTask(void);
 
-#endif /* __UTIL_HB_H */
+#endif  // UTIL_HB_H_

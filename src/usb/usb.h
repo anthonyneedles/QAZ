@@ -13,8 +13,8 @@
  * Endpoint 1 -> Interrupt, TX only
  */
 
-#ifndef __USB_USB_H
-#define __USB_USB_H
+#ifndef USB_USB_H_
+#define USB_USB_H_
 
 #include <stdint.h>
 
@@ -49,4 +49,4 @@ void USBWrite(int ep, const uint8_t *buf, uint16_t len);
  */
 void USB_IRQHandler(void);
 
-#endif /* __USB_USB_H */
+#endif  // USB_USB_H_

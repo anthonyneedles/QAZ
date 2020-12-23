@@ -24,13 +24,13 @@
  *   user keys, such as changing the RGB LED color, brightness, etc.
  */
 
-#ifndef __QAZ_KEY_MATRIX_H_
-#define __QAZ_KEY_MATRIX_H_
+#ifndef QAZ_KEY_MATRIX_H_
+#define QAZ_KEY_MATRIX_H_
 
 #include <stdint.h>
 
 #include "bsp/bsp.h"
-#include "stm32f0xx.h"
+#include "stm32f0xx.h"  // NOLINT
 
 #define KEY_MATRIX_TASK_PERIOD_MS (20u)
 
@@ -80,4 +80,4 @@ void KeyMatrixTask(void);
  */
 void KeyMatrixGetKeyBuffer(keys_t *key_buf);
 
-#endif /* __QAZ_KEY_MATRIX_H_ */
+#endif  // QAZ_KEY_MATRIX_H_

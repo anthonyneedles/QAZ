@@ -11,12 +11,12 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#ifndef __COMMS_UART_H_
-#define __COMMS_UART_H_
+#ifndef COMMS_UART_H_
+#define COMMS_UART_H_
 
 #include <stdint.h>
 
-#include "stm32f0xx.h"
+#include "stm32f0xx.h"  // NOLINT
 
 // status code returned by UART API
 typedef enum {
@@ -58,4 +58,4 @@ uart_status_t UARTInit(uart_handle_t *uart);
  */
 uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n);
 
-#endif /* __COMMS_UART_H_ */
+#endif  // COMMS_UART_H_

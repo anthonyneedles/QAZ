@@ -17,10 +17,10 @@
 
 #include <stdbool.h>
 
-#include "stm32f0xx.h"
 #include "usb/usb_descriptors.h"
 #include "util/debug.h"
 #include "util/macros.h"
+#include "stm32f0xx.h"  // NOLINT
 
 // Total number of EPs used
 #define NUM_EP (2)
@@ -151,13 +151,13 @@ void USBInit(void)
     RCC->APB1ENR |= RCC_APB1ENR_USBEN;
 
     // Ensure USB clock is set
-    while ((RCC->APB1ENR & RCC_APB1ENR_USBEN_Msk) != RCC_APB1ENR_USBEN) {};
+    while ((RCC->APB1ENR & RCC_APB1ENR_USBEN_Msk) != RCC_APB1ENR_USBEN) {}
 
     // Exit USB power down
     USB->CNTR &= ~USB_CNTR_PDWN;
 
     // Startup can take a max of 1us
-    //nop_delay(50);
+    LOOP_DELAY(50);
 
     // Clear peripheral reset
     USB->CNTR = USB_CNTR_FRES;
@@ -283,8 +283,7 @@ static void usbEP0Setup(void)
     PRINT_SETUP(setup_pkt);
 
     // determine request type, and proceed accordingly
-    switch(REQ(setup_pkt.bmRequestType, setup_pkt.bRequest)) {
-
+    switch (REQ(setup_pkt.bmRequestType, setup_pkt.bRequest)) {
     // handle both device and interface get descriptor
     case REQ(REQ_IN_STD_DEV, REQ_GET_DESC):
     case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
@@ -364,7 +363,7 @@ static void usbEP0Setup(void)
     // host request status
     case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
     {
-        const uint8_t status[] = { 0x01, 0x00 }; // self powered
+        const uint8_t status[] = { 0x01, 0x00 };  // self powered
         DbgPrintf("GET STAT ");
         USBWrite(0, status, sizeof(status));
         break;

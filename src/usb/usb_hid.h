@@ -9,8 +9,8 @@
  * This module will use the USB driver to send keycodes to the USB host.
  */
 
-#ifndef __USB_USB_HID_H
-#define __USB_USB_HID_H
+#ifndef USB_USB_HID_H_
+#define USB_USB_HID_H_
 
 #define USB_HID_TASK_PERIOD_MS (20U)
 
@@ -29,4 +29,4 @@ void USBHIDInit(void);
  */
 void USBHIDTask(void);
 
-#endif /* __USB_USB_HID_H */
+#endif  // USB_USB_HID_H_

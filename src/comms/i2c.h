@@ -11,12 +11,12 @@
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
  */
 
-#ifndef __COMMS_I2C_H_
-#define __COMMS_I2C_H_
+#ifndef COMMS_I2C_H_
+#define COMMS_I2C_H_
 
 #include <stdint.h>
 
-#include "stm32f0xx.h"
+#include "stm32f0xx.h"  // NOLINT
 
 // status code returned by I2C API
 typedef enum {
@@ -70,4 +70,4 @@ i2c_status_t I2CInit(i2c_handle_t *i2c);
  */
 i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n);
 
-#endif /* __COMMS_I2C_H_ */
+#endif  // COMMS_I2C_H_

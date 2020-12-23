@@ -7,12 +7,12 @@
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
-#ifndef __UTIL_STATIC_ASSERT_H_
-#define __UTIL_STATIC_ASSERT_H_
+#ifndef UTIL_MACROS_H_
+#define UTIL_MACROS_H_
 
 // combining arguments after expansion
-#define GLUE(a,b) __GLUE(a,b)
-#define __GLUE(a,b) a ## b
+#define GLUE(a, b) __GLUE(a, b)
+#define __GLUE(a, b) a ## b
 
 // use STATIC_ASSERT outside of functions to force a compiler error if 'exp' is false
 // "context_msg" will appear in the compiler message, so fill it with useful information
@@ -40,4 +40,4 @@
 // for-loop delay. must measure actual delay for "accuracy"
 #define LOOP_DELAY(loops) for (volatile int loop_cnt = 0; loop_cnt < loops; ++loop_cnt);
 
-#endif /* __UTIL_STATIC_ASSERT_H_ */
+#endif  // UTIL_MACROS_H_

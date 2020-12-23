@@ -9,8 +9,8 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#ifndef __QAZ_RGB_LED_H
-#define __QAZ_RGB_LED_H
+#ifndef QAZ_RGB_LED_H_
+#define QAZ_RGB_LED_H_
 
 #include <stdint.h>
 
@@ -106,4 +106,4 @@ void KeyMatrixCallback_COLOR(void);
  */
 void KeyMatrixCallback_PROF(void);
 
-#endif /* __QAZ_RGB_LED_H */
+#endif  // QAZ_RGB_LED_H_

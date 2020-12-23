@@ -12,7 +12,7 @@
 
 #include "core/clock.h"
 
-#include "stm32f0xx.h"
+#include "stm32f0xx.h"  // NOLINT
 
 /**
  * @brief Init system clock
@@ -59,18 +59,18 @@ void ClockInit(void)
     RCC->CFGR = ((RCC->CFGR & ~RCC_CFGR_MCO_Msk) | RCC_CFGR_MCO_SYSCLK);
 
     // enable GPIOA clock (MCO pin used is PA8)
-	  RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
 
     GPIOA->MODER |= GPIO_MODER_MODER8_0;
 
-	  // set MCO pin to alternate function
-	  GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER8_Msk)
+    // set MCO pin to alternate function
+    GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER8_Msk)
             | (2UL << GPIO_MODER_MODER8_Pos));
 
     // set for high speed
     GPIOA->OSPEEDR = ((GPIOA->OSPEEDR & ~GPIO_OSPEEDR_OSPEEDR8_Msk)
             | (3UL << GPIO_OSPEEDR_OSPEEDR8_Pos));
 
-	  // set MCO pin to alternate function 0 (MCO)
-	  GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL8_Msk;
+    // set MCO pin to alternate function 0 (MCO)
+    GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL8_Msk;
 }

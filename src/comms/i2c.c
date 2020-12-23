@@ -19,7 +19,7 @@
 
 #define GPIO_AFRH_AFSEL10_AF1 (0x1u << GPIO_AFRH_AFSEL10_Pos)
 #define GPIO_AFRH_AFSEL11_AF1 (0x1u << GPIO_AFRH_AFSEL11_Pos)
-#define TX_REG_EMPTY_FLAG ((I2C1->ISR & I2C_ISR_TXE_Msk) >> I2C_ISR_TXE_Pos)
+#define TX_REG_EMPTY_FLAG  ((I2C1->ISR & I2C_ISR_TXE_Msk)   >> I2C_ISR_TXE_Pos)
 #define STOP_COND_GEN_FLAG ((I2C1->ISR & I2C_ISR_STOPF_Msk) >> I2C_ISR_STOPF_Pos)
 #define SET 1U
 
@@ -125,7 +125,7 @@ i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8
         i2c->regs->TXDR = data[i];
     }
 
-    while(STOP_COND_GEN_FLAG != SET){}
+    while (STOP_COND_GEN_FLAG != SET) {}
     i2c->regs->ICR |= (I2C_ICR_STOPCF);
 
     i2c->regs->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);

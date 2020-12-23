@@ -10,12 +10,12 @@
  * The information for a descriptor can then be obtained via API.
  */
 
-#ifndef __USB_USB_DESCRIPTORS_H
-#define __USB_USB_DESCRIPTORS_H
+#ifndef USB_USB_DESCRIPTORS_H_
+#define USB_USB_DESCRIPTORS_H_
 
 #include <stdint.h>
 
-#include "stm32f0xx.h"
+#include "stm32f0xx.h"  // NOLINT
 
 // Bits in modifier byte in HID report
 #define MODIFIER_LCTRL_MSK  (0x01)
@@ -67,4 +67,4 @@ typedef struct {
  */
 int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc);
 
-#endif /* __USB_USB_DESCRIPTORS_H */
+#endif  // USB_USB_DESCRIPTORS_H_

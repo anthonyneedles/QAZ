@@ -13,12 +13,12 @@
 #include <stdint.h>
 
 #include  "qaz/key_matrix.h"
-#include "stm32f0xx.h"
 #include "usb/usb.h"
 #include "usb/usb_descriptors.h"
 #include "usb/usb_hid_usages.h"
 #include "util/debug.h"
 #include "util/macros.h"
+#include "stm32f0xx.h" // NOLINT
 
 #define INTERRUPT_EPN (1)
 
