@@ -3,7 +3,7 @@
 /build/log
 /build/obj
 
-/doc
+/docs
 
 *.zip
 *.tar

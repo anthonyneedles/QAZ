@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/12/21
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * This source file handles all UART communications. Configured for 115200 baud.
  *
@@ -17,8 +16,6 @@
 #include "util/debug.h"
 
 /**
- * UARTInit
- *
  * @brief Enables USART for TX at 115200 baud, 8-N-1.
  *
  * @param[in] uart handle for uart to init
@@ -69,8 +66,6 @@ uart_status_t UARTInit(uart_handle_t *uart)
 }
 
 /**
- * UARTWriteBlocking
- *
  * @brief Sends data over USART, blocking on write ready
  *
  * Blocks until USART is ready to transmit, then pushes character onto output buffer.

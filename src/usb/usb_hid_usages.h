@@ -1,8 +1,10 @@
 /**
- * @file    key_matrix.h
- * @author  Anthony Needles
- * @date    2020/10/31
- * @brief   Keyboard/Keypad Page (0x07) HID usages
+ * @file      usb_hid_usages.h
+ * @brief     Keyboard/Keypad Page (0x07) HID usages
+ *
+ * @author    Anthony Needles
+ * @date      2020/11/02
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * HID usages keys to be sent to the USB HID host
  */

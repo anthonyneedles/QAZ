@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/11/02
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * This module will use the USB driver to send keycodes to the USB host.
  */
@@ -35,9 +34,7 @@ static key_buf_t key_buf;
 
 static void usbhidSendReport(void);
 
-/*
- * USBHIDInit
- *
+/**
  * @brief Intialize the USB HID module
  *
  * We only need to ready key buffers and initialize the USB driver.
@@ -54,9 +51,7 @@ void USBHIDInit(void)
     DbgPrintf("Initialized: USB HID\r\n");
 }
 
-/*
- * USBHIDTask
- *
+/**
  * @brief Periodically sample key buffer, and send report if necessary
  *
  * We check the currently pressed keys, and if there has been a change then we send a new key HID
@@ -80,9 +75,7 @@ void USBHIDTask(void)
     }
 }
 
-/*
- * usbhidSendReport
- *
+/**
  * @brief Populate HID report and send it off
  *
  * The report buffer has been defined in the report descriptor that was requested from the device

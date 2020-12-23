@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/10/12
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Holds any debug functionality that will effectively "not do anything" if BUILD_TYPE is not set
  * to DEBUG, in order to remove code size and processor time dedicated to debug.
@@ -38,8 +37,6 @@ static void debugPutString(const char *data);
 static char *debugExpandNum(unsigned num, int base, int width);
 
 /**
- * DebugInit
- *
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
  */
 void DebugInit(void)
@@ -51,9 +48,7 @@ void DebugInit(void)
 }
 
 /**
- * DbgPrint
- *
- * @brief Sends formatted string over USART1
+ * @brief Sends formatted string over UART
  *
  * When DEBUG, this function will expand the given format string with the variable args. The
  * expanded string will then be output on USART1 TX.
@@ -159,8 +154,6 @@ void DbgPrintf(const char *fmt_ptr, ...)
 }
 
 /**
- * DebugAssertFailed
- *
  * @brief Called by DBG_ASSERT() if assertion failed (ONLY IN DEBUG)
  *
  * Print out the context and expression of the failed assertion.
@@ -180,8 +173,6 @@ void DebugAssertFailed(char *file, int line, char *expr)
 }
 
 /**
- * debugPutChar
- *
  * @brief Sends single character over USART1
  *
  * Blocks until USART1 is ready to transmit, then pushes character onto output buffer.
@@ -192,8 +183,6 @@ static void debugPutChar(char data)
 }
 
 /**
- * debugPutString
- *
  * @brief Sends string over USART1
  *
  * Pushes each character in a string over USART1.
@@ -208,8 +197,6 @@ static void debugPutString(const char *data)
 }
 
 /**
- * debugExpandNum
- *
  * @brief Expand a number into string representation
  *
  * Takes the absolute value of the number to expand (if negative, the '-' prints before this) and

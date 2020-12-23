@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/10/12
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * This source file handles all I2C communications. Configured for 100kHz SCL frequency.
  *
@@ -39,8 +38,6 @@ typedef struct {
 } i2c_handle_t;
 
 /**
- * I2CInit
- *
  * @brief Initializes I2C module
  *
  * Enables clocks for I2C pins as well as I2C module. GPIO configured as open drain with no pull
@@ -55,8 +52,6 @@ typedef struct {
 i2c_status_t I2CInit(i2c_handle_t *i2c);
 
 /**
- * I2CWriteMasterBlocking
- *
  * @brief Master transmit function for I2C
  *
  * Handles master transmission of data to slave. Clears current slave address and number of bytes

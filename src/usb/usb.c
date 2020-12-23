@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/11/02
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * This module interfaces with the USB peripheral to establish basic USB HID communications with
  * host.
@@ -93,21 +92,21 @@
         pkt.wIndex, pkt.wLength);
 
 // SETUP packet as it will appear in memory
-typedef struct __PACKED {
+typedef struct {
     uint8_t bmRequestType;
     uint8_t bRequest;
     uint16_t wValue;
     uint16_t wIndex;
     uint16_t wLength;
-} usb_setup_packet_t;
+} usb_setup_packet_t __PACKED;
 
 // Buffer descriptor table entry as it will appear in memory
-typedef struct __PACKED {
+typedef struct {
     uint16_t tx_addr;
     uint16_t tx_size;
     uint16_t rx_addr;
     uint16_t rx_size;
-} buf_desc_t;
+} buf_desc_t __PACKED;
 
 // Entire buffer descriptor table
 typedef struct {
@@ -136,9 +135,7 @@ static void usbEP1Init(void);
 static void usbEP0Setup(void);
 static void usbEP0Read(uint8_t *in_buf);
 
-/*
- * USBInit
- *
+/**
  * @brief Performs USB port, clock, and peripheral initialization
  *
  * USB port is used in startup (for DFU), so the ports come up configured. Host detects device upon
@@ -183,18 +180,17 @@ void USBInit(void)
     DbgPrintf("Initialized: USB\r\n");
 }
 
-/*
- * USBWrite
- *
+/**
  * @brief Write data from input buffer into PMA, set TX byte count, and set TX STATUS to VALID
  *
- * Due to a bug when writing bytes into the PMA, only halfword accesses work. So @len will
- * need to always be even (and @buf an even number of bytes).
+ * Due to a bug when writing bytes into the PMA, only halfword accesses work. So `len` will
+ * need to always be even (and `buf` an even number of bytes).
  *
  * Only works because MCU architecture and USB protocol is little endian.
  *
+ * @param[in] ep  the endpoint to write with
  * @param[in] buf input buffer that contains data to be tranmitted
- * @param[in] len number of bytes in @buf
+ * @param[in] len number of bytes in `buf`
  */
 void USBWrite(int ep, const uint8_t *buf, uint16_t len)
 {
@@ -218,9 +214,7 @@ void USBWrite(int ep, const uint8_t *buf, uint16_t len)
     SET_TX_STATUS(ep, USB_EP_TX_VALID);
 }
 
-/*
- * usbEP0Init
- *
+/**
  * @brief Initialize endpoint 0 as control endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission and reception.
@@ -239,9 +233,7 @@ static void usbEP0Init(void)
     SET_RX_STATUS(0, USB_EP_RX_VALID);
 }
 
-/*
- * usbEP1Init
- *
+/**
  * @brief Initialize endpoint 1 as interrupt endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission only.
@@ -258,9 +250,7 @@ static void usbEP1Init(void)
     SET_TX_STATUS(1, USB_EP_TX_NAK);
 }
 
-/*
- * usbEP0Read
- *
+/**
  * @brief Read RX byte count sized block from PMA into input buffer and set RX STATUS to VALID
  *
  * @param[in, out] buf output buffer that is filled with received data
@@ -275,9 +265,7 @@ static void usbEP0Read(uint8_t *buf) {
     SET_RX_STATUS(0, USB_EP_RX_VALID);
 }
 
-/*
- * usbEP0Setup
- *
+/**
  * @brief Handle SETUP packet
  *
  * Called when a CTR interrupt is received, and CTR_RX and SETUP field in the endpoint 0 register
@@ -393,9 +381,7 @@ static void usbEP0Setup(void)
     }
 }
 
-/*
- * usbReset
- *
+/**
  * @brief Handle RESET request
  *
  * Called when reset interrupt recieved. Restores peripheral to known starting state, with address
@@ -418,9 +404,7 @@ static void usbReset(void)
     USB->DADDR = USB_DADDR_EF;
 }
 
-/*
- * USB_IRQHandler()
- *
+/**
  * @brief Route USB events
  *
  * Routes module function based on received interrupts. Most are ignored, except RESET and CTR.

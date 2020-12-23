@@ -1,8 +1,10 @@
 /**
- * @file    bsp_qaz_testboard.h
- * @author  Anthony Needles
- * @date    2020/12/20
- * @brief   BSP for the QAZ testboard
+ * @file      bsp_qaz_testboard.h
+ * @brief     BSP for the QAZ testboard
+ * 
+ * @author    Anthony Needles
+ * @date      2020/12/20
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Definitions specfic to the QAZ testboard.
  */

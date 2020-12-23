@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/11/26
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * This module defines all of the USB descriptors (device, config, report, etc.) for a given device.
  * The information for a descriptor can then be obtained via API.
@@ -45,7 +44,7 @@ typedef struct {
 } usb_desc_t;
 
 // HID report structure defined by HID Report Descriptor
-typedef struct __PACKED {
+typedef struct {
     uint8_t modifiers;
     uint8_t reserved;
     uint8_t key0;
@@ -54,18 +53,16 @@ typedef struct __PACKED {
     uint8_t key3;
     uint8_t key4;
     uint8_t key5;
-} hid_keyboard_report_t;
+} hid_keyboard_report_t __PACKED;
 
-/*
- * USBGetDescriptor
- *
+/**
  * @brief For obtaining descriptors
  *
  * Information for a given descriptor can be requested with this, and (if exists) a pointer to the
- * desc buffer and the size (in bytes) is returned via @desc.
+ * desc buffer and the size (in bytes) is returned via @p desc.
  *
  * @param[in]     desc_id ID of requested descriptor
- * @param[in,out] desc    Descriptor information struct that will be populated (if @desc_id valid)
+ * @param[in,out] desc    Descriptor information struct that will be populated (if desc_id valid)
  * @return 0 if success, -1 if descriptor is not defined
  */
 int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc);

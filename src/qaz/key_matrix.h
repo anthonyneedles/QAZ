@@ -1,8 +1,10 @@
 /**
- * @file    key_matrix.h
- * @author  Anthony Needles
- * @date    2020/10/04
- * @brief   Implements key matrix scanning
+ * @file      key_matrix.h
+ * @brief     Implements key matrix scanning
+ * 
+ * @author    Anthony Needles
+ * @date      2020/10/04
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Used to detect keypress on a key matrix. The columns open drain outputs, and the rows are inputs
  * with the pull ups. Under normal circumstances, the columns are high-Z, and the rows will read
@@ -54,8 +56,6 @@ typedef struct {
 } key_layer_t;
 
 /**
- * KeyMatrixInit
- *
  * @brief Initializes columns/rows
  *
  * Takes the given row/columns gpio definitions and inits them as needed.
@@ -64,8 +64,6 @@ typedef struct {
 void KeyMatrixInit(void);
 
 /**
- * KeyMatrixTask
- *
  * @brief Calls key scan routine, fills key code buffer, calls callbacks
  *
  * This task will scan the physical keys each task period. The output key_in buffer will hold the
@@ -75,9 +73,7 @@ void KeyMatrixInit(void);
  */
 void KeyMatrixTask(void);
 
-/*
- * KeyMatrixGetKeyBuffer
- *
+/**
  * @brief Fills input buffer with current key buffer
  *
  * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)

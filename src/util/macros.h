@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/10/12
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
 #ifndef __UTIL_STATIC_ASSERT_H_

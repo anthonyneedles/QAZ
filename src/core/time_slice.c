@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/10/12
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Core time slice loop scheduler, which will use the SysTick timer to execute a loop at a set
  * LOOP_PERIOD_MS period. It will count these loops to execute given tasks at a specified period.
@@ -59,8 +58,6 @@ static bool init_flag = 0U;
 void timeSliceManagerTask(void);
 
 /**
- * TimeSliceInit
- *
  * @brief Init TimeSlice loop
  *
  * Enables SysTick timer via CMSIS SysTick_Config (found in arch/core_cm0.h) with required clock
@@ -83,8 +80,6 @@ void TimeSliceInit(void)
 }
 
 /**
- * TimeSliceInit
- *
  * @brief Init TimeSlice loop
  *
  * Enables SysTick timer via CMSIS SysTick_Config (found in arch/core_cm0.h) with required clock
@@ -110,8 +105,6 @@ void TimeSliceLoop(void)
 }
 
 /**
- * TimeSliceLoop
- *
  * @brief Enters the infinite TimeSlice loop
  *
  * This is the main execution loop, and should be called after all initialization is finished.
@@ -161,8 +154,6 @@ void timeSliceManagerTask(void)
 }
 
 /**
- * SysTickHandler
- *
  * @brief SysTick IRQ Handler
  *
  * When initalized, the SysTick will generate interrupts at 1kHz. This IRQ handler will then

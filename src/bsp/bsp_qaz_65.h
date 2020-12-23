@@ -1,8 +1,10 @@
 /**
- * @file    bsp_qaz_65.h
- * @author  Anthony Needles
- * @date    2020/12/20
- * @brief   BSP for the QAZ 65% board
+ * @file      bsp_qaz_65.h
+ * @brief     BSP for the QAZ 65% board
+ * 
+ * @author    Anthony Needles
+ * @date      2020/12/20
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Definitions specfic to the QAZ 65% board.
  */

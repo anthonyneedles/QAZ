@@ -1,8 +1,10 @@
 /**
- * @file    lp500x_regs.h
- * @author  Anthony Needles
- * @date    2020/10/31
- * @brief   LP500x LED Driver RGB regiser map
+ * @file      lp500x_regs.h
+ * @brief     LP500x LED Driver RGB regiser map
+ * 
+ * @author    Anthony Needles
+ * @date      2020/10/31
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
 #ifndef __QAZ_LP500X_REGS_H_

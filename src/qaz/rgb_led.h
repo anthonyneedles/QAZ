@@ -4,8 +4,7 @@
  *
  * @author    Anthony Needles
  * @date      2020/10/31
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
@@ -43,8 +42,6 @@
 #define COLOR_YELLOW  RGB_CODE(0xff, 0xff, 0x00)
 
 /**
- * RGBLEDInit
- *
  * @brief Initializes RGB LED
  *
  * Handles setting initial settings to the LED driver for the RGB LED. This includes first setting
@@ -57,8 +54,6 @@
 void RGBLEDInit(void);
 
 /**
- * RGBLEDBankSetColor
- *
  * @brief Sets ALL RGB LEDs to color
  *
  * Since the LEDs are in bank mode, all red/blue/green LEDs get set at once.
@@ -68,8 +63,6 @@ void RGBLEDInit(void);
 void RGBLEDBankSetColor(uint32_t rgb_code);
 
 /**
- * RGBLEDBankSetBrightness
- *
  * @brief Sets ALL RGB LEDs brightnesses
  *
  * Since the LEDs are in bank mode, all LED brightnesses set at once.
@@ -79,35 +72,27 @@ void RGBLEDBankSetColor(uint32_t rgb_code);
 void RGBLEDBankSetBrightness(uint8_t val);
 
 /**
- * RGBLEDTask
+ * @brief Task for updating RGB LEDs.
  *
- * @brief Task for updating LED brightness.
- *
- * Changes depending on the chosen profile.
+ * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
  */
 void RGBLEDTask(void);
 
 /**
- * KeyMatrixCallback_BRTUP
- *
  * @brief BRTUP key callback
  *
- * Increases brightness setting up
+ * Increases brightness setting up. Saturates at max.
  */
 void KeyMatrixCallback_BRTUP(void);
 
 /**
- * KeyMatrixCallback_BRTDN
- *
  * @brief BRTDN key callback
  *
- * Increases brightness setting down
+ * Increases brightness setting down. Saturates at min.
  */
 void KeyMatrixCallback_BRTDN(void);
 
 /**
- * KeyMatrixCallback_COLOR
- *
  * @brief COLOR key callback
  *
  * Cycles through colors
@@ -115,8 +100,6 @@ void KeyMatrixCallback_BRTDN(void);
 void KeyMatrixCallback_COLOR(void);
 
 /**
- * KeyMatrixCallback_PROF
- *
  * @brief PROF key callback
  *
  * Cycles through coloring profiles

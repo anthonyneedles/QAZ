@@ -37,6 +37,7 @@ BOARD = QAZ_65
 
 ALL_SRC := $(CXX_SRC) $(C_SRC) $(S_SRC)
 
+DOC_DIR := ./docs
 BLD_DIR := ./build
 SRC_DIR := ./src
 
@@ -63,7 +64,7 @@ ODS = $(LOG_DIR)/$(TARGET)-od.sym
 RES = $(LOG_DIR)/$(TARGET)-re.sym
 LOG = $(LST) $(MAP) $(ODS) $(RES)
 
-CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR)
+CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOC_DIR)
 
 hdr_print = "\n\033[1;38;5;174m$(1)\033[0m"
 
@@ -142,7 +143,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIRS) $(DEP_DIRS)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
-$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR):
+$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR) $(DOC_DIR):
 		@echo $(call hdr_print,"Making dir $@")
 		@mkdir --parents $@
 
@@ -161,6 +162,10 @@ clean:
 		@echo $(call hdr_print,"Cleaning $(CLEAN)")
 		@rm -rf $(CLEAN)
 
+.PHONY: doc | $(DOC_DIR)
+doc:
+		doxygen
+
 .PHONY: flash
 flash: $(BIN)
 		@echo $(call hdr_print,"Flashing $^ at $(SF_ADDR)")
@@ -178,6 +183,9 @@ help:
 		@echo ""
 		@echo "$(TARGET)"
 		@echo "  Build complete software target"
+		@echo ""
+		@echo "doc"
+		@echo "  Use Doxygen to create project documentation"
 		@echo ""
 		@echo "flash"
 		@echo "  Flash binary at $(SF_ADDR), make '$(TARGET)' if no binary"

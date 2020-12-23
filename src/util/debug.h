@@ -1,11 +1,10 @@
 /**
- * @file      debug.c
+ * @file      debug.h
  * @brief     Debug functionality. Only used when BUILD_TYPE = DEBUG
  *
  * @author    Anthony Needles
  * @date      2020/10/12
- * @copyright (c) 2020 Anthony Needles
- * @license   GNU GPL v3 (see LICENSE)
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Holds any debug functionality that will effectively "not do anything" if BUILD_TYPE is not set
  * to DEBUG (in top level Makefile), in order to remove code size and processor time dedicated to
@@ -23,16 +22,12 @@
 #define FORCE_ASSERT (0)
 
 /**
- * DebugInit
- *
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
  */
 void DebugInit(void);
 
 /**
- * DbgPrint()
- *
- * @brief Sends formatted string over USART1 (only for DEBUG)
+ * @brief Sends formatted string over UART
  *
  * When DEBUG, this function will expand the given format string with the variable args. The
  * expanded string will then be output on USART1 TX.
@@ -56,8 +51,6 @@ void DebugInit(void);
 void DbgPrintf(const char* format, ...);
 
 /**
- * DebugAssertFailed
- *
  * @brief Called by DBG_ASSERT() if assertion failed (ONLY IN DEBUG)
  *
  * Print out the context and expression of the failed assertion.

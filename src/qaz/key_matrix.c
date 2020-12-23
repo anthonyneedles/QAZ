@@ -1,8 +1,10 @@
 /**
- * @file    key_matrix.c
- * @author  Anthony Needles
- * @date    2020/10/04
- * @brief   Implements key matrix scanning
+ * @file      key_matrix.c
+ * @brief     Implements key matrix scanning
+ * 
+ * @author    Anthony Needles
+ * @date      2020/10/04
+ * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Used to detect keypress on a key matrix. The columns are set as outputs and rows set as inputs.
  * Each column is set high and each row is read.
@@ -105,8 +107,6 @@ static callback_states_t callback_states = { 0 };
 void keyMatrixScan(key_buf_t *keybuf);
 
 /**
- * KeyMatrixInit
- *
  * @brief Initializes columns/rows
  *
  * Takes the given row/columns gpio definitions and inits them as needed.
@@ -136,8 +136,6 @@ void KeyMatrixInit(void)
 }
 
 /**
- * KeyMatrixTask
- *
  * @brief Calls key scan routine, fills key code buffer, calls callbacks
  *
  * This task will scan the physical keys each task period. The output key_in buffer will hold the
@@ -203,9 +201,7 @@ void KeyMatrixTask(void)
     #undef K
 }
 
-/*
- * KeyMatrixGetKeyBuffer
- *
+/**
  * @brief Fills input buffer with current key buffer
  *
  * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)
@@ -219,9 +215,7 @@ void KeyMatrixGetKeyBuffer(keys_t *keybuf)
     }
 }
 
-/*
- * keyMatrixScan
- *
+/**
  * @brief Scans the key matrix to detect key presses
  *
  * Will set each column and read each row for each column. This allows detection of individual
