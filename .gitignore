@@ -3,7 +3,7 @@
 /build/log
 /build/obj
 
-/docs
+/docs/doxygen
 
 *.zip
 *.tar

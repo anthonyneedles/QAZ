@@ -37,9 +37,9 @@ BOARD = QAZ_65
 
 ALL_SRC := $(CXX_SRC) $(C_SRC) $(S_SRC)
 
-DOC_DIR := ./docs
 BLD_DIR := ./build
 SRC_DIR := ./src
+DOC_DIR := ./docs
 
 OBJ_DIR := $(BLD_DIR)/obj
 DEP_DIR := $(BLD_DIR)/dep
@@ -47,6 +47,7 @@ BIN_DIR := $(BLD_DIR)/bin
 LOG_DIR := $(BLD_DIR)/log
 OCD_DIR := $(BLD_DIR)/openocd
 SRP_DIR := $(BLD_DIR)/scripts
+DOX_DIR := $(DOC_DIR)/doxygen
 
 BIN = $(BIN_DIR)/$(TARGET).bin
 ELF = $(BIN_DIR)/$(TARGET).elf
@@ -64,7 +65,7 @@ ODS = $(LOG_DIR)/$(TARGET)-od.sym
 RES = $(LOG_DIR)/$(TARGET)-re.sym
 LOG = $(LST) $(MAP) $(ODS) $(RES)
 
-CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOC_DIR)
+CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOX_DIR)
 
 hdr_print = "\n\033[1;38;5;174m$(1)\033[0m"
 
@@ -146,7 +147,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIRS) $(DEP_DIRS)
 		@echo $(call hdr_print,"Compiling $@ from $<:")
 		$(CC) $(CCFLAGS) -c $< -o $@
 
-$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR) $(DOC_DIR):
+$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR) $(DOX_DIR):
 		@echo $(call hdr_print,"Making dir $@")
 		@mkdir --parents $@
 
