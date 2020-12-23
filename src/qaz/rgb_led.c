@@ -98,13 +98,12 @@ static void rgbledProfileRainbow(void);
  */
 void RGBLEDInit(void)
 {
-#define GPIO(port, pin) \
-    RCC->AHBENR  |= RCC_AHBENR_GPIO##port##EN;                              \
-    GPIO##port->MODER  = (GPIO##port->MODER & ~GPIO_MODER_MODER##pin##_Msk) \
-                         | GPIO_MODER_MODER##pin##_0;                       \
-    GPIO##port->ODR |= 1UL << pin;
-    LED_EN_PIN
-#undef GPIO
+    // enable RGB LED EN GPIO port clock, set as output
+    GPIO_CLOCK_ENABLE(HB_LED_PORT);
+    GPIO_MODE_SET(HB_LED_PORT, HB_LED_PIN, GPIO_OUTPUT);
+
+    // we keep the LED EN pin set
+    GPIO_OUTPUT_SET(HB_LED_PORT, HB_LED_PIN);
 
     I2CInit(&i2c_handle);
 

@@ -98,7 +98,7 @@ typedef struct {
     uint16_t wValue;
     uint16_t wIndex;
     uint16_t wLength;
-} usb_setup_packet_t __PACKED;
+} __PACKED usb_setup_packet_t;
 
 // Buffer descriptor table entry as it will appear in memory
 typedef struct {
@@ -106,7 +106,7 @@ typedef struct {
     uint16_t tx_size;
     uint16_t rx_addr;
     uint16_t rx_size;
-} buf_desc_t __PACKED;
+} __PACKED buf_desc_t;
 
 // Entire buffer descriptor table
 typedef struct {

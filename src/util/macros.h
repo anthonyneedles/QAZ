@@ -40,4 +40,39 @@
 // for-loop delay. must measure actual delay for "accuracy"
 #define LOOP_DELAY(loops) for (volatile int loop_cnt = 0; loop_cnt < loops; ++loop_cnt);
 
+// GPIO AHB clock enable. not too elegant...
+#define GPIO_CLOCK_ENABLE(port) RCC->AHBENR |= \
+    (port == GPIOA) ? RCC_AHBENR_GPIOAEN :     \
+    (port == GPIOB) ? RCC_AHBENR_GPIOBEN :     \
+    (port == GPIOC) ? RCC_AHBENR_GPIOCEN :     \
+    (port == GPIOF) ? RCC_AHBENR_GPIOFEN : 0
+
+// GPIO mode settings
+#define GPIO_INPUT  0x0U
+#define GPIO_OUTPUT 0x1U
+#define GPIO_ALTFN  0x2U
+#define GPIO_ANALOG 0x3U
+#define GPIO_MODE_SET(port, pin, mode) \
+    (port)->MODER = (((port)->MODER & ~(0x3UL << ((pin)*2))) | ((mode) << ((pin)*2)))
+
+// GPIO output data setting/clearing
+#define GPIO_OUTPUT_SET(port, pin) (port)->ODR |=  (1UL << (pin))
+#define GPIO_OUTPUT_CLR(port, pin) (port)->ODR &= ~(1UL << (pin))
+
+// GPIO read input data
+#define GPIO_READ_INPUT(port, pin) ((port)->IDR &= (1UL << (pin)))
+
+// GPIO output type settings
+#define GPIO_PUSH_PULL  0x0U
+#define GPIO_OPEN_DRAIN 0x1U
+#define GPIO_OUTPUT_TYPE_SET(port, pin, type) \
+    (port)->OTYPER = (((port)->OTYPER & ~(0x1UL << (pin))) | ((type) << (pin)))
+
+// GPIO pull up/down settings
+#define GPIO_NO_PULL   0x0U
+#define GPIO_PULL_UP   0x1U
+#define GPIO_PULL_DOWN 0x2U
+#define GPIO_PULL_SET(port, pin, pull) \
+    port->PUPDR = (((port)->PUPDR & ~(0x3UL << ((pin)*2))) | ((pull) << ((pin)*2)))
+
 #endif  // UTIL_MACROS_H_

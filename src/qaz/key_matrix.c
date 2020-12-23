@@ -1,7 +1,7 @@
 /**
  * @file      key_matrix.c
  * @brief     Implements key matrix scanning
- * 
+ *
  * @author    Anthony Needles
  * @date      2020/10/04
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
@@ -33,12 +33,12 @@
 // SET/CLR does not mean driving the column 3.3V/GND, but rather (respectively)
 // activating/deactivating it. Since the inputs are pulled HIGH, and the outputs
 // are open drain, SET/CLR corresponds to (respectively) GND/HIGH-Z
-#define ACTIVATE_COL(col)   ((col.port)->ODR &= ~(1UL << col.pin))
-#define DEACTIVATE_COL(col) ((col.port)->ODR |=  (1UL << col.pin))
+#define ACTIVATE_COL(col)   GPIO_OUTPUT_CLR(col.port, col.pin)
+#define DEACTIVATE_COL(col) GPIO_OUTPUT_SET(col.port, col.pin)
 
 // Row inputs are pulled HIGH, and active LOW, this will evaulate to '1' if the
 // row is active (LOW) and '0' if the row is inactive (HIGH)
-#define READ_ROW(row) (!((row.port)->IDR &= (1UL << row.pin)))
+#define READ_ROW(row) (!GPIO_READ_INPUT(row.port, row.pin))
 #define ROW_SET (1)
 #define ROW_CLR (0)
 
@@ -71,14 +71,14 @@ typedef struct {
 
 // macro expand column gpio attribute array
 static const gpio_t col[] = {
-#define COL(port, pin) {GPIO##port, pin},
+#define COL(port, pin) {port, pin},
     COL_TABLE(COL)
 #undef COL
 };
 
 // macro expand row gpio attribute array
 static const gpio_t row[] = {
-#define ROW(port, pin) {GPIO##port, pin},
+#define ROW(port, pin) {port, pin},
     ROW_TABLE(ROW)
 #undef ROW
 };
@@ -114,23 +114,19 @@ void keyMatrixScan(key_buf_t *keybuf);
  */
 void KeyMatrixInit(void)
 {
-    // macro expand the col table into open drain output gpio init
-#define COL(port, pin)                                                                    \
-    RCC->AHBENR |= RCC_AHBENR_GPIO##port##EN;                                             \
-    GPIO##port->MODER =                                                                   \
-        ((GPIO##port->MODER & ~GPIO_MODER_MODER##pin##_Msk) | GPIO_MODER_MODER##pin##_0); \
-    GPIO##port->OTYPER |= GPIO_OTYPER_OT_##pin;
-    COL_TABLE(COL)
-#undef COL
+    // init each col gpio as open drain output
+    for (int i = 0; i < (int)NUM_COLS; ++i) {
+        GPIO_CLOCK_ENABLE(col[i].port);
+        GPIO_OUTPUT_TYPE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
+        GPIO_MODE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
+    }
 
-    // macro expand the row table into pullup input gpio init
-#define ROW(port, pin)                                                                    \
-    RCC->AHBENR |= RCC_AHBENR_GPIO##port##EN;                                             \
-    GPIO##port->PUPDR =                                                                   \
-        ((GPIO##port->PUPDR & ~GPIO_PUPDR_PUPDR##pin##_Msk) | GPIO_PUPDR_PUPDR##pin##_0); \
-    GPIO##port->MODER &= ~GPIO_MODER_MODER##pin##_Msk;
-    ROW_TABLE(ROW)
-#undef ROW
+    // init each row gpio as pullup input
+    for (int i = 0; i < (int)NUM_ROWS; ++i) {
+        GPIO_CLOCK_ENABLE(row[i].port);
+        GPIO_MODE_SET(row[i].port, row[i].pin, GPIO_INPUT);
+        GPIO_PULL_SET(row[i].port, row[i].pin, GPIO_PULL_UP);
+    }
 
     DbgPrintf("Initialized: Key Matrix\r\n");
 }

@@ -53,7 +53,7 @@ typedef struct {
     uint8_t key3;
     uint8_t key4;
     uint8_t key5;
-} hid_keyboard_report_t __PACKED;
+} __PACKED hid_keyboard_report_t;
 
 /**
  * @brief For obtaining descriptors

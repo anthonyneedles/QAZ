@@ -13,12 +13,11 @@
 #include "util/hb.h"
 
 #include "util/debug.h"
+#include "util/macros.h"
 #include "stm32f0xx.h"  // NOLINT
 
-#define HB_LED_ON()  (HB_LED_PORT->ODR |=  (1UL << HB_LED_NUM))
-#define HB_LED_OFF() (HB_LED_PORT->ODR &= ~(1UL << HB_LED_NUM))
-
-#define OUTPUT (1UL)
+#define HB_LED_ON()  GPIO_OUTPUT_SET(HB_LED_PORT, HB_LED_PIN)
+#define HB_LED_OFF() GPIO_OUTPUT_CLR(HB_LED_PORT, HB_LED_PIN)
 
 /**
  * @brief Initializes heartbeat LED
@@ -28,12 +27,9 @@
  */
 void HeartbeatInit(void)
 {
-    // enable HB LED GPIO port clock
-    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-
-    // set HB LED as GPIO output
-    HB_LED_PORT->MODER = ((HB_LED_PORT->MODER & ~(0x3UL << (HB_LED_NUM * 2)))
-            | (OUTPUT << (HB_LED_NUM * 2)));
+    // enable HB LED GPIO port clock, set as output
+    GPIO_CLOCK_ENABLE(HB_LED_PORT);
+    GPIO_MODE_SET(HB_LED_PORT, HB_LED_PIN, GPIO_OUTPUT);
 
     DbgPrintf("Initialized: Heartbeat\r\n");
 }

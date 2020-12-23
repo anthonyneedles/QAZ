@@ -18,7 +18,7 @@
 
 #elif defined(QAZ_TESTBOARD)
 
-#include "bsp/bsp_testboard.h"
+#include "bsp/bsp_qaz_testboard.h"
 
 #else
 

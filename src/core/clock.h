@@ -7,7 +7,7 @@
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
  * Holds any user clock configuration that should be applied before any other user initialization
- * or project execution. Set CLK_SOURCE in the Makefile to select the clock.
+ * or project execution.
  */
 
 #ifndef CORE_CLOCK_H_
@@ -16,8 +16,8 @@
 /**
  * @brief Init system clock
  *
- * Enable and switch system clock over to desired clock domain depending on the CLK_SOURCE
- * option in the Makefile. Also, set MCO to PA8, so that we can scope the SYSCLK.
+ * Enable and switch system clock over to using HSE and PLL to result in 48MHz SYSCLK.
+ * Also, set MCO to PA8, so that we can scope the SYSCLK. Assumes 8MHz external crystal.
  */
 void ClockInit(void);
 
