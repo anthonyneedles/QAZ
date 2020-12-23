@@ -8,3 +8,5 @@
 *.zip
 *.tar
 *~*
+*bak
+fp-info-cache

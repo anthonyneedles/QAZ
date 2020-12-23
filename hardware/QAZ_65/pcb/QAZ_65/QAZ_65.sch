@@ -1,12 +1,13 @@
 EESchema Schematic File Version 4
+LIBS:QAZ_65-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
 Title "QAZ 65% Main"
-Date "2020-11-04"
-Rev "v1.0"
+Date "2020-12-23"
+Rev "v1.1"
 Comp "Anthony Needles"
 Comment1 ""
 Comment2 ""
@@ -199,55 +200,38 @@ F 3 "" H 1250 4200 50  0001 C CNN
 $EndComp
 Connection ~ 1250 4200
 $Comp
-L Device:R_Small_US R1
-U 1 1 5E2DED31
-P 3350 3950
-F 0 "R1" H 3500 3900 50  0000 R CNN
-F 1 "10k" H 3550 4000 50  0000 R CNN
-F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 3350 3950 50  0001 C CNN
-F 3 "~" H 3350 3950 50  0001 C CNN
-F 4 "DNP" H 3300 3950 50  0000 R CNN "Comment"
-	1    3350 3950
-	-1   0    0    1   
-$EndComp
-$Comp
 L Device:R_Small_US R2
 U 1 1 5E2DEDBB
-P 3350 4250
-F 0 "R2" H 3500 4200 50  0000 R CNN
-F 1 "10k" H 3550 4300 50  0000 R CNN
-F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 3350 4250 50  0001 C CNN
-F 3 "~" H 3350 4250 50  0001 C CNN
-	1    3350 4250
-	-1   0    0    1   
+P 3450 4100
+F 0 "R2" V 3350 4150 50  0000 R CNN
+F 1 "10k" V 3250 4150 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 3450 4100 50  0001 C CNN
+F 3 "~" H 3450 4100 50  0001 C CNN
+	1    3450 4100
+	0    -1   -1   0   
 $EndComp
 $Comp
 L power:GND #PWR014
 U 1 1 5E2DF23D
-P 3350 4350
-F 0 "#PWR014" H 3350 4100 50  0001 C CNN
-F 1 "GND" H 3355 4177 50  0001 C CNN
-F 2 "" H 3350 4350 50  0001 C CNN
-F 3 "" H 3350 4350 50  0001 C CNN
-	1    3350 4350
+P 2950 4350
+F 0 "#PWR014" H 2950 4100 50  0001 C CNN
+F 1 "GND" H 2955 4177 50  0001 C CNN
+F 2 "" H 2950 4350 50  0001 C CNN
+F 3 "" H 2950 4350 50  0001 C CNN
+	1    2950 4350
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+3.3V #PWR013
 U 1 1 5E2DF2F4
-P 3350 3850
-F 0 "#PWR013" H 3350 3700 50  0001 C CNN
-F 1 "+3.3V" H 3350 4000 50  0000 C CNN
-F 2 "" H 3350 3850 50  0001 C CNN
-F 3 "" H 3350 3850 50  0001 C CNN
-	1    3350 3850
+P 2950 3850
+F 0 "#PWR013" H 2950 3700 50  0001 C CNN
+F 1 "+3.3V" H 2950 4000 50  0000 C CNN
+F 2 "" H 2950 3850 50  0001 C CNN
+F 3 "" H 2950 3850 50  0001 C CNN
+	1    2950 3850
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3350 4100 3350 4150
-Wire Wire Line
-	3350 4100 3350 4050
-Connection ~ 3350 4100
 $Comp
 L Regulator_Linear:AP2112K-3.3 U1
 U 1 1 5E2E3AE6
@@ -507,20 +491,14 @@ Wire Notes Line
 	2250 3250 2250 2250
 Text Notes 2250 2250 0    50   ~ 0
 8.0000MHz Oscillator
-Wire Wire Line
-	3350 4100 3800 4100
 Text Label 3800 4100 2    50   ~ 0
 BOOT0
 Wire Notes Line
-	3100 3600 3900 3600
-Wire Notes Line
 	3900 3600 3900 4500
 Wire Notes Line
-	3900 4500 3100 4500
-Wire Notes Line
-	3100 4500 3100 3600
-Text Notes 3100 3600 0    50   ~ 0
-BOOT0 Selection
+	2800 4500 2800 3600
+Text Notes 2800 3600 0    50   ~ 0
+BOOT0 Switch
 Text Notes 4550 1100 0    50   ~ 0
 MCU
 Wire Notes Line
@@ -963,17 +941,6 @@ Wire Wire Line
 	8650 5900 8200 5900
 Text Label 8200 5900 0    50   ~ 0
 USB_D-
-$Comp
-L QAZ:TestPoint_Thruhole_0.7mm TP9
-U 1 1 5F9FCEFD
-P 4900 2150
-F 0 "TP9" V 4900 2300 50  0000 L CNN
-F 1 "TestPoint" H 4900 2000 50  0001 C CNN
-F 2 "QAZ:TestPoint_Thruhole_1.0mm" H 4900 2150 50  0001 C CNN
-F 3 "" H 4900 2150 50  0001 C CNN
-	1    4900 2150
-	0    -1   -1   0   
-$EndComp
 Connection ~ 1700 6650
 Wire Wire Line
 	1700 6650 1850 6650
@@ -2166,4 +2133,25 @@ COL07
 NoConn ~ 6550 2950
 NoConn ~ 6550 3150
 NoConn ~ 6550 2750
+$Comp
+L Switch:SW_SPDT SW70
+U 1 1 5FE5583C
+P 3150 4100
+F 0 "SW70" H 3200 3800 50  0000 C CNN
+F 1 "JS102011SCQN" H 3000 3900 50  0000 C CNN
+F 2 "QAZ:JS102011SCQN_SPDT" H 3150 4100 50  0001 C CNN
+F 3 "~" H 3150 4100 50  0001 C CNN
+	1    3150 4100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3550 4100 3800 4100
+Wire Wire Line
+	2950 4350 2950 4200
+Wire Wire Line
+	2950 4000 2950 3850
+Wire Notes Line
+	2800 4500 3900 4500
+Wire Notes Line
+	2800 3600 3900 3600
 $EndSCHEMATC
