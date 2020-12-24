@@ -1,6 +1,6 @@
 # User Definitions  ############################################################
 
-TARGET = QAZ
+TARGET  = QAZ
 
 CXX_SRC =
 
@@ -117,12 +117,12 @@ LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-readability/casting,
 
 # Build Rules ##################################################################
 
-.PHONY: all
-all: $(TARGET)
-
 .PHONY: $(TARGET)
 $(TARGET): $(BIN) $(ELF) $(ROM) $(LOG)
 		@echo $(call hdr_print,"Make success for target \'$(TARGET)\'")
+
+.PHONY: all
+all: $(TARGET) doc lint
 
 $(BIN): $(ELF) | $(BIN_DIR)
 		@echo $(call hdr_print,"Creating $@ from $^:")
@@ -192,8 +192,14 @@ help:
 		@echo "$(TARGET)"
 		@echo "  Build complete software target"
 		@echo ""
+		@echo "all"
+		@echo "  Build software target, doxygen, and lint"
+		@echo ""
 		@echo "doc"
 		@echo "  Use Doxygen to create project documentation"
+		@echo ""
+		@echo "lint"
+		@echo "  Run cpplint.py on $(SRC_DIR)"
 		@echo ""
 		@echo "flash"
 		@echo "  Flash binary at $(SF_ADDR), make '$(TARGET)' if no binary"
