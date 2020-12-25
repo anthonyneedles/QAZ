@@ -13,8 +13,6 @@
 #ifndef UTIL_HB_H_
 #define UTIL_HB_H_
 
-#include "bsp/bsp.h"
-
 #define HB_TASK_PERIOD_MS (500)
 
 /**

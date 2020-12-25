@@ -61,7 +61,7 @@ files are included in this repo.
     │   ├── scripts/
     │   │   └── useful project scripts
     │   │
-    │   └── other build files (linker script, etc.)
+    │   └── Doxyfile, linker script
     │
     ├── doc/
     │   ├── doxygen/
@@ -83,7 +83,7 @@ files are included in this repo.
     ├── src/
     │   └── all source files, with module subdirectories
     │
-    └── LICENSE, README, Doxyfile, top-level Makefile
+    └── LICENSE, README, top-level Makefile
 ```
 
 The `bin/`, `dep/`, `log/`, and `obj/` directories are not tracked, and get made when the
@@ -101,6 +101,7 @@ Required APT packages for utility targets and debugging:
 - openocd
 - stlink-tools
 - doxygen
+- graphviz
 - python
 
 Additionally, KiCad is used for PCB design.
@@ -118,7 +119,7 @@ handles all building commands. These are the available commands:
 
 - `all` - Build software target, doxygen, and lint
 
-- `doc` - Use Doxygen to create project documentaton
+- `doc` - Use Doxygen to create project documentaton (with Graphviz graphs)
 
 - `lint` - Run cpplint.py on `src/`
 

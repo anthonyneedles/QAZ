@@ -13,6 +13,7 @@
 
 #include <stdbool.h>
 
+#include "bsp/bsp.h"
 #include "comms/i2c.h"
 #include "qaz/key_matrix.h"
 #include "qaz/lp500x_regs.h"

@@ -14,8 +14,6 @@
 
 #include <stdint.h>
 
-#include "bsp/bsp.h"
-
 #define RGB_LED_TASK_PERIOD_MS (10U)
 
 // percent to 256 value

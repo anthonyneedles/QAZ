@@ -10,6 +10,12 @@
 #ifndef UTIL_MACROS_H_
 #define UTIL_MACROS_H_
 
+// bit operations
+#define BIT_SET(x, bitno) ((x) |=  (1 << (bitno)))
+#define BIT_CLR(x, bitno) ((x) &= ~(1 << (bitno)))
+#define BIT_READ(x, bitno) (((unsigned)(x) >> (bitno)) & 1)
+#define BITS_UPDATE(x, mask, val) ((x) = ((x) & ~(mask)) | ((val) & (mask)))
+
 // combining arguments after expansion
 #define GLUE(a, b) __GLUE(a, b)
 #define __GLUE(a, b) a ## b
@@ -52,27 +58,24 @@
 #define GPIO_OUTPUT 0x1U
 #define GPIO_ALTFN  0x2U
 #define GPIO_ANALOG 0x3U
-#define GPIO_MODE_SET(port, pin, mode) \
-    (port)->MODER = (((port)->MODER & ~(0x3UL << ((pin)*2))) | ((mode) << ((pin)*2)))
+#define GPIO_MODE_SET(port, pin, mode) BITS_UPDATE((port)->MODER, 3 << (pin)*2, (mode) << (pin)*2)
 
 // GPIO output data setting/clearing
-#define GPIO_OUTPUT_SET(port, pin) (port)->ODR |=  (1UL << (pin))
-#define GPIO_OUTPUT_CLR(port, pin) (port)->ODR &= ~(1UL << (pin))
+#define GPIO_OUTPUT_SET(port, pin) BIT_SET((port)->ODR, pin)
+#define GPIO_OUTPUT_CLR(port, pin) BIT_CLR((port)->ODR, pin)
 
 // GPIO read input data
-#define GPIO_READ_INPUT(port, pin) ((port)->IDR &= (1UL << (pin)))
+#define GPIO_READ_INPUT(port, pin) BIT_READ((port)->IDR, pin)
 
 // GPIO output type settings
 #define GPIO_PUSH_PULL  0x0U
 #define GPIO_OPEN_DRAIN 0x1U
-#define GPIO_OUTPUT_TYPE_SET(port, pin, type) \
-    (port)->OTYPER = (((port)->OTYPER & ~(0x1UL << (pin))) | ((type) << (pin)))
+#define GPIO_OUTPUT_TYPE_SET(port, pin, type) BITS_UPDATE((port)->OTYPER, 1 << (pin), type << (pin))
 
 // GPIO pull up/down settings
 #define GPIO_NO_PULL   0x0U
 #define GPIO_PULL_UP   0x1U
 #define GPIO_PULL_DOWN 0x2U
-#define GPIO_PULL_SET(port, pin, pull) \
-    port->PUPDR = (((port)->PUPDR & ~(0x3UL << ((pin)*2))) | ((pull) << ((pin)*2)))
+#define GPIO_PULL_SET(port, pin, pull) BITS_UPDATE((port)->PUPDR, 3 << (pin)*2, pull << (pin)*2)
 
 #endif  // UTIL_MACROS_H_

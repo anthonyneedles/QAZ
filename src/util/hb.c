@@ -12,6 +12,7 @@
 
 #include "util/hb.h"
 
+#include "bsp/bsp.h"
 #include "util/debug.h"
 #include "util/macros.h"
 #include "stm32f0xx.h"  // NOLINT

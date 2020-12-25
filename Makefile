@@ -4,12 +4,12 @@ TARGET  = QAZ
 
 CXX_SRC =
 
-C_SRC   = core/main.c                  \
-				  core/clock.c                 \
+C_SRC   = core/clock.c                 \
 					core/time_slice.c            \
 					comms/i2c.c                  \
 					comms/uart.c                 \
 					qaz/key_matrix.c             \
+					qaz/main.c                   \
 					qaz/rgb_led.c                \
 					usb/usb.c                    \
 					usb/usb_hid.c                \
@@ -168,10 +168,12 @@ clean:
 
 .PHONY: doc | $(DOC_DIR)
 doc:
-		doxygen
+		@echo $(call hdr_print,"Running Doxygen:")
+		doxygen $(BLD_DIR)/Doxyfile
 
 .PHONY: lint
 lint:
+		@echo $(call hdr_print,"Running cpplint.py:")
 	$(SRP_DIR)/cpplint.py $(LINTFLAGS) $(SRC_DIR)/*
 
 .PHONY: flash
