@@ -39,12 +39,14 @@
 // number of different brightness levels to cycle through
 #define BRIGHTNESS_LEVELS (5)
 
+// the backlight coloring profiles
 typedef enum {
     PROFILE_SOLID,
     PROFILE_BREATHING,
     PROFILE_RAINBOW,
 } color_profile_t;
 
+// rainbow profile states
 typedef enum {
     BLUE_UP,
     RED_DOWN,
@@ -54,6 +56,7 @@ typedef enum {
     GREEN_DOWN,
 } rainbow_state_t;
 
+// our rgb control structure
 typedef struct {
     int bright_idx;
     int color_idx;
@@ -100,11 +103,27 @@ static void rgbledProfileRainbow(void);
 void RGBLEDInit(void)
 {
     // enable RGB LED EN GPIO port clock, set as output
-    GPIO_CLOCK_ENABLE(HB_LED_PORT);
-    GPIO_MODE_SET(HB_LED_PORT, HB_LED_PIN, GPIO_OUTPUT);
+    GPIO_CLOCK_ENABLE(LED_EN_PORT);
+    GPIO_MODE_SET(LED_EN_PORT, LED_EN_PIN, GPIO_OUTPUT);
 
     // we keep the LED EN pin set
-    GPIO_OUTPUT_SET(HB_LED_PORT, HB_LED_PIN);
+    GPIO_OUTPUT_SET(LED_EN_PORT, LED_EN_PIN);
+
+    // enable I2C SCL/SDA GPIO port clock
+    GPIO_CLOCK_ENABLE(RGB_LED_SDA_PORT);
+    GPIO_CLOCK_ENABLE(RGB_LED_SCL_PORT);
+
+    // set to SCL/SDA pints to alternate mode
+    GPIO_MODE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_ALTFN);
+    GPIO_MODE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_ALTFN);
+
+    // set to SCL/SDA pins to open drain
+    GPIO_OUTPUT_TYPE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_OPEN_DRAIN);
+    GPIO_OUTPUT_TYPE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_OPEN_DRAIN);
+
+    // set to SCL/SDA pins to Alternate Function 1
+    GPIO_AF_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_AF1);
+    GPIO_AF_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_AF1);
 
     I2CInit(&i2c_handle);
 

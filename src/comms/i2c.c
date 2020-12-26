@@ -16,12 +16,7 @@
 #include "comms/i2c.h"
 
 #include "util/debug.h"
-
-#define GPIO_AFRH_AFSEL10_AF1 (0x1u << GPIO_AFRH_AFSEL10_Pos)
-#define GPIO_AFRH_AFSEL11_AF1 (0x1u << GPIO_AFRH_AFSEL11_Pos)
-#define TX_REG_EMPTY_FLAG  ((I2C1->ISR & I2C_ISR_TXE_Msk)   >> I2C_ISR_TXE_Pos)
-#define STOP_COND_GEN_FLAG ((I2C1->ISR & I2C_ISR_STOPF_Msk) >> I2C_ISR_STOPF_Pos)
-#define SET 1U
+#include "util/macros.h"
 
 // Calculated for 100kHz with 48MHz I2C clock
 #define TIMING_CONFIG 0xB0240F13
@@ -50,37 +45,23 @@ i2c_status_t I2CInit(i2c_handle_t *i2c)
         return I2C_FAILURE;
     }
 
-    i2c->regs->CR1 &= ~I2C_CR1_PE;
+    CLR(i2c->regs->CR1, I2C_CR1_PE);
 
-    // enable I2C1 clocking with SYSCLK
-    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
-    RCC->CFGR3   |= RCC_CFGR3_I2C1SW;
-
-    // enable HB LED GPIO port clock
-    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-
-    // set to SCL/SDA pints to alternate mode
-    GPIOB->MODER  &= ~(GPIO_MODER_MODER10_Msk | GPIO_MODER_MODER11_Msk);
-    GPIOB->MODER  |=  (GPIO_MODER_MODER10_1   | GPIO_MODER_MODER11_1);
-
-    GPIOB->MODER  &= ~GPIO_MODER_MODER2_Msk;
-    GPIOB->MODER  |=  GPIO_MODER_MODER2_0;
-    GPIOB->ODR |=  (1UL << 2);
-
-    // set to SCL/SDA pins to open drain
-    GPIOB->OTYPER |= (GPIO_OTYPER_OT_10 | GPIO_OTYPER_OT_10);
-
-    // set to SCL/SDA pins to Alternate Function 1
-    GPIOB->AFR[1] &= ~(GPIO_AFRH_AFSEL10_Msk | GPIO_AFRH_AFSEL11_Msk);
-    GPIOB->AFR[1] |=  (GPIO_AFRH_AFSEL10_AF1 | GPIO_AFRH_AFSEL11_AF1);
+    // enable I2C clocking with SYSCLK
+    if (i2c->regs == I2C1) {
+        SET(RCC->APB1ENR, RCC_APB1ENR_I2C1EN);
+        SET(RCC->CFGR3,   RCC_CFGR3_I2C1SW);
+    } else {
+        DBG_ASSERT(FORCE_ASSERT);
+        return I2C_FAILURE;
+    }
 
     i2c->regs->TIMINGR = TIMING_CONFIG;
-    i2c->regs->CR1 |= I2C_CR1_PE;
+    SET(i2c->regs->CR1, I2C_CR1_PE);
 
     // set own address
-    i2c->regs->OAR1 &= ~(I2C_OAR1_OA1EN_Msk);
-    i2c->regs->OAR1 &= ~(I2C_OAR1_OA1_Msk);
-    i2c->regs->OAR1 |= (((uint32_t)i2c->self_addr << 1U) | I2C_OAR1_OA1EN);
+    BITMASK_UPDATE(i2c->regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
+            (i2c->self_addr << 1) | I2C_OAR1_OA1EN);
 
     i2c->state = I2C_READY;
 
@@ -116,19 +97,19 @@ i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8
         return I2C_FAILURE;
     }
 
-    i2c->regs->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-    i2c->regs->CR2 |= (((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
+    CLR(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
+    SET(i2c->regs->CR2, ((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
             ((uint32_t)n << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
 
     for (int i = 0; i < n; ++i) {
-        while (TX_REG_EMPTY_FLAG != SET) {}
+        while (BIT_READ(i2c->regs->ISR, I2C_ISR_TXE_Pos) != 1) {}
         i2c->regs->TXDR = data[i];
     }
 
-    while (STOP_COND_GEN_FLAG != SET) {}
-    i2c->regs->ICR |= (I2C_ICR_STOPCF);
+    while (BIT_READ(i2c->regs->ISR, I2C_ISR_STOPF_Pos) != 1) {}
+    SET(i2c->regs->ICR, I2C_ICR_STOPCF);
 
-    i2c->regs->CR2 &= ~(I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
+    CLR(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
 
     return I2C_SUCCESS;
 }

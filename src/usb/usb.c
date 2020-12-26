@@ -144,17 +144,17 @@ static void usbEP0Read(uint8_t *in_buf);
 void USBInit(void)
 {
     // Disble embedded pullup on DP
-    USB->BCDR &= ~USB_BCDR_DPPU;
+    CLR(USB->BCDR, USB_BCDR_DPPU);
 
     // Set USB clock source from PLL, enable USB clocking
-    RCC->CFGR3   |= RCC_CFGR3_USBSW;
-    RCC->APB1ENR |= RCC_APB1ENR_USBEN;
+    SET(RCC->CFGR3, RCC_CFGR3_USBSW);
+    SET(RCC->APB1ENR, RCC_APB1ENR_USBEN);
 
     // Ensure USB clock is set
-    while ((RCC->APB1ENR & RCC_APB1ENR_USBEN_Msk) != RCC_APB1ENR_USBEN) {}
+    while (BIT_READ(RCC->APB1ENR, RCC_APB1ENR_USBEN_Pos) != 1) {}
 
     // Exit USB power down
-    USB->CNTR &= ~USB_CNTR_PDWN;
+    CLR(USB->CNTR, USB_CNTR_PDWN);
 
     // Startup can take a max of 1us
     LOOP_DELAY(50);
@@ -175,7 +175,7 @@ void USBInit(void)
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM;
 
     // Enable embedded pullup on DP
-    USB->BCDR |= USB_BCDR_DPPU;
+    SET(USB->BCDR, USB_BCDR_DPPU);
 
     DbgPrintf("Initialized: USB\r\n");
 }

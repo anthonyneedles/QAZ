@@ -41,6 +41,13 @@ static char *debugExpandNum(unsigned num, int base, int width);
  */
 void DebugInit(void)
 {
+    // Set debug tx port into alt function 1 mode, pullup, and high speed output
+    SET(RCC->AHBENR,  RCC_AHBENR_GPIOAEN);
+    GPIO_MODE_SET(DEBUG_TX_PORT, DEBUG_TX_PIN, GPIO_ALTFN);
+    GPIO_AF_SET(DEBUG_TX_PORT, DEBUG_TX_PIN, GPIO_AF1);
+    GPIO_PULL_SET(DEBUG_TX_PORT, DEBUG_TX_PIN, GPIO_PULL_UP);
+    GPIO_OUT_SPEED_SET(DEBUG_TX_PORT, DEBUG_TX_PIN, GPIO_HIGH_SPEED);
+
     UARTInit(&uart_handle);
 
     DbgPrintf("\r\n=== QAZ ===\r\n");

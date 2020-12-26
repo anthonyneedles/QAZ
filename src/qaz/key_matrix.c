@@ -117,7 +117,7 @@ void KeyMatrixInit(void)
     // init each col gpio as open drain output
     for (int i = 0; i < (int)NUM_COLS; ++i) {
         GPIO_CLOCK_ENABLE(col[i].port);
-        GPIO_OUTPUT_TYPE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
+        GPIO_OUTPUT_TYPE_SET(col[i].port, col[i].pin, GPIO_OPEN_DRAIN);
         GPIO_MODE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
     }
 

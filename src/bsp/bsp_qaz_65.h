@@ -49,7 +49,7 @@
     K(TAB)   K(Q)     K(W)     K(E)     K(R)     K(T)     K(Y)     K(U)     K(I)     K(O)     K(P)     K(LBRKT) K(RBRKT) K(BSLSH) K(PGEUP)  /* NOLINT */  \
     K(CPLCK) K(A)     K(S)     K(D)     K(F)     K(G)     K(H)     K(J)     K(K)     K(L)     K(SEMI)  K(QUOTE) K(NONE)  K(ENTER) K(PGEDN)  /* NOLINT */  \
     K(LSHFT) K(Z)     K(X)     K(C)     K(V)     K(B)     K(N)     K(M)     K(COMMA) K(PRIOD) K(FSLSH) K(RSHFT) K(NONE)  K(UARRW) K(DELET)  /* NOLINT */  \
-    K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(SPACE) K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(LARRW) K(NONE)  K(DARRW) K(RARRW)  /* NOLINT */ 
+    K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(SPACE) K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(LARRW) K(NONE)  K(DARRW) K(RARRW)  /* NOLINT */
 
 // fn key symbol table - for when the FN key is pressed
 //     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
@@ -72,10 +72,20 @@
 #define LED_EN_PORT GPIOB
 #define LED_EN_PIN  2
 
+// MCO pin
+#define MCO_PORT GPIOA
+#define MCO_PIN  9
+
 // USART used for sending debug messages
-#define DEBUG_UART USART1
+#define DEBUG_UART    USART1
+#define DEBUG_TX_PORT GPIOA
+#define DEBUG_TX_PIN  9
 
 // I2C used for talking to the LED controller
-#define RGB_LED_I2C I2C1
+#define RGB_LED_I2C      I2C1
+#define RGB_LED_SDA_PORT GPIOB
+#define RGB_LED_SDA_PIN  10
+#define RGB_LED_SCL_PORT GPIOB
+#define RGB_LED_SCL_PIN  11
 
 #endif  // BSP_BSP_QAZ_65_H_

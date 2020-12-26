@@ -14,6 +14,9 @@
 #include "comms/uart.h"
 
 #include "util/debug.h"
+#include "util/macros.h"
+
+#define BAUD_115200 0x1A1
 
 /**
  * @brief Enables USART for TX at 115200 baud, 8-N-1.
@@ -34,31 +37,22 @@ uart_status_t UARTInit(uart_handle_t *uart)
         return UART_FAILURE;
     }
 
-    // Enable clock for GPIOA and USART1
-    RCC->AHBENR  |= RCC_AHBENR_GPIOAEN;
-    RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
-
-    // Set debug tx port into alt function mode
-    GPIOA->MODER = ((GPIOA->MODER & ~GPIO_MODER_MODER9_Msk) | GPIO_MODER_MODER9_1);
-
-    // Set alternate function 1 (USART1_TX)
-    GPIOA->AFR[1] = ((GPIOA->AFR[1] & ~GPIO_AFRH_AFSEL9_Msk) | (1UL << GPIO_AFRH_AFSEL9_Pos));
-
-    // Set pullup
-    GPIOA->PUPDR = ((GPIOA->PUPDR  & ~GPIO_PUPDR_PUPDR9_Msk) | GPIO_PUPDR_PUPDR9_0);
-
-    // Fast output
-    GPIOA->OSPEEDR = ((GPIOA->OSPEEDR  & ~GPIO_OSPEEDR_OSPEEDR9_Msk)
-            | GPIO_OSPEEDR_OSPEEDR9);
+    // Enable clock for given USART
+    if (uart->regs == USART1) {
+        SET(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
+    } else {
+        DBG_ASSERT(FORCE_ASSERT);
+        return UART_FAILURE;
+    }
 
     // Enable transmitting
     uart->regs->CR1 = USART_CR1_TE;
 
     // Set baudrate to 115200
-    uart->regs->BRR = 0x1A1;
+    uart->regs->BRR = BAUD_115200;
 
     // Enable USART1
-    uart->regs->CR1 |= USART_CR1_UE;
+    SET(uart->regs->CR1, USART_CR1_UE);
 
     uart->state = UART_READY;
 
@@ -89,7 +83,7 @@ uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n)
     }
 
     for (int i = 0; i < n; ++i) {
-        while ((uart->regs->ISR & USART_ISR_TXE) == 0) {}
+        while (BIT_READ(uart->regs->ISR, USART_ISR_TXE_Pos) != 1) {}
         uart->regs->TDR = data[i];
     }
 
