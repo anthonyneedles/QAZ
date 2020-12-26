@@ -8,9 +8,10 @@ C_SRC   = core/clock.c                 \
 					core/time_slice.c            \
 					comms/i2c.c                  \
 					comms/uart.c                 \
+					lp500x/lp500x.c              \
 					qaz/key_matrix.c             \
+					qaz/lighting.c               \
 					qaz/main.c                   \
-					qaz/rgb_led.c                \
 					usb/usb.c                    \
 					usb/usb_hid.c                \
 					usb/usb_descriptors.c        \

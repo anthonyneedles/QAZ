@@ -2,6 +2,8 @@
 
 *STM32F042K6 Firmware for my 'QAZ' keyboard*
 
+![QAZ Logo](docs/media/qaz_logo_500x500.png)
+
 1. [About This Project](#about-this-project)
     1. [File Structure](#file-structure)
     1. [Dependencies](#dependencies)

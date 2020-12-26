@@ -1,27 +1,22 @@
 /**
- * @file      rgb_led.c
- * @brief     RGB LED driver
+ * @file      lighting.c
+ * @brief     Color profile manager
  *
  * @author    Anthony Needles
- * @date      2020/10/31
+ * @date      2020/11/02
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
+ * Uses LP500x driver to control the RGB LEDs with backlight coloring profiles.
  */
 
-#include "qaz/rgb_led.h"
+#include "qaz/lighting.h"
 
+#include <stdint.h>
 #include <stdbool.h>
 
-#include "bsp/bsp.h"
-#include "comms/i2c.h"
-#include "qaz/key_matrix.h"
-#include "qaz/lp500x_regs.h"
+#include "lp500x/lp500x.h"
 #include "util/debug.h"
 #include "util/macros.h"
-#include "stm32f0xx.h"  // NOLINT
-
-#define I2C_ADDR (0x14)
 
 // converts brightness index to percent, then percent to 256 value
 #define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
@@ -56,12 +51,12 @@ typedef enum {
     GREEN_DOWN,
 } rainbow_state_t;
 
-// our rgb control structure
+// our lighting  control structure
 typedef struct {
     int bright_idx;
     int color_idx;
     color_profile_t profile;
-} rgb_ctrl_t;
+} lighting_ctrl_t;
 
 // colors to cycle through
 static const uint32_t COLORS[] = {
@@ -73,105 +68,26 @@ static const color_profile_t PROFILES[] = {
     PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
-// rgb control structure
-static rgb_ctrl_t rgb = {
-    .bright_idx = 4,
+static lighting_ctrl_t lighting = {
+    .bright_idx = BRIGHTNESS_LEVELS - 1,
     .color_idx  = 0,
     .profile    = PROFILE_SOLID,
 };
 
-// our handle to the i2c we use to communicate with LED controller
-static i2c_handle_t i2c_handle = {
-    .regs      = RGB_LED_I2C,
-    .state     = I2C_RESET,
-    .self_addr = 0x53,
-};
-
-static void rgbledProfileBreathing(void);
-static void rgbledProfileRainbow(void);
+static void lightingProfileBreathing(void);
+static void lightingProfileRainbow(void);
 
 /**
- * @brief Initializes RGB LED
+ * @brief Initializes lighting profile
  *
- * Handles setting initial settings to the LED driver for the RGB LED. This includes first setting
- * the LED EN GPIO pin, which brings the LP500x out of SHUTDOWN into INITIALIZATION, then STANDBY.
- * Then sets the chip enable, to go to NORMAL, where the driver starts driving the LEDs.
- *
- * Sets logarithmic dimming curve, power saving, auto incrementing registers, PWM dithering, and
- * a max current of 35mA.
+ * Initializes the LP500x driver for control of the RGB LEDs.
  */
-void RGBLEDInit(void)
+void LightingInit(void)
 {
-    // enable RGB LED EN GPIO port clock, set as output
-    GPIO_CLOCK_ENABLE(LED_EN_PORT);
-    GPIO_MODE_SET(LED_EN_PORT, LED_EN_PIN, GPIO_OUTPUT);
+    LP500xInit();
 
-    // we keep the LED EN pin set
-    GPIO_OUTPUT_SET(LED_EN_PORT, LED_EN_PIN);
-
-    // enable I2C SCL/SDA GPIO port clock
-    GPIO_CLOCK_ENABLE(RGB_LED_SDA_PORT);
-    GPIO_CLOCK_ENABLE(RGB_LED_SCL_PORT);
-
-    // set to SCL/SDA pints to alternate mode
-    GPIO_MODE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_ALTFN);
-    GPIO_MODE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_ALTFN);
-
-    // set to SCL/SDA pins to open drain
-    GPIO_OUTPUT_TYPE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_OPEN_DRAIN);
-    GPIO_OUTPUT_TYPE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_OPEN_DRAIN);
-
-    // set to SCL/SDA pins to Alternate Function 1
-    GPIO_AF_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_AF1);
-    GPIO_AF_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_AF1);
-
-    I2CInit(&i2c_handle);
-
-    // init config registers, starting at DEVICE_CONFIG_0 register
-    const uint8_t init_data[] = {
-        DEVICE_CONFIG0_R,
-        CHIP_EN,
-        LOG_SCALE_EN | POWER_SAVE_EN | AUTO_INCR_EN | PWM_DITHER_EN,
-        LED2_BANK_EN | LED1_BANK_EN | LED0_BANK_EN,
-        BRIGHTNESS_PERCENT(rgb.bright_idx*25),
-    };
-    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, init_data, sizeof(init_data));
-
-    RGBLEDBankSetColor(COLOR_WHITE);
-
-    DbgPrintf("Initialized: RGB LED\r\n");
-}
-
-/**
- * @brief Sets ALL RGB LEDs to color
- *
- * Since the LEDs are in bank mode, all red/blue/green LEDs get set at once.
- *
- * @param[in] rgb_code RGB hex code to set
- */
-void RGBLEDBankSetColor(uint32_t rgb_code)
-{
-    uint8_t data[4];
-    data[0] = BANK_A_COLOR_R;
-    data[1] = R_RGB(rgb_code);  // BANK A = Red
-    data[2] = G_RGB(rgb_code);  // BANK B = Green
-    data[3] = B_RGB(rgb_code);  // BANK C = Blue
-    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, data, sizeof(data));
-}
-
-/**
- * @brief Sets ALL RGB LEDs brightnesses
- *
- * Since the LEDs are in bank mode, all LED brightnesses set at once.
- *
- * @param[in] val brightness value 0x00-0xFF
- */
-void RGBLEDBankSetBrightness(uint8_t val)
-{
-    uint8_t data[2];
-    data[0] = BANK_BRIGHTNESS_R;
-    data[1] = val;
-    I2CWriteMasterBlocking(&i2c_handle, I2C_ADDR, data, sizeof(data));
+    LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
+    LP500xBankSetColor(COLOR_WHITE);
 }
 
 /**
@@ -179,27 +95,27 @@ void RGBLEDBankSetBrightness(uint8_t val)
  *
  * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
  */
-void RGBLEDTask(void)
+void LightingTask(void)
 {
-    if (rgb.bright_idx > 0) {
-        switch (rgb.profile) {
+    if (lighting.bright_idx > 0) {
+        switch (lighting.profile) {
         case PROFILE_SOLID:
-            RGBLEDBankSetColor(COLORS[rgb.color_idx]);
-            RGBLEDBankSetBrightness(BRIGHTNESS_INDEX(rgb.bright_idx));
+            LP500xBankSetColor(COLORS[lighting.color_idx]);
+            LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
             break;
         case PROFILE_BREATHING:
-            rgbledProfileBreathing();
+            lightingProfileBreathing();
             break;
         case PROFILE_RAINBOW:
-            rgbledProfileRainbow();
+            lightingProfileRainbow();
             break;
         default:
-            DbgPrintf("ERROR: Invalid RGB LED profile (%d)\r\n", rgb.profile);
-            rgb.profile = PROFILE_SOLID;
+            DbgPrintf("ERROR: Invalid RGB LED profile (%d)\r\n", lighting.profile);
+            lighting.profile = PROFILE_SOLID;
             break;
         }
     } else {
-        RGBLEDBankSetBrightness(0);
+        LP500xBankSetBrightness(0);
     }
 }
 
@@ -209,13 +125,13 @@ void RGBLEDTask(void)
  * Ramps brightness level all the way up, then all the way down, over and over. Since the LED driver
  * brightness is in logarithmic mode, this should result in a (roughly) linear brightness change.
  */
-static void rgbledProfileBreathing(void)
+static void lightingProfileBreathing(void)
 {
     static uint8_t brightness = 0;
     static bool    ramp_up    = true;
     static int     loop_cnt   = 0;
 
-    RGBLEDBankSetColor(COLORS[rgb.color_idx]);
+    LP500xBankSetColor(COLORS[lighting.color_idx]);
 
     if (loop_cnt < N_LOOP_UPDATE_BREATHING - 1) {
         loop_cnt++;
@@ -225,7 +141,7 @@ static void rgbledProfileBreathing(void)
     }
 
     if (ramp_up) {
-        if (brightness >= BRIGHTNESS_INDEX(rgb.bright_idx)) {
+        if (brightness >= BRIGHTNESS_INDEX(lighting.bright_idx)) {
             ramp_up = false;
         } else {
             brightness++;
@@ -238,7 +154,7 @@ static void rgbledProfileBreathing(void)
         }
     }
 
-    RGBLEDBankSetBrightness(brightness);
+    LP500xBankSetBrightness(brightness);
 }
 
 /**
@@ -248,15 +164,15 @@ static void rgbledProfileBreathing(void)
  * little awkward. The state machine will cycle through increasing/decreasing each color intensity,
  * which works well enough.
  */
-static void rgbledProfileRainbow(void)
+static void lightingProfileRainbow(void)
 {
     static uint8_t red   = 0xff;
     static uint8_t green = 0x00;
     static uint8_t blue  = 0x00;
     static rainbow_state_t rainbow_state = BLUE_UP;
 
-    RGBLEDBankSetColor(RGB_CODE(red, green, blue));
-    RGBLEDBankSetBrightness(BRIGHTNESS_INDEX(rgb.bright_idx));
+    LP500xBankSetColor(RGB_CODE(red, green, blue));
+    LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
 
     switch (rainbow_state) {
     case BLUE_UP:
@@ -315,7 +231,7 @@ static void rgbledProfileRainbow(void)
  */
 void KeyMatrixCallback_BRTUP(void)
 {
-    rgb.bright_idx = NEXT_LINEAR_INDEX(rgb.bright_idx, BRIGHTNESS_LEVELS);
+    lighting.bright_idx = NEXT_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -325,7 +241,7 @@ void KeyMatrixCallback_BRTUP(void)
  */
 void KeyMatrixCallback_BRTDN(void)
 {
-    rgb.bright_idx = PREV_LINEAR_INDEX(rgb.bright_idx, BRIGHTNESS_LEVELS);
+    lighting.bright_idx = PREV_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -335,7 +251,7 @@ void KeyMatrixCallback_BRTDN(void)
  */
 void KeyMatrixCallback_COLOR(void)
 {
-    rgb.color_idx = NEXT_CIRCULAR_INDEX(rgb.color_idx, N_ELEMENTS(COLORS));
+    lighting.color_idx = NEXT_CIRCULAR_INDEX(lighting.color_idx, N_ELEMENTS(COLORS));
 }
 
 /**
@@ -345,5 +261,5 @@ void KeyMatrixCallback_COLOR(void)
  */
 void KeyMatrixCallback_PROF(void)
 {
-    rgb.profile = NEXT_CIRCULAR_INDEX(rgb.profile, N_ELEMENTS(PROFILES));
+    lighting.profile = NEXT_CIRCULAR_INDEX(lighting.profile, N_ELEMENTS(PROFILES));
 }

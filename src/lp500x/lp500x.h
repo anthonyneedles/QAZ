@@ -1,5 +1,5 @@
 /**
- * @file      rgb_led.h
+ * @file      lp500x.h
  * @brief     RGB LED driver
  *
  * @author    Anthony Needles
@@ -9,12 +9,10 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#ifndef QAZ_RGB_LED_H_
-#define QAZ_RGB_LED_H_
+#ifndef LP500X_LP500X_H_
+#define LP500X_LP500X_H_
 
 #include <stdint.h>
-
-#define RGB_LED_TASK_PERIOD_MS (10U)
 
 // percent to 256 value
 #define BRIGHTNESS_PERCENT(x) (((0xffUL*(x))/100) & 0xffUL)
@@ -49,7 +47,7 @@
  * Sets logarithmic dimming curve, power saving, auto incrementing registers, PWM dithering, and
  * a max current of 35mA.
  */
-void RGBLEDInit(void);
+void LP500xInit(void);
 
 /**
  * @brief Sets ALL RGB LEDs to color
@@ -58,7 +56,7 @@ void RGBLEDInit(void);
  *
  * @param[in] rgb_code RGB hex code to set
  */
-void RGBLEDBankSetColor(uint32_t rgb_code);
+void LP500xBankSetColor(uint32_t rgb_code);
 
 /**
  * @brief Sets ALL RGB LEDs brightnesses
@@ -67,41 +65,6 @@ void RGBLEDBankSetColor(uint32_t rgb_code);
  *
  * @param[in] val brightness value 0x00-0xFF
  */
-void RGBLEDBankSetBrightness(uint8_t val);
+void LP500xBankSetBrightness(uint8_t val);
 
-/**
- * @brief Task for updating RGB LEDs.
- *
- * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
- */
-void RGBLEDTask(void);
-
-/**
- * @brief BRTUP key callback
- *
- * Increases brightness setting up. Saturates at max.
- */
-void KeyMatrixCallback_BRTUP(void);
-
-/**
- * @brief BRTDN key callback
- *
- * Increases brightness setting down. Saturates at min.
- */
-void KeyMatrixCallback_BRTDN(void);
-
-/**
- * @brief COLOR key callback
- *
- * Cycles through colors
- */
-void KeyMatrixCallback_COLOR(void);
-
-/**
- * @brief PROF key callback
- *
- * Cycles through coloring profiles
- */
-void KeyMatrixCallback_PROF(void);
-
-#endif  // QAZ_RGB_LED_H_
+#endif  // LP500X_LP500X_H_

@@ -20,7 +20,7 @@
 #define CORE_TIME_SLICE_H_
 
 #include "qaz/key_matrix.h"
-#include "qaz/rgb_led.h"
+#include "qaz/lighting.h"
 #include "usb/usb_hid.h"
 #include "util/hb.h"
 
@@ -33,7 +33,7 @@
 #define TASK_TABLE(TASK) \
     TASK(HB_TASK_PERIOD_MS,         HeartbeatTask) \
     TASK(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask) \
-    TASK(RGB_LED_TASK_PERIOD_MS,    RGBLEDTask)    \
+    TASK(LIGHTING_TASK_PERIOD_MS,   LightingTask)  \
     TASK(USB_HID_TASK_PERIOD_MS,    USBHIDTask)
 
 /**

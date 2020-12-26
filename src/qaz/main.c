@@ -14,7 +14,7 @@
 #include "core/clock.h"
 #include "core/time_slice.h"
 #include "qaz/key_matrix.h"
-#include "qaz/rgb_led.h"
+#include "qaz/lighting.h"
 #include "usb/usb_hid.h"
 #include "util/debug.h"
 #include "util/hb.h"
@@ -29,7 +29,7 @@ int main(void)
     // inits - no required order
     HeartbeatInit();
     KeyMatrixInit();
-    RGBLEDInit();
+    LightingInit();
     USBHIDInit();
 
     // enter the loop - no return
