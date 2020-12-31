@@ -9,8 +9,8 @@
  * Definitions specfic to the QAZ 65% board.
  */
 
-#ifndef BSP_BSP_QAZ_65_H_
-#define BSP_BSP_QAZ_65_H_
+#ifndef BSP_BSP_QAZ_65_HPP_
+#define BSP_BSP_QAZ_65_HPP_
 
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
@@ -88,4 +88,4 @@
 #define RGB_LED_SCL_PORT GPIOB
 #define RGB_LED_SCL_PIN  11
 
-#endif  // BSP_BSP_QAZ_65_H_
+#endif  // BSP_BSP_QAZ_65_HPP_

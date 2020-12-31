@@ -7,8 +7,8 @@
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
-#ifndef LP500X_LP500X_REGS_H_
-#define LP500X_LP500X_REGS_H_
+#ifndef LP500X_LP500X_REGS_HPP_
+#define LP500X_LP500X_REGS_HPP_
 
 #define DEVICE_CONFIG0_R       (0x00)
 #define   CHIP_EN                (0x40)
@@ -47,4 +47,4 @@
 #define OUT11_COLOR_R          (0x16)
 #define RESET_R                (0x17)
 
-#endif  // LP500X_LP500X_REGS_H_
+#endif  // LP500X_LP500X_REGS_HPP_

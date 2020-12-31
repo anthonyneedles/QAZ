@@ -10,8 +10,8 @@
  * or project execution.
  */
 
-#ifndef CORE_CLOCK_H_
-#define CORE_CLOCK_H_
+#ifndef CORE_CLOCK_HPP_
+#define CORE_CLOCK_HPP_
 
 /**
  * @brief Init system clock
@@ -21,4 +21,4 @@
  */
 void ClockInit(void);
 
-#endif  // CORE_CLOCK_H_
+#endif  // CORE_CLOCK_HPP_

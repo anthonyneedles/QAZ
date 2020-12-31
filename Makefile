@@ -2,21 +2,22 @@
 
 TARGET  = QAZ
 
-CXX_SRC =
+CXX_SRC = core/clock.cpp                 \
+					core/time_slice.cpp            \
+					comms/i2c.cpp                  \
+					comms/uart.cpp                 \
+					lp500x/lp500x.cpp              \
+					qaz/key_matrix.cpp             \
+					qaz/lighting.cpp               \
+					qaz/main.cpp                   \
+					usb/usb.cpp                    \
+					usb/usb_hid.cpp                \
+					usb/usb_descriptors.cpp        \
+					util/debug.cpp                 \
+		      util/hb.cpp                             
 
-C_SRC   = core/clock.c                 \
-					core/time_slice.c            \
-					comms/i2c.c                  \
-					comms/uart.c                 \
-					lp500x/lp500x.c              \
-					qaz/key_matrix.c             \
-					qaz/lighting.c               \
-					qaz/main.c                   \
-					usb/usb.c                    \
-					usb/usb_hid.c                \
-					usb/usb_descriptors.c        \
-					util/debug.c                 \
-		      util/hb.c                             
+C_SRC   =
+
 
 S_SRC	  = core/startup_stm32f042.s
 

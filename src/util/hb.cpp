@@ -10,11 +10,11 @@
  * hanging and/or violating timeslice scheduling.
  */
 
-#include "util/hb.h"
+#include "util/hb.hpp"
 
-#include "bsp/bsp.h"
-#include "util/debug.h"
-#include "util/macros.h"
+#include "bsp/bsp.hpp"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 #define HB_LED_ON()  GPIO_OUTPUT_SET(HB_LED_PORT, HB_LED_PIN)

@@ -16,13 +16,13 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#ifndef CORE_TIME_SLICE_H_
-#define CORE_TIME_SLICE_H_
+#ifndef CORE_TIME_SLICE_HPP_
+#define CORE_TIME_SLICE_HPP_
 
-#include "qaz/key_matrix.h"
-#include "qaz/lighting.h"
-#include "usb/usb_hid.h"
-#include "util/hb.h"
+#include "qaz/key_matrix.hpp"
+#include "qaz/lighting.hpp"
+#include "usb/usb_hid.hpp"
+#include "util/hb.hpp"
 
 // period at which the loop will execute. try to make as large as possible
 #define LOOP_PERIOD_MS (10U)
@@ -34,7 +34,6 @@
     TASK(HB_TASK_PERIOD_MS,         HeartbeatTask) \
     TASK(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask) \
     TASK(LIGHTING_TASK_PERIOD_MS,   LightingTask)  \
-    TASK(USB_HID_TASK_PERIOD_MS,    USBHIDTask)
 
 /**
  * @brief Init TimeSlice loop
@@ -52,12 +51,4 @@ void TimeSliceInit(void);
  */
 void TimeSliceLoop(void);
 
-/**
- * @brief SysTick IRQ Handler
- *
- * When initalized, the SysTick will generate interrupts at 1kHz. This IRQ handler will then
- * increment the TimeSlice millisecond count every entrance.
- */
-void SysTick_Handler(void);
-
-#endif  // CORE_TIME_SLICE_H_
+#endif  // CORE_TIME_SLICE_HPP_

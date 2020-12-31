@@ -10,8 +10,8 @@
  * hanging and/or violating timeslice scheduling.
  */
 
-#ifndef UTIL_HB_H_
-#define UTIL_HB_H_
+#ifndef UTIL_HB_HPP_
+#define UTIL_HB_HPP_
 
 #define HB_TASK_PERIOD_MS (500)
 
@@ -30,4 +30,4 @@ void HeartbeatInit(void);
  */
 void HeartbeatTask(void);
 
-#endif  // UTIL_HB_H_
+#endif  // UTIL_HB_HPP_

@@ -11,14 +11,14 @@
  * debug.
  */
 
-#ifndef UTIL_DEBUG_H_
-#define UTIL_DEBUG_H_
+#ifndef UTIL_DEBUG_HPP_
+#define UTIL_DEBUG_HPP_
 
 #if defined(DEBUG)
 
 // similar to assert() in standard library. if expr is false, the assert fails, and the
 // line/file/expr is printed, and the program stops
-#define DBG_ASSERT(expr) ((expr) ? ((void)0) : DebugAssertFailed(__FILE__, __LINE__, #expr))
+#define DBG_ASSERT(expr) ((expr) ? ((void)0) : DebugAssertFailed((char *)__FILE__, __LINE__, (char *)#expr))
 #define FORCE_ASSERT (0)
 
 /**
@@ -71,4 +71,4 @@ void DebugAssertFailed(char *file, int line, char *expr);
 
 #endif
 
-#endif  // UTIL_DEBUG_H_
+#endif  // UTIL_DEBUG_HPP_

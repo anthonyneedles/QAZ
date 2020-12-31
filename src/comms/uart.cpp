@@ -11,10 +11,10 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#include "comms/uart.h"
+#include "comms/uart.hpp"
 
-#include "util/debug.h"
-#include "util/macros.h"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 
 #define BAUD_115200 0x1A1
 

@@ -11,13 +11,13 @@
  * https://github.com/anthonyneedles/QAZ
  */
 
-#include "core/clock.h"
-#include "core/time_slice.h"
-#include "qaz/key_matrix.h"
-#include "qaz/lighting.h"
-#include "usb/usb_hid.h"
-#include "util/debug.h"
-#include "util/hb.h"
+#include "core/clock.hpp"
+#include "core/time_slice.hpp"
+#include "qaz/key_matrix.hpp"
+#include "qaz/lighting.hpp"
+#include "usb/usb_hid.hpp"
+#include "util/debug.hpp"
+#include "util/hb.hpp"
 
 int main(void)
 {
@@ -30,7 +30,7 @@ int main(void)
     HeartbeatInit();
     KeyMatrixInit();
     LightingInit();
-    USBHIDInit();
+    // USBHIDInit();
 
     // enter the loop - no return
     TimeSliceLoop();

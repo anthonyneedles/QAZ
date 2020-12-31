@@ -9,8 +9,8 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#ifndef LP500X_LP500X_H_
-#define LP500X_LP500X_H_
+#ifndef LP500X_LP500X_HPP_
+#define LP500X_LP500X_HPP_
 
 #include <stdint.h>
 
@@ -67,4 +67,4 @@ void LP500xBankSetColor(uint32_t rgb_code);
  */
 void LP500xBankSetBrightness(uint8_t val);
 
-#endif  // LP500X_LP500X_H_
+#endif  // LP500X_LP500X_HPP_

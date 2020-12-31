@@ -13,10 +13,10 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#include "comms/i2c.h"
+#include "comms/i2c.hpp"
 
-#include "util/debug.h"
-#include "util/macros.h"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 
 // Calculated for 100kHz with 48MHz I2C clock
 #define TIMING_CONFIG 0xB0240F13

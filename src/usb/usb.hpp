@@ -13,8 +13,8 @@
  * Endpoint 1 -> Interrupt, TX only
  */
 
-#ifndef USB_USB_H_
-#define USB_USB_H_
+#ifndef USB_USB_HPP_
+#define USB_USB_HPP_
 
 #include <stdint.h>
 
@@ -42,11 +42,4 @@ void USBInit(void);
  */
 void USBWrite(int ep, const uint8_t *buf, uint16_t len);
 
-/**
- * @brief Route USB events
- *
- * Routes module function based on received interrupts. Most are ignored, except RESET and CTR.
- */
-void USB_IRQHandler(void);
-
-#endif  // USB_USB_H_
+#endif  // USB_USB_HPP_

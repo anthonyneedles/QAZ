@@ -24,12 +24,12 @@
  *   user keys, such as changing the RGB LED color, brightness, etc.
  */
 
-#ifndef QAZ_KEY_MATRIX_H_
-#define QAZ_KEY_MATRIX_H_
+#ifndef QAZ_KEY_MATRIX_HPP_
+#define QAZ_KEY_MATRIX_HPP_
 
 #include <stdint.h>
 
-#include "bsp/bsp.h"
+#include "bsp/bsp.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 #define KEY_MATRIX_TASK_PERIOD_MS (20u)
@@ -40,7 +40,7 @@
 CALLBACK_KEY_TABLE(K)
 #undef K
 
-typedef uint16_t keys_t;
+typedef int16_t keys_t;
 
 // get the keycode from a symbol
 #define KEY(x) ((keys_t)(HID_USAGE_KEYBOARD_##x))
@@ -80,4 +80,4 @@ void KeyMatrixTask(void);
  */
 void KeyMatrixGetKeyBuffer(keys_t *key_buf);
 
-#endif  // QAZ_KEY_MATRIX_H_
+#endif  // QAZ_KEY_MATRIX_HPP_

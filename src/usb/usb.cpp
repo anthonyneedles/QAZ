@@ -13,14 +13,17 @@
  * Endpoint 1 -> Interrupt, TX only
  */
 
-#include "usb/usb.h"
+#include "usb/usb.hpp"
 
 #include <stdbool.h>
 
-#include "usb/usb_descriptors.h"
-#include "util/debug.h"
-#include "util/macros.h"
+#include "usb/usb_descriptors.hpp"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
+
+// usb handler needs C linkage
+extern "C" void USB_IRQHandler(void);
 
 // Total number of EPs used
 #define NUM_EP (2)
@@ -403,11 +406,12 @@ static void usbReset(void)
     USB->DADDR = USB_DADDR_EF;
 }
 
+
 /**
- * @brief Route USB events
- *
- * Routes module function based on received interrupts. Most are ignored, except RESET and CTR.
- */
+* @brief Route USB events
+*
+* Routes module function based on received interrupts. Most are ignored, except RESET and CTR.
+*/
 void USB_IRQHandler(void)
 {
     uint16_t ep_reg;

@@ -9,15 +9,15 @@
  * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
  */
 
-#include "lp500x/lp500x.h"
+#include "lp500x/lp500x.hpp"
 
 #include <stdbool.h>
 
-#include "bsp/bsp.h"
-#include "comms/i2c.h"
-#include "lp500x/lp500x_regs.h"
-#include "util/debug.h"
-#include "util/macros.h"
+#include "bsp/bsp.hpp"
+#include "comms/i2c.hpp"
+#include "lp500x/lp500x_regs.hpp"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 
 #define LP500X_I2C_ADDR (0x14)
 

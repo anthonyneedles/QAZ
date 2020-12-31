@@ -16,13 +16,16 @@
  * The SysTick timer shall not be used for anything else...
  */
 
-#include "core/time_slice.h"
+#include "core/time_slice.hpp"
 
 #include <stdbool.h>
 
-#include "util/debug.h"
-#include "util/macros.h"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
+
+// systick handler needs C linkage
+extern "C" void SysTick_Handler(void);
 
 // find number of loops needed to meet a given period
 #define CALCULATE_LOOPS(period_ms) (period_ms/LOOP_PERIOD_MS)
@@ -66,7 +69,6 @@ void timeSliceManagerTask(void);
 void TimeSliceInit(void)
 {
     uint32_t st_error = SysTick_Config(CLKCYCLES_PER_MS);
-
     if (st_error == 0U) {
         // 0U = Systick timer successfully loaded
         init_flag = true;
@@ -154,11 +156,11 @@ void timeSliceManagerTask(void)
 }
 
 /**
- * @brief SysTick IRQ Handler
- *
- * When initalized, the SysTick will generate interrupts at 1kHz. This IRQ handler will then
- * increment the TimeSlice millisecond count every entrance.
- */
+* @brief SysTick IRQ Handler
+*
+* When initalized, the SysTick will generate interrupts at 1kHz. This IRQ handler will then
+* increment the TimeSlice millisecond count every entrance.
+*/
 void SysTick_Handler(void)
 {
     current_ms_cnt++;

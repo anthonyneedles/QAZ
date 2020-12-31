@@ -9,16 +9,16 @@
  * Loads BSP header depending on the $BOARD macro (set in user-definitions section in Makefile)
  */
 
-#ifndef BSP_BSP_H_
-#define BSP_BSP_H_
+#ifndef BSP_BSP_HPP_
+#define BSP_BSP_HPP_
 
 #if defined(QAZ_65)
 
-#include "bsp/bsp_qaz_65.h"
+#include "bsp/bsp_qaz_65.hpp"
 
 #elif defined(QAZ_TESTBOARD)
 
-#include "bsp/bsp_qaz_testboard.h"
+#include "bsp/bsp_qaz_testboard.hpp"
 
 #else
 
@@ -26,4 +26,4 @@
 
 #endif
 
-#endif  // BSP_BSP_H_
+#endif  // BSP_BSP_HPP_

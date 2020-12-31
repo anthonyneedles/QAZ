@@ -9,8 +9,8 @@
  * Uses LP500x driver to control the RGB LEDs with backlight coloring profiles.
  */
 
-#ifndef QAZ_LIGHTING_H_
-#define QAZ_LIGHTING_H_
+#ifndef QAZ_LIGHTING_HPP_
+#define QAZ_LIGHTING_HPP_
 
 #define LIGHTING_TASK_PERIOD_MS (10U)
 
@@ -56,4 +56,4 @@ void KeyMatrixCallback_COLOR(void);
  */
 void KeyMatrixCallback_PROF(void);
 
-#endif  // QAZ_LIGHTING_H_
+#endif  // QAZ_LIGHTING_HPP_

@@ -15,13 +15,13 @@
  * where X is the symbol given in KEY_TABLE.
  */
 
-#include "qaz/key_matrix.h"
+#include "qaz/key_matrix.hpp"
 
 #include <stdbool.h>
 
-#include "usb/usb_hid_usages.h"
-#include "util/debug.h"
-#include "util/macros.h"
+#include "usb/usb_hid_usages.hpp"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 
 #define NUM_COLS (sizeof(col)/sizeof(col[0]))
 #define NUM_ROWS (sizeof(row)/sizeof(row[0]))
@@ -102,7 +102,7 @@ static const keys_t fn_keys[NUM_COLS*NUM_ROWS] = {
 static keys_t keys_in[KEY_BUF_SIZE];
 
 // all callback key states
-static callback_states_t callback_states = { 0 };
+static callback_states_t callback_states = { };
 
 void keyMatrixScan(key_buf_t *keybuf);
 

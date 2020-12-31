@@ -9,14 +9,14 @@
  * Uses LP500x driver to control the RGB LEDs with backlight coloring profiles.
  */
 
-#include "qaz/lighting.h"
+#include "qaz/lighting.hpp"
 
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "lp500x/lp500x.h"
-#include "util/debug.h"
-#include "util/macros.h"
+#include "lp500x/lp500x.hpp"
+#include "util/debug.hpp"
+#include "util/macros.hpp"
 
 // converts brightness index to percent, then percent to 256 value
 #define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
@@ -55,7 +55,7 @@ typedef enum {
 typedef struct {
     int bright_idx;
     int color_idx;
-    color_profile_t profile;
+    int profile_idx;
 } lighting_ctrl_t;
 
 // colors to cycle through
@@ -69,9 +69,9 @@ static const color_profile_t PROFILES[] = {
 };
 
 static lighting_ctrl_t lighting = {
-    .bright_idx = BRIGHTNESS_LEVELS - 1,
-    .color_idx  = 0,
-    .profile    = PROFILE_SOLID,
+    .bright_idx  = BRIGHTNESS_LEVELS - 1,
+    .color_idx   = 0,
+    .profile_idx = 0,
 };
 
 static void lightingProfileBreathing(void);
@@ -98,7 +98,7 @@ void LightingInit(void)
 void LightingTask(void)
 {
     if (lighting.bright_idx > 0) {
-        switch (lighting.profile) {
+        switch (PROFILES[lighting.profile_idx]) {
         case PROFILE_SOLID:
             LP500xBankSetColor(COLORS[lighting.color_idx]);
             LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
@@ -110,8 +110,8 @@ void LightingTask(void)
             lightingProfileRainbow();
             break;
         default:
-            DbgPrintf("ERROR: Invalid RGB LED profile (%d)\r\n", lighting.profile);
-            lighting.profile = PROFILE_SOLID;
+            DbgPrintf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting.profile_idx);
+            lighting.profile_idx = 0;
             break;
         }
     } else {
@@ -261,5 +261,5 @@ void KeyMatrixCallback_COLOR(void)
  */
 void KeyMatrixCallback_PROF(void)
 {
-    lighting.profile = NEXT_CIRCULAR_INDEX(lighting.profile, N_ELEMENTS(PROFILES));
+    lighting.profile_idx = NEXT_CIRCULAR_INDEX(lighting.profile_idx, N_ELEMENTS(PROFILES));
 }

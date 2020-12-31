@@ -10,10 +10,10 @@
  * or project execution.
  */
 
-#include "core/clock.h"
+#include "core/clock.hpp"
 
-#include "bsp/bsp.h"
-#include "util/macros.h"
+#include "bsp/bsp.hpp"
+#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 /**

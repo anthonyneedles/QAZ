@@ -9,8 +9,8 @@
  * Definitions specfic to the QAZ testboard.
  */
 
-#ifndef BSP_BSP_QAZ_TESTBOARD_H_
-#define BSP_BSP_QAZ_TESTBOARD_H_
+#ifndef BSP_BSP_QAZ_TESTBOARD_HPP_
+#define BSP_BSP_QAZ_TESTBOARD_HPP_
 
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
@@ -60,4 +60,4 @@
 // I2C used for talking to the LED controller
 #define RGB_LED_I2C I2C1
 
-#endif  // BSP_BSP_QAZ_TESTBOARD_H_
+#endif  // BSP_BSP_QAZ_TESTBOARD_HPP_

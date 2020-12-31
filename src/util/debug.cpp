@@ -10,13 +10,13 @@
  * to DEBUG, in order to remove code size and processor time dedicated to debug.
  */
 
-#include "util/debug.h"
+#include "util/debug.hpp"
 
 #include <stdarg.h>
 
-#include "bsp/bsp.h"
-#include "comms/uart.h"
-#include "util/macros.h"
+#include "bsp/bsp.hpp"
+#include "comms/uart.hpp"
+#include "util/macros.hpp"
 
 #if defined(DEBUG)
 

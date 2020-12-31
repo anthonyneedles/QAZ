@@ -7,8 +7,8 @@
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  */
 
-#ifndef UTIL_MACROS_H_
-#define UTIL_MACROS_H_
+#ifndef UTIL_MACROS_HPP_
+#define UTIL_MACROS_HPP_
 
 // bit operations
 #define SET(x, mask) ((x) |=  (mask))
@@ -24,8 +24,9 @@
 
 // use STATIC_ASSERT outside of functions to force a compiler error if 'exp' is false
 // "context_msg" will appear in the compiler message, so fill it with useful information
-#define CASSERT(expr, msg) typedef char GLUE (STATIC_ASSERT_, msg) [(expr) ? (+1) : (-1)]
-#define STATIC_ASSERT(exp, context, msg) CASSERT(exp, GLUE(GLUE(context, _), msg))
+//#define CASSERT(expr, msg) typedef char GLUE (STATIC_ASSERT_, msg) [(expr) ? (+1) : (-1)]
+//#define STATIC_ASSERT(exp, context, msg) CASSERT(exp, GLUE(GLUE(context, _), msg))
+#define STATIC_ASSERT(exp, context, msg) static_assert(exp, #msg)
 
 // bypassing warnings
 #define UNUSED(x) ((void)(x))
@@ -102,4 +103,4 @@
 #define GPIO_OUT_SPEED_SET(port, pin, speed) \
     BITMASK_UPDATE((port)->OSPEEDR, 0x3UL << (pin)*2, speed << (pin)*2)
 
-#endif  // UTIL_MACROS_H_
+#endif  // UTIL_MACROS_HPP_
