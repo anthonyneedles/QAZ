@@ -18,7 +18,6 @@ CXX_SRC = core/clock.cpp                 \
 
 C_SRC   =
 
-
 S_SRC	  = core/startup_stm32f042.s
 
 INC     = ./CMSIS/Core/Include                \

@@ -40,28 +40,20 @@ static i2c_handle_t i2c_handle = {
  */
 void LP500xInit(void)
 {
-    // enable RGB LED EN GPIO port clock, set as output
-    GPIO_CLOCK_ENABLE(LED_EN_PORT);
-    GPIO_MODE_SET(LED_EN_PORT, LED_EN_PIN, GPIO_OUTPUT);
+    // enable RGB LED EN GPIO port clock, set as output, and keep set
+    bsp::rgb_led_en::enable_port_clock();
+    bsp::rgb_led_en::set_mode(gpio::OUTPUT);
+    bsp::rgb_led_en::set_output();
 
-    // we keep the LED EN pin set
-    GPIO_OUTPUT_SET(LED_EN_PORT, LED_EN_PIN);
-
-    // enable I2C SCL/SDA GPIO port clock
-    GPIO_CLOCK_ENABLE(RGB_LED_SDA_PORT);
-    GPIO_CLOCK_ENABLE(RGB_LED_SCL_PORT);
-
-    // set to SCL/SDA pints to alternate mode
-    GPIO_MODE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_ALTFN);
-    GPIO_MODE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_ALTFN);
-
-    // set to SCL/SDA pins to open drain
-    GPIO_OUTPUT_TYPE_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_OPEN_DRAIN);
-    GPIO_OUTPUT_TYPE_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_OPEN_DRAIN);
-
-    // set to SCL/SDA pins to Alternate Function 1
-    GPIO_AF_SET(RGB_LED_SDA_PORT, RGB_LED_SDA_PIN, GPIO_AF1);
-    GPIO_AF_SET(RGB_LED_SCL_PORT, RGB_LED_SCL_PIN, GPIO_AF1);
+    // enable I2C SCL/SDA GPIO port clocks, put in alt mode 1 (I2C) as open drain
+    bsp::rgb_led_sda::enable_port_clock();
+    bsp::rgb_led_sda::set_mode(gpio::ALTFN);
+    bsp::rgb_led_sda::set_output_type(gpio::OPEN_DRAIN);
+    bsp::rgb_led_sda::set_altfn(gpio::ALTFN_1);
+    bsp::rgb_led_scl::enable_port_clock();
+    bsp::rgb_led_scl::set_mode(gpio::ALTFN);
+    bsp::rgb_led_scl::set_output_type(gpio::OPEN_DRAIN);
+    bsp::rgb_led_scl::set_altfn(gpio::ALTFN_1);
 
     I2CInit(&i2c_handle);
 

@@ -12,6 +12,17 @@
 #ifndef BSP_BSP_QAZ_65_HPP_
 #define BSP_BSP_QAZ_65_HPP_
 
+#include "core/gpio.hpp"
+
+namespace bsp {
+    using hb_led      = GPIOBase<gpio::B, gpio::PIN_3>;
+    using mco         = GPIOBase<gpio::A, gpio::PIN_9>;
+    using rgb_led_en  = GPIOBase<gpio::B, gpio::PIN_2>;
+    using rgb_led_sda = GPIOBase<gpio::B, gpio::PIN_10>;
+    using rgb_led_scl = GPIOBase<gpio::B, gpio::PIN_11>;
+    using debug_tx    = GPIOBase<gpio::A, gpio::PIN_9>;
+}
+
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
 //     pin  - the pin number
@@ -64,28 +75,10 @@
 #define CALLBACK_KEY_TABLE(K) \
     K(BRTUP) K(BRTDN) K(COLOR) K(PROF)
 
-// HB driving GPIO port
-#define HB_LED_PORT GPIOB
-#define HB_LED_PIN  3
-
-// RGB LED enable pin
-#define LED_EN_PORT GPIOB
-#define LED_EN_PIN  2
-
-// MCO pin
-#define MCO_PORT GPIOA
-#define MCO_PIN  9
-
 // USART used for sending debug messages
 #define DEBUG_UART    USART1
-#define DEBUG_TX_PORT GPIOA
-#define DEBUG_TX_PIN  9
 
 // I2C used for talking to the LED controller
 #define RGB_LED_I2C      I2C1
-#define RGB_LED_SDA_PORT GPIOB
-#define RGB_LED_SDA_PIN  10
-#define RGB_LED_SCL_PORT GPIOB
-#define RGB_LED_SCL_PIN  11
 
 #endif  // BSP_BSP_QAZ_65_HPP_

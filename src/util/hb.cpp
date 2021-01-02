@@ -15,10 +15,6 @@
 #include "bsp/bsp.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
-#include "stm32f0xx.h"  // NOLINT
-
-#define HB_LED_ON()  GPIO_OUTPUT_SET(HB_LED_PORT, HB_LED_PIN)
-#define HB_LED_OFF() GPIO_OUTPUT_CLR(HB_LED_PORT, HB_LED_PIN)
 
 /**
  * @brief Initializes heartbeat LED
@@ -29,8 +25,8 @@
 void HeartbeatInit(void)
 {
     // enable HB LED GPIO port clock, set as output
-    GPIO_CLOCK_ENABLE(HB_LED_PORT);
-    GPIO_MODE_SET(HB_LED_PORT, HB_LED_PIN, GPIO_OUTPUT);
+    bsp::hb_led::enable_port_clock();
+    bsp::hb_led::set_mode(gpio::OUTPUT);
 
     DbgPrintf("Initialized: Heartbeat\r\n");
 }
@@ -47,8 +43,8 @@ void HeartbeatTask(void)
     state = !state;
 
     if (state) {
-        HB_LED_ON();
+        bsp::hb_led::set_output();
     } else {
-        HB_LED_OFF();
+        bsp::hb_led::clr_output();
     }
 }
