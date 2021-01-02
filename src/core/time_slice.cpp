@@ -21,7 +21,6 @@
 #include <stdbool.h>
 
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 // systick handler needs C linkage
@@ -32,8 +31,10 @@ extern "C" void SysTick_Handler(void);
 
 // static asserts to ensure task periods are multiples of loop period
 #define TASK(period_ms, task_func) \
-    STATIC_ASSERT((period_ms / LOOP_PERIOD_MS) != 0, task_func, period_zero_or_gt_loop_period); \
-    STATIC_ASSERT((period_ms % LOOP_PERIOD_MS) == 0, task_func, period_not_multiple_of_loop_period);
+    static_assert((period_ms / LOOP_PERIOD_MS) != 0, \
+        "Time Slice: " #task_func " task period 0 or > LOOP_PERIOD_MS") \
+    static_assert((period_ms % LOOP_PERIOD_MS) == 0, \
+        "Time Slice: " #task_func " task period not multiple of LOOP_PERIOD_MS") \
     TASK_TABLE(TASK)
 #undef TASK
 

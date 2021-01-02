@@ -22,13 +22,10 @@
 #define GLUE(a, b) __GLUE(a, b)
 #define __GLUE(a, b) a ## b
 
-// use STATIC_ASSERT outside of functions to force a compiler error if 'exp' is false
+// (for C) use CSTATIC_ASSERT outside of functions to force a compiler error if 'exp' is false
 // "context_msg" will appear in the compiler message, so fill it with useful information
 #define CASSERT(expr, msg) typedef char GLUE (STATIC_ASSERT_, msg) [(expr) ? (+1) : (-1)]
 #define CSTATIC_ASSERT(exp, context, msg) CASSERT(exp, GLUE(GLUE(context, _), msg))
-
-// TODO: replace
-#define STATIC_ASSERT(exp, context, msg) static_assert(exp, #msg)
 
 // bypassing warnings
 #define UNUSED(x) ((void)(x))

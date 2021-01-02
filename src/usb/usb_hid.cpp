@@ -17,12 +17,11 @@
 #include "usb/usb_descriptors.hpp"
 #include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 #include "stm32f0xx.h" // NOLINT
 
 #define INTERRUPT_EPN (1)
 
-STATIC_ASSERT(KEY_BUF_SIZE >= 6, usb_hid, key_buf_must_be_gt_eq_6);
+static_assert(KEY_BUF_SIZE >= 6, "USB HID: Key buffer size must be >= 6");
 
 // both previous key buffer and current key buffer
 typedef struct {
