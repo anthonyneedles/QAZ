@@ -1,5 +1,5 @@
 /**
- * @file      bsp.h
+ * @file      bsp.hpp
  * @brief     Loads correct BSP header for given selection
  *
  * @author    Anthony Needles

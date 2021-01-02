@@ -1,5 +1,5 @@
 /**
- * @file      hb.h
+ * @file      hb.hpp
  * @brief     Heartbeat LED functionality
  *
  * @author    Anthony Needles

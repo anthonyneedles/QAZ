@@ -1,5 +1,5 @@
 /**
- * @file      usb_hid_usages.h
+ * @file      usb_hid_usages.hpp
  * @brief     Keyboard/Keypad Page (0x07) HID usages
  *
  * @author    Anthony Needles

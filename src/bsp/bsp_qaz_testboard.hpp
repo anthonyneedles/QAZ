@@ -1,5 +1,5 @@
 /**
- * @file      bsp_qaz_testboard.h
+ * @file      bsp_qaz_testboard.hpp
  * @brief     BSP for the QAZ testboard
  *
  * @author    Anthony Needles

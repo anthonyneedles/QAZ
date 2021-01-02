@@ -1,5 +1,5 @@
 /**
- * @file      lp500x_regs.h
+ * @file      lp500x_regs.hpp
  * @brief     LP500x LED Driver RGB register map
  *
  * @author    Anthony Needles

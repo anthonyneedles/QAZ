@@ -1,5 +1,5 @@
 /**
- * @file      main.c
+ * @file      main.cpp
  * @brief     QAZ init and loop entry
  *
  * @author    Anthony Needles

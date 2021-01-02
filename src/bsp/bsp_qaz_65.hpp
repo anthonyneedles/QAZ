@@ -1,5 +1,5 @@
 /**
- * @file      bsp_qaz_65.h
+ * @file      bsp_qaz_65.hpp
  * @brief     BSP for the QAZ 65% board
  *
  * @author    Anthony Needles

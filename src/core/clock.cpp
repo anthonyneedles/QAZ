@@ -1,5 +1,5 @@
 /**
- * @file      clock.c
+ * @file      clock.cpp
  * @brief     System clock initialization
  *
  * @author    Anthony Needles

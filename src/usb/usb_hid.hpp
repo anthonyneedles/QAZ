@@ -1,5 +1,5 @@
 /**
- * @file      usb_hid.h
+ * @file      usb_hid.hpp
  * @brief     USB HID control
  *
  * @author    Anthony Needles

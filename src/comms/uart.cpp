@@ -1,5 +1,5 @@
 /**
- * @file      uart.c
+ * @file      uart.cpp
  * @brief     UART driver
  *
  * @author    Anthony Needles

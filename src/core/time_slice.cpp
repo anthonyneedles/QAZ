@@ -1,5 +1,5 @@
 /**
- * @file      time_slice.c
+ * @file      time_slice.cpp
  * @brief     Implements time slice loop scheduler
  *
  * @author    Anthony Needles

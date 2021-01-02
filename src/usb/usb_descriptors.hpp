@@ -1,5 +1,5 @@
 /**
- * @file      usb_descriptors.h
+ * @file      usb_descriptors.hpp
  * @brief     USB descriptor management
  *
  * @author    Anthony Needles

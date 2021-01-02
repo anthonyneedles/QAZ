@@ -1,5 +1,5 @@
 /**
- * @file      i2c.c
+ * @file      i2c.cpp
  * @brief     I2C driver
  *
  * @author    Anthony Needles

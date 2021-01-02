@@ -1,5 +1,5 @@
 /**
- * @file      key_matrix.h
+ * @file      key_matrix.hpp
  * @brief     Implements key matrix scanning
  * 
  * @author    Anthony Needles

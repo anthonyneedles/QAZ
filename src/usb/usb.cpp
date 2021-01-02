@@ -1,5 +1,5 @@
 /**
- * @file      usb.c
+ * @file      usb.cpp
  * @brief     USB driver
  *
  * @author    Anthony Needles

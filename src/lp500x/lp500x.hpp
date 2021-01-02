@@ -1,5 +1,5 @@
 /**
- * @file      lp500x.h
+ * @file      lp500x.hpp
  * @brief     RGB LED driver
  *
  * @author    Anthony Needles

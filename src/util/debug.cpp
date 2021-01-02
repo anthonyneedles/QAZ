@@ -1,5 +1,5 @@
 /**
- * @file      debug.c
+ * @file      debug.cpp
  * @brief     Debug functionality. Only used when BUILD_TYPE = DEBUG
  *
  * @author    Anthony Needles

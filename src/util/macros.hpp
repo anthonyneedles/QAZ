@@ -1,5 +1,5 @@
 /**
- * @file      macros.h
+ * @file      macros.hpp
  * @brief     Holds useful utility macros
  *
  * @author    Anthony Needles

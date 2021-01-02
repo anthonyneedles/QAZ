@@ -1,5 +1,5 @@
 /**
- * @file      lighting.c
+ * @file      lighting.cpp
  * @brief     Color profile manager
  *
  * @author    Anthony Needles
