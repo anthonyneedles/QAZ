@@ -25,8 +25,8 @@
 void HeartbeatInit(void)
 {
     // enable HB LED GPIO port clock, set as output
-    bsp::hb_led::enable_port_clock();
-    bsp::hb_led::set_mode(gpio::OUTPUT);
+    GPIO::enable_port_clock(bsp::HB_LED);
+    GPIO::set_mode(bsp::HB_LED, gpio::OUTPUT);
 
     DbgPrintf("Initialized: Heartbeat\r\n");
 }
@@ -43,8 +43,8 @@ void HeartbeatTask(void)
     state = !state;
 
     if (state) {
-        bsp::hb_led::set_output();
+        GPIO::set_output(bsp::HB_LED);
     } else {
-        bsp::hb_led::clr_output();
+        GPIO::clr_output(bsp::HB_LED);
     }
 }

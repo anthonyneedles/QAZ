@@ -15,13 +15,15 @@
 #include "core/gpio.hpp"
 
 namespace bsp {
-    using hb_led      = GPIOBase<gpio::B, gpio::PIN_3>;
-    using mco         = GPIOBase<gpio::A, gpio::PIN_9>;
-    using rgb_led_en  = GPIOBase<gpio::B, gpio::PIN_2>;
-    using rgb_led_sda = GPIOBase<gpio::B, gpio::PIN_10>;
-    using rgb_led_scl = GPIOBase<gpio::B, gpio::PIN_11>;
-    using debug_tx    = GPIOBase<gpio::A, gpio::PIN_9>;
-}
+
+constexpr gpio::Id HB_LED  { gpio::B, gpio::PIN_3  };
+constexpr gpio::Id MCO     { gpio::A, gpio::PIN_8  };
+constexpr gpio::Id DBG_TX  { gpio::A, gpio::PIN_9  };
+constexpr gpio::Id RGB_EN  { gpio::B, gpio::PIN_2  };
+constexpr gpio::Id RGB_SDA { gpio::B, gpio::PIN_10 };
+constexpr gpio::Id RGB_SCL { gpio::B, gpio::PIN_11 };
+
+}  // namespace bsp
 
 // output GPIO ports. each column has:
 //     port - the port (A, B, C, D, ...)
