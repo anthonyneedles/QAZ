@@ -15,8 +15,8 @@
 
 #include "comms/i2c.hpp"
 
+#include "util/bitop.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 
 // Calculated for 100kHz with 48MHz I2C clock
 #define TIMING_CONFIG 0xB0240F13
@@ -45,22 +45,22 @@ i2c_status_t I2CInit(i2c_handle_t *i2c)
         return I2C_FAILURE;
     }
 
-    CLR(i2c->regs->CR1, I2C_CR1_PE);
+    bitop::clr_msk(i2c->regs->CR1, I2C_CR1_PE);
 
     // enable I2C clocking with SYSCLK
     if (i2c->regs == I2C1) {
-        SET(RCC->APB1ENR, RCC_APB1ENR_I2C1EN);
-        SET(RCC->CFGR3,   RCC_CFGR3_I2C1SW);
+        bitop::set_msk(RCC->APB1ENR, RCC_APB1ENR_I2C1EN);
+        bitop::set_msk(RCC->CFGR3,   RCC_CFGR3_I2C1SW);
     } else {
         DBG_ASSERT(FORCE_ASSERT);
         return I2C_FAILURE;
     }
 
     i2c->regs->TIMINGR = TIMING_CONFIG;
-    SET(i2c->regs->CR1, I2C_CR1_PE);
+    bitop::set_msk(i2c->regs->CR1, I2C_CR1_PE);
 
     // set own address
-    BITMASK_UPDATE(i2c->regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
+    bitop::update_msk(i2c->regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
             (i2c->self_addr << 1) | I2C_OAR1_OA1EN);
 
     i2c->state = I2C_READY;
@@ -97,19 +97,19 @@ i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8
         return I2C_FAILURE;
     }
 
-    CLR(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-    SET(i2c->regs->CR2, ((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
+    bitop::clr_msk(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
+    bitop::set_msk(i2c->regs->CR2, ((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
             ((uint32_t)n << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
 
     for (int i = 0; i < n; ++i) {
-        while (BIT_READ(i2c->regs->ISR, I2C_ISR_TXE_Pos) != 1) {}
+        while (bitop::read_bit(i2c->regs->ISR, I2C_ISR_TXE_Pos) != 1) {}
         i2c->regs->TXDR = data[i];
     }
 
-    while (BIT_READ(i2c->regs->ISR, I2C_ISR_STOPF_Pos) != 1) {}
-    SET(i2c->regs->ICR, I2C_ICR_STOPCF);
+    while (bitop::read_bit(i2c->regs->ISR, I2C_ISR_STOPF_Pos) != 1) {}
+    bitop::set_msk(i2c->regs->ICR, I2C_ICR_STOPCF);
 
-    CLR(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
+    bitop::clr_msk(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
 
     return I2C_SUCCESS;
 }

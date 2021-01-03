@@ -15,37 +15,7 @@
 
 #include <cstdint>
 
-// forward declare
-template <typename T> class BitOp;
-
-// shorthand for standard integer sizes
-using BitOp32  = BitOp<uint32_t>;
-using BitOp16  = BitOp<uint16_t>;
-using BitOp8   = BitOp<uint8_t>;
-
-// shorthand for volatile standard integer sizes
-using BitOpV32 = BitOp<volatile uint32_t>;
-using BitOpV16 = BitOp<volatile uint16_t>;
-using BitOpV8  = BitOp<volatile uint8_t>;
-
-/**
- * @brief bit operations class template
- *
- * Bit operations can be performed using this template class for specific types.
- *
- * @tparam T type to use for operations
- */
-template <typename T>
-class BitOp {
- public:
-    static void set_bit(T *x, unsigned bitn);
-    static void clr_bit(T *x, unsigned bitn);
-    static void update_bit(T *x, unsigned bitn, T val);
-    static T read_bit(T *x, unsigned bitn);
-    static void set_msk(T *x, T msk);
-    static void clr_msk(T *x, T msk);
-    static void update_msk(T *x, T msk, T val);
-};
+namespace bitop {
 
 /**
  * @brief Set a specific bit
@@ -55,9 +25,9 @@ class BitOp {
  * @param[in]     bitn bit posiiton
  */
 template <typename T>
-inline void BitOp<T>::set_bit(T *x, unsigned bitn)
+inline void set_bit(T &x, unsigned bitn)
 {
-    *x |= (1 << bitn);
+    x |= (1 << bitn);
 }
 
 /**
@@ -68,9 +38,9 @@ inline void BitOp<T>::set_bit(T *x, unsigned bitn)
  * @param[in]     bitn bit posiiton
  */
 template <typename T>
-inline void BitOp<T>::clr_bit(T *x, unsigned bitn)
+inline void clr_bit(T &x, unsigned bitn)
 {
-    *x &= ~(1 << bitn);
+    x &= ~(1 << bitn);
 }
 
 /**
@@ -82,9 +52,9 @@ inline void BitOp<T>::clr_bit(T *x, unsigned bitn)
  * @param[in]     val  value to update bit with
  */
 template <typename T>
-inline void BitOp<T>::update_bit(T *x, unsigned bitn, T val)
+inline void update_bit(T &x, unsigned bitn, unsigned val)
 {
-    *x = ((*x & ~(1 << bitn)) | ((val & 1) << bitn));
+    x = ((x & ~(1 << bitn)) | ((val & 1) << bitn));
 }
 
 /**
@@ -96,49 +66,51 @@ inline void BitOp<T>::update_bit(T *x, unsigned bitn, T val)
  * @return T sized field with read bit at LSB
  */
 template <typename T>
-inline T BitOp<T>::read_bit(T *x, unsigned bitn)
+inline T read_bit(const T &x, unsigned bitn)
 {
-    return (*x >> bitn) & 1;
+    return (x >> bitn) & 1;
 }
 
 /**
  * @brief Clear a bitmask
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     msk  bitmask
+ * @tparam        T   type to use for operations
+ * @param[in,out] x   reference of value to perform bitop on
+ * @param[in]     msk bitmask
  */
 template <typename T>
-inline void BitOp<T>::set_msk(T *x, T msk)
+inline void set_msk(T &x, unsigned msk)
 {
-    *x |= msk;
+    x |= msk;
 }
 
 /**
  * @brief Clear a bitmask
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     msk  bitmask
+ * @tparam        T   type to use for operations
+ * @param[in,out] x   reference of value to perform bitop on
+ * @param[in]     msk bitmask
  */
 template <typename T>
-inline void BitOp<T>::clr_msk(T *x, T msk)
+inline void clr_msk(T &x, unsigned msk)
 {
-    *x &= ~msk;
+    x &= ~msk;
 }
 
 /**
  * @brief Update a bitmask
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     msk  bitmask
- * @param[in]     val  value to update bit with
+ * @tparam        T   type to use for operations
+ * @param[in,out] x   reference of value to perform bitop on
+ * @param[in]     msk bitmask
+ * @param[in]     val value to update bit with
  */
 template <typename T>
-inline void BitOp<T>::update_msk(T *x, T msk, T val)
+inline void update_msk(T &x, unsigned msk, unsigned val)
 {
-    *x = ((*x & ~msk) | (val & msk));
+    x = ((x & ~msk) | (val & msk));
 }
+
+}  // namespace bitop
 
 #endif  // UTIL_BITOP_HPP_

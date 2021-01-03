@@ -206,13 +206,11 @@ void keyMatrixScan(key_buf_t *keybuf)
     // ensure all columns are off
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
         GPIO::set_output(bsp::COLS[ncol]);
-        //DEACTIVATE_COL(col[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
         GPIO::clr_output(bsp::COLS[ncol]);
-        //ACTIVATE_COL(col[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
@@ -233,7 +231,6 @@ void keyMatrixScan(key_buf_t *keybuf)
         }
 
         GPIO::set_output(bsp::COLS[ncol]);
-        //DEACTIVATE_COL(col[ncol]);
 
         // ~10us delay. allows row to pull back up to VCC
         LOOP_DELAY(40);

@@ -165,7 +165,7 @@ inline volatile GPIO_TypeDef *GPIO::regs(gpio::Id id)
  */
 inline void GPIO::enable_port_clock(gpio::Id id)
 {
-    BitOpV32::set_msk(&(RCC->AHBENR),
+    bitop::set_msk(RCC->AHBENR,
         #ifdef GPIOA
         (regs(id) == GPIOA) ? RCC_AHBENR_GPIOAEN :
         #endif
@@ -203,7 +203,7 @@ inline void GPIO::enable_port_clock(gpio::Id id)
  */
 inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
 {
-    BitOpV32::update_msk(&(regs(id)->MODER), 0x3 << id.pin*2, mode << id.pin*2);
+    bitop::update_msk(regs(id)->MODER, 0x3 << id.pin*2, mode << id.pin*2);
 }
 
 /**
@@ -216,7 +216,7 @@ inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
  */
 inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
 {
-    BitOpV32::update_msk(&(regs(id)->PUPDR), 0x3 << id.pin*2, pull << id.pin*2);
+    bitop::update_msk(regs(id)->PUPDR, 0x3 << id.pin*2, pull << id.pin*2);
 }
 
 /**
@@ -229,7 +229,7 @@ inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
  */
 inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
 {
-    BitOpV32::update_msk(&(regs(id)->OTYPER), 0x3 << id.pin*2, type  << id.pin*2);
+    bitop::update_msk(regs(id)->OTYPER, 0x3 << id.pin*2, type << id.pin*2);
 }
 
 /**
@@ -242,7 +242,7 @@ inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
  */
 inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
 {
-    BitOpV32::update_msk(&(regs(id)->AFR[id.pin < 8 ? 0 : 1]), 0xF << (id.pin % 8)*4,
+    bitop::update_msk(regs(id)->AFR[id.pin < 8 ? 0 : 1], 0xF << (id.pin % 8)*4,
             afn << (id.pin % 8)*4);
 }
 
@@ -256,7 +256,7 @@ inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
  */
 inline void GPIO::set_output_speed(gpio::Id id, gpio::OutputSpeed speed)
 {
-    BitOpV32::update_msk(&(regs(id)->OSPEEDR), 0x3 << id.pin*2, speed << id.pin*2);
+    bitop::update_msk(regs(id)->OSPEEDR, 0x3 << id.pin*2, speed << id.pin*2);
 }
 
 /**
@@ -268,7 +268,7 @@ inline void GPIO::set_output_speed(gpio::Id id, gpio::OutputSpeed speed)
  */
 inline void GPIO::clr_output(gpio::Id id)
 {
-    BitOpV32::clr_bit(&(regs(id)->ODR), id.pin);
+    bitop::clr_bit(regs(id)->ODR, id.pin);
 }
 
 /**
@@ -280,7 +280,7 @@ inline void GPIO::clr_output(gpio::Id id)
  */
 inline void GPIO::set_output(gpio::Id id)
 {
-    BitOpV32::set_bit(&(regs(id)->ODR), id.pin);
+    bitop::set_bit(regs(id)->ODR, id.pin);
 }
 
 /**
@@ -294,7 +294,7 @@ inline void GPIO::set_output(gpio::Id id)
  */
 inline void GPIO::set_output_state(gpio::Id id, gpio::PinState state)
 {
-    BitOpV32::update_bit(&(regs(id)->ODR), id.pin, state);
+    bitop::update_bit(regs(id)->ODR, id.pin, state);
 }
 
 /**
@@ -307,7 +307,7 @@ inline void GPIO::set_output_state(gpio::Id id, gpio::PinState state)
  */
 inline gpio::PinState GPIO::read_input(gpio::Id id)
 {
-    return static_cast<gpio::PinState>(BitOpV32::read_bit(&(regs(id)->IDR), id.pin));
+    return static_cast<gpio::PinState>(bitop::read_bit(regs(id)->IDR, id.pin));
 }
 
 #endif  // CORE_GPIO_HPP_

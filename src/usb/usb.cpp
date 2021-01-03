@@ -18,6 +18,7 @@
 #include <stdbool.h>
 
 #include "usb/usb_descriptors.hpp"
+#include "util/bitop.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
@@ -147,17 +148,17 @@ static void usbEP0Read(uint8_t *in_buf);
 void USBInit(void)
 {
     // Disble embedded pullup on DP
-    CLR(USB->BCDR, USB_BCDR_DPPU);
+    bitop::clr_msk(USB->BCDR, USB_BCDR_DPPU);
 
     // Set USB clock source from PLL, enable USB clocking
-    SET(RCC->CFGR3, RCC_CFGR3_USBSW);
-    SET(RCC->APB1ENR, RCC_APB1ENR_USBEN);
+    bitop::set_msk(RCC->CFGR3, RCC_CFGR3_USBSW);
+    bitop::set_msk(RCC->APB1ENR, RCC_APB1ENR_USBEN);
 
     // Ensure USB clock is set
-    while (BIT_READ(RCC->APB1ENR, RCC_APB1ENR_USBEN_Pos) != 1) {}
+    while (bitop::read_bit(RCC->APB1ENR, RCC_APB1ENR_USBEN_Pos) != 1) {}
 
     // Exit USB power down
-    CLR(USB->CNTR, USB_CNTR_PDWN);
+    bitop::clr_msk(USB->CNTR, USB_CNTR_PDWN);
 
     // Startup can take a max of 1us
     LOOP_DELAY(50);
@@ -178,7 +179,7 @@ void USBInit(void)
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM;
 
     // Enable embedded pullup on DP
-    SET(USB->BCDR, USB_BCDR_DPPU);
+    bitop::set_msk(USB->BCDR, USB_BCDR_DPPU);
 
     DbgPrintf("Initialized: USB\r\n");
 }

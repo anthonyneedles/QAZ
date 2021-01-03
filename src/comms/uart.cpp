@@ -13,8 +13,8 @@
 
 #include "comms/uart.hpp"
 
+#include "util/bitop.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 
 #define BAUD_115200 0x1A1
 
@@ -39,7 +39,7 @@ uart_status_t UARTInit(uart_handle_t *uart)
 
     // Enable clock for given USART
     if (uart->regs == USART1) {
-        SET(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
+        bitop::set_msk(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
     } else {
         DBG_ASSERT(FORCE_ASSERT);
         return UART_FAILURE;
@@ -52,7 +52,7 @@ uart_status_t UARTInit(uart_handle_t *uart)
     uart->regs->BRR = BAUD_115200;
 
     // Enable USART1
-    SET(uart->regs->CR1, USART_CR1_UE);
+    bitop::set_msk(uart->regs->CR1, USART_CR1_UE);
 
     uart->state = UART_READY;
 
@@ -83,7 +83,7 @@ uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n)
     }
 
     for (int i = 0; i < n; ++i) {
-        while (BIT_READ(uart->regs->ISR, USART_ISR_TXE_Pos) != 1) {}
+        while (bitop::read_bit(uart->regs->ISR, USART_ISR_TXE_Pos) != 1) {}
         uart->regs->TDR = data[i];
     }
 

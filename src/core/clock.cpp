@@ -13,7 +13,7 @@
 #include "core/clock.hpp"
 
 #include "bsp/bsp.hpp"
-#include "util/macros.hpp"
+#include "util/bitop.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 /**
@@ -25,39 +25,39 @@
 void ClockInit(void)
 {
     // enable Clock Security System and High Speed External clock
-    SET(RCC->CR, RCC_CR_CSSON | RCC_CR_HSEON);
+    bitop::set_msk(RCC->CR, RCC_CR_CSSON | RCC_CR_HSEON);
 
     // wait until HSE oscillator is stable (~512 HSE clock pulses)
-    while (BIT_READ(RCC->CR, RCC_CR_HSERDY_Pos) != 1) {}
+    while (bitop::read_bit(RCC->CR, RCC_CR_HSERDY_Pos) != 1) {}
 
     // set system clock mux to HSE (SYSCLK is now 8MHz)
-    BITMASK_UPDATE(RCC->CFGR, RCC_CFGR_SW_Msk, RCC_CFGR_SW_HSE);
+    bitop::update_msk(RCC->CFGR, RCC_CFGR_SW_Msk, RCC_CFGR_SW_HSE);
 
     // turn PLL off to change parameters
-    CLR(RCC->CR, ~RCC_CR_PLLON);
+    bitop::clr_msk(RCC->CR, RCC_CR_PLLON);
 
     // wait until PLL is unlocked (off)
-    while (BIT_READ(RCC->CR, RCC_CR_PLLRDY_Pos) == 1) {}
+    while (bitop::read_bit(RCC->CR, RCC_CR_PLLRDY_Pos) == 1) {}
 
     // set PLL multiplication factor to 6 (6 x 8Mhz = 48MHz) MUST NOT EXCEED 6!
     // select HSE as PLL source
-    BITMASK_UPDATE(RCC->CFGR, RCC_CFGR_PLLMUL_Msk | RCC_CFGR_PLLSRC_Msk,
+    bitop::update_msk(RCC->CFGR, RCC_CFGR_PLLMUL_Msk | RCC_CFGR_PLLSRC_Msk,
             RCC_CFGR_PLLMUL6 | RCC_CFGR_PLLSRC_HSE_PREDIV);
 
     // turn PLL on as parameters are changed
-    SET(RCC->CR, RCC_CR_PLLON);
+    bitop::set_msk(RCC->CR, RCC_CR_PLLON);
 
     // wait until PLL is locked (on)
-    while (BIT_READ(RCC->CR, RCC_CR_PLLRDY_Pos) != 1) {}
+    while (bitop::read_bit(RCC->CR, RCC_CR_PLLRDY_Pos) != 1) {}
 
     // set system clock mux to PLL (SYSCLK is now 48MHz)
-    BITMASK_UPDATE(RCC->CFGR, RCC_CFGR_SW_Msk, RCC_CFGR_SW_PLL);
+    bitop::update_msk(RCC->CFGR, RCC_CFGR_SW_Msk, RCC_CFGR_SW_PLL);
 
     // enable Prefetch Buffer and set Flash latency
     FLASH->ACR = FLASH_ACR_PRFTBE | FLASH_ACR_LATENCY;
 
     // select SYSCLK as MCO output
-    BITMASK_UPDATE(RCC->CFGR, RCC_CFGR_MCO_Msk, RCC_CFGR_MCO_SYSCLK);
+    bitop::update_msk(RCC->CFGR, RCC_CFGR_MCO_Msk, RCC_CFGR_MCO_SYSCLK);
 
     // enable MCO pin clock, set to alternate function 0, high speed
     GPIO::enable_port_clock(bsp::MCO);
