@@ -23,8 +23,8 @@
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
-#define NUM_COLS static_cast<int>(sizeof(col)/sizeof(col[0]))
-#define NUM_ROWS static_cast<int>(sizeof(row)/sizeof(row[0]))
+constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
+constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
 
 // index into key symbol array for corresponding symbol
 #define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
@@ -63,26 +63,6 @@ typedef struct {
     int idx;
 } key_buf_t;
 
-// attributes for each gpio used
-typedef struct {
-    GPIO_TypeDef *port;
-    uint16_t pin;
-} gpio_t;
-
-// macro expand column gpio attribute array
-static const gpio_t col[] = {
-#define COL(port, pin) {port, pin},
-    COL_TABLE(COL)
-#undef COL
-};
-
-// macro expand row gpio attribute array
-static const gpio_t row[] = {
-#define ROW(port, pin) {port, pin},
-    ROW_TABLE(ROW)
-#undef ROW
-};
-
 // macro expand base key symbol array. this holds every KEY_* enumeration value corresponding to
 // every key, in order (for N columns and M rows):
 //   col0_row0, col1_row0, ..., colN_row0, col0_row1, col1_row1, ... colN_rowM
@@ -116,16 +96,16 @@ void KeyMatrixInit(void)
 {
     // init each col gpio as open drain output
     for (int i = 0; i < NUM_COLS; ++i) {
-        GPIO_CLOCK_ENABLE(col[i].port);
-        GPIO_OUTPUT_TYPE_SET(col[i].port, col[i].pin, GPIO_OPEN_DRAIN);
-        GPIO_MODE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
+        GPIO::enable_port_clock(bsp::COLS[i]);
+        GPIO::set_mode(bsp::COLS[i], gpio::OUTPUT);
+        GPIO::set_output_type(bsp::COLS[i], gpio::OPEN_DRAIN);
     }
 
     // init each row gpio as pullup input
     for (int i = 0; i < NUM_ROWS; ++i) {
-        GPIO_CLOCK_ENABLE(row[i].port);
-        GPIO_MODE_SET(row[i].port, row[i].pin, GPIO_INPUT);
-        GPIO_PULL_SET(row[i].port, row[i].pin, GPIO_PULL_UP);
+        GPIO::enable_port_clock(bsp::ROWS[i]);
+        GPIO::set_mode(bsp::ROWS[i], gpio::INPUT);
+        GPIO::set_pull(bsp::ROWS[i], gpio::PULL_UP);
     }
 
     DbgPrintf("Initialized: Key Matrix\r\n");
@@ -225,17 +205,19 @@ void keyMatrixScan(key_buf_t *keybuf)
 
     // ensure all columns are off
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
-        DEACTIVATE_COL(col[ncol]);
+        GPIO::set_output(bsp::COLS[ncol]);
+        //DEACTIVATE_COL(col[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
-        ACTIVATE_COL(col[ncol]);
+        GPIO::clr_output(bsp::COLS[ncol]);
+        //ACTIVATE_COL(col[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
-            int state = READ_ROW(row[nrow]);
-            if (state == ROW_SET) {
+            gpio::PinState state = GPIO::read_input(bsp::ROWS[nrow]);
+            if (state == gpio::CLR) {
                 // found pressed key...
                 keybuf->buf[keybuf->idx].base = BASE_KEY(ncol, nrow);
                 if (keybuf->buf[keybuf->idx].base == KEY(FN)) {
@@ -250,7 +232,8 @@ void keyMatrixScan(key_buf_t *keybuf)
             }
         }
 
-        DEACTIVATE_COL(col[ncol]);
+        GPIO::set_output(bsp::COLS[ncol]);
+        //DEACTIVATE_COL(col[ncol]);
 
         // ~10us delay. allows row to pull back up to VCC
         LOOP_DELAY(40);

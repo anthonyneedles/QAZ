@@ -106,8 +106,8 @@ enum OutputSpeed : uint32_t {
     HIGH_SPEED = 0x3,
 };
 
-// output states in ODR register
-enum OutputState : uint32_t {
+// output/input states in ODR/IDR registers
+enum PinState : uint32_t {
     CLR = 0x0,
     SET = 0x1,
 };
@@ -136,7 +136,8 @@ struct GPIO {
     static void set_output_speed(gpio::Id, gpio::OutputSpeed speed);
     static void clr_output(gpio::Id);
     static void set_output(gpio::Id);
-    static void set_output_state(gpio::Id, gpio::OutputState);
+    static void set_output_state(gpio::Id, gpio::PinState);
+    static gpio::PinState read_input(gpio::Id);
 };
 
 /**
@@ -202,7 +203,7 @@ inline void GPIO::enable_port_clock(gpio::Id id)
  */
 inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
 {
-    BitOpV32::upd_msk(&(regs(id)->MODER), 0x3 << id.pin*2, mode << id.pin*2);
+    BitOpV32::update_msk(&(regs(id)->MODER), 0x3 << id.pin*2, mode << id.pin*2);
 }
 
 /**
@@ -215,7 +216,7 @@ inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
  */
 inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
 {
-    BitOpV32::upd_msk(&(regs(id)->PUPDR), 0x3 << id.pin*2, pull << id.pin*2);
+    BitOpV32::update_msk(&(regs(id)->PUPDR), 0x3 << id.pin*2, pull << id.pin*2);
 }
 
 /**
@@ -228,7 +229,7 @@ inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
  */
 inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
 {
-    BitOpV32::upd_msk(&(regs(id)->OTYPER), 0x3 << id.pin*2, type  << id.pin*2);
+    BitOpV32::update_msk(&(regs(id)->OTYPER), 0x3 << id.pin*2, type  << id.pin*2);
 }
 
 /**
@@ -241,7 +242,7 @@ inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
  */
 inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
 {
-    BitOpV32::upd_msk(&(regs(id)->AFR[id.pin < 8 ? 0 : 1]), 0xF << (id.pin % 8)*4,
+    BitOpV32::update_msk(&(regs(id)->AFR[id.pin < 8 ? 0 : 1]), 0xF << (id.pin % 8)*4,
             afn << (id.pin % 8)*4);
 }
 
@@ -255,7 +256,7 @@ inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
  */
 inline void GPIO::set_output_speed(gpio::Id id, gpio::OutputSpeed speed)
 {
-    BitOpV32::upd_msk(&(regs(id)->OSPEEDR), 0x3 << id.pin*2, speed << id.pin*2);
+    BitOpV32::update_msk(&(regs(id)->OSPEEDR), 0x3 << id.pin*2, speed << id.pin*2);
 }
 
 /**
@@ -289,11 +290,24 @@ inline void GPIO::set_output(gpio::Id id)
  * or `clr_output` should be used instead.
  *
  * @param[in] id    identification for gpio
- * @param[in] state resultant gpio state
+ * @param[in] state gpio output state
  */
-inline void GPIO::set_output_state(gpio::Id id, gpio::OutputState state)
+inline void GPIO::set_output_state(gpio::Id id, gpio::PinState state)
 {
-    BitOpV32::upd_bit(&(regs(id)->ODR), id.pin, state);
+    BitOpV32::update_bit(&(regs(id)->ODR), id.pin, state);
+}
+
+/**
+ * @brief Read the GPIO input state
+ *
+ * Returns the state of the pin in the IDR register.
+ *
+ * @param[in] id identification for gpio
+ * @return read pin state
+ */
+inline gpio::PinState GPIO::read_input(gpio::Id id)
+{
+    return static_cast<gpio::PinState>(BitOpV32::read_bit(&(regs(id)->IDR), id.pin));
 }
 
 #endif  // CORE_GPIO_HPP_

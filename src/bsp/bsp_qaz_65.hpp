@@ -23,37 +23,33 @@ constexpr gpio::Id RGB_EN  { gpio::B, gpio::PIN_2  };
 constexpr gpio::Id RGB_SDA { gpio::B, gpio::PIN_10 };
 constexpr gpio::Id RGB_SCL { gpio::B, gpio::PIN_11 };
 
+constexpr gpio::Id COLS[] {
+    { gpio::A, gpio::PIN_5  },
+    { gpio::A, gpio::PIN_6  },
+    { gpio::A, gpio::PIN_7  },
+    { gpio::B, gpio::PIN_13 },
+    { gpio::B, gpio::PIN_14 },
+    { gpio::B, gpio::PIN_15 },
+    { gpio::A, gpio::PIN_10 },
+    { gpio::B, gpio::PIN_4  },
+    { gpio::B, gpio::PIN_7  },
+    { gpio::B, gpio::PIN_8  },
+    { gpio::B, gpio::PIN_9  },
+    { gpio::C, gpio::PIN_13 },
+    { gpio::B, gpio::PIN_6  },
+    { gpio::C, gpio::PIN_14 },
+    { gpio::C, gpio::PIN_15 },
+};
+
+constexpr gpio::Id ROWS[] {
+    { gpio::B, gpio::PIN_0  },
+    { gpio::B, gpio::PIN_1  },
+    { gpio::A, gpio::PIN_15 },
+    { gpio::B, gpio::PIN_12 },
+    { gpio::B, gpio::PIN_5  },
+};
+
 }  // namespace bsp
-
-// output GPIO ports. each column has:
-//     port - the port (A, B, C, D, ...)
-//     pin  - the pin number
-#define COL_TABLE(COL) \
-    COL(GPIOA,  5) \
-    COL(GPIOA,  6) \
-    COL(GPIOA,  7) \
-    COL(GPIOB, 13) \
-    COL(GPIOB, 14) \
-    COL(GPIOB, 15) \
-    COL(GPIOA, 10) \
-    COL(GPIOB,  4) \
-    COL(GPIOB,  7) \
-    COL(GPIOB,  8) \
-    COL(GPIOB,  9) \
-    COL(GPIOC, 13) \
-    COL(GPIOB,  6) \
-    COL(GPIOC, 14) \
-    COL(GPIOC, 15)
-
-// input GPIO rows. each row has:
-//     port - the port (A, B, C, D, ...)
-//     pin  - the pin number
-#define ROW_TABLE(ROW) \
-    ROW(GPIOB,  0) \
-    ROW(GPIOB,  1) \
-    ROW(GPIOA, 15) \
-    ROW(GPIOB, 12) \
-    ROW(GPIOB,  5)
 
 // base key symbol table
 //     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define

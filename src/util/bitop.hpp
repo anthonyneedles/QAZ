@@ -40,10 +40,11 @@ class BitOp {
  public:
     static void set_bit(T *x, unsigned bitn);
     static void clr_bit(T *x, unsigned bitn);
-    static void upd_bit(T *x, unsigned bitn, T val);
+    static void update_bit(T *x, unsigned bitn, T val);
+    static T read_bit(T *x, unsigned bitn);
     static void set_msk(T *x, T msk);
     static void clr_msk(T *x, T msk);
-    static void upd_msk(T *x, T msk, T val);
+    static void update_msk(T *x, T msk, T val);
 };
 
 /**
@@ -81,9 +82,23 @@ inline void BitOp<T>::clr_bit(T *x, unsigned bitn)
  * @param[in]     val  value to update bit with
  */
 template <typename T>
-inline void BitOp<T>::upd_bit(T *x, unsigned bitn, T val)
+inline void BitOp<T>::update_bit(T *x, unsigned bitn, T val)
 {
     *x = ((*x & ~(1 << bitn)) | ((val & 1) << bitn));
+}
+
+/**
+ * @brief Read a specific bit
+ *
+ * @tparam        T    type to use for operations
+ * @param[in,out] x    reference of value to perform bitop on
+ * @param[in]     bitn bit posiiton
+ * @return T sized field with read bit at LSB
+ */
+template <typename T>
+inline T BitOp<T>::read_bit(T *x, unsigned bitn)
+{
+    return (*x >> bitn) & 1;
 }
 
 /**
@@ -121,7 +136,7 @@ inline void BitOp<T>::clr_msk(T *x, T msk)
  * @param[in]     val  value to update bit with
  */
 template <typename T>
-inline void BitOp<T>::upd_msk(T *x, T msk, T val)
+inline void BitOp<T>::update_msk(T *x, T msk, T val)
 {
     *x = ((*x & ~msk) | (val & msk));
 }
