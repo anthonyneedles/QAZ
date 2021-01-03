@@ -183,7 +183,7 @@ int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc)
 {
     int ret = -1;
 
-    for (int i = 0; i < (int)N_ELEMENTS(desc_table); ++i) {
+    for (int i = 0; i < static_cast<int>(N_ELEMENTS(desc_table)); ++i) {
         if (desc_table[i].id == desc_id) {
             desc->buf_ptr = desc_table[i].desc.buf_ptr;
             desc->size    = desc_table[i].desc.size;

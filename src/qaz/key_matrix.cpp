@@ -23,8 +23,8 @@
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
-#define NUM_COLS (sizeof(col)/sizeof(col[0]))
-#define NUM_ROWS (sizeof(row)/sizeof(row[0]))
+#define NUM_COLS static_cast<int>(sizeof(col)/sizeof(col[0]))
+#define NUM_ROWS static_cast<int>(sizeof(row)/sizeof(row[0]))
 
 // index into key symbol array for corresponding symbol
 #define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
@@ -115,14 +115,14 @@ void keyMatrixScan(key_buf_t *keybuf);
 void KeyMatrixInit(void)
 {
     // init each col gpio as open drain output
-    for (int i = 0; i < (int)NUM_COLS; ++i) {
+    for (int i = 0; i < NUM_COLS; ++i) {
         GPIO_CLOCK_ENABLE(col[i].port);
         GPIO_OUTPUT_TYPE_SET(col[i].port, col[i].pin, GPIO_OPEN_DRAIN);
         GPIO_MODE_SET(col[i].port, col[i].pin, GPIO_OUTPUT);
     }
 
     // init each row gpio as pullup input
-    for (int i = 0; i < (int)NUM_ROWS; ++i) {
+    for (int i = 0; i < NUM_ROWS; ++i) {
         GPIO_CLOCK_ENABLE(row[i].port);
         GPIO_MODE_SET(row[i].port, row[i].pin, GPIO_INPUT);
         GPIO_PULL_SET(row[i].port, row[i].pin, GPIO_PULL_UP);
@@ -224,16 +224,16 @@ void keyMatrixScan(key_buf_t *keybuf)
     DBG_ASSERT(keybuf);
 
     // ensure all columns are off
-    for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
+    for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
         DEACTIVATE_COL(col[ncol]);
     }
 
     // set columns, one by one
-    for (int ncol = 0; ncol < (int)NUM_COLS; ++ncol) {
+    for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
         ACTIVATE_COL(col[ncol]);
 
         // and read each row for each set column
-        for (int nrow = 0; nrow < (int)NUM_ROWS; ++nrow) {
+        for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
             int state = READ_ROW(row[nrow]);
             if (state == ROW_SET) {
                 // found pressed key...

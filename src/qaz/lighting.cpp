@@ -53,9 +53,9 @@ typedef enum {
 
 // our lighting  control structure
 typedef struct {
-    int bright_idx;
-    int color_idx;
-    int profile_idx;
+    unsigned bright_idx;
+    unsigned color_idx;
+    unsigned profile_idx;
 } lighting_ctrl_t;
 
 // colors to cycle through

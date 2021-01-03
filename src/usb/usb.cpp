@@ -118,19 +118,19 @@ typedef struct {
 
 // The buffer descriptor table itself, at the given offset
 static volatile buf_desc_table_t *const BDT =
-    (buf_desc_table_t *const)(USB_PMAADDR + BDT_OFFSET);
+    reinterpret_cast<volatile buf_desc_table_t *>(USB_PMAADDR + BDT_OFFSET);
 
 // EP0 tx buffer in the PMA memory space
-static volatile uint8_t *const ep0_tx =
-    (volatile uint8_t *const)(USB_PMAADDR + TX0_ADDR);
+static volatile uint16_t *const ep0_tx =
+    reinterpret_cast<volatile uint16_t *>(USB_PMAADDR + TX0_ADDR);
 
 // EP0 rx buffer in the PMA memory space
-static volatile uint8_t *const ep0_rx =
-    (volatile uint8_t *const)(USB_PMAADDR + RX0_ADDR);
+static volatile uint16_t *const ep0_rx =
+    reinterpret_cast<volatile uint16_t *>(USB_PMAADDR + RX0_ADDR);
 
 // EP1 tx buffer in the PMA memory space
-static volatile uint8_t *const ep1_tx =
-    (volatile uint8_t *const)(USB_PMAADDR + TX1_ADDR);
+static volatile uint16_t *const ep1_tx =
+    reinterpret_cast<volatile uint16_t *>(USB_PMAADDR + TX1_ADDR);
 
 static void usbReset(void);
 static void usbEP0Init(void);
@@ -202,12 +202,12 @@ void USBWrite(int ep, const uint8_t *buf, uint16_t len)
     switch (ep) {
     case 0:
         for (int i = 0; i < len/2; ++i) {
-            ((uint16_t *)ep0_tx)[i] = ((uint16_t *)buf)[i];
+            ep0_tx[i] = reinterpret_cast<const uint16_t *>(buf)[i];
         }
         break;
     case 1:
         for (int i = 0; i < len/2; ++i) {
-            ((uint16_t *)ep1_tx)[i] = ((uint16_t *)buf)[i];
+            ep1_tx[i] = reinterpret_cast<const uint16_t *>(buf)[i];
         }
         break;
     default:
@@ -282,7 +282,7 @@ static void usbEP0Setup(void)
     usb_desc_t         desc;
 
     // get the setup packet contents
-    usbEP0Read((uint8_t *)&setup_pkt);
+    usbEP0Read(reinterpret_cast<uint8_t *>(&setup_pkt));
     PRINT_SETUP(setup_pkt);
 
     // determine request type, and proceed accordingly

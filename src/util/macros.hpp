@@ -35,15 +35,15 @@
 
 // cycling through indicies, not incrementing/decrementing past the end/beginning
 #define NEXT_LINEAR_INDEX(index, indicies) \
-    (int)((int)(index) >= (int)(indicies) - 1) ? (int)(indicies) - 1: (int)(index) + 1;
+    ((index) >= (indicies) - 1) ? (indicies) - 1: (index) + 1;
 #define PREV_LINEAR_INDEX(index, indicies) \
-    (int)((int)(index) <= 0) ? 0 : (int)(index) - 1;
+    ((index) <= 0) ? 0 : (index) - 1;
 
 // cycling through indicies, wrapping the beginning/end
 #define NEXT_CIRCULAR_INDEX(index, indicies) \
-    (int)((int)(index) >= (int)(indicies) - 1) ? 0 : (int)(index) + 1;
+    ((index) >= (indicies) - 1) ? 0 : (index) + 1;
 #define PREV_CIRCULAR_INDEX(index, indicies) \
-    (int)((int)(index) <= 0) ? (int)(indicies) - 1 : (int)(index) - 1;
+    ((index) <= 0) ? (indicies) - 1 : (index) - 1;
 
 // for-loop delay. must measure actual delay for "accuracy"
 #define LOOP_DELAY(loops) for (volatile int loop_cnt = 0; loop_cnt < loops; ++loop_cnt);

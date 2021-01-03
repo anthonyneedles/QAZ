@@ -19,7 +19,7 @@
 // similar to assert() in standard library. if expr is false, the assert fails, and the
 // line/file/expr is printed, and the program stops
 #define DBG_ASSERT(expr) \
-    ((expr) ? ((void)0) : DebugAssertFailed((char *)__FILE__, __LINE__, (char *)#expr))
+    ((expr) ? ((void)0) : DebugAssertFailed((char *)__FILE__, __LINE__, (char *)#expr)) // NOLINT
 #define FORCE_ASSERT (0)
 
 /**
