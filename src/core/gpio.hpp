@@ -12,14 +12,12 @@
 #ifndef CORE_GPIO_HPP_
 #define CORE_GPIO_HPP_
 
+#include "util/bitop.hpp"
 #include "stm32f0xx.h"  // NOLINT
-
-// TODO: remove
-#include "util/macros.hpp"
 
 // the gpio namespace holds enums for configuration options
 namespace gpio {
-    enum Port {
+    enum Port : uint32_t {
         #ifdef GPIOA_BASE
         A = GPIOA_BASE,
         #endif
@@ -45,7 +43,7 @@ namespace gpio {
         H = GPIOH_BASE,
         #endif
     };
-    enum Pin {
+    enum Pin : uint32_t {
         PIN_0  =  0,
         PIN_1  =  1,
         PIN_2  =  2,
@@ -63,22 +61,22 @@ namespace gpio {
         PIN_14 = 14,
         PIN_15 = 15,
     };
-    enum Mode {
+    enum Mode : uint32_t {
         INPUT  = 0x0,
         OUTPUT = 0x1,
         ALTFN  = 0x2,
         ANALOG = 0x3,
     };
-    enum Pull {
+    enum Pull : uint32_t {
         NO_PULL    = 0x0,
         PULL_UP    = 0x1,
         PULL_DOWN  = 0x2,
     };
-    enum OutputType {
+    enum OutputType : uint32_t {
         PUSH_PULL  = 0x0,
         OPEN_DRAIN = 0x1,
     };
-    enum AltFn {
+    enum AltFn : uint32_t {
         ALTFN_0 = 0x0,
         ALTFN_1 = 0x1,
         ALTFN_2 = 0x2,
@@ -88,21 +86,29 @@ namespace gpio {
         ALTFN_6 = 0x6,
         ALTFN_7 = 0x7,
     };
-    enum OutputSpeed {
+    enum OutputSpeed : uint32_t {
         LOW_SPEED  = 0x0,
         MED_SPEED  = 0x1,
         HIGH_SPEED = 0x3,
     };
-    enum OutputState {
+    enum OutputState : uint32_t {
         CLR = 0x0,
         SET = 0x1,
     };
 }  // namespace gpio
 
-// struct template for each gpio pin. everything here should simply inline, and should produce
-// exactly the same code as if we were using macros
-template <gpio::Port port, gpio::Pin pin>
-struct GPIOBase {
+/**
+ * @brief Base gpio class template
+ *
+ * Class template for each gpio pin. Everything here should simply inline, and should produce
+ * exactly the same code as if we were using macros
+ *
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
+ */
+template <gpio::Port TPort, gpio::Pin TPin>
+class GPIOBase {
+ public:
     static volatile GPIO_TypeDef *port_struct(void);
     static void enable_port_clock(void);
     static void set_mode(gpio::Mode mode);
@@ -118,16 +124,18 @@ struct GPIOBase {
 /**
  * @brief Convert template port value to port structure
  *
- * The template `port` input is the address of the GPIO structure defined in the CMSIS header. This
+ * The template `TPort` input is the address of the GPIO structure defined in the CMSIS header. This
  * struct maps the GPIO registers for each port. This method will convert this address to the
  * structure.
  *
- * @return GPIO structure pointer
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
+ * @return gpio structure pointer
  */
-template <gpio::Port port, gpio::Pin pin>
-inline volatile GPIO_TypeDef *GPIOBase<port, pin>::port_struct(void)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline volatile GPIO_TypeDef *GPIOBase<TPort, TPin>::port_struct(void)
 {
-    return reinterpret_cast<GPIO_TypeDef *>(port);
+    return reinterpret_cast<GPIO_TypeDef *>(TPort);
 }
 
 /**
@@ -135,11 +143,14 @@ inline volatile GPIO_TypeDef *GPIOBase<port, pin>::port_struct(void)
  *
  * Unfortunately, there doesn't seem to be a good way to do this. Since pin clocks are usually only
  * set upon initialization, this is good enough.
+ *
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::enable_port_clock(void)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::enable_port_clock(void)
 {
-    RCC->AHBENR |=
+    BitOpV32::set_msk(&(RCC->AHBENR),
         #ifdef GPIOA
         (port_struct() == GPIOA) ? RCC_AHBENR_GPIOAEN :
         #endif
@@ -164,7 +175,7 @@ inline void GPIOBase<port, pin>::enable_port_clock(void)
         #ifdef GPIOH
         (port_struct() == GPIOH) ? RCC_AHBENR_GPIOHEN :
         #endif
-        0;
+        0);
 }
 
 /**
@@ -172,12 +183,14 @@ inline void GPIOBase<port, pin>::enable_port_clock(void)
  *
  * A GPIO can be either an input, output, alternate function, or analog.
  *
- * @param[in] mode the mode option to set
+ * @tparam    TPort port enum for given gpio
+ * @tparam    TPin  pin enum for given gpio
+ * @param[in] mode  the mode option to set
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_mode(gpio::Mode mode)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_mode(gpio::Mode mode)
 {
-    BITMASK_UPDATE(port_struct()->MODER, 0x3 << pin*2, mode << pin*2);
+    BitOpV32::upd_msk(&(port_struct()->MODER), 0x3 << TPin*2, mode << TPin*2);
 }
 
 /**
@@ -185,12 +198,14 @@ inline void GPIOBase<port, pin>::set_mode(gpio::Mode mode)
  *
  * A GPIO can have a pull up, pull down, or neither.
  *
- * @param[in] pull the pull option to set
+ * @tparam    TPort port enum for given gpio
+ * @tparam    TPin  pin enum for given gpio
+ * @param[in] pull  the pull option to set
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_pull(gpio::Pull pull)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_pull(gpio::Pull pull)
 {
-    BITMASK_UPDATE(port_struct()->PUPDR, 0x3 << pin*2, pull << pin*2);
+    BitOpV32::upd_msk(&(port_struct()->PUPDR), 0x3 << TPin*2, pull << TPin*2);
 }
 
 /**
@@ -198,12 +213,14 @@ inline void GPIOBase<port, pin>::set_pull(gpio::Pull pull)
  *
  * A GPIO can be set to push/pull or open drain output.
  *
- * @param[in] type the output type option to set
+ * @tparam    TPort port enum for given gpio
+ * @tparam    TPin  pin enum for given gpio
+ * @param[in] type  the output type option to set
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_output_type(gpio::OutputType type)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_output_type(gpio::OutputType type)
 {
-    BITMASK_UPDATE(port_struct()->OTYPER, 0x3 << pin*2, type  << pin*2);
+    BitOpV32::upd_msk(&(port_struct()->OTYPER), 0x3 << TPin*2, type  << TPin*2);
 }
 
 /**
@@ -211,12 +228,15 @@ inline void GPIOBase<port, pin>::set_output_type(gpio::OutputType type)
  *
  * A GPIO can be set to any available alternate function, which is different for every pin.
  *
- * @param[in] afn the alternate function option to set
+ * @tparam    TPort port enum for given gpio
+ * @tparam    TPin  pin enum for given gpio
+ * @param[in] afn   the alternate function option to set
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_altfn(gpio::AltFn afn)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_altfn(gpio::AltFn afn)
 {
-    BITMASK_UPDATE(port_struct()->AFR[pin < 8 ? 0 : 1], 0xF << (pin % 8)*4, afn << (pin % 8)*4);
+    BitOpV32::upd_msk(&(port_struct()->AFR[TPin < 8 ? 0 : 1]), 0xF << (TPin % 8)*4,
+            afn << (TPin % 8)*4);
 }
 
 /**
@@ -224,34 +244,42 @@ inline void GPIOBase<port, pin>::set_altfn(gpio::AltFn afn)
  *
  * A GPIO can have low, medium, or fast output.
  *
+ * @tparam    TPort port enum for given gpio
+ * @tparam    TPin  pin enum for given gpio
  * @param[in] speed the output speed option to set
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_output_speed(gpio::OutputSpeed speed)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_output_speed(gpio::OutputSpeed speed)
 {
-    BITMASK_UPDATE(port_struct()->OSPEEDR, 0x3 << pin*2, speed << pin*2);
+    BitOpV32::upd_msk(&(port_struct()->OSPEEDR), 0x3 << TPin*2, speed << TPin*2);
 }
 
 /**
  * @brief Clear the GPIO output
  *
  * The output state is set low.
+ *
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::clr_output(void)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::clr_output(void)
 {
-    port_struct()->ODR &= ~(1 << pin);
+    BitOpV32::clr_bit(&(port_struct()->ODR), TPin);
 }
 
 /**
  * @brief Set the GPIO output
  *
  * The output state is set high.
+ *
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_output(void)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_output(void)
 {
-    port_struct()->ODR |=  (1 << pin);
+    BitOpV32::set_bit(&(port_struct()->ODR), TPin);
 }
 
 /**
@@ -259,11 +287,15 @@ inline void GPIOBase<port, pin>::set_output(void)
  *
  * Either set or clear the GPIO state. If the desired state is known at compile-time, `set_output`
  * or `clr_output` should be used instead.
+ *
+ * @tparam TPort port enum for given gpio
+ * @tparam TPin  pin enum for given gpio
+ * @param  state resultant gpio state
  */
-template <gpio::Port port, gpio::Pin pin>
-inline void GPIOBase<port, pin>::set_output_state(gpio::OutputState state)
+template <gpio::Port TPort, gpio::Pin TPin>
+inline void GPIOBase<TPort, TPin>::set_output_state(gpio::OutputState state)
 {
-    BITMASK_UPDATE(port_struct()->ODR, 0x1 << pin, state << pin);
+    BitOpV32::upd_bit(&(port_struct()->ODR), TPin, state);
 }
 
 #endif  // CORE_GPIO_HPP_
