@@ -15,7 +15,7 @@
 #include <stdarg.h>
 
 #include "bsp/bsp.hpp"
-#include "comms/uart.hpp"
+#include "comm/uart.hpp"
 #include "util/macros.hpp"
 
 #if defined(DEBUG)

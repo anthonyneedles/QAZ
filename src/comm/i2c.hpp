@@ -11,8 +11,8 @@
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
  */
 
-#ifndef COMMS_I2C_HPP_
-#define COMMS_I2C_HPP_
+#ifndef COMM_I2C_HPP_
+#define COMM_I2C_HPP_
 
 #include <stdint.h>
 
@@ -70,4 +70,4 @@ i2c_status_t I2CInit(i2c_handle_t *i2c);
  */
 i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n);
 
-#endif  // COMMS_I2C_HPP_
+#endif  // COMM_I2C_HPP_

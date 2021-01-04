@@ -11,8 +11,8 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#ifndef COMMS_UART_HPP_
-#define COMMS_UART_HPP_
+#ifndef COMM_UART_HPP_
+#define COMM_UART_HPP_
 
 #include <stdint.h>
 
@@ -58,4 +58,4 @@ uart_status_t UARTInit(uart_handle_t *uart);
  */
 uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n);
 
-#endif  // COMMS_UART_HPP_
+#endif  // COMM_UART_HPP_

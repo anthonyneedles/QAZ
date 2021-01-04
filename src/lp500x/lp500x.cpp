@@ -14,7 +14,7 @@
 #include <stdbool.h>
 
 #include "bsp/bsp.hpp"
-#include "comms/i2c.hpp"
+#include "comm/i2c.hpp"
 #include "lp500x/lp500x_regs.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"

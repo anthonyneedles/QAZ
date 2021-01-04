@@ -13,7 +13,7 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#include "comms/i2c.hpp"
+#include "comm/i2c.hpp"
 
 #include "util/bitop.hpp"
 #include "util/debug.hpp"

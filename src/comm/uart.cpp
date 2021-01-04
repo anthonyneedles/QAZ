@@ -11,7 +11,7 @@
  * Assumes SYSCLK = 48MHz
  */
 
-#include "comms/uart.hpp"
+#include "comm/uart.hpp"
 
 #include "util/bitop.hpp"
 #include "util/debug.hpp"

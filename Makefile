@@ -4,8 +4,8 @@ TARGET  = QAZ
 
 CXX_SRC = core/clock.cpp                 \
 					core/time_slice.cpp            \
-					comms/i2c.cpp                  \
-					comms/uart.cpp                 \
+					comm/i2c.cpp                   \
+					comm/uart.cpp                  \
 					lp500x/lp500x.cpp              \
 					qaz/key_matrix.cpp             \
 					qaz/lighting.cpp               \
