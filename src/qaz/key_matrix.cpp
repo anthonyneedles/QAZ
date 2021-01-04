@@ -96,16 +96,16 @@ void KeyMatrixInit(void)
 {
     // init each col gpio as open drain output
     for (int i = 0; i < NUM_COLS; ++i) {
-        GPIO::enable_port_clock(bsp::COLS[i]);
-        GPIO::set_mode(bsp::COLS[i], gpio::OUTPUT);
-        GPIO::set_output_type(bsp::COLS[i], gpio::OPEN_DRAIN);
+        gpio::enable_port_clock(bsp::COLS[i]);
+        gpio::set_mode(bsp::COLS[i], gpio::OUTPUT);
+        gpio::set_output_type(bsp::COLS[i], gpio::OPEN_DRAIN);
     }
 
     // init each row gpio as pullup input
     for (int i = 0; i < NUM_ROWS; ++i) {
-        GPIO::enable_port_clock(bsp::ROWS[i]);
-        GPIO::set_mode(bsp::ROWS[i], gpio::INPUT);
-        GPIO::set_pull(bsp::ROWS[i], gpio::PULL_UP);
+        gpio::enable_port_clock(bsp::ROWS[i]);
+        gpio::set_mode(bsp::ROWS[i], gpio::INPUT);
+        gpio::set_pull(bsp::ROWS[i], gpio::PULL_UP);
     }
 
     DbgPrintf("Initialized: Key Matrix\r\n");
@@ -205,16 +205,16 @@ void keyMatrixScan(key_buf_t *keybuf)
 
     // ensure all columns are off
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
-        GPIO::set_output(bsp::COLS[ncol]);
+        gpio::set_output(bsp::COLS[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
-        GPIO::clr_output(bsp::COLS[ncol]);
+        gpio::clr_output(bsp::COLS[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
-            gpio::PinState state = GPIO::read_input(bsp::ROWS[nrow]);
+            gpio::PinState state = gpio::read_input(bsp::ROWS[nrow]);
             if (state == gpio::CLR) {
                 // found pressed key...
                 keybuf->buf[keybuf->idx].base = BASE_KEY(ncol, nrow);
@@ -230,7 +230,7 @@ void keyMatrixScan(key_buf_t *keybuf)
             }
         }
 
-        GPIO::set_output(bsp::COLS[ncol]);
+        gpio::set_output(bsp::COLS[ncol]);
 
         // ~10us delay. allows row to pull back up to VCC
         LOOP_DELAY(40);

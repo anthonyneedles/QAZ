@@ -41,19 +41,19 @@ static i2c_handle_t i2c_handle = {
 void LP500xInit(void)
 {
     // // enable RGB LED EN GPIO port clock, set as output, and keep set
-    GPIO::enable_port_clock(bsp::RGB_EN);
-    GPIO::set_mode(bsp::RGB_EN, gpio::OUTPUT);
-    GPIO::set_output(bsp::RGB_EN);
+    gpio::enable_port_clock(bsp::RGB_EN);
+    gpio::set_mode(bsp::RGB_EN, gpio::OUTPUT);
+    gpio::set_output(bsp::RGB_EN);
 
     // // enable I2C SCL/SDA GPIO port clocks, put in alt mode 1 (I2C) as open drain
-    GPIO::enable_port_clock(bsp::RGB_SDA);
-    GPIO::set_mode(bsp::RGB_SDA, gpio::ALTFN);
-    GPIO::set_output_type(bsp::RGB_SDA, gpio::OPEN_DRAIN);
-    GPIO::set_altfn(bsp::RGB_SDA, gpio::ALTFN_1);
-    GPIO::enable_port_clock(bsp::RGB_SCL);
-    GPIO::set_mode(bsp::RGB_SCL, gpio::ALTFN);
-    GPIO::set_output_type(bsp::RGB_SCL, gpio::OPEN_DRAIN);
-    GPIO::set_altfn(bsp::RGB_SCL, gpio::ALTFN_1);
+    gpio::enable_port_clock(bsp::RGB_SDA);
+    gpio::set_mode(bsp::RGB_SDA, gpio::ALTFN);
+    gpio::set_output_type(bsp::RGB_SDA, gpio::OPEN_DRAIN);
+    gpio::set_altfn(bsp::RGB_SDA, gpio::ALTFN_1);
+    gpio::enable_port_clock(bsp::RGB_SCL);
+    gpio::set_mode(bsp::RGB_SCL, gpio::ALTFN);
+    gpio::set_output_type(bsp::RGB_SCL, gpio::OPEN_DRAIN);
+    gpio::set_altfn(bsp::RGB_SCL, gpio::ALTFN_1);
 
     I2CInit(&i2c_handle);
 

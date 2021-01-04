@@ -6,15 +6,19 @@
  * @date      2021/01/02
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * Instead of explicitly using bit-wise operators (and macros), the bitop class template can
- * be used for performing bit operations on either a specific bit or bitmask.
+ * Instead of explicitly using bit-wise operators (and macros) this module can be used for
+ * performing bit operations on either a specific bit or bitmask.
  */
 
 #ifndef UTIL_BITOP_HPP_
 #define UTIL_BITOP_HPP_
 
-#include <cstdint>
-
+/**
+ * @brief Bit operations namespace
+ *
+ * This namespace holds methods for performing bitwise operations. These can be done using a bit
+ * position or a bitmask.
+ */
 namespace bitop {
 
 /**

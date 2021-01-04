@@ -60,8 +60,8 @@ void ClockInit(void)
     bitop::update_msk(RCC->CFGR, RCC_CFGR_MCO_Msk, RCC_CFGR_MCO_SYSCLK);
 
     // enable MCO pin clock, set to alternate function 0, high speed
-    GPIO::enable_port_clock(bsp::MCO);
-    GPIO::set_mode(bsp::MCO, gpio::ALTFN);
-    GPIO::set_altfn(bsp::MCO, gpio::ALTFN_0);
-    GPIO::set_output_speed(bsp::MCO, gpio::HIGH_SPEED);
+    gpio::enable_port_clock(bsp::MCO);
+    gpio::set_mode(bsp::MCO, gpio::ALTFN);
+    gpio::set_altfn(bsp::MCO, gpio::ALTFN_0);
+    gpio::set_output_speed(bsp::MCO, gpio::HIGH_SPEED);
 }

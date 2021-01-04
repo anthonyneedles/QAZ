@@ -14,8 +14,16 @@
 
 #include "core/gpio.hpp"
 
+/**
+ * @brief Board support package namespace (for QAZ 65% board)
+ *
+ * This namespace holds definitions specific to a certain QAZ board.
+ *
+ * Is this the correct way to use the term "BSP"? Eh...
+ */
 namespace bsp {
 
+// individual gpio pins
 constexpr gpio::Id HB_LED  { gpio::B, gpio::PIN_3  };
 constexpr gpio::Id MCO     { gpio::A, gpio::PIN_8  };
 constexpr gpio::Id DBG_TX  { gpio::A, gpio::PIN_9  };
@@ -23,6 +31,7 @@ constexpr gpio::Id RGB_EN  { gpio::B, gpio::PIN_2  };
 constexpr gpio::Id RGB_SDA { gpio::B, gpio::PIN_10 };
 constexpr gpio::Id RGB_SCL { gpio::B, gpio::PIN_11 };
 
+// key matrix column gpio pins
 constexpr gpio::Id COLS[] {
     { gpio::A, gpio::PIN_5  },
     { gpio::A, gpio::PIN_6  },
@@ -41,6 +50,7 @@ constexpr gpio::Id COLS[] {
     { gpio::C, gpio::PIN_15 },
 };
 
+// key matrix row gpio pins
 constexpr gpio::Id ROWS[] {
     { gpio::B, gpio::PIN_0  },
     { gpio::B, gpio::PIN_1  },

@@ -42,11 +42,11 @@ static char *debugExpandNum(unsigned num, int base, int width);
 void DebugInit(void)
 {
     // Set debug tx port into alt function 1 mode, pullup, and high speed output
-    GPIO::enable_port_clock(bsp::DBG_TX);
-    GPIO::set_mode(bsp::DBG_TX, gpio::ALTFN);
-    GPIO::set_altfn(bsp::DBG_TX, gpio::ALTFN_1);
-    GPIO::set_pull(bsp::DBG_TX, gpio::PULL_UP);
-    GPIO::set_output_speed(bsp::DBG_TX, gpio::HIGH_SPEED);
+    gpio::enable_port_clock(bsp::DBG_TX);
+    gpio::set_mode(bsp::DBG_TX, gpio::ALTFN);
+    gpio::set_altfn(bsp::DBG_TX, gpio::ALTFN_1);
+    gpio::set_pull(bsp::DBG_TX, gpio::PULL_UP);
+    gpio::set_output_speed(bsp::DBG_TX, gpio::HIGH_SPEED);
 
     UARTInit(&uart_handle);
 

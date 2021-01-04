@@ -15,7 +15,12 @@
 #include "util/bitop.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-// the gpio namespace holds enums for configuration options
+/**
+ * @brief GPIO base namespace
+ *
+ * This namespace holds enums for gpio pin config options, as well as the methods to set those
+ * configs, control output, etc.
+ */
 namespace gpio {
 
 // port enums set to the base address for port registers
@@ -118,28 +123,6 @@ struct Id {
     Pin  pin;
 };
 
-}  // namespace gpio
-
-/**
- * @brief Base gpio struct template
- *
- * Struct template for each gpio pin. Everything here should simply inline, and should produce
- * exactly the same code as if we were using macros
- */
-struct GPIO {
-    static volatile GPIO_TypeDef *regs(gpio::Id id);
-    static void enable_port_clock(gpio::Id id);
-    static void set_mode(gpio::Id, gpio::Mode mode);
-    static void set_pull(gpio::Id, gpio::Pull pull);
-    static void set_output_type(gpio::Id, gpio::OutputType type);
-    static void set_altfn(gpio::Id, gpio::AltFn afn);
-    static void set_output_speed(gpio::Id, gpio::OutputSpeed speed);
-    static void clr_output(gpio::Id);
-    static void set_output(gpio::Id);
-    static void set_output_state(gpio::Id, gpio::PinState);
-    static gpio::PinState read_input(gpio::Id);
-};
-
 /**
  * @brief Convert template port value to port structure
  *
@@ -150,7 +133,7 @@ struct GPIO {
  * @param[in] id   identification for gpio
  * @return    gpio structure pointer
  */
-inline volatile GPIO_TypeDef *GPIO::regs(gpio::Id id)
+inline volatile GPIO_TypeDef *regs(Id id)
 {
     return reinterpret_cast<GPIO_TypeDef *>(id.port);
 }
@@ -163,7 +146,7 @@ inline volatile GPIO_TypeDef *GPIO::regs(gpio::Id id)
  *
  * @param[in] id identification for gpio
  */
-inline void GPIO::enable_port_clock(gpio::Id id)
+inline void enable_port_clock(Id id)
 {
     bitop::set_msk(RCC->AHBENR,
         #ifdef GPIOA
@@ -201,7 +184,7 @@ inline void GPIO::enable_port_clock(gpio::Id id)
  * @param[in] id   identification for gpio
  * @param[in] mode the mode option to set
  */
-inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
+inline void set_mode(Id id, Mode mode)
 {
     bitop::update_msk(regs(id)->MODER, 0x3 << id.pin*2, mode << id.pin*2);
 }
@@ -214,7 +197,7 @@ inline void GPIO::set_mode(gpio::Id id, gpio::Mode mode)
  * @param[in] id   identification for gpio
  * @param[in] pull the pull option to set
  */
-inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
+inline void set_pull(Id id, Pull pull)
 {
     bitop::update_msk(regs(id)->PUPDR, 0x3 << id.pin*2, pull << id.pin*2);
 }
@@ -227,7 +210,7 @@ inline void GPIO::set_pull(gpio::Id id, gpio::Pull pull)
  * @param[in] id   identification for gpio
  * @param[in] type the output type option to set
  */
-inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
+inline void set_output_type(Id id, OutputType type)
 {
     bitop::update_msk(regs(id)->OTYPER, 0x3 << id.pin*2, type << id.pin*2);
 }
@@ -240,7 +223,7 @@ inline void GPIO::set_output_type(gpio::Id id, gpio::OutputType type)
  * @param[in] id  identification for gpio
  * @param[in] afn the alternate function option to set
  */
-inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
+inline void set_altfn(Id id, AltFn afn)
 {
     bitop::update_msk(regs(id)->AFR[id.pin < 8 ? 0 : 1], 0xF << (id.pin % 8)*4,
             afn << (id.pin % 8)*4);
@@ -254,7 +237,7 @@ inline void GPIO::set_altfn(gpio::Id id, gpio::AltFn afn)
  * @param[in] id    identification for gpio
  * @param[in] speed the output speed option to set
  */
-inline void GPIO::set_output_speed(gpio::Id id, gpio::OutputSpeed speed)
+inline void set_output_speed(Id id, OutputSpeed speed)
 {
     bitop::update_msk(regs(id)->OSPEEDR, 0x3 << id.pin*2, speed << id.pin*2);
 }
@@ -266,7 +249,7 @@ inline void GPIO::set_output_speed(gpio::Id id, gpio::OutputSpeed speed)
  *
  * @param[in] id identification for gpio
  */
-inline void GPIO::clr_output(gpio::Id id)
+inline void clr_output(Id id)
 {
     bitop::clr_bit(regs(id)->ODR, id.pin);
 }
@@ -278,7 +261,7 @@ inline void GPIO::clr_output(gpio::Id id)
  *
  * @param[in] id identification for gpio
  */
-inline void GPIO::set_output(gpio::Id id)
+inline void set_output(Id id)
 {
     bitop::set_bit(regs(id)->ODR, id.pin);
 }
@@ -292,7 +275,7 @@ inline void GPIO::set_output(gpio::Id id)
  * @param[in] id    identification for gpio
  * @param[in] state gpio output state
  */
-inline void GPIO::set_output_state(gpio::Id id, gpio::PinState state)
+inline void set_output_state(Id id, PinState state)
 {
     bitop::update_bit(regs(id)->ODR, id.pin, state);
 }
@@ -305,9 +288,11 @@ inline void GPIO::set_output_state(gpio::Id id, gpio::PinState state)
  * @param[in] id identification for gpio
  * @return read pin state
  */
-inline gpio::PinState GPIO::read_input(gpio::Id id)
+inline PinState read_input(Id id)
 {
-    return static_cast<gpio::PinState>(bitop::read_bit(regs(id)->IDR, id.pin));
+    return static_cast<PinState>(bitop::read_bit(regs(id)->IDR, id.pin));
 }
+
+}  // namespace gpio
 
 #endif  // CORE_GPIO_HPP_
