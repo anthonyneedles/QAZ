@@ -14,48 +14,27 @@
 #ifndef COMM_UART_HPP_
 #define COMM_UART_HPP_
 
-#include <stdint.h>
-
+#include "comm/comm_base.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-// status code returned by UART API
-typedef enum {
-    UART_SUCCESS,
-    UART_FAILURE,
-} uart_status_t;
-
-// state of a given UART instance
-typedef enum {
-    UART_RESET = 0,
-    UART_READY,
-} uart_state_t;
-
-// handle for a UART instance, holds control information
-typedef struct {
-    USART_TypeDef *regs;
-    uart_state_t state;
-} uart_handle_t;
-
 /**
- * @brief Enables USART for TX at 115200 baud, 8-N-1.
+ * @brief I2C communication class
  *
- * @param[in] uart handle for uart to init
- * @return UART_SUCCCESS - successfully initialized uart
- *         UART_FAILURE  - failed uart init (already initialized)
+ * Derived from the Base communication class, this class implements the I2C driver
  */
-uart_status_t UARTInit(uart_handle_t *uart);
+class UART : public CommBase {
+ public:
+    // ctor, initialize private member variables
+    explicit UART(USART_TypeDef *regs) : _regs(regs) {}
 
-/**
- * @brief Sends data over USART, blocking on write ready
- *
- * Blocks until USART is ready to transmit, then pushes character onto output buffer.
- *
- * @param[in] uart handle for uart to write with
- * @param[in] data buffer to transmit
- * @param[in] n    number of bytes to transmit
- * @return UART_SUCCCESS - successful uart write
- *         UART_FAILURE  - failed uart write (not ready, invalid buf)
- */
-uart_status_t UARTWriteBlocking(uart_handle_t *uart, const char *data, int n);
+    // implementing base methods
+    comm::Status init(void);
+    comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes);
+ private:
+    // must be set via ctor initializer list
+    USART_TypeDef *const _regs;
+
+    comm::State _state = comm::RESET;
+};
 
 #endif  // COMM_UART_HPP_

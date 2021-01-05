@@ -6,7 +6,7 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * This source file handles all I2C communications. Configured for 100kHz SCL frequency.
+ * Low-level I2C driver. Configured for 100kHz SCL frequency.
  *
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
  *
@@ -19,7 +19,7 @@
 #include "util/debug.hpp"
 
 // Calculated for 100kHz with 48MHz I2C clock
-#define TIMING_CONFIG 0xB0240F13
+constexpr std::uint32_t TIMING_CONFIG = 0xB0240F13;
 
 /**
  * @brief Initializes I2C module
@@ -29,43 +29,37 @@
  * I2C SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
  * disabled.
  *
- * @param[in] i2c handle for i2c to init
- * @return I2C_SUCCCESS - successfully initialized i2c
- *         I2C_FAILURE  - failed i2c init (already initialized)
+ * @return comm::SUCCCESS - successfully initialized i2c
+ *         comm::FAILURE  - failed i2c init (already initialized)
  */
-i2c_status_t I2CInit(i2c_handle_t *i2c)
+comm::Status I2C::init(void)
 {
-    if (!i2c) {
-        DBG_ASSERT(FORCE_ASSERT);
-        return I2C_FAILURE;
+    if (_state != comm::RESET) {
+        DbgPrintf("I2C init error, not in I2C_RESET (%p)\r\n", _regs);
+        return comm::FAILURE;
     }
 
-    if (i2c->state != I2C_RESET) {
-        DbgPrintf("I2C init error, not in I2C_RESET (%p)\r\n", i2c->regs);
-        return I2C_FAILURE;
-    }
-
-    bitop::clr_msk(i2c->regs->CR1, I2C_CR1_PE);
+    bitop::clr_msk(_regs->CR1, I2C_CR1_PE);
 
     // enable I2C clocking with SYSCLK
-    if (i2c->regs == I2C1) {
+    if (_regs == I2C1) {
         bitop::set_msk(RCC->APB1ENR, RCC_APB1ENR_I2C1EN);
         bitop::set_msk(RCC->CFGR3,   RCC_CFGR3_I2C1SW);
     } else {
         DBG_ASSERT(FORCE_ASSERT);
-        return I2C_FAILURE;
+        return comm::FAILURE;
     }
 
-    i2c->regs->TIMINGR = TIMING_CONFIG;
-    bitop::set_msk(i2c->regs->CR1, I2C_CR1_PE);
+    _regs->TIMINGR = TIMING_CONFIG;
+    bitop::set_msk(_regs->CR1, I2C_CR1_PE);
 
     // set own address
-    bitop::update_msk(i2c->regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
-            (i2c->self_addr << 1) | I2C_OAR1_OA1EN);
+    bitop::update_msk(_regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
+            (_self_addr << 1) | I2C_OAR1_OA1EN);
 
-    i2c->state = I2C_READY;
+    _state = comm::READY;
 
-    return I2C_SUCCESS;
+    return comm::SUCCESS;
 }
 
 /**
@@ -78,38 +72,36 @@ i2c_status_t I2CInit(i2c_handle_t *i2c)
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
  *
- * @param[in] i2c  handle for i2c to init
- * @param[in] addr address of target slave
- * @param[in] data buffer to transmit
- * @param[in] n    number of bytes to transmit
- * @return I2C_SUCCCESS - successfully initialized i2c
- *         I2C_FAILURE  - failed i2c init (already initialized)
+ * @param[in] data   buffer to transmit
+ * @param[in] nbytes number of bytes to transmit
+ * @return comm::SUCCCESS - successfully initialized i2c
+ *         comm::FAILURE  - failed i2c init (already initialized)
  */
-i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n)
+comm::Status I2C::write_blocking(const std::uint8_t *data, unsigned nbytes)
 {
-    if (!i2c || !data || (n <= 0)) {
+    if (!data || (nbytes <= 0)) {
         DBG_ASSERT(FORCE_ASSERT);
-        return I2C_FAILURE;
+        return comm::FAILURE;
     }
 
-    if (i2c->state != I2C_READY) {
-        DbgPrintf("I2C write error, not in I2C_READY (%p)\r\n", i2c->regs);
-        return I2C_FAILURE;
+    if (_state != comm::READY) {
+        DbgPrintf("I2C write error, not in I2C_READY (%p)\r\n", _regs);
+        return comm::FAILURE;
     }
 
-    bitop::clr_msk(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-    bitop::set_msk(i2c->regs->CR2, ((uint32_t)addr << 1U) | I2C_CR2_AUTOEND |
-            ((uint32_t)n << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
+    bitop::clr_msk(_regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
+    bitop::set_msk(_regs->CR2, ((uint32_t)_send_addr << 1U) | I2C_CR2_AUTOEND |
+            ((uint32_t)nbytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
 
-    for (int i = 0; i < n; ++i) {
-        while (bitop::read_bit(i2c->regs->ISR, I2C_ISR_TXE_Pos) != 1) {}
-        i2c->regs->TXDR = data[i];
+    for (unsigned i = 0; i < nbytes; ++i) {
+        while (bitop::read_bit(_regs->ISR, I2C_ISR_TXE_Pos) != 1) {}
+        _regs->TXDR = data[i];
     }
 
-    while (bitop::read_bit(i2c->regs->ISR, I2C_ISR_STOPF_Pos) != 1) {}
-    bitop::set_msk(i2c->regs->ICR, I2C_ICR_STOPCF);
+    while (bitop::read_bit(_regs->ISR, I2C_ISR_STOPF_Pos) != 1) {}
+    bitop::set_msk(_regs->ICR, I2C_ICR_STOPCF);
 
-    bitop::clr_msk(i2c->regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
+    bitop::clr_msk(_regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_AUTOEND_Msk | I2C_CR2_NBYTES_Msk);
 
-    return I2C_SUCCESS;
+    return comm::SUCCESS;
 }

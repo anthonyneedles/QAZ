@@ -19,14 +19,13 @@
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
-#define LP500X_I2C_ADDR (0x14)
+constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
+constexpr std::uint8_t SELF_ADDR = 0x53;
 
-// our handle to the i2c we use to communicate with LED controller
-static i2c_handle_t i2c_handle = {
-    .regs      = RGB_LED_I2C,
-    .state     = I2C_RESET,
-    .self_addr = 0x53,
-};
+namespace {
+    // our I2C driver object for the RGB LEDs
+    I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
+}
 
 /**
  * @brief Initializes RGB LED
@@ -55,7 +54,7 @@ void LP500xInit(void)
     gpio::set_output_type(bsp::RGB_SCL, gpio::OPEN_DRAIN);
     gpio::set_altfn(bsp::RGB_SCL, gpio::ALTFN_1);
 
-    I2CInit(&i2c_handle);
+    rgb_i2c.init();
 
     // init config registers, starting at DEVICE_CONFIG_0 register
     const uint8_t init_data[] = {
@@ -64,7 +63,7 @@ void LP500xInit(void)
         LOG_SCALE_EN | POWER_SAVE_EN | AUTO_INCR_EN | PWM_DITHER_EN,
         LED2_BANK_EN | LED1_BANK_EN  | LED0_BANK_EN,
     };
-    I2CWriteMasterBlocking(&i2c_handle, LP500X_I2C_ADDR, init_data, sizeof(init_data));
+    rgb_i2c.write_blocking(init_data, sizeof(init_data));
 
     DbgPrintf("Initialized: RGB LED\r\n");
 }
@@ -83,7 +82,7 @@ void LP500xBankSetColor(uint32_t rgb_code)
     data[1] = R_RGB(rgb_code);  // BANK A = Red
     data[2] = G_RGB(rgb_code);  // BANK B = Green
     data[3] = B_RGB(rgb_code);  // BANK C = Blue
-    I2CWriteMasterBlocking(&i2c_handle, LP500X_I2C_ADDR, data, sizeof(data));
+    rgb_i2c.write_blocking(data, sizeof(data));
 }
 
 /**
@@ -98,5 +97,5 @@ void LP500xBankSetBrightness(uint8_t val)
     uint8_t data[2];
     data[0] = BANK_BRIGHTNESS_R;
     data[1] = val;
-    I2CWriteMasterBlocking(&i2c_handle, LP500X_I2C_ADDR, data, sizeof(data));
+    rgb_i2c.write_blocking(data, sizeof(data));
 }

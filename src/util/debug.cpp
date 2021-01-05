@@ -26,11 +26,9 @@
 // maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
 #define MAX_EXPAND_CHARACTERS (50)
 
-// our handle to the uart we use to send debug messages
-static uart_handle_t uart_handle = {
-    .regs  = DEBUG_UART,
-    .state = UART_RESET,
-};
+namespace {
+    UART dbg_uart(DEBUG_UART);
+}
 
 static void debugPutChar(char data);
 static void debugPutString(const char *data);
@@ -48,7 +46,7 @@ void DebugInit(void)
     gpio::set_pull(bsp::DBG_TX, gpio::PULL_UP);
     gpio::set_output_speed(bsp::DBG_TX, gpio::HIGH_SPEED);
 
-    UARTInit(&uart_handle);
+    dbg_uart.init();
 
     DbgPrintf("\r\n=== QAZ ===\r\n");
     DbgPrintf("Initialized: Debug\r\n");
@@ -186,7 +184,7 @@ void DebugAssertFailed(char *file, int line, char *expr)
  */
 static void debugPutChar(char data)
 {
-    UARTWriteBlocking(&uart_handle, &data, 1);
+    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&data), 1);
 }
 
 /**

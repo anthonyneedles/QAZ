@@ -6,68 +6,54 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * This source file handles all I2C communications. Configured for 100kHz SCL frequency.
+ * Low-level I2C driver. Configured for 100kHz SCL frequency.
  *
  * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
+ *
+ * Assumes SYSCLK = 48MHz
  */
 
 #ifndef COMM_I2C_HPP_
 #define COMM_I2C_HPP_
 
-#include <stdint.h>
-
+#include "comm/comm_base.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-// status code returned by I2C API
-typedef enum {
-    I2C_SUCCESS,
-    I2C_FAILURE,
-} i2c_status_t;
+/**
+ * @brief I2C communication class
+ *
+ * Derived from the Base communication class, this class implements the I2C driver
+ */
+class I2C : public CommBase {
+ public:
+    // ctor, initialize private member variables
+    explicit I2C(I2C_TypeDef *regs, std::uint8_t self_addr, std::uint8_t send_addr = 0) :
+        _regs(regs), _self_addr(self_addr), _send_addr(send_addr) {}
 
-// state of a given I2C instance
-typedef enum {
-    I2C_RESET = 0,
-    I2C_READY,
-} i2c_state_t;
+    // implementing base methods
+    comm::Status init(void);
+    comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes);
 
-// handle for an I2C instance, holds control information
-typedef struct {
-    I2C_TypeDef *regs;
-    i2c_state_t state;
-    uint8_t self_addr;
-} i2c_handle_t;
+    inline void set_send_addr(std::uint8_t addr);
+ private:
+    // must be set via ctor initializer list
+    I2C_TypeDef *const _regs;
+    const std::uint8_t _self_addr;
+
+    // can be set via ctor initializer list OR set_send_addr()
+    std::uint8_t _send_addr;
+
+    comm::State _state = comm::RESET;
+};
 
 /**
- * @brief Initializes I2C module
+ * @brief Set slave address of I2C transmissions
  *
- * Enables clocks for I2C pins as well as I2C module. GPIO configured as open drain with no pull
- * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select
- * I2C SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
- * disabled.
- *
- * @param[in] i2c handle for i2c to init
- * @return I2C_SUCCCESS - successfully initialized i2c
- *         I2C_FAILURE  - failed i2c init (already initialized)
+ * This sets the internally held address of the slave that will be written to.
  */
-i2c_status_t I2CInit(i2c_handle_t *i2c);
-
-/**
- * @brief Master transmit function for I2C
- *
- * Handles master transmission of data to slave. Clears current slave address and number of bytes
- * to be sent values from CR2 register, then populates with passed values. Also, AUTOEND is enabled
- * (stop condition is automatically generated when number of bytes is reached. Start condition is
- * initiated. Data is loaded into transmit data register when register is ready. Data array is
- * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
- * then stop flag is cleared and CR2 is cleared of set values.
- *
- * @param[in] i2c  handle for i2c to init
- * @param[in] addr address of target slave
- * @param[in] data buffer to transmit
- * @param[in] n    number of bytes to transmit
- * @return I2C_SUCCCESS - successfully initialized i2c
- *         I2C_FAILURE  - failed i2c init (already initialized)
- */
-i2c_status_t I2CWriteMasterBlocking(i2c_handle_t *i2c, uint8_t addr, const uint8_t *data, int n);
+inline void I2C::set_send_addr(std::uint8_t addr)
+{
+    _send_addr = addr;
+}
 
 #endif  // COMM_I2C_HPP_
