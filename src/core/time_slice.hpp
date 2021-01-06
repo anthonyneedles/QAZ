@@ -34,6 +34,7 @@
     TASK(HB_TASK_PERIOD_MS,         HeartbeatTask) \
     TASK(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask) \
     TASK(LIGHTING_TASK_PERIOD_MS,   LightingTask)  \
+    TASK(USB_HID_TASK_PERIOD_MS,    USBHIDTask)
 
 /**
  * @brief Init TimeSlice loop

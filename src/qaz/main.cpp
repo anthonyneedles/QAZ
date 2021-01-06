@@ -30,7 +30,7 @@ int main(void)
     HeartbeatInit();
     KeyMatrixInit();
     LightingInit();
-    // USBHIDInit();
+    USBHIDInit();
 
     // enter the loop - no return
     TimeSliceLoop();
