@@ -24,7 +24,7 @@ int main(void)
     // inits - specifically ordered
     ClockInit();
     DebugInit();
-    TimeSliceInit();
+    timeslice::init();
 
     // inits - no required order
     HeartbeatInit();
@@ -33,7 +33,7 @@ int main(void)
     USBHIDInit();
 
     // enter the loop - no return
-    TimeSliceLoop();
+    timeslice::enter_loop();
 
     while (1) {}
 }

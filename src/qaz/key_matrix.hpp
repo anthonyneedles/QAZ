@@ -1,7 +1,7 @@
 /**
  * @file      key_matrix.hpp
  * @brief     Implements key matrix scanning
- * 
+ *
  * @author    Anthony Needles
  * @date      2020/10/04
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
@@ -31,8 +31,6 @@
 
 #include "bsp/bsp.hpp"
 #include "stm32f0xx.h"  // NOLINT
-
-#define KEY_MATRIX_TASK_PERIOD_MS (20u)
 
 // weak callbacks for each of the callback keys. these are called ONCE PER BUTTON PRESS. the user
 // must release then repress the key for a second call

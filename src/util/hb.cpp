@@ -13,8 +13,16 @@
 #include "util/hb.hpp"
 
 #include "bsp/bsp.hpp"
+#include "core/time_slice.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
+
+namespace {
+
+// task fuction will execute every 500ms (LED will flash at 1Hz)
+constexpr unsigned HB_TASK_PERIOD_MS = 500;
+
+}
 
 /**
  * @brief Initializes heartbeat LED
@@ -27,6 +35,9 @@ void HeartbeatInit(void)
     // enable HB LED GPIO port clock, set as output
     gpio::enable_port_clock(bsp::HB_LED);
     gpio::set_mode(bsp::HB_LED, gpio::OUTPUT);
+
+    auto status = timeslice::register_task(HB_TASK_PERIOD_MS, HeartbeatTask);
+    DBG_ASSERT(status == timeslice::SUCCESS);
 
     DbgPrintf("Initialized: Heartbeat\r\n");
 }

@@ -19,12 +19,20 @@
 
 #include <stdbool.h>
 
+#include "core/time_slice.hpp"
 #include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
+namespace {
+
+// task fuction will execute every 20ms
+constexpr unsigned  KEY_MATRIX_TASK_PERIOD_MS = 20;
+
 constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
 constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
+
+}
 
 // index into key symbol array for corresponding symbol
 #define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
@@ -107,6 +115,9 @@ void KeyMatrixInit(void)
         gpio::set_mode(bsp::ROWS[i], gpio::INPUT);
         gpio::set_pull(bsp::ROWS[i], gpio::PULL_UP);
     }
+
+    auto status = timeslice::register_task(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask);
+    DBG_ASSERT(status == timeslice::SUCCESS);
 
     DbgPrintf("Initialized: Key Matrix\r\n");
 }

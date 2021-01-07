@@ -13,6 +13,20 @@
 #ifndef CORE_CLOCK_HPP_
 #define CORE_CLOCK_HPP_
 
+#include <cstdint>
+
+/**
+ * @brief Clock namespace
+ *
+ * Holds configuration for the MCU clocking.
+ */
+namespace clock {
+
+// the (after init) frequency of the core clock SYSCLK
+constexpr std::uint32_t SYSCLK_HZ = 48000000;
+
+}  // namespace clock
+
 /**
  * @brief Init system clock
  *

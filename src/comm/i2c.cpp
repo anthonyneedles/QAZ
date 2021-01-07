@@ -18,8 +18,12 @@
 #include "util/bitop.hpp"
 #include "util/debug.hpp"
 
+namespace {
+
 // Calculated for 100kHz with 48MHz I2C clock
 constexpr std::uint32_t TIMING_CONFIG = 0xB0240F13;
+
+}
 
 /**
  * @brief Initializes I2C module

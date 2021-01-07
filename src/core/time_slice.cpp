@@ -18,48 +18,40 @@
 
 #include "core/time_slice.hpp"
 
-#include <stdbool.h>
+#include <cstdint>
 
+#include "core/clock.hpp"
 #include "util/debug.hpp"
+#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 // systick handler needs C linkage
 extern "C" void SysTick_Handler(void);
 
-// find number of loops needed to meet a given period
-#define CALCULATE_LOOPS(period_ms) (period_ms/LOOP_PERIOD_MS)
+namespace {
 
-// static asserts to ensure task periods are multiples of loop period
-#define TASK(period_ms, task_func) \
-    static_assert((period_ms / LOOP_PERIOD_MS) != 0, \
-        "Time Slice: " #task_func " task period 0 or > LOOP_PERIOD_MS") \
-    static_assert((period_ms % LOOP_PERIOD_MS) == 0, \
-        "Time Slice: " #task_func " task period not multiple of LOOP_PERIOD_MS") \
-    TASK_TABLE(TASK)
-#undef TASK
-
-// define loop counter structure, keeping a counter for each task
-typedef struct {
-#define TASK(period_ms, task_func) \
-    uint32_t task_func;
-    TASK_TABLE(TASK)
-#undef TASK
-} task_loop_cnts_t;
-
-// create loop counter structure, init each value so all tasks enter the first time around
-static task_loop_cnts_t loop_counts = {
-#define TASK(period_ms, task_func) \
-    .task_func = CALCULATE_LOOPS(period_ms),
-    TASK_TABLE(TASK)
-#undef TASK
+// each registered task has an info struct
+struct task_info {
+    unsigned loop_cnt;
+    unsigned loops_per_period;
+    void (*task_func)(void);
 };
 
-#define CLKCYCLES_PER_MS 48000U
+// the current number of milliseconds elapsed
+volatile std::uint32_t ms_cnt = 0;
 
-static volatile int current_ms_cnt = 0U;
-static bool init_flag = 0U;
+// the millisecond count the last time the manager task ran
+std::uint32_t last_ms = 0;
 
-void timeSliceManagerTask(void);
+// total tasks registered. can never be > MAX_NUM_TASKS
+unsigned ntasks = 0;
+
+// task registry is just an array of task info, filled with each register
+task_info task_registry[timeslice::MAX_NUM_TASKS] = { };
+
+}  // namespace
+
+void manager_task(void);
 
 /**
  * @brief Init TimeSlice loop
@@ -67,93 +59,114 @@ void timeSliceManagerTask(void);
  * Enables SysTick timer via CMSIS SysTick_Config (found in arch/core_cm0.h) with required clock
  * cycles to result in 1ms interrupts.
  */
-void TimeSliceInit(void)
+void timeslice::init(void)
 {
-    uint32_t st_error = SysTick_Config(CLKCYCLES_PER_MS);
-    if (st_error == 0U) {
-        // 0U = Systick timer successfully loaded
-        init_flag = true;
-        DbgPrintf("Initialized: TimeSlice\r\n");
-    } else {
-        // 1U = Reload value impossible
-        init_flag = false;
-        DbgPrintf("ERROR: SysTick load failed!\r\n");
+    std::uint32_t st_error = SysTick_Config(clock::SYSCLK_HZ/1000);
+    if (st_error != SUCCESS) {
         DBG_ASSERT(FORCE_ASSERT);
-      }
+    }
+
+    DbgPrintf("Initialized: TimeSlice\r\n");
 }
 
 /**
- * @brief Init TimeSlice loop
+ * @brief Register task for timeslice loop
  *
- * Enables SysTick timer via CMSIS SysTick_Config (found in arch/core_cm0.h) with required clock
- * cycles to result in 1ms interrupts.
+ * If a task can be added, the input task function and period is saved in next open task regsitery
+ * slot. Tasks will be executed in order in the task registry.
+ *
+ * A task is not registerd if the maximum number of tasks have already been registered, the task
+ * function is invalid, or if the task period is 0, less than the loop period, and/or not a multiple
+ * of the loop period.
+ *
+ * @param[in] period    task period, in millisecond
+ * @param[in] task_func task function to be called at task period
+ * @return timeslice::SUCCESS if the task has been registered
+ *         timeslice::FAILURE if the task has not been registered
  */
-void TimeSliceLoop(void)
+timeslice::RegStatus timeslice::register_task(unsigned period, void (*task_func)(void))
+{
+    if (((period % timeslice::LOOP_PERIOD_MS) != 0) || ((period / timeslice::LOOP_PERIOD_MS) == 0)
+            || ((task_func == nullptr) || (ntasks >= timeslice::MAX_NUM_TASKS))) {
+        return timeslice::FAILURE;
+    }
+
+    // populate next task registry slot
+    task_registry[ntasks].loops_per_period = period / timeslice::LOOP_PERIOD_MS;
+    task_registry[ntasks].loop_cnt         = 0;
+    task_registry[ntasks].task_func        = task_func;
+
+    ntasks++;
+
+    return timeslice::SUCCESS;
+}
+
+/**
+ * @brief Enter the timeslice loop
+ *
+ * This should be called ONLY when all initialization has been completed. There should be no return
+ * from this fuction.
+ *
+ * The manager task ensures that each task loop counter is increased every loop period. When the
+ * task loop counter reaches the required value to achieve the desired task period, it will execute
+ * the task function and start counting again.
+ */
+void timeslice::enter_loop(void)
 {
     DbgPrintf("Starting timeslice loop...\r\n");
 
+    // any amount of time could have passed since initialization
+    last_ms = ms_cnt;
+
     while (1) {
-        timeSliceManagerTask();
+        manager_task();
 
         // handle each task counter, and call task function if desired # of loops reached
-#define TASK(period_ms, task_func) \
-        if (loop_counts.task_func >= CALCULATE_LOOPS(period_ms)) { \
-            loop_counts.task_func = 0;                             \
-            task_func();                                           \
-        }                                                          \
-        loop_counts.task_func++;
-        TASK_TABLE(TASK)
-#undef TASK
+        for (unsigned i = 0; i < ntasks; ++i) {
+            if (task_registry[i].loop_cnt >= task_registry[i].loops_per_period) {
+                task_registry[i].loop_cnt = 0;
+                task_registry[i].task_func();
+            }
+            task_registry[i].loop_cnt++;
+        }
     }
 }
 
 /**
- * @brief Enters the infinite TimeSlice loop
+ * @brief Manages timing loops
  *
- * This is the main execution loop, and should be called after all initialization is finished.
- * Kills program if TimeSliceInit was never called.
+ * This "task" regulates the timing of the loop to the given loop period. It does this by saving
+ * the previous ms count, and comparing it to the current ms count. It will wait out any remaining
+ * time until the loop period is achieved.
  *
- * Calls the internal time slice manager, and increments task counters until their task period is
- * reached, then calls the given task function.
- *
- * Should NEVER return.
+ * If the calculated elapsed time is greater than the loop period, some task must have overran. The
+ * function may be hanging, or the loop period must be increased.
  */
-void timeSliceManagerTask(void)
+void manager_task(void)
 {
-    uint32_t elapsed_ticks;
-    static uint32_t last_tick = 0;
-    static bool is_first_entry = true;
+    std::uint32_t elapsed_ms;
 
-    // copy value now, can change at any time
-    uint32_t current_tick = current_ms_cnt;
+    // copy value now, it can change at any time
+    std::uint32_t current_ms = ms_cnt;
 
-    if (is_first_entry) {
-        // we want to skip the first entry
-        is_first_entry = false;
-    } else if (!init_flag) {
-        // failure in init, we got a problem
-        DbgPrintf("ERROR: SysTick can't run, init failure\n\r");
-        DBG_ASSERT(FORCE_ASSERT);
+    if (current_ms >= last_ms) {
+        // find the time we spent in the loop so far
+        elapsed_ms = current_ms - last_ms;
     } else {
-        if (current_tick >= last_tick) {
-            // find the time we spent in the loop so far
-            elapsed_ticks = current_tick - last_tick;
-        } else {
-            // likely tick overflow
-            elapsed_ticks = current_tick + (UINT32_MAX - last_tick);
-            DbgPrintf("INFO: Likely tick overflow, OK\r\n");
-        }
-
-        if (elapsed_ticks <= LOOP_PERIOD_MS) {
-            // wait out the remaining time in the loop period
-            while ((current_ms_cnt - last_tick) < LOOP_PERIOD_MS) {}
-            current_tick = current_ms_cnt;
-        } else {
-            DbgPrintf("WARNING: Loop overran by %ums\r\n", elapsed_ticks - LOOP_PERIOD_MS);
-        }
+        // likely tick overflow
+        elapsed_ms = current_ms + (UINT32_MAX - last_ms);
+        DbgPrintf("INFO: Likely tick overflow, OK\r\n");
     }
 
-    last_tick = current_tick;
+    if (elapsed_ms <= timeslice::LOOP_PERIOD_MS) {
+        // wait out the remaining time in the loop period
+        while ((ms_cnt - last_ms) < timeslice::LOOP_PERIOD_MS) {}
+        current_ms = ms_cnt;
+    } else {
+        DbgPrintf("WARNING: Loop overran by %ums\r\n", elapsed_ms - timeslice::LOOP_PERIOD_MS);
+    }
+
+    last_ms = current_ms;
 }
 
 /**
@@ -164,5 +177,5 @@ void timeSliceManagerTask(void)
 */
 void SysTick_Handler(void)
 {
-    current_ms_cnt++;
+    ms_cnt++;
 }

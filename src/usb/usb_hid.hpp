@@ -12,8 +12,6 @@
 #ifndef USB_USB_HID_HPP_
 #define USB_USB_HID_HPP_
 
-#define USB_HID_TASK_PERIOD_MS (20U)
-
 /**
  * @brief Intialize the USB HID module
  *

@@ -23,8 +23,10 @@ constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
 constexpr std::uint8_t SELF_ADDR = 0x53;
 
 namespace {
-    // our I2C driver object for the RGB LEDs
-    I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
+
+// our I2C driver object for the RGB LEDs
+I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
+
 }
 
 /**

@@ -14,9 +14,17 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "core/time_slice.hpp"
 #include "lp500x/lp500x.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
+
+namespace {
+
+// task fuction will execute every 10ms
+constexpr unsigned LIGHTING_TASK_PERIOD_MS = 10;
+
+}
 
 // converts brightness index to percent, then percent to 256 value
 #define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
@@ -88,6 +96,9 @@ void LightingInit(void)
 
     LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
     LP500xBankSetColor(COLOR_WHITE);
+
+    auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, LightingTask);
+    DBG_ASSERT(status == timeslice::SUCCESS);
 }
 
 /**

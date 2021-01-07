@@ -12,14 +12,23 @@
 
 #include <stdint.h>
 
-#include  "qaz/key_matrix.hpp"
+#include "core/time_slice.hpp"
+#include "qaz/key_matrix.hpp"
 #include "usb/usb.hpp"
 #include "usb/usb_descriptors.hpp"
 #include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
 #include "stm32f0xx.h" // NOLINT
 
-#define INTERRUPT_EPN (1)
+namespace {
+
+// task fuction will execute every 20ms
+constexpr unsigned USB_HID_TASK_PERIOD_MS = 20;
+
+// usb hid transactions occur on EP1, which is configure as an Interrupt EP
+constexpr unsigned INTERRUPT_EPN = 1;
+
+}
 
 static_assert(KEY_BUF_SIZE >= 6, "USB HID: Key buffer size must be >= 6");
 
@@ -46,6 +55,9 @@ void USBHIDInit(void)
     }
 
     USBInit();
+
+    auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, USBHIDTask);
+    DBG_ASSERT(status == timeslice::SUCCESS);
 
     DbgPrintf("Initialized: USB HID\r\n");
 }

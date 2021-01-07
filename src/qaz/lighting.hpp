@@ -12,8 +12,6 @@
 #ifndef QAZ_LIGHTING_HPP_
 #define QAZ_LIGHTING_HPP_
 
-#define LIGHTING_TASK_PERIOD_MS (10U)
-
 /**
  * @brief Initializes lighting profile
  *

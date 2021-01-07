@@ -14,13 +14,14 @@
 #ifndef UTIL_DEBUG_HPP_
 #define UTIL_DEBUG_HPP_
 
+#define FORCE_ASSERT (false)
+
 #if defined(DEBUG)
 
 // similar to assert() in standard library. if expr is false, the assert fails, and the
 // line/file/expr is printed, and the program stops
 #define DBG_ASSERT(expr) \
-    ((expr) ? ((void)0) : DebugAssertFailed((char *)__FILE__, __LINE__, (char *)#expr)) // NOLINT
-#define FORCE_ASSERT (0)
+    if (!expr) { DebugAssertFailed((char *)__FILE__, __LINE__, (char *)#expr); }  // NOLINT
 
 /**
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
@@ -65,10 +66,14 @@ void DebugAssertFailed(char *file, int line, char *expr);
 
 #else
 
+// similar to assert() in standard library. if expr is false, the assert fails.
+// in RELEASE, we just stop the program here
+#define DBG_ASSERT(expr) \
+    if (!expr) { while (1) {} }  // NOLINT
+
 // these do nothing when not DEBUG
 #define DebugInit(x)      ((void)0)
 #define DbgPrintf(x, ...) ((void)0)
-#define DBG_ASSERT(x)     ((void)0)
 
 #endif
 

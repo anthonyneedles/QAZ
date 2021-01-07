@@ -13,8 +13,6 @@
 #ifndef UTIL_HB_HPP_
 #define UTIL_HB_HPP_
 
-#define HB_TASK_PERIOD_MS (500)
-
 /**
  * @brief Initializes heartbeat LED
  *
