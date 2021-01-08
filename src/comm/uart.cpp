@@ -32,7 +32,7 @@ constexpr std::uint16_t BAUD_115200 = 0x1A1;
 comm::Status UART::init(void)
 {
     if (_state != comm::RESET) {
-        DbgPrintf("UART init error, not in comm::RESET (%p)\r\n", _regs);
+        debug::printf("UART init error, not in comm::RESET (%p)\r\n", _regs);
         return comm::FAILURE;
     }
 
@@ -40,7 +40,7 @@ comm::Status UART::init(void)
     if (_regs == USART1) {
         bitop::set_msk(RCC->APB2ENR, RCC_APB2ENR_USART1EN);
     } else {
-        DBG_ASSERT(FORCE_ASSERT);
+        DBG_ASSERT(debug::FORCE_ASSERT);
         return comm::FAILURE;
     }
 
@@ -71,12 +71,12 @@ comm::Status UART::init(void)
 comm::Status UART::write_blocking(const std::uint8_t *data, unsigned nbytes)
 {
     if (!data || (nbytes <= 0)) {
-        DBG_ASSERT(FORCE_ASSERT);
+        DBG_ASSERT(debug::FORCE_ASSERT);
         return comm::FAILURE;
     }
 
     if (_state != comm::READY) {
-        DbgPrintf("UART write error, not in comm::READY (%p)\r\n", _regs);
+        debug::printf("UART write error, not in comm::READY (%p)\r\n", _regs);
         return comm::FAILURE;
     }
 

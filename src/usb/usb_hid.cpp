@@ -59,7 +59,7 @@ void USBHIDInit(void)
     auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, USBHIDTask);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
-    DbgPrintf("Initialized: USB HID\r\n");
+    debug::puts("Initialized: USB HID\r\n");
 }
 
 /**

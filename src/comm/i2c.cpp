@@ -39,7 +39,7 @@ constexpr std::uint32_t TIMING_CONFIG = 0xB0240F13;
 comm::Status I2C::init(void)
 {
     if (_state != comm::RESET) {
-        DbgPrintf("I2C init error, not in I2C_RESET (%p)\r\n", _regs);
+        debug::printf("I2C init error, not in I2C_RESET (%p)\r\n", _regs);
         return comm::FAILURE;
     }
 
@@ -50,7 +50,7 @@ comm::Status I2C::init(void)
         bitop::set_msk(RCC->APB1ENR, RCC_APB1ENR_I2C1EN);
         bitop::set_msk(RCC->CFGR3,   RCC_CFGR3_I2C1SW);
     } else {
-        DBG_ASSERT(FORCE_ASSERT);
+        DBG_ASSERT(debug::FORCE_ASSERT);
         return comm::FAILURE;
     }
 
@@ -84,12 +84,12 @@ comm::Status I2C::init(void)
 comm::Status I2C::write_blocking(const std::uint8_t *data, unsigned nbytes)
 {
     if (!data || (nbytes <= 0)) {
-        DBG_ASSERT(FORCE_ASSERT);
+        DBG_ASSERT(debug::FORCE_ASSERT);
         return comm::FAILURE;
     }
 
     if (_state != comm::READY) {
-        DbgPrintf("I2C write error, not in I2C_READY (%p)\r\n", _regs);
+        debug::printf("I2C write error, not in I2C_READY (%p)\r\n", _regs);
         return comm::FAILURE;
     }
 

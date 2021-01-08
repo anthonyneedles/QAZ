@@ -20,24 +20,24 @@
 
 #if defined(DEBUG)
 
-// checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
-#define IS_WIDTH_SPECIFIER(x, y) ((x == '0') && (y >= '0' && y <= '8'))
+namespace {
 
 // maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
-#define MAX_EXPAND_CHARACTERS (50)
+constexpr unsigned MAX_EXPAND_CHARACTERS = 50;
 
-namespace {
-    UART dbg_uart(DEBUG_UART);
-}
+UART dbg_uart(DEBUG_UART);
 
-static void debugPutChar(char data);
-static void debugPutString(const char *data);
-static char *debugExpandNum(unsigned num, int base, int width);
+// checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
+inline bool IS_WIDTH_SPECIFIER(char x, char y) { return ((x == '0') && (y >= '0' && y <= '8')); }
+
+}  // namespace
+
+static char *expand_num(unsigned num, int base, int width);
 
 /**
  * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
  */
-void DebugInit(void)
+void debug::init(void)
 {
     // Set debug tx port into alt function 1 mode, pullup, and high speed output
     gpio::enable_port_clock(bsp::DBG_TX);
@@ -48,8 +48,8 @@ void DebugInit(void)
 
     dbg_uart.init();
 
-    DbgPrintf("\r\n=== QAZ ===\r\n");
-    DbgPrintf("Initialized: Debug\r\n");
+    debug::puts("\r\n=== QAZ ===\r\n");
+    debug::puts("Initialized: Debug\r\n");
 }
 
 /**
@@ -74,7 +74,7 @@ void DebugInit(void)
  * @param[in] fmt Format string, with or without format specifiers
  * @param[in] ... Variable arguments for format speifiers
  */
-void DbgPrintf(const char *fmt_ptr, ...)
+void debug::printf(const char *fmt_ptr, ...)
 {
     DBG_ASSERT(fmt_ptr);
 
@@ -102,13 +102,13 @@ void DbgPrintf(const char *fmt_ptr, ...)
             case 'c' :
                 // character specifier (char promoted to int)
                 sint_arg = va_arg(arg, int);
-                debugPutChar(sint_arg);
+                putchar(sint_arg);
                 break;
 
             case 's':
                 // string specifier
                 str_arg = va_arg(arg, char *);
-                debugPutString(str_arg);
+                puts(str_arg);
                 break;
 
             case 'd' :
@@ -116,46 +116,74 @@ void DbgPrintf(const char *fmt_ptr, ...)
                 sint_arg = va_arg(arg, int);
                 if (sint_arg < 0) {
                     sint_arg = -sint_arg;
-                    debugPutChar('-');
+                    putchar('-');
                 }
-                debugPutString(debugExpandNum((unsigned)sint_arg, 10, width));
+                puts(expand_num((unsigned)sint_arg, 10, width));
                 break;
 
             case 'u' :
                 // unsigned decimal specifier
                 uint_arg = va_arg(arg, unsigned);
-                debugPutString(debugExpandNum(uint_arg, 10, width));
+                puts(expand_num(uint_arg, 10, width));
                 break;
 
             case 'o':
                 // octal specifier
                 uint_arg = va_arg(arg, unsigned int);
-                debugPutString(debugExpandNum(uint_arg, 8, width));
+                puts(expand_num(uint_arg, 8, width));
                 break;
 
             case 'x':
                 // hexadecimal specifier
                 uint_arg = va_arg(arg, unsigned int);
-                debugPutString(debugExpandNum(uint_arg, 16, width));
+                puts(expand_num(uint_arg, 16, width));
                 break;
 
             case 'p':
                 // p specifier (width always 8)
                 uint_arg = va_arg(arg, unsigned int);
-                debugPutString(debugExpandNum(uint_arg, 16, 8));
+                puts(expand_num(uint_arg, 16, 8));
                 break;
 
             default:
-                debugPutChar(*fmt_ptr);
+                putchar(*fmt_ptr);
                 break;
             }
         } else {
             // print and 'normal' character
-            debugPutChar(*fmt_ptr);
+            putchar(*fmt_ptr);
         }
     }
 
     va_end(arg);
+}
+
+/**
+ * @brief Sends string over USART
+ *
+ * Pushes each character in a string over Debug USART.
+ *
+ * Use when only a non-format string is needed to be sent.
+ */
+void debug::puts(const char *data)
+{
+    DBG_ASSERT(data);
+
+    for (int i = 0; data[i] != '\0'; ++i) {
+        putchar(data[i]);
+    }
+}
+
+/**
+ * @brief Sends single character over USART
+ *
+ * Blocks until Debug USART is ready to transmit, then pushes character onto output buffer.
+ *
+ * Use when only a single non-format character is needed to be sent.
+ */
+void debug::putchar(char data)
+{
+    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&data), 1);
 }
 
 /**
@@ -168,37 +196,13 @@ void DbgPrintf(const char *fmt_ptr, ...)
  * @param[in] base expression line number
  * @param[in] expr expression string
  */
-void DebugAssertFailed(char *file, int line, char *expr)
+void debug::assert_failed(char *file, int line, char *expr)
 {
-    DbgPrintf("\r\nERROR: ASSERTION FAILED!\r\n");
-    DbgPrintf("EXPR: %s\r\n", expr);
-    DbgPrintf("LINE: %d\r\n", line);
-    DbgPrintf("FILE: %s\r\n", file);
+    debug::puts("\r\nERROR: ASSERTION FAILED!\r\n");
+    debug::printf("EXPR: %s\r\n", expr);
+    debug::printf("LINE: %d\r\n", line);
+    debug::printf("FILE: %s\r\n", file);
     while (1) {}
-}
-
-/**
- * @brief Sends single character over USART1
- *
- * Blocks until USART1 is ready to transmit, then pushes character onto output buffer.
- */
-static void debugPutChar(char data)
-{
-    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&data), 1);
-}
-
-/**
- * @brief Sends string over USART1
- *
- * Pushes each character in a string over USART1.
- */
-static void debugPutString(const char *data)
-{
-    DBG_ASSERT(data);
-
-    for (int i = 0; data[i] != '\0'; ++i) {
-        debugPutChar(data[i]);
-    }
 }
 
 /**
@@ -221,7 +225,7 @@ static void debugPutString(const char *data)
  *
  * @return pointer to expanded string
  */
-static char *debugExpandNum(unsigned num, int base, int width)
+static char *expand_num(unsigned num, int base, int width)
 {
     // number-to-character array
     static const char num_chars[]= "0123456789ABCDEF";

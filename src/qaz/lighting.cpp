@@ -121,7 +121,7 @@ void LightingTask(void)
             lightingProfileRainbow();
             break;
         default:
-            DbgPrintf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting.profile_idx);
+            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting.profile_idx);
             lighting.profile_idx = 0;
             break;
         }
@@ -229,7 +229,7 @@ static void lightingProfileRainbow(void)
         }
         break;
     default:
-        DbgPrintf("ERROR: Invalid rainbow profile state (%d)\r\n", rainbow_state);
+        debug::printf("ERROR: Invalid rainbow profile state (%d)\r\n", rainbow_state);
         rainbow_state = BLUE_UP;
         break;
     }

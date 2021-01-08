@@ -24,15 +24,15 @@
 namespace bsp {
 
 // individual gpio pins
-constexpr gpio::Id HB_LED  { gpio::B, gpio::PIN_3  };
-constexpr gpio::Id MCO     { gpio::A, gpio::PIN_8  };
-constexpr gpio::Id DBG_TX  { gpio::A, gpio::PIN_9  };
-constexpr gpio::Id RGB_EN  { gpio::B, gpio::PIN_2  };
-constexpr gpio::Id RGB_SDA { gpio::B, gpio::PIN_10 };
-constexpr gpio::Id RGB_SCL { gpio::B, gpio::PIN_11 };
+inline constexpr gpio::Id HB_LED  { gpio::B, gpio::PIN_3  };
+inline constexpr gpio::Id MCO     { gpio::A, gpio::PIN_8  };
+inline constexpr gpio::Id DBG_TX  { gpio::A, gpio::PIN_9  };
+inline constexpr gpio::Id RGB_EN  { gpio::B, gpio::PIN_2  };
+inline constexpr gpio::Id RGB_SDA { gpio::B, gpio::PIN_10 };
+inline constexpr gpio::Id RGB_SCL { gpio::B, gpio::PIN_11 };
 
 // key matrix column gpio pins
-constexpr gpio::Id COLS[] {
+inline constexpr gpio::Id COLS[] {
     { gpio::A, gpio::PIN_5  },
     { gpio::A, gpio::PIN_6  },
     { gpio::A, gpio::PIN_7  },
@@ -51,7 +51,7 @@ constexpr gpio::Id COLS[] {
 };
 
 // key matrix row gpio pins
-constexpr gpio::Id ROWS[] {
+inline constexpr gpio::Id ROWS[] {
     { gpio::B, gpio::PIN_0  },
     { gpio::B, gpio::PIN_1  },
     { gpio::A, gpio::PIN_15 },

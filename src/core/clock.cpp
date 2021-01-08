@@ -22,7 +22,7 @@
  * Enable and switch system clock over to using HSE and PLL to result in 48MHz SYSCLK.
  * Also, set MCO to PA8, so that we can scope the SYSCLK. Assumes 8MHz external crystal.
  */
-void ClockInit(void)
+void clock::init(void)
 {
     // enable Clock Security System and High Speed External clock
     bitop::set_msk(RCC->CR, RCC_CR_CSSON | RCC_CR_HSEON);

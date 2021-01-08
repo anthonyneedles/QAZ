@@ -23,9 +23,7 @@
 namespace clock {
 
 // the (after init) frequency of the core clock SYSCLK
-constexpr std::uint32_t SYSCLK_HZ = 48000000;
-
-}  // namespace clock
+inline constexpr std::uint32_t SYSCLK_HZ = 48000000;
 
 /**
  * @brief Init system clock
@@ -33,6 +31,8 @@ constexpr std::uint32_t SYSCLK_HZ = 48000000;
  * Enable and switch system clock over to using HSE and PLL to result in 48MHz SYSCLK.
  * Also, set MCO to PA8, so that we can scope the SYSCLK. Assumes 8MHz external crystal.
  */
-void ClockInit(void);
+void init(void);
+
+}  // namespace clock
 
 #endif  // CORE_CLOCK_HPP_

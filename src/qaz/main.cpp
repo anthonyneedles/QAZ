@@ -22,8 +22,8 @@
 int main(void)
 {
     // inits - specifically ordered
-    ClockInit();
-    DebugInit();
+    clock::init();
+    debug::init();
     timeslice::init();
 
     // inits - no required order

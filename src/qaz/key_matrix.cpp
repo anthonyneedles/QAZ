@@ -119,7 +119,7 @@ void KeyMatrixInit(void)
     auto status = timeslice::register_task(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
-    DbgPrintf("Initialized: Key Matrix\r\n");
+    debug::puts("Initialized: Key Matrix\r\n");
 }
 
 /**

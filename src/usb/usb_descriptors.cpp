@@ -193,8 +193,8 @@ int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc)
     }
 
     if (ret == -1) {
-        DbgPrintf("ERROR: Requested undefined descriptor (%d)\r\n", desc_id);
-        DBG_ASSERT(FORCE_ASSERT);
+        debug::printf("ERROR: Requested undefined descriptor (%d)\r\n", desc_id);
+        DBG_ASSERT(debug::FORCE_ASSERT);
     }
 
     return ret;

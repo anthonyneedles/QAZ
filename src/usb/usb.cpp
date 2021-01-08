@@ -92,7 +92,7 @@ extern "C" void USB_IRQHandler(void);
     (EP_REG(epn) = (EP_REG(epn) ^ (status & USB_EPRX_STAT)) & (USB_EPREG_MASK | USB_EPRX_STAT));
 
 #define PRINT_SETUP(pkt) \
-    DbgPrintf("%02x %02x %04x %04x %04x ", pkt.bmRequestType, pkt.bRequest, pkt.wValue, \
+    debug::printf("%02x %02x %04x %04x %04x ", pkt.bmRequestType, pkt.bRequest, pkt.wValue, \
         pkt.wIndex, pkt.wLength);
 
 // SETUP packet as it will appear in memory
@@ -181,7 +181,7 @@ void USBInit(void)
     // Enable embedded pullup on DP
     bitop::set_msk(USB->BCDR, USB_BCDR_DPPU);
 
-    DbgPrintf("Initialized: USB\r\n");
+    debug::puts("Initialized: USB\r\n");
 }
 
 /**
@@ -293,28 +293,28 @@ static void usbEP0Setup(void)
     // handle both device and interface get descriptor
     case REQ(REQ_IN_STD_DEV, REQ_GET_DESC):
     case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
-        DbgPrintf("GET DESC ");
+        debug::puts("GET DESC ");
 
         if (setup_pkt.wValue == 0x100) {
-            DbgPrintf("DEV ");
+            debug::puts("DEV ");
             ret = USBGetDescriptor(DESCRIPTOR_DEVICE_ID,    &desc);
         } else if (setup_pkt.wValue == 0x200) {
-            DbgPrintf("CFG ");
+            debug::puts("CFG ");
             ret = USBGetDescriptor(DESCRIPTOR_CONFIG_ID,    &desc);
 
             // TODO: Windows gives 255 for "compatability reasons"
             desc.size = (setup_pkt.wLength == 0xff) ? desc.size : setup_pkt.wLength;
         } else if (setup_pkt.wValue == 0x300) {
-            DbgPrintf("STR0 ");
+            debug::puts("STR0 ");
             ret = USBGetDescriptor(DESCRIPTOR_LANG_ID,      &desc);
         } else if (setup_pkt.wValue == 0x301) {
-            DbgPrintf("STR1 ");
+            debug::puts("STR1 ");
             ret = USBGetDescriptor(DESCRIPTOR_MANUFACT_ID,  &desc);
         } else if (setup_pkt.wValue == 0x302) {
-            DbgPrintf("STR2 ");
+            debug::puts("STR2 ");
             ret = USBGetDescriptor(DESCRIPTOR_PRODUCT_ID,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
-            DbgPrintf("RPT ");
+            debug::puts("RPT ");
 
             // TODO: why the hell does Windows request twice the size
             if (setup_pkt.wLength == 0x80) {
@@ -324,7 +324,7 @@ static void usbEP0Setup(void)
             }
         } else {
             // Stall for unknown descriptors
-            DbgPrintf("0x%04x? (STALLING) ", setup_pkt.wValue);
+            debug::printf("0x%04x? (STALLING) ", setup_pkt.wValue);
             SET_RX_STATUS(0, USB_EP_RX_STALL);
             SET_TX_STATUS(0, USB_EP_TX_STALL);
         }
@@ -336,17 +336,17 @@ static void usbEP0Setup(void)
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
-        DbgPrintf("SET IDLE ");
+        debug::puts("SET IDLE ");
         break;
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_RPT):
-        DbgPrintf("SET RPT ");
+        debug::puts("SET RPT ");
         break;
 
     // device has been addressed
     case REQ(REQ_OUT_STD_DEV, REQ_SET_ADDR):
-        DbgPrintf("SET ADDR ");
+        debug::puts("SET ADDR ");
 
         // Send 0 length packet with address 0
         USBWrite(0, 0, 0);
@@ -361,7 +361,7 @@ static void usbEP0Setup(void)
 
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
-        DbgPrintf("SET CFG (%x) ", setup_pkt.wValue);
+        debug::printf("SET CFG (%x) ", setup_pkt.wValue);
         USBWrite(0, 0, 0);
         usbEP1Init();
         break;
@@ -370,18 +370,18 @@ static void usbEP0Setup(void)
     case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
     {
         const uint8_t status[] = { 0x01, 0x00 };  // self powered
-        DbgPrintf("GET STAT ");
+        debug::puts("GET STAT ");
         USBWrite(0, status, sizeof(status));
         break;
     }
 
     // clearing an endpoint feature (always ENDPOINT_HALT)
     case REQ(REQ_OUT_STD_EP, REQ_CLR_STAT):
-        DbgPrintf("CLR STAT ");
+        debug::puts("CLR STAT ");
         break;
 
     default:
-        DbgPrintf("UNKNOWN REQUEST ");
+        debug::puts("UNKNOWN REQUEST ");
         break;
     }
 }
@@ -420,32 +420,32 @@ void USB_IRQHandler(void)
     uint16_t int_reg = USB->ISTR;
     uint16_t int_ep = (int_reg & USB_ISTR_EP_ID);
 
-    DbgPrintf("> EP%d %s: ", int_ep, (int_reg & USB_ISTR_DIR) ? "IN " : "OUT");
+    debug::printf("> EP%d %s: ", int_ep, (int_reg & USB_ISTR_DIR) ? "IN " : "OUT");
 
     if (int_reg & USB_ISTR_PMAOVR) {
         USB->ISTR = ~USB_ISTR_PMAOVR;
-        DbgPrintf("PMAOVR ");
+        debug::puts("PMAOVR ");
     }
 
     if (int_reg & USB_ISTR_ERR) {
         USB->ISTR = ~USB_ISTR_ERR;
-        DbgPrintf("ERR ");
+        debug::puts("ERR ");
     }
 
     if (int_reg & USB_ISTR_WKUP) {
         USB->ISTR = ~USB_ISTR_WKUP;
-        DbgPrintf("WKUP ");
+        debug::puts("WKUP ");
     }
 
     if (int_reg & USB_ISTR_SUSP) {
         USB->ISTR = ~USB_ISTR_SUSP;
-        DbgPrintf("SUSP ");
+        debug::puts("SUSP ");
     }
 
     if (int_reg & USB_ISTR_RESET) {
         usbReset();
         USB->ISTR = ~USB_ISTR_RESET;
-        DbgPrintf("RESET ");
+        debug::puts("RESET ");
     }
 
     if (int_reg & USB_ISTR_SOF) {
@@ -454,33 +454,33 @@ void USB_IRQHandler(void)
 
     if (int_reg & USB_ISTR_ESOF) {
         USB->ISTR = ~USB_ISTR_ESOF;
-        DbgPrintf("ESOF ");
+        debug::puts("ESOF ");
     }
 
     if (int_reg & USB_ISTR_L1REQ) {
         USB->ISTR = ~USB_ISTR_L1REQ;
-        DbgPrintf("L1REQ ");
+        debug::puts("L1REQ ");
     }
 
     if (int_reg & USB_ISTR_CTR) {
-        DbgPrintf("CTR ");
+        debug::puts("CTR ");
         ep_reg = EP_REG(int_ep);
 
         if (ep_reg & USB_EP_CTR_RX) {
-            DbgPrintf("RX ");
+            debug::puts("RX ");
 
             if (ep_reg & USB_EP_SETUP) {
-                DbgPrintf("SETUP ");
+                debug::puts("SETUP ");
                 usbEP0Setup();
             }
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_RX;
         }
 
         if (ep_reg & USB_EP_CTR_TX) {
-            DbgPrintf("TX ");
+            debug::puts("TX ");
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_TX;
         }
     }
 
-    DbgPrintf("\r\n");
+    debug::puts("\r\n");
 }

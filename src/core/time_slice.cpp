@@ -51,7 +51,7 @@ task_info task_registry[timeslice::MAX_NUM_TASKS] = { };
 
 }  // namespace
 
-void manager_task(void);
+static void manager_task(void);
 
 /**
  * @brief Init TimeSlice loop
@@ -63,10 +63,10 @@ void timeslice::init(void)
 {
     std::uint32_t st_error = SysTick_Config(clock::SYSCLK_HZ/1000);
     if (st_error != SUCCESS) {
-        DBG_ASSERT(FORCE_ASSERT);
+        DBG_ASSERT(debug::FORCE_ASSERT);
     }
 
-    DbgPrintf("Initialized: TimeSlice\r\n");
+    debug::puts("Initialized: TimeSlice\r\n");
 }
 
 /**
@@ -113,7 +113,7 @@ timeslice::RegStatus timeslice::register_task(unsigned period, void (*task_func)
  */
 void timeslice::enter_loop(void)
 {
-    DbgPrintf("Starting timeslice loop...\r\n");
+    debug::puts("Starting timeslice loop...\r\n");
 
     // any amount of time could have passed since initialization
     last_ms = ms_cnt;
@@ -155,7 +155,7 @@ void manager_task(void)
     } else {
         // likely tick overflow
         elapsed_ms = current_ms + (UINT32_MAX - last_ms);
-        DbgPrintf("INFO: Likely tick overflow, OK\r\n");
+        debug::puts("INFO: Likely tick overflow, OK\r\n");
     }
 
     if (elapsed_ms <= timeslice::LOOP_PERIOD_MS) {
@@ -163,7 +163,7 @@ void manager_task(void)
         while ((ms_cnt - last_ms) < timeslice::LOOP_PERIOD_MS) {}
         current_ms = ms_cnt;
     } else {
-        DbgPrintf("WARNING: Loop overran by %ums\r\n", elapsed_ms - timeslice::LOOP_PERIOD_MS);
+        debug::printf("WARNING: Loop overran by %ums\r\n", elapsed_ms - timeslice::LOOP_PERIOD_MS);
     }
 
     last_ms = current_ms;

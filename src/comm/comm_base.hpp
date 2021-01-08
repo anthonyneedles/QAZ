@@ -20,16 +20,18 @@
  * Holds values useful for all communications.
  */
 namespace comm {
-    // status return codes
-    enum Status {
-        SUCCESS,
-        FAILURE,
-    };
-    // state of the communication driver
-    enum State {
-        RESET,
-        READY,
-    };
+
+// status return codes
+enum Status {
+    SUCCESS,
+    FAILURE,
+};
+// state of the communication driver
+enum State {
+    RESET,
+    READY,
+};
+
 }  // namespace comm
 
 /**

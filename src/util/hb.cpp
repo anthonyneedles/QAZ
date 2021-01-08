@@ -39,7 +39,7 @@ void HeartbeatInit(void)
     auto status = timeslice::register_task(HB_TASK_PERIOD_MS, HeartbeatTask);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
-    DbgPrintf("Initialized: Heartbeat\r\n");
+    debug::puts("Initialized: Heartbeat\r\n");
 }
 
 /**
