@@ -27,7 +27,7 @@ int main(void)
     timeslice::init();
 
     // inits - no required order
-    HeartbeatInit();
+    heartbeat::init();
     KeyMatrixInit();
     LightingInit();
     USBHIDInit();

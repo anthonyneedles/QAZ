@@ -30,13 +30,13 @@ constexpr unsigned HB_TASK_PERIOD_MS = 500;
  * The LED should have its cathode pulled to ground with a resistor of proper value, and the LED
  * GPIO output port on its anode.
  */
-void HeartbeatInit(void)
+void heartbeat::init(void)
 {
     // enable HB LED GPIO port clock, set as output
     gpio::enable_port_clock(bsp::HB_LED);
     gpio::set_mode(bsp::HB_LED, gpio::OUTPUT);
 
-    auto status = timeslice::register_task(HB_TASK_PERIOD_MS, HeartbeatTask);
+    auto status = timeslice::register_task(HB_TASK_PERIOD_MS, heartbeat::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
     debug::puts("Initialized: Heartbeat\r\n");
@@ -47,7 +47,7 @@ void HeartbeatInit(void)
  *
  * Just toggles the LED each entry
  */
-void HeartbeatTask(void)
+void heartbeat::task(void)
 {
     static int state = 0;
 
