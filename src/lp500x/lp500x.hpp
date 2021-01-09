@@ -12,30 +12,43 @@
 #ifndef LP500X_LP500X_HPP_
 #define LP500X_LP500X_HPP_
 
-#include <stdint.h>
+#include <cstdint>
+
+/**
+ * @brief LP500x namespace
+ *
+ * This namespace holds both the utility functions for controlling the LP500x external device (via
+ * I2C), as well as the registers for that device.
+ */
+namespace lp500x {
 
 // percent to 256 value
-#define BRIGHTNESS_PERCENT(x) (((0xffUL*(x))/100) & 0xffUL)
+constexpr std::uint8_t BRIGHTNESS_PERCENT_TO_256(unsigned percent)
+{
+    return static_cast<std::uint8_t>((0xff*percent)/100);
+}
 
 // RGB values to 24-bit color code
-#define RGB_CODE(red, blue, green) \
-    (uint32_t)((((uint32_t)(red)   << 16) & 0xff0000UL) | \
-               (((uint32_t)(green) <<  8) & 0x00ff00UL) | \
-               (((uint32_t)(blue))        & 0x0000ffUL))
+constexpr std::uint32_t RGB_CODE(std::uint8_t red, std::uint8_t blue, std::uint8_t green)
+{
+    return (static_cast<std::uint32_t>((red   << 16) & 0xff0000) |
+            static_cast<std::uint32_t>((green <<  8) & 0x00ff00) |
+            static_cast<std::uint32_t>((blue)        & 0x0000ff));
+}
 
 // 24-bit color code to RGB values
-#define R_RGB(rgb_code) (((uint32_t)(rgb_code) & 0xff0000UL) >> 16)
-#define G_RGB(rgb_code) (((uint32_t)(rgb_code) & 0x00ff00UL) >>  8)
-#define B_RGB(rgb_code) (((uint32_t)(rgb_code) & 0x0000ffUL))
+constexpr std::uint32_t R_RGB(std::uint32_t rgb_code) { return (rgb_code & 0xff0000) >> 16; }
+constexpr std::uint32_t G_RGB(std::uint32_t rgb_code) { return (rgb_code & 0x00ff00) >> 8;  }
+constexpr std::uint32_t B_RGB(std::uint32_t rgb_code) { return (rgb_code & 0x0000ff);       }
 
 // RGB color codes
-#define COLOR_WHITE   RGB_CODE(0xff, 0xff, 0xff)
-#define COLOR_RED     RGB_CODE(0xff, 0x00, 0x00)
-#define COLOR_GREEN   RGB_CODE(0x00, 0xff, 0x00)
-#define COLOR_BLUE    RGB_CODE(0x00, 0x00, 0xff)
-#define COLOR_CYAN    RGB_CODE(0x00, 0xff, 0xff)
-#define COLOR_MAGENTA RGB_CODE(0xff, 0x00, 0xff)
-#define COLOR_YELLOW  RGB_CODE(0xff, 0xff, 0x00)
+constexpr std::uint32_t WHITE   = RGB_CODE(0xff, 0xff, 0xff);
+constexpr std::uint32_t RED     = RGB_CODE(0xff, 0x00, 0x00);
+constexpr std::uint32_t GREEN   = RGB_CODE(0x00, 0xff, 0x00);
+constexpr std::uint32_t BLUE    = RGB_CODE(0x00, 0x00, 0xff);
+constexpr std::uint32_t CYAN    = RGB_CODE(0x00, 0xff, 0xff);
+constexpr std::uint32_t MAGENTA = RGB_CODE(0xff, 0x00, 0xff);
+constexpr std::uint32_t YELLOW  = RGB_CODE(0xff, 0xff, 0x00);
 
 /**
  * @brief Initializes RGB LED
@@ -47,7 +60,7 @@
  * Sets logarithmic dimming curve, power saving, auto incrementing registers, PWM dithering, and
  * a max current of 35mA.
  */
-void LP500xInit(void);
+void init(void);
 
 /**
  * @brief Sets ALL RGB LEDs to color
@@ -56,7 +69,7 @@ void LP500xInit(void);
  *
  * @param[in] rgb_code RGB hex code to set
  */
-void LP500xBankSetColor(uint32_t rgb_code);
+void bank_set_color(std::uint32_t rgb_code);
 
 /**
  * @brief Sets ALL RGB LEDs brightnesses
@@ -65,6 +78,8 @@ void LP500xBankSetColor(uint32_t rgb_code);
  *
  * @param[in] val brightness value 0x00-0xFF
  */
-void LP500xBankSetBrightness(uint8_t val);
+void bank_set_brightness(std::uint8_t val);
+
+}  // namespace lp500x
 
 #endif  // LP500X_LP500X_HPP_

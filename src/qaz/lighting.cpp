@@ -24,63 +24,67 @@ namespace {
 // task fuction will execute every 10ms
 constexpr unsigned LIGHTING_TASK_PERIOD_MS = 10;
 
-}
-
-// converts brightness index to percent, then percent to 256 value
-#define BRIGHTNESS_INDEX(idx) BRIGHTNESS_PERCENT((idx*100)/BRIGHTNESS_LEVELS)
-
 // every n loops to update breathing profile, to make it go slower
 // TODO: set profile speeds from user input
-#define N_LOOP_UPDATE_BREATHING (2)
+constexpr unsigned N_LOOP_UPDATE_BREATHING = 2;
 
 // lowest brightness that the breathing profile will go down to
-#define LOWEST_BREATHING_BRIGHTNESS (0x10)
+constexpr unsigned LOWEST_BREATHING_BRIGHTNESS = 0x10;
 
 // amount decremented/incremented each rainbow profile step
-#define RAINBOW_COLOR_STEPS (5)
+constexpr unsigned RAINBOW_STEPS = 5;
 
 // number of different brightness levels to cycle through
-#define BRIGHTNESS_LEVELS (5)
+constexpr unsigned BRIGHTNESS_LEVELS = 5;
+
+// converts brightness index to percent, then percent to 256 value
+constexpr std::uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
+{
+    return static_cast<uint8_t>(lp500x::BRIGHTNESS_PERCENT_TO_256((idx*100)/BRIGHTNESS_LEVELS));
+}
 
 // the backlight coloring profiles
-typedef enum {
+enum ColorProfile {
     PROFILE_SOLID,
     PROFILE_BREATHING,
     PROFILE_RAINBOW,
-} color_profile_t;
+};
 
 // rainbow profile states
-typedef enum {
+enum RainbowState{
     BLUE_UP,
     RED_DOWN,
     GREEN_UP,
     BLUE_DOWN,
     RED_UP,
     GREEN_DOWN,
-} rainbow_state_t;
+};
 
 // our lighting  control structure
-typedef struct {
+struct LightingCtrl{
     unsigned bright_idx;
     unsigned color_idx;
     unsigned profile_idx;
-} lighting_ctrl_t;
+};
 
 // colors to cycle through
-static const uint32_t COLORS[] = {
-    COLOR_WHITE, COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_MAGENTA, COLOR_YELLOW
+const uint32_t COLORS[] = {
+    lp500x::WHITE, lp500x::RED,     lp500x::GREEN, lp500x::BLUE,
+    lp500x::CYAN,  lp500x::MAGENTA, lp500x::YELLOW
 };
 
 // profiles to cycle through
-static const color_profile_t PROFILES[] = {
+const ColorProfile PROFILES[] = {
     PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
-static lighting_ctrl_t lighting = {
+LightingCtrl lighting = {
     .bright_idx  = BRIGHTNESS_LEVELS - 1,
     .color_idx   = 0,
     .profile_idx = 0,
 };
+
+}  // namespace
 
 static void lightingProfileBreathing(void);
 static void lightingProfileRainbow(void);
@@ -92,10 +96,10 @@ static void lightingProfileRainbow(void);
  */
 void LightingInit(void)
 {
-    LP500xInit();
+    lp500x::init();
 
-    LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
-    LP500xBankSetColor(COLOR_WHITE);
+    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
+    lp500x::bank_set_color(lp500x::WHITE);
 
     auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, LightingTask);
     DBG_ASSERT(status == timeslice::SUCCESS);
@@ -111,8 +115,8 @@ void LightingTask(void)
     if (lighting.bright_idx > 0) {
         switch (PROFILES[lighting.profile_idx]) {
         case PROFILE_SOLID:
-            LP500xBankSetColor(COLORS[lighting.color_idx]);
-            LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
+            lp500x::bank_set_color(COLORS[lighting.color_idx]);
+            lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
             break;
         case PROFILE_BREATHING:
             lightingProfileBreathing();
@@ -126,7 +130,7 @@ void LightingTask(void)
             break;
         }
     } else {
-        LP500xBankSetBrightness(0);
+        lp500x::bank_set_brightness(0);
     }
 }
 
@@ -138,11 +142,11 @@ void LightingTask(void)
  */
 static void lightingProfileBreathing(void)
 {
-    static uint8_t brightness = 0;
-    static bool    ramp_up    = true;
-    static int     loop_cnt   = 0;
+    static uint8_t  brightness = 0;
+    static bool     ramp_up    = true;
+    static unsigned loop_cnt   = 0;
 
-    LP500xBankSetColor(COLORS[lighting.color_idx]);
+    lp500x::bank_set_color(COLORS[lighting.color_idx]);
 
     if (loop_cnt < N_LOOP_UPDATE_BREATHING - 1) {
         loop_cnt++;
@@ -152,7 +156,7 @@ static void lightingProfileBreathing(void)
     }
 
     if (ramp_up) {
-        if (brightness >= BRIGHTNESS_INDEX(lighting.bright_idx)) {
+        if (brightness >= BRIGHTNESS_INDEX_TO_256(lighting.bright_idx)) {
             ramp_up = false;
         } else {
             brightness++;
@@ -165,7 +169,7 @@ static void lightingProfileBreathing(void)
         }
     }
 
-    LP500xBankSetBrightness(brightness);
+    lp500x::bank_set_brightness(brightness);
 }
 
 /**
@@ -180,52 +184,52 @@ static void lightingProfileRainbow(void)
     static uint8_t red   = 0xff;
     static uint8_t green = 0x00;
     static uint8_t blue  = 0x00;
-    static rainbow_state_t rainbow_state = BLUE_UP;
+    static RainbowState rainbow_state = BLUE_UP;
 
-    LP500xBankSetColor(RGB_CODE(red, green, blue));
-    LP500xBankSetBrightness(BRIGHTNESS_INDEX(lighting.bright_idx));
+    lp500x::bank_set_color(lp500x::RGB_CODE(red, green, blue));
+    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
 
     switch (rainbow_state) {
     case BLUE_UP:
         if (blue == 0xff) {
             rainbow_state = RED_DOWN;
         } else {
-            blue += 5;
+            blue += RAINBOW_STEPS;
         }
         break;
     case RED_DOWN:
         if (red == 0x00) {
             rainbow_state = GREEN_UP;
         } else {
-            red -= 5;
+            red -= RAINBOW_STEPS;
         }
         break;
     case GREEN_UP:
         if (green == 0xff) {
             rainbow_state = BLUE_DOWN;
         } else {
-            green += 5;
+            green += RAINBOW_STEPS;
         }
         break;
     case BLUE_DOWN:
         if (blue == 0x00) {
             rainbow_state = RED_UP;
         } else {
-            blue -= 5;
+            blue -= RAINBOW_STEPS;
         }
         break;
     case RED_UP:
         if (red == 0xff) {
             rainbow_state = GREEN_DOWN;
         } else {
-            red += 5;
+            red += RAINBOW_STEPS;
         }
         break;
     case GREEN_DOWN:
         if (green == 0x00) {
             rainbow_state = BLUE_UP;
         } else {
-            green -= 5;
+            green -= RAINBOW_STEPS;
         }
         break;
     default:

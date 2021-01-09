@@ -10,41 +10,53 @@
 #ifndef LP500X_LP500X_REGS_HPP_
 #define LP500X_LP500X_REGS_HPP_
 
-#define DEVICE_CONFIG0_R       (0x00)
-#define   CHIP_EN                (0x40)
-#define DEVICE_CONFIG1_R       (0x01)
-#define   LOG_SCALE_EN           (0x20)
-#define   POWER_SAVE_EN          (0x10)
-#define   AUTO_INCR_EN           (0x08)
-#define   PWM_DITHER_EN          (0x04)
-#define   MAX_CURR_35MA          (0x02)
-#define   MAX_CURR_25MA          (0x00)
-#define   LED_GLOBAL_OFF         (0x01)
-#define LED_CONFIG0_R          (0x02)
-#define   LED3_BANK_EN           (0x08)
-#define   LED2_BANK_EN           (0x04)
-#define   LED1_BANK_EN           (0x02)
-#define   LED0_BANK_EN           (0x01)
-#define BANK_BRIGHTNESS_R      (0x03)
-#define BANK_A_COLOR_R         (0x04)
-#define BANK_B_COLOR_R         (0x05)
-#define BANK_C_COLOR_R         (0x06)
-#define LED0_BRIGHTNESS_R      (0x07)
-#define LED1_BRIGHTNESS_R      (0x08)
-#define LED2_BRIGHTNESS_R      (0x09)
-#define LED3_BRIGHTNESS_R      (0x0A)
-#define OUT0_COLOR_R           (0x0B)
-#define OUT1_COLOR_R           (0x0C)
-#define OUT2_COLOR_R           (0x0D)
-#define OUT3_COLOR_R           (0x0E)
-#define OUT4_COLOR_R           (0x0F)
-#define OUT5_COLOR_R           (0x10)
-#define OUT6_COLOR_R           (0x11)
-#define OUT7_COLOR_R           (0x12)
-#define OUT8_COLOR_R           (0x13)
-#define OUT9_COLOR_R           (0x14)
-#define OUT10_COLOR_R          (0x15)
-#define OUT11_COLOR_R          (0x16)
-#define RESET_R                (0x17)
+#include <cstdint>
+
+/**
+ * @brief LP500x namespace
+ *
+ * This namespace holds both the utility functions for controlling the LP500x external device (via
+ * I2C), as well as the registers for that device.
+ */
+namespace lp500x {
+
+inline constexpr uint8_t DEVICE_CONFIG0_R  = 0x00;
+inline constexpr uint8_t   CHIP_EN         =  0x40;
+inline constexpr uint8_t DEVICE_CONFIG1_R  = 0x01;
+inline constexpr uint8_t   LOG_SCALE_EN    =  0x20;
+inline constexpr uint8_t   POWER_SAVE_EN   =  0x10;
+inline constexpr uint8_t   AUTO_INCR_EN    =  0x08;
+inline constexpr uint8_t   PWM_DITHER_EN   =  0x04;
+inline constexpr uint8_t   MAX_CURR_35MA   =  0x02;
+inline constexpr uint8_t   MAX_CURR_25MA   =  0x00;
+inline constexpr uint8_t   LED_GLOBAL_OFF  =  0x01;
+inline constexpr uint8_t LED_CONFIG0_R     = 0x02;
+inline constexpr uint8_t   LED3_BANK_EN    =  0x08;
+inline constexpr uint8_t   LED2_BANK_EN    =  0x04;
+inline constexpr uint8_t   LED1_BANK_EN    =  0x02;
+inline constexpr uint8_t   LED0_BANK_EN    =  0x01;
+inline constexpr uint8_t BANK_BRIGHTNESS_R = 0x03;
+inline constexpr uint8_t BANK_A_COLOR_R    = 0x04;
+inline constexpr uint8_t BANK_B_COLOR_R    = 0x05;
+inline constexpr uint8_t BANK_C_COLOR_R    = 0x06;
+inline constexpr uint8_t LED0_BRIGHTNESS_R = 0x07;
+inline constexpr uint8_t LED1_BRIGHTNESS_R = 0x08;
+inline constexpr uint8_t LED2_BRIGHTNESS_R = 0x09;
+inline constexpr uint8_t LED3_BRIGHTNESS_R = 0x0A;
+inline constexpr uint8_t OUT0_COLOR_R      = 0x0B;
+inline constexpr uint8_t OUT1_COLOR_R      = 0x0C;
+inline constexpr uint8_t OUT2_COLOR_R      = 0x0D;
+inline constexpr uint8_t OUT3_COLOR_R      = 0x0E;
+inline constexpr uint8_t OUT4_COLOR_R      = 0x0F;
+inline constexpr uint8_t OUT5_COLOR_R      = 0x10;
+inline constexpr uint8_t OUT6_COLOR_R      = 0x11;
+inline constexpr uint8_t OUT7_COLOR_R      = 0x12;
+inline constexpr uint8_t OUT8_COLOR_R      = 0x13;
+inline constexpr uint8_t OUT9_COLOR_R      = 0x14;
+inline constexpr uint8_t OUT10_COLOR_R     = 0x15;
+inline constexpr uint8_t OUT11_COLOR_R     = 0x16;
+inline constexpr uint8_t RESET_R           = 0x17;
+
+}  // namespace lp500x
 
 #endif  // LP500X_LP500X_REGS_HPP_

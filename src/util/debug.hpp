@@ -14,6 +14,12 @@
 #ifndef UTIL_DEBUG_HPP_
 #define UTIL_DEBUG_HPP_
 
+/**
+ * @brief Debug namespace
+ *
+ * The debug namespace will hold functions relevant to debug, such as printing to the debug output
+ * (only if BUILD_TYPE = DEBUG). If BUILD_TYPE = RELEASE, most things here are no-ops.
+ */
 namespace debug {
 
 inline constexpr bool FORCE_ASSERT = false;

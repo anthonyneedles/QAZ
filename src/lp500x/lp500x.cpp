@@ -19,15 +19,18 @@
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
-constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
-constexpr std::uint8_t SELF_ADDR = 0x53;
-
 namespace {
+
+// lp500x broadcast address
+constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
+
+// self address of our I2C master peripheral
+constexpr std::uint8_t SELF_ADDR = 0x53;
 
 // our I2C driver object for the RGB LEDs
 I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
 
-}
+}  // namespace
 
 /**
  * @brief Initializes RGB LED
@@ -39,7 +42,7 @@ I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
  * Sets logarithmic dimming curve, power saving, auto incrementing registers, PWM dithering, and
  * a max current of 35mA.
  */
-void LP500xInit(void)
+void lp500x::init(void)
 {
     // // enable RGB LED EN GPIO port clock, set as output, and keep set
     gpio::enable_port_clock(bsp::RGB_EN);
@@ -59,11 +62,11 @@ void LP500xInit(void)
     rgb_i2c.init();
 
     // init config registers, starting at DEVICE_CONFIG_0 register
-    const uint8_t init_data[] = {
-        DEVICE_CONFIG0_R,
-        CHIP_EN,
-        LOG_SCALE_EN | POWER_SAVE_EN | AUTO_INCR_EN | PWM_DITHER_EN,
-        LED2_BANK_EN | LED1_BANK_EN  | LED0_BANK_EN,
+    const std::uint8_t init_data[] = {
+        lp500x::DEVICE_CONFIG0_R,
+        lp500x::CHIP_EN,
+        lp500x::LOG_SCALE_EN | lp500x::POWER_SAVE_EN | lp500x::AUTO_INCR_EN | lp500x::PWM_DITHER_EN,
+        lp500x::LED2_BANK_EN | lp500x::LED1_BANK_EN  | lp500x::LED0_BANK_EN,
     };
     rgb_i2c.write_blocking(init_data, sizeof(init_data));
 
@@ -77,13 +80,13 @@ void LP500xInit(void)
  *
  * @param[in] rgb_code RGB hex code to set
  */
-void LP500xBankSetColor(uint32_t rgb_code)
+void lp500x::bank_set_color(std::uint32_t rgb_code)
 {
     uint8_t data[4];
-    data[0] = BANK_A_COLOR_R;
-    data[1] = R_RGB(rgb_code);  // BANK A = Red
-    data[2] = G_RGB(rgb_code);  // BANK B = Green
-    data[3] = B_RGB(rgb_code);  // BANK C = Blue
+    data[0] = lp500x::BANK_A_COLOR_R;
+    data[1] = lp500x::R_RGB(rgb_code);  // BANK A = Red
+    data[2] = lp500x::G_RGB(rgb_code);  // BANK B = Green
+    data[3] = lp500x::B_RGB(rgb_code);  // BANK C = Blue
     rgb_i2c.write_blocking(data, sizeof(data));
 }
 
@@ -94,10 +97,10 @@ void LP500xBankSetColor(uint32_t rgb_code)
  *
  * @param[in] val brightness value 0x00-0xFF
  */
-void LP500xBankSetBrightness(uint8_t val)
+void lp500x::bank_set_brightness(std::uint8_t val)
 {
     uint8_t data[2];
-    data[0] = BANK_BRIGHTNESS_R;
+    data[0] = lp500x::BANK_BRIGHTNESS_R;
     data[1] = val;
     rgb_i2c.write_blocking(data, sizeof(data));
 }
