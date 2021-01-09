@@ -21,12 +21,13 @@
  */
 namespace comm {
 
-// status return codes
+/// status return codes
 enum Status {
     SUCCESS,
     FAILURE,
 };
-// state of the communication driver
+
+/// state of the communication driver
 enum State {
     RESET,
     READY,

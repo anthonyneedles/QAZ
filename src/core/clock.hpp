@@ -22,7 +22,7 @@
  */
 namespace clock {
 
-// the (after init) frequency of the core clock SYSCLK
+/// the (after init) frequency of the core clock SYSCLK
 inline constexpr std::uint32_t SYSCLK_HZ = 48000000;
 
 /**

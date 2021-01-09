@@ -22,12 +22,27 @@
  */
 namespace debug {
 
+/// will force an assert when given to DBG_ASSERT
 inline constexpr bool FORCE_ASSERT = false;
 
-#if defined(DEBUG)
+#if defined(RELEASE)
 
-// similar to assert() in standard library. if expr is false, the assert fails, and the
-// line/file/expr is printed, and the program stops
+/// similar to assert() in standard library. if expr is false, the assert fails.
+/// in RELEASE, we just stop the program here
+#define DBG_ASSERT(expr) \
+    if (!expr) { while (1) {} }
+
+// these do nothing when not DEBUG
+inline void init(void) { }
+inline void printf(const char *, ...) { }
+inline void puts(const char *) { }
+inline void putchar(char ) { }
+inline void assert_failed(char *, int, char *) { }
+
+#elif defined(DEBUG)
+
+/// similar to assert() in standard library. if expr is false, the assert fails, and the
+/// line/file/expr is printed, and the program stops
 #define DBG_ASSERT(expr) \
     if (!expr) { debug::assert_failed((char *)__FILE__, __LINE__, (char *)#expr); }  // NOLINT
 
@@ -92,17 +107,7 @@ void assert_failed(char *file, int line, char *expr);
 
 #else
 
-// similar to assert() in standard library. if expr is false, the assert fails.
-// in RELEASE, we just stop the program here
-#define DBG_ASSERT(expr) \
-    if (!expr) { while (1) {} }
-
-// these do nothing when not DEBUG
-inline void init(void) { }
-inline void printf(const char *, ...) { }
-inline void puts(const char *) { }
-inline void putchar(char ) { }
-inline void assert_failed(char *, int, char *) { }
+#error "No valid BUILD_TYPE value given"
 
 #endif
 

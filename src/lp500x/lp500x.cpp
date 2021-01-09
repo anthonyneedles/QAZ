@@ -21,13 +21,13 @@
 
 namespace {
 
-// lp500x broadcast address
+/// lp500x broadcast address
 constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
 
-// self address of our I2C master peripheral
+/// self address of our I2C master peripheral
 constexpr std::uint8_t SELF_ADDR = 0x53;
 
-// our I2C driver object for the RGB LEDs
+/// rgb led i2c class object
 I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
 
 }  // namespace
@@ -44,12 +44,12 @@ I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
  */
 void lp500x::init(void)
 {
-    // // enable RGB LED EN GPIO port clock, set as output, and keep set
+    // enable RGB LED EN GPIO port clock, set as output, and keep set
     gpio::enable_port_clock(bsp::RGB_EN);
     gpio::set_mode(bsp::RGB_EN, gpio::OUTPUT);
     gpio::set_output(bsp::RGB_EN);
 
-    // // enable I2C SCL/SDA GPIO port clocks, put in alt mode 1 (I2C) as open drain
+    // enable I2C SCL/SDA GPIO port clocks, put in alt mode 1 (I2C) as open drain
     gpio::enable_port_clock(bsp::RGB_SDA);
     gpio::set_mode(bsp::RGB_SDA, gpio::ALTFN);
     gpio::set_output_type(bsp::RGB_SDA, gpio::OPEN_DRAIN);

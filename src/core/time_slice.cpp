@@ -25,28 +25,28 @@
 #include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-// systick handler needs C linkage
+/// systick handler needs C linkage
 extern "C" void SysTick_Handler(void);
 
 namespace {
 
-// each registered task has an info struct
+/// each registered task has an info struct
 struct task_info {
     unsigned loop_cnt;
     unsigned loops_per_period;
     void (*task_func)(void);
 };
 
-// the current number of milliseconds elapsed
+/// the current number of milliseconds elapsed
 volatile std::uint32_t ms_cnt = 0;
 
-// the millisecond count the last time the manager task ran
+/// the millisecond count the last time the manager task ran
 std::uint32_t last_ms = 0;
 
-// total tasks registered. can never be > MAX_NUM_TASKS
+/// total tasks registered. can never be > MAX_NUM_TASKS
 unsigned ntasks = 0;
 
-// task registry is just an array of task info, filled with each register
+/// task registry is just an array of task info, filled with each register
 task_info task_registry[timeslice::MAX_NUM_TASKS] = { };
 
 }  // namespace

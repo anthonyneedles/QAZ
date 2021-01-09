@@ -27,13 +27,13 @@
  */
 namespace timeslice {
 
-// period at which the loop will execute (in milliseconds). try to make as large as possible
+/// period at which the loop will execute (in milliseconds). try to make as large as possible
 inline constexpr unsigned LOOP_PERIOD_MS = 10;
 
-// maximum number of tasks that can be registerd. try to make as small as possible
+/// maximum number of tasks that can be registerd. try to make as small as possible
 inline constexpr unsigned MAX_NUM_TASKS  = 4;
 
-// return status values
+/// return status values
 enum RegStatus {
     SUCCESS,
     FAILURE,

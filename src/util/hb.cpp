@@ -19,7 +19,7 @@
 
 namespace {
 
-// task fuction will execute every 500ms (LED will flash at 1Hz)
+/// task fuction will execute every 500ms (LED will flash at 1Hz)
 constexpr unsigned HB_TASK_PERIOD_MS = 500;
 
 }

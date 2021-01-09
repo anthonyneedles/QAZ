@@ -22,13 +22,14 @@
 
 namespace {
 
-// maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
+/// maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
 constexpr unsigned MAX_EXPAND_CHARACTERS = 50;
 
-UART dbg_uart(DEBUG_UART);
+/// checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
+constexpr bool IS_WIDTH_SPECIFIER(char x, char y) { return ((x == '0') && (y >= '0' && y <= '8')); }
 
-// checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
-inline bool IS_WIDTH_SPECIFIER(char x, char y) { return ((x == '0') && (y >= '0' && y <= '8')); }
+/// debug uart class object
+UART dbg_uart(DEBUG_UART);
 
 }  // namespace
 

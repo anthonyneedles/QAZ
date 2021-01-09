@@ -18,7 +18,7 @@
 
 namespace {
 
-// Calculated for 115200 baud with 48MHz UART clock
+/// Calculated for 115200 baud with 48MHz UART clock
 constexpr std::uint16_t BAUD_115200 = 0x1A1;
 
 }

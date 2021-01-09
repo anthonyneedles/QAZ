@@ -20,7 +20,7 @@
 
 namespace {
 
-// Calculated for 100kHz with 48MHz I2C clock
+/// Calculated for 100kHz with 48MHz I2C clock
 constexpr std::uint32_t TIMING_CONFIG = 0xB0240F13;
 
 }
