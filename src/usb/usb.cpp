@@ -282,7 +282,7 @@ static void usbEP0Setup(void)
 {
     int ret = -1;
     usb_setup_packet_t setup_pkt;
-    usb_desc_t         desc;
+    usb_desc::USBDesc  desc;
 
     // get the setup packet contents
     usbEP0Read(reinterpret_cast<uint8_t *>(&setup_pkt));
@@ -297,28 +297,28 @@ static void usbEP0Setup(void)
 
         if (setup_pkt.wValue == 0x100) {
             debug::puts("DEV ");
-            ret = USBGetDescriptor(DESCRIPTOR_DEVICE_ID,    &desc);
+            ret = usb_desc::get_desc(usb_desc::DEVICE_ID,    &desc);
         } else if (setup_pkt.wValue == 0x200) {
             debug::puts("CFG ");
-            ret = USBGetDescriptor(DESCRIPTOR_CONFIG_ID,    &desc);
+            ret = usb_desc::get_desc(usb_desc::CONFIG_ID,    &desc);
 
             // TODO: Windows gives 255 for "compatability reasons"
             desc.size = (setup_pkt.wLength == 0xff) ? desc.size : setup_pkt.wLength;
         } else if (setup_pkt.wValue == 0x300) {
             debug::puts("STR0 ");
-            ret = USBGetDescriptor(DESCRIPTOR_LANG_ID,      &desc);
+            ret = usb_desc::get_desc(usb_desc::LANG_ID,      &desc);
         } else if (setup_pkt.wValue == 0x301) {
             debug::puts("STR1 ");
-            ret = USBGetDescriptor(DESCRIPTOR_MANUFACT_ID,  &desc);
+            ret = usb_desc::get_desc(usb_desc::MANUFACT_ID,  &desc);
         } else if (setup_pkt.wValue == 0x302) {
             debug::puts("STR2 ");
-            ret = USBGetDescriptor(DESCRIPTOR_PRODUCT_ID,   &desc);
+            ret = usb_desc::get_desc(usb_desc::PRODUCT_ID,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
             debug::puts("RPT ");
 
             // TODO: why the hell does Windows request twice the size
             if (setup_pkt.wLength == 0x80) {
-                ret = USBGetDescriptor(DESCRIPTOR_HIDREPORT_ID, &desc);
+                ret = usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
                 USBWrite(0, desc.buf_ptr, desc.size);
                 LOOP_DELAY(1000);
             }

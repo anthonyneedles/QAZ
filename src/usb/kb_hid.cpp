@@ -10,7 +10,7 @@
  */
 #include "usb/kb_hid.hpp"
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "core/time_slice.hpp"
 #include "qaz/key_matrix.hpp"
@@ -31,11 +31,33 @@ constexpr unsigned USB_HID_TASK_PERIOD_MS = 20;
 /// USB HID transactions occur on EP1, which is configure as an Interrupt EP
 constexpr unsigned INTERRUPT_EPN = 1;
 
+// Bits in modifier byte in HID report
+constexpr std::uint8_t MODIFIER_LCTRL_MSK  = 0x01;
+constexpr std::uint8_t MODIFIER_LSHIFT_MSK = 0x02;
+constexpr std::uint8_t MODIFIER_LALT_MSK   = 0x04;
+constexpr std::uint8_t MODIFIER_LGUI_MSK   = 0x08;
+constexpr std::uint8_t MODIFIER_RCTRL_MSK  = 0x10;
+constexpr std::uint8_t MODIFIER_RSHIFT_MSK = 0x20;
+constexpr std::uint8_t MODIFIER_RALT_MSK   = 0x40;
+constexpr std::uint8_t MODIFIER_RGUI_MSK   = 0x80;
+
 /// Both previous key buffer and current key buffer so we can detect a change
 struct KeyBuf {
     keymatrix::Key curr[keymatrix::KEY_BUF_SIZE];
     keymatrix::Key prev[keymatrix::KEY_BUF_SIZE];
 };
+
+/// HID report structure defined by HID Report Descriptor
+struct  HIDKBReport{
+    uint8_t modifiers;
+    uint8_t reserved;
+    uint8_t key0;
+    uint8_t key1;
+    uint8_t key2;
+    uint8_t key3;
+    uint8_t key4;
+    uint8_t key5;
+} __PACKED;
 
 /// Where we hold hold current and previous key buffer copies
 KeyBuf key_buf;
@@ -100,7 +122,7 @@ void kb_hid::task(void)
  */
 static void send_report(void)
 {
-    hid_keyboard_report_t report;
+    HIDKBReport report;
 
     report.modifiers = 0x00;
     for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
@@ -140,5 +162,5 @@ static void send_report(void)
     report.key3      = key_buf.curr[3];
     report.key4      = key_buf.curr[4];
     report.key5      = key_buf.curr[5];
-    USBWrite(INTERRUPT_EPN, (uint8_t  *)(&report), sizeof(report));
+    USBWrite(INTERRUPT_EPN, (std::uint8_t  *)(&report), sizeof(report));
 }

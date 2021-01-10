@@ -15,7 +15,10 @@
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 
-static const uint8_t DESCRIPTOR_DEVICE[] = {
+namespace {
+
+/// Device descriptor. Contains basic information about the device and specify string desc indicies.
+constexpr std::uint8_t DESCRIPTOR_DEVICE[] = {
       18,        // bLength
        1,        // bDescriptorType        Device
     0x00, 0x02,  // bcdUSB                 USB 2.0
@@ -33,7 +36,10 @@ static const uint8_t DESCRIPTOR_DEVICE[] = {
 };
 
 // TODO: wakeup? 2 interfaces.
-static const uint8_t DESCRIPTOR_CONFIG[] = {
+/// Configuration, Interface, HID, and Endpoint  descriptors. These are eventually asked for, all at
+/// once. These define the device interface as USB HID Keyboard, the report size, and the interrupt
+/// endpoint config.
+constexpr std::uint8_t DESCRIPTOR_CONFIG[] = {
 // Configuration Descriptor
        9,        // bLength
        2,        // bDescriptorType        Configuration
@@ -51,7 +57,7 @@ static const uint8_t DESCRIPTOR_CONFIG[] = {
        1,        // bNumEndpoints
     0x03,        // bInterfaceClass        HID
     0x01,        // bInterfaceSubClass     Boot
-    0x01,        // bInterfaceProtocol     Mouse
+    0x01,        // bInterfaceProtocol     Keyboard
        0,        // iInterface             No string
 // HID Descriptor
        9,        // bLength
@@ -70,13 +76,15 @@ static const uint8_t DESCRIPTOR_CONFIG[] = {
       10,        // bInterval              10 ms
 };
 
-static const uint8_t DESCRIPTOR_LANG[] = {
+/// Language String Descriptor (index 0). Our string descs are in English.
+constexpr std::uint8_t DESCRIPTOR_LANG[] = {
        4,        // bLength                2 + 2*2
        3,        // bDescriptorType        String
     0x09, 0x04,  // wLANGID[0]             English (US)
 };
 
-static const uint8_t DESCRIPTOR_MANUFACT[] = {
+/// Manufactrurer String Descriptor (index 1). In Unicode format.
+constexpr std::uint8_t DESCRIPTOR_MANUFACT[] = {
       30,         // bLength                2 + 14*2
        3,         // bDescriptorType        String
       'a', 0x00,  // wString                anthonyneedles
@@ -95,7 +103,8 @@ static const uint8_t DESCRIPTOR_MANUFACT[] = {
       's', 0x00,
 };
 
-static const uint8_t DESCRIPTOR_PRODUCT[] = {
+/// Product String Descriptor (index 2). In Unicode format.
+constexpr std::uint8_t DESCRIPTOR_PRODUCT[] = {
       26,         // bLength                2 + 14*2
        3,         // bDescriptorType        String
       'q', 0x00,  // wString                qaz keyboard
@@ -112,7 +121,8 @@ static const uint8_t DESCRIPTOR_PRODUCT[] = {
       'd', 0x00,
 };
 
-static const uint8_t DESCRIPTOR_HIDREPORT[] = {
+/// HID Report Descriptor. Defines the format of key packets we send.
+constexpr std::uint8_t DESCRIPTOR_HIDREPORT[] = {
     0x05, 0x01,  // Usage Page   = Desktop,
     0x09, 0x06,  // Usage        = Keyboard,
     0xA1, 0x01,  // Collection   = Application,
@@ -152,22 +162,23 @@ static const uint8_t DESCRIPTOR_HIDREPORT[] = {
     0xC0,        // End Collection
 };
 
-// Descriptor table entry, pairing the desc ID with desc info
-typedef struct {
-    usb_desc_id_t id;
-    usb_desc_t    desc;
-} usb_desc_entry_t;
-
-
-// Descriptor table, with an entry for each descriptor
-static const usb_desc_entry_t desc_table[] = {
-    { DESCRIPTOR_DEVICE_ID,    { DESCRIPTOR_DEVICE,    sizeof(DESCRIPTOR_DEVICE)    } },
-    { DESCRIPTOR_CONFIG_ID,    { DESCRIPTOR_CONFIG,    sizeof(DESCRIPTOR_CONFIG)    } },
-    { DESCRIPTOR_LANG_ID,      { DESCRIPTOR_LANG,      sizeof(DESCRIPTOR_LANG)      } },
-    { DESCRIPTOR_MANUFACT_ID,  { DESCRIPTOR_MANUFACT,  sizeof(DESCRIPTOR_MANUFACT)  } },
-    { DESCRIPTOR_PRODUCT_ID,   { DESCRIPTOR_PRODUCT,   sizeof(DESCRIPTOR_PRODUCT)   } },
-    { DESCRIPTOR_HIDREPORT_ID, { DESCRIPTOR_HIDREPORT, sizeof(DESCRIPTOR_HIDREPORT) } },
+/// Descriptor table entry, pairing the desc ID with desc info
+struct USBDescTableEntry{
+    usb_desc::USBDescId id;
+    usb_desc::USBDesc   desc;
 };
+
+/// Descriptor table, with an entry for each descriptor
+constexpr USBDescTableEntry desc_table[] = {
+    { usb_desc::DEVICE_ID,    { DESCRIPTOR_DEVICE,    sizeof(DESCRIPTOR_DEVICE)    } },
+    { usb_desc::CONFIG_ID,    { DESCRIPTOR_CONFIG,    sizeof(DESCRIPTOR_CONFIG)    } },
+    { usb_desc::LANG_ID,      { DESCRIPTOR_LANG,      sizeof(DESCRIPTOR_LANG)      } },
+    { usb_desc::MANUFACT_ID,  { DESCRIPTOR_MANUFACT,  sizeof(DESCRIPTOR_MANUFACT)  } },
+    { usb_desc::PRODUCT_ID,   { DESCRIPTOR_PRODUCT,   sizeof(DESCRIPTOR_PRODUCT)   } },
+    { usb_desc::HIDREPORT_ID, { DESCRIPTOR_HIDREPORT, sizeof(DESCRIPTOR_HIDREPORT) } },
+};
+
+}  // namespace
 
 /**
  * @brief For obtaining descriptors
@@ -177,9 +188,10 @@ static const usb_desc_entry_t desc_table[] = {
  *
  * @param[in]     desc_id  ID of requested descriptor
  * @param[in,out] desc     Descriptor information struct that will be populated (if `desc_id` valid)
+ *
  * @return 0 if success, -1 if descriptor is not defined
  */
-int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc)
+int usb_desc::get_desc(USBDescId desc_id, USBDesc *desc)
 {
     int ret = -1;
 

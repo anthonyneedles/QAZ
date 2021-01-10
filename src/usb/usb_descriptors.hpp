@@ -13,58 +13,34 @@
 #ifndef USB_USB_DESCRIPTORS_HPP_
 #define USB_USB_DESCRIPTORS_HPP_
 
-#include <stdint.h>
-
-#include "stm32f0xx.h"  // NOLINT
-
-// Bits in modifier byte in HID report
-#define MODIFIER_LCTRL_MSK  (0x01)
-#define MODIFIER_LSHIFT_MSK (0x02)
-#define MODIFIER_LALT_MSK   (0x04)
-#define MODIFIER_LGUI_MSK   (0x08)
-#define MODIFIER_RCTRL_MSK  (0x10)
-#define MODIFIER_RSHIFT_MSK (0x20)
-#define MODIFIER_RALT_MSK   (0x40)
-#define MODIFIER_RGUI_MSK   (0x80)
-
-// Each valid descriptor gets an ID
-typedef enum {
-    DESCRIPTOR_DEVICE_ID,
-    DESCRIPTOR_CONFIG_ID,
-    DESCRIPTOR_LANG_ID,
-    DESCRIPTOR_MANUFACT_ID,
-    DESCRIPTOR_PRODUCT_ID,
-    DESCRIPTOR_HIDREPORT_ID,
-} usb_desc_id_t;
-
-// Descriptor information struct
-typedef struct {
-    const uint8_t *buf_ptr;
-    uint16_t size;
-} usb_desc_t;
-
-// HID report structure defined by HID Report Descriptor
-typedef struct {
-    uint8_t modifiers;
-    uint8_t reserved;
-    uint8_t key0;
-    uint8_t key1;
-    uint8_t key2;
-    uint8_t key3;
-    uint8_t key4;
-    uint8_t key5;
-} __PACKED hid_keyboard_report_t;
+#include <cstdint>
 
 /**
- * @brief For obtaining descriptors
+ * @brief Keyboard descriptor namespace
  *
- * Information for a given descriptor can be requested with this, and (if exists) a pointer to the
- * desc buffer and the size (in bytes) is returned via `desc`.
- *
- * @param[in]     desc_id ID of requested descriptor
- * @param[in,out] desc    Descriptor information struct that will be populated (if `desc_id` valid)
- * @return 0 if success, -1 if descriptor is not defined
+ * This namespace holds the means to obtain the interal USB descriptors.
  */
-int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc);
+namespace usb_desc {
+
+/// Each valid descriptor gets an ID
+enum USBDescId {
+    DEVICE_ID,
+    CONFIG_ID,
+    LANG_ID,
+    MANUFACT_ID,
+    PRODUCT_ID,
+    HIDREPORT_ID,
+};
+
+/// Descriptor information struct
+struct USBDesc {
+    const std::uint8_t *buf_ptr;
+    std::uint16_t size;
+};
+
+/// Obtain a USB descriptor from ID
+int get_desc(USBDescId desc_id, USBDesc *desc);
+
+}  // namespace usb_desc
 
 #endif  // USB_USB_DESCRIPTORS_HPP_
