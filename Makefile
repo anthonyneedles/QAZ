@@ -11,7 +11,7 @@ CXX_SRC = core/clock.cpp                 \
 					qaz/lighting.cpp               \
 					qaz/main.cpp                   \
 					usb/usb.cpp                    \
-					usb/usb_hid.cpp                \
+					usb/kb_hid.cpp                 \
 					usb/usb_descriptors.cpp        \
 					util/debug.cpp                 \
 		      util/hb.cpp                             

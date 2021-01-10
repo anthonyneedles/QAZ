@@ -15,7 +15,7 @@
 #include "core/time_slice.hpp"
 #include "qaz/key_matrix.hpp"
 #include "qaz/lighting.hpp"
-#include "usb/usb_hid.hpp"
+#include "usb/kb_hid.hpp"
 #include "util/debug.hpp"
 #include "util/hb.hpp"
 
@@ -30,7 +30,7 @@ int main(void)
     heartbeat::init();
     keymatrix::init();
     lighting::init();
-    USBHIDInit();
+    kb_hid::init();
 
     // enter the loop - no return
     timeslice::enter_loop();

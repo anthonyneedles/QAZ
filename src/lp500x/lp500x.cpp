@@ -70,7 +70,7 @@ void lp500x::init(void)
     };
     rgb_i2c.write_blocking(init_data, sizeof(init_data));
 
-    debug::puts("Initialized: RGB LED\r\n");
+    debug::puts("Initialized: LP500x\r\n");
 }
 
 /**

@@ -105,6 +105,8 @@ void lighting::init(void)
 
     auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
+
+    debug::puts("Initialized: Lighting\r\n");
 }
 
 /**

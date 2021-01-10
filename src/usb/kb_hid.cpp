@@ -1,14 +1,14 @@
 /**
- * @file      usb_hid.cpp
+ * @file      kb_hid.cpp
  * @brief     USB HID control
  *
  * @author    Anthony Needles
  * @date      2020/11/02
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * This module will use the USB driver to send keycodes to the USB host.
+ * This module will use the USB driver to send HID keycodes to the USB host.
  */
-#include "usb/usb_hid.hpp"
+#include "usb/kb_hid.hpp"
 
 #include <stdint.h>
 
@@ -20,34 +20,36 @@
 #include "util/debug.hpp"
 #include "stm32f0xx.h" // NOLINT
 
+/// we need to ensure that our key buffer size is equal to what we describe in the report descriptor
+static_assert(keymatrix::KEY_BUF_SIZE == 6, "USB HID: Key buffer size must be == 6");
+
 namespace {
 
-// task fuction will execute every 20ms
+/// Task fuction will execute every 20ms
 constexpr unsigned USB_HID_TASK_PERIOD_MS = 20;
 
-// usb hid transactions occur on EP1, which is configure as an Interrupt EP
+/// USB HID transactions occur on EP1, which is configure as an Interrupt EP
 constexpr unsigned INTERRUPT_EPN = 1;
 
-}
-
-static_assert(keymatrix::KEY_BUF_SIZE >= 6, "USB HID: Key buffer size must be >= 6");
-
-// both previous key buffer and current key buffer
-typedef struct {
+/// Both previous key buffer and current key buffer so we can detect a change
+struct KeyBuf {
     keymatrix::Key curr[keymatrix::KEY_BUF_SIZE];
     keymatrix::Key prev[keymatrix::KEY_BUF_SIZE];
-} key_buf_t;
+};
 
-static key_buf_t key_buf;
+/// Where we hold hold current and previous key buffer copies
+KeyBuf key_buf;
 
-static void usbhidSendReport(void);
+}  // namespace
+
+static void send_report(void);
 
 /**
  * @brief Intialize the USB HID module
  *
  * We only need to ready key buffers and initialize the USB driver.
  */
-void USBHIDInit(void)
+void kb_hid::init(void)
 {
     // clear out the 'previous' key buffer
     for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
@@ -56,7 +58,7 @@ void USBHIDInit(void)
 
     USBInit();
 
-    auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, USBHIDTask);
+    auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, kb_hid::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
     debug::puts("Initialized: USB HID\r\n");
@@ -68,14 +70,14 @@ void USBHIDInit(void)
  * We check the currently pressed keys, and if there has been a change then we send a new key HID
  * report.
  */
-void USBHIDTask(void)
+void kb_hid::task(void)
 {
     keymatrix::copy_key_buffer(key_buf.curr);
 
     // we only want to send a report when keys states change
     for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
         if (key_buf.curr[i] != key_buf.prev[i]) {
-            usbhidSendReport();
+            send_report();
             break;
         }
     }
@@ -96,7 +98,7 @@ void USBHIDTask(void)
  * drivers just ignore them, but we do anyways because it would involve more logic and we wouldn't
  * gain anything from excluding them.
  */
-static void usbhidSendReport(void)
+static void send_report(void)
 {
     hid_keyboard_report_t report;
 
