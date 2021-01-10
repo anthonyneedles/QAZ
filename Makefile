@@ -58,7 +58,7 @@ OBJ_DIRS := $(sort $(addprefix $(OBJ_DIR)/, $(dir $(ALL_SRC))))
 DEP_DIRS := $(sort $(addprefix $(DEP_DIR)/, $(dir $(ALL_SRC))))
 
 OBJ = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.o) $(C_SRC:%.c=$(OBJ_DIR)/%.o) $(S_SRC:%.s=$(OBJ_DIR)/%.o)
-DEP = $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(S_SRC:%.s=$(DEP_DIR)/%.d)
+DEP = $(CXX_SRC:%.cpp=$(DEP_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(S_SRC:%.s=$(DEP_DIR)/%.d)
 
 LST = $(LOG_DIR)/$(TARGET).lst
 MAP = $(LOG_DIR)/$(TARGET).map
@@ -119,19 +119,21 @@ LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-runtime/references
 # Build Rules ##################################################################
 
 .PHONY: $(TARGET)
-$(TARGET): $(BIN) $(ELF) $(ROM) $(LOG)
+$(TARGET): $(BIN) $(ELF) $(LOG)
 		@echo $(call hdr_print,"Make success for target \'$(TARGET)\'")
 
 .PHONY: all
-all: $(TARGET) doc lint
+all: clean $(TARGET) doc lint
 
 $(BIN): $(ELF) | $(BIN_DIR)
 		@echo $(call hdr_print,"Creating $@ from $^:")
+		rm -f $(BIN_DIR)/*.bin
 		$(CP) $(CPFLAGS) $(ELF) $(BIN)
 		sh $(SRP_DIR)/git-hash-bin-copy.sh $(BIN)
 
 $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@ from $^:")
+		rm -f $(BIN_DIR)/*.elf
 		$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
 		sh $(SRP_DIR)/git-hash-bin-copy.sh $(ELF)
 		$(SZ) $(ELF)
@@ -158,6 +160,8 @@ $(LOG): $(ELF) | $(LOG_DIR)
 		$(OD) -x $(ELF) > $(ODS)
 		$(RE) -a $(ELF) > $(RES)
 
+# include dependency files, which hold all dependency targets for all sources
+# so if a file changes (header or source), all dependent files will rebuild
 -include $(DEP)
 
 # Utility Rules ################################################################
