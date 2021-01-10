@@ -102,6 +102,11 @@ CallbackStates callback_states = { };
 
 static void scan_matrix(KeyBuf *keybuf);
 
+/// Default implementation of the callbacks does nothing
+#define K(symbol) __WEAK void callback_##symbol(void) {}
+CALLBACK_KEY_TABLE(K)
+#undef K
+
 /**
  * @brief Initializes columns/rows
  *

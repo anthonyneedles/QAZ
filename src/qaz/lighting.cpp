@@ -243,42 +243,49 @@ static void profile_rainbow(void)
     }
 }
 
+// "WarNing: dOcumEnTed SYMboL 'vOid KEYMAtrix::callBaCk_*' WAs nOt DeCLarED Or DeFINed."
+//  - big dumb doxygen
+
+//! @cond Doxygen_Suppress
+
 /**
- * @brief BRTUP key callback
+ * @brief BRTUP key callback __WEAK override
  *
  * Increases brightness setting up. Saturates at max.
  */
-void keymatrix::callback_BRTUP(void)
+extern void keymatrix::callback_BRTUP(void)
 {
     lighting_ctrl.bright_idx = NEXT_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
- * @brief BRTDN key callback
+ * @brief BRTDN key callback __WEAK override
  *
  * Increases brightness setting down. Saturates at min.
  */
-void keymatrix::callback_BRTDN(void)
+extern void keymatrix::callback_BRTDN(void)
 {
     lighting_ctrl.bright_idx = PREV_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
- * @brief COLOR key callback
+ * @brief COLOR key callback __WEAK override
  *
- * Cycles through colors
+ * Cycles through colors.
  */
-void keymatrix::callback_COLOR(void)
+extern void keymatrix::callback_COLOR(void)
 {
     lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, N_ELEMENTS(COLORS));
 }
 
 /**
- * @brief PROF key callback
+ * @brief PROF key callback __WEAK override
  *
- * Cycles through coloring profiles
+ * Cycles through coloring profiles.
  */
-void keymatrix::callback_PROF(void)
+extern void keymatrix::callback_PROF(void)
 {
     lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, N_ELEMENTS(PROFILES));
 }
+
+//! @endcond
