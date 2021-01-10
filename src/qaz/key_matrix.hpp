@@ -32,50 +32,35 @@
 #include "bsp/bsp.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-// weak callbacks for each of the callback keys. these are called ONCE PER BUTTON PRESS. the user
-// must release then repress the key for a second call
+/// Weak callbacks for each of the callback keys. these are called ONCE PER BUTTON PRESS. The user
+/// must release then repress the key for a second call
 #define K(symbol) __WEAK void KeyMatrixCallback_##symbol(void);
 CALLBACK_KEY_TABLE(K)
 #undef K
 
+// Keycodes in HID standard are 16-bit values
 typedef int16_t keys_t;
 
-// get the keycode from a symbol
+/// Get the keycode from a symbol
 #define KEY(x) ((keys_t)(HID_USAGE_KEYBOARD_##x))
 
-// keys that can be detected at once
+/// Keys that can be detected at once
 #define KEY_BUF_SIZE (6)
 
-// each physical key has 'base' key, and a 'fn' key. which is considered 'pressed' depends on if
+// Each physical key has 'base' key, and a 'fn' key. which is considered 'pressed' depends on if
 // the FN key is pressed
 typedef struct {
     keys_t base;
     keys_t fn;
 } key_layer_t;
 
-/**
- * @brief Initializes columns/rows
- *
- * Takes the given row/columns gpio definitions and inits them as needed.
- * The inputs need a pullup or else they will float.
- */
+/// Init all rows as pullup inputs and columns as open-drain outputs
 void KeyMatrixInit(void);
 
-/**
- * @brief Calls key scan routine, fills key code buffer, calls callbacks
- *
- * This task will scan the physical keys each task period. The output key_in buffer will hold the
- * actual keycodes for this set, either the base keys of fn keys (if FN key also pressed). If any
- * of the callback keys are newly pressed, the callbacks get called, otherwise their states get
- * updated accordingly.
- */
+/// Run scan routine, fill internal key buffer, and call any key callbacks
 void KeyMatrixTask(void);
 
-/**
- * @brief Fills input buffer with current key buffer
- *
- * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)
- */
+/// Fills input buffer (OF SIZE `KEY_BUF_SIZE`) with current key buffer
 void KeyMatrixGetKeyBuffer(keys_t *key_buf);
 
 #endif  // QAZ_KEY_MATRIX_HPP_

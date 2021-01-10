@@ -21,36 +21,36 @@
 
 namespace {
 
-// task fuction will execute every 10ms
+/// Task fuction will execute every 10ms
 constexpr unsigned LIGHTING_TASK_PERIOD_MS = 10;
 
-// every n loops to update breathing profile, to make it go slower
-// TODO: set profile speeds from user input
+/// Every n loops to update breathing profile, to make it go slower
 constexpr unsigned N_LOOP_UPDATE_BREATHING = 2;
+// TODO: set profile speeds from user input
 
-// lowest brightness that the breathing profile will go down to
+/// Lowest brightness that the breathing profile will go down to
 constexpr unsigned LOWEST_BREATHING_BRIGHTNESS = 0x10;
 
-// amount decremented/incremented each rainbow profile step
+/// Amount decremented/incremented each rainbow profile step
 constexpr unsigned RAINBOW_STEPS = 5;
 
-// number of different brightness levels to cycle through
+/// Number of different brightness levels to cycle through
 constexpr unsigned BRIGHTNESS_LEVELS = 5;
 
-// converts brightness index to percent, then percent to 256 value
+/// Converts brightness index to percent, then percent to 256 value
 constexpr std::uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
 {
     return static_cast<uint8_t>(lp500x::BRIGHTNESS_PERCENT_TO_256((idx*100)/BRIGHTNESS_LEVELS));
 }
 
-// the backlight coloring profiles
+/// The backlight coloring profiles
 enum ColorProfile {
     PROFILE_SOLID,
     PROFILE_BREATHING,
     PROFILE_RAINBOW,
 };
 
-// rainbow profile states
+/// Rainbow profile states
 enum RainbowState{
     BLUE_UP,
     RED_DOWN,
@@ -60,24 +60,25 @@ enum RainbowState{
     GREEN_DOWN,
 };
 
-// our lighting  control structure
+/// Our lighting  control structure
 struct LightingCtrl{
     unsigned bright_idx;
     unsigned color_idx;
     unsigned profile_idx;
 };
 
-// colors to cycle through
+/// Colors to cycle through
 const uint32_t COLORS[] = {
     lp500x::WHITE, lp500x::RED,     lp500x::GREEN, lp500x::BLUE,
     lp500x::CYAN,  lp500x::MAGENTA, lp500x::YELLOW
 };
 
-// profiles to cycle through
+/// Profiles to cycle through
 const ColorProfile PROFILES[] = {
     PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
+/// Lighting control structure instantiation
 LightingCtrl lighting = {
     .bright_idx  = BRIGHTNESS_LEVELS - 1,
     .color_idx   = 0,

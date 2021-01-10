@@ -21,13 +21,13 @@
 
 namespace {
 
-/// lp500x broadcast address
+/// LP500x broadcast address
 constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
 
-/// self address of our I2C master peripheral
+/// Self address of our I2C master peripheral
 constexpr std::uint8_t SELF_ADDR = 0x53;
 
-/// rgb led i2c class object
+/// RGB LED I2C class object
 I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
 
 }  // namespace
@@ -78,7 +78,7 @@ void lp500x::init(void)
  *
  * Since the LEDs are in bank mode, all red/blue/green LEDs get set at once.
  *
- * @param[in] rgb_code RGB hex code to set
+ * @param[in] rgb_code  RGB hex code to set
  */
 void lp500x::bank_set_color(std::uint32_t rgb_code)
 {
@@ -95,7 +95,7 @@ void lp500x::bank_set_color(std::uint32_t rgb_code)
  *
  * Since the LEDs are in bank mode, all LED brightnesses set at once.
  *
- * @param[in] val brightness value 0x00-0xFF
+ * @param[in] val  brightness value 0x00-0xFF
  */
 void lp500x::bank_set_brightness(std::uint8_t val)
 {

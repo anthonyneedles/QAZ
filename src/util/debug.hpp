@@ -22,13 +22,13 @@
  */
 namespace debug {
 
-/// will force an assert when given to DBG_ASSERT
+/// Will force an assert when given to DBG_ASSERT
 inline constexpr bool FORCE_ASSERT = false;
 
 #if defined(RELEASE)
 
-/// similar to assert() in standard library. if expr is false, the assert fails.
-/// in RELEASE, we just stop the program here
+/// Similar to assert() in standard library. If expr is false, the assert fails.
+/// In RELEASE, we just stop the program here
 #define DBG_ASSERT(expr) \
     if (!expr) { while (1) {} }
 
@@ -41,68 +41,24 @@ inline void assert_failed(char *, int, char *) { }
 
 #elif defined(DEBUG)
 
-/// similar to assert() in standard library. if expr is false, the assert fails, and the
+/// Similar to assert() in standard library. If expr is false, the assert fails, and the
 /// line/file/expr is printed, and the program stops
 #define DBG_ASSERT(expr) \
     if (!expr) { debug::assert_failed((char *)__FILE__, __LINE__, (char *)#expr); }  // NOLINT
 
-/**
- * @brief Enables USART1 for TX at 115200 on pin PA9 (only for DEBUG)
- */
+/// Init debug printing by instantiating UART driver object
 void init(void);
 
-/**
- * @brief Sends formatted string over UART
- *
- * When DEBUG, this function will expand the given format string with the variable args. The
- * expanded string will then be output on the Debug USART TX.
- *
- * Format specifiers:
- * %c - Character
- * %s - String
- * %d - Decimal
- * %o - Octal
- * %x - Hexadecimal
- * %p - Pointer
- *
- * '0n' can be placed in between the '%' and type specifier to specify the minimum width of the
- * result. The output is zero-padded up to 'n' characters. Max width of 8. %p always pads to 8.
- *
- * For example: %08x with an arg of 0x1234 results in 00001234
- *
- * @param[in] fmt Format string, with or without format specifiers
- * @param[in] ... Variable arguments for format speifiers
- */
-void printf(const char* format, ...);
+/// Print a format string
+void printf(const char *fs, ...);
 
-/**
- * @brief Sends string over USART
- *
- * Pushes each character in a string over Debug USART.
- *
- * Use when only a non-format string is needed to be sent.
- */
-void puts(const char *data);
+/// Print a non-format string
+void puts(const char *s);
 
-/**
- * @brief Sends single character over USART
- *
- * Blocks until Debug USART is ready to transmit, then pushes character onto output buffer.
- *
- * Use when only a single non-format character is needed to be sent.
- */
-void putchar(char data);
+/// Print a single character
+void putchar(char c);
 
-/**
- * @brief Called by DBG_ASSERT() if assertion failed (ONLY IN DEBUG)
- *
- * Print out the context and expression of the failed assertion.
- * We stop here, never to return.
- *
- * @param[in] file expression file name string
- * @param[in] base expression line number
- * @param[in] expr expression string
- */
+/// Only to be called when an assert fails (`DBG_ASSERT`), prints assert info and infinitely loops
 void assert_failed(char *file, int line, char *expr);
 
 #else

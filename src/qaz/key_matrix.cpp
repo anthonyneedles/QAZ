@@ -26,13 +26,16 @@
 
 namespace {
 
-// task fuction will execute every 20ms
+/// Task fuction will execute every 20ms
 constexpr unsigned  KEY_MATRIX_TASK_PERIOD_MS = 20;
 
+/// Number of physical columns in matrix
 constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
+
+/// Number of physical rows in martrix
 constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
 
-}
+}  // namespace
 
 // index into key symbol array for corresponding symbol
 #define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
@@ -191,7 +194,7 @@ void KeyMatrixTask(void)
 /**
  * @brief Fills input buffer with current key buffer
  *
- * @param[in,out] keybuf buffer/info to fill into (assumed size = KEY_BUF_SIZE)
+ * @param[in,out] keybuf  buffer/info to fill into (assumed size = KEY_BUF_SIZE)
  */
 void KeyMatrixGetKeyBuffer(keys_t *keybuf)
 {
@@ -208,7 +211,7 @@ void KeyMatrixGetKeyBuffer(keys_t *keybuf)
  * Will set each column and read each row for each column. This allows detection of individual
  * keys. If a key is found, its layer is pushed into the key buffer.
  *
- * @param[in,out] keybuf buffer/info to fill
+ * @param[in,out] keybuf  buffer/info to fill
  */
 void keyMatrixScan(key_buf_t *keybuf)
 {

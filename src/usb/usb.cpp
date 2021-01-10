@@ -192,9 +192,9 @@ void USBInit(void)
  *
  * Only works because MCU architecture and USB protocol is little endian.
  *
- * @param[in] ep  the endpoint to write with
- * @param[in] buf input buffer that contains data to be tranmitted
- * @param[in] len number of bytes in `buf`
+ * @param[in] ep   the endpoint to write with
+ * @param[in] buf  input buffer that contains data to be tranmitted
+ * @param[in] len  number of bytes in `buf`
  */
 void USBWrite(int ep, const uint8_t *buf, uint16_t len)
 {
@@ -259,7 +259,7 @@ static void usbEP1Init(void)
 /**
  * @brief Read RX byte count sized block from PMA into input buffer and set RX STATUS to VALID
  *
- * @param[in, out] buf output buffer that is filled with received data
+ * @param[in, out] buf  output buffer that is filled with received data
  */
 static void usbEP0Read(uint8_t *buf) {
     int rx_size = BDT->bd_ep[0].rx_size & USB_CNT_RX_MSK;

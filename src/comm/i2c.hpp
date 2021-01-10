@@ -26,23 +26,30 @@
  */
 class I2C : public CommBase {
  public:
-    // ctor, initialize private member variables
+    /// CTOR, initialize private member variables
     explicit I2C(I2C_TypeDef *regs, std::uint8_t self_addr, std::uint8_t send_addr = 0) :
         _regs(regs), _self_addr(self_addr), _send_addr(send_addr) {}
 
-    // implementing base methods
+    /// I2C init, enables peripheral clocking, self address, and timing config for 100kHz SCL
     comm::Status init(void);
+
+    /// Master transmit raw bytes, blocks each byte transfer for TXE (transmit buffer empty) flag
     comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes);
 
+    /// Set the I2C slave address
     inline void set_send_addr(std::uint8_t addr);
+
  private:
-    // must be set via ctor initializer list
+    /// Register structure pointer, required CTOR init
     I2C_TypeDef *const _regs;
+
+    /// Master address of I2C peripheral, required CTOR init
     const std::uint8_t _self_addr;
 
-    // can be set via ctor initializer list OR set_send_addr()
+    /// Slave address to transmit to, optional CTOR init
     std::uint8_t _send_addr;
 
+    /// State of the I2C driver
     comm::State _state = comm::RESET;
 };
 
@@ -50,6 +57,8 @@ class I2C : public CommBase {
  * @brief Set slave address of I2C transmissions
  *
  * This sets the internally held address of the slave that will be written to.
+ *
+ * @param addr  8-bit slave address
  */
 inline void I2C::set_send_addr(std::uint8_t addr)
 {

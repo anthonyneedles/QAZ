@@ -20,19 +20,10 @@
  */
 namespace heartbeat {
 
-/**
- * @brief Initializes heartbeat LED
- *
- * The LED should have its cathode pulled to ground with a resistor of proper value, and the LED
- * GPIO output port on its anode.
- */
+/// Init heartbeat pin and task
 void init(void);
 
-/**
- * @brief Task to toggle HB LED at 1Hz
- *
- * Just toggles the LED each entry
- */
+/// Toggle LED
 void task(void);
 
 }  // namespace heartbeat

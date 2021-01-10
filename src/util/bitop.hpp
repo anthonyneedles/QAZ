@@ -24,9 +24,9 @@ namespace bitop {
 /**
  * @brief Set a specific bit
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     bitn bit posiiton
+ * @tparam        T     type to use for operations
+ * @param[in,out] x     reference of value to perform bitop on
+ * @param[in]     bitn  bit posiiton
  */
 template <typename T>
 inline void set_bit(T &x, unsigned bitn)
@@ -37,9 +37,9 @@ inline void set_bit(T &x, unsigned bitn)
 /**
  * @brief Clear a specific bit
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     bitn bit posiiton
+ * @tparam        T     type to use for operations
+ * @param[in,out] x     reference of value to perform bitop on
+ * @param[in]     bitn  bit posiiton
  */
 template <typename T>
 inline void clr_bit(T &x, unsigned bitn)
@@ -50,10 +50,10 @@ inline void clr_bit(T &x, unsigned bitn)
 /**
  * @brief Update a specific bit
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     bitn bit posiiton
- * @param[in]     val  value to update bit with
+ * @tparam        T     type to use for operations
+ * @param[in,out] x     reference of value to perform bitop on
+ * @param[in]     bitn  bit posiiton
+ * @param[in]     val   value to update bit with
  */
 template <typename T>
 inline void update_bit(T &x, unsigned bitn, unsigned val)
@@ -64,9 +64,10 @@ inline void update_bit(T &x, unsigned bitn, unsigned val)
 /**
  * @brief Read a specific bit
  *
- * @tparam        T    type to use for operations
- * @param[in,out] x    reference of value to perform bitop on
- * @param[in]     bitn bit posiiton
+ * @tparam        T     type to use for operations
+ * @param[in,out] x     reference of value to perform bitop on
+ * @param[in]     bitn  bit posiiton
+ *
  * @return T sized field with read bit at LSB
  */
 template <typename T>
@@ -78,9 +79,9 @@ inline T read_bit(const T &x, unsigned bitn)
 /**
  * @brief Clear a bitmask
  *
- * @tparam        T   type to use for operations
- * @param[in,out] x   reference of value to perform bitop on
- * @param[in]     msk bitmask
+ * @tparam        T    type to use for operations
+ * @param[in,out] x    reference of value to perform bitop on
+ * @param[in]     msk  bitmask
  */
 template <typename T>
 inline void set_msk(T &x, unsigned msk)
@@ -91,9 +92,9 @@ inline void set_msk(T &x, unsigned msk)
 /**
  * @brief Clear a bitmask
  *
- * @tparam        T   type to use for operations
- * @param[in,out] x   reference of value to perform bitop on
- * @param[in]     msk bitmask
+ * @tparam        T    type to use for operations
+ * @param[in,out] x    reference of value to perform bitop on
+ * @param[in]     msk  bitmask
  */
 template <typename T>
 inline void clr_msk(T &x, unsigned msk)
@@ -104,10 +105,10 @@ inline void clr_msk(T &x, unsigned msk)
 /**
  * @brief Update a bitmask
  *
- * @tparam        T   type to use for operations
- * @param[in,out] x   reference of value to perform bitop on
- * @param[in]     msk bitmask
- * @param[in]     val value to update bit with
+ * @tparam        T    type to use for operations
+ * @param[in,out] x    reference of value to perform bitop on
+ * @param[in]     msk  bitmask
+ * @param[in]     val  value to update bit with
  */
 template <typename T>
 inline void update_msk(T &x, unsigned msk, unsigned val)

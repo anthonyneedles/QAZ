@@ -21,13 +21,13 @@
  */
 namespace comm {
 
-/// status return codes
+/// Status return codes
 enum Status {
     SUCCESS,
     FAILURE,
 };
 
-/// state of the communication driver
+/// State of the communication driver
 enum State {
     RESET,
     READY,
@@ -43,8 +43,10 @@ enum State {
  */
 class CommBase {
  public:
-    // pure virtual functions derived classes MUST implement
+    /// The communication initializer (peripheral init, prepare buffers, etc.)
     virtual comm::Status init(void) = 0;
+
+    /// Write raw bytes, can block between writes (e.g. waiting for a register flag)
     virtual comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes) = 0;
 };
 

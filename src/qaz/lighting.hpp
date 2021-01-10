@@ -12,46 +12,22 @@
 #ifndef QAZ_LIGHTING_HPP_
 #define QAZ_LIGHTING_HPP_
 
-/**
- * @brief Initializes lighting profile
- *
- * Initializes the LP500x driver for control of the RGB LEDs.
- */
+/// Init lighting by initializing the LP500x driver
 void LightingInit(void);
 
-/**
- * @brief Task for updating RGB LEDs.
- *
- * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
- */
+/// Runs given lighting profile
 void LightingTask(void);
 
-/**
- * @brief BRTUP key callback
- *
- * Increases brightness setting up. Saturates at max.
- */
+/// Increase brightness when BRTUP key pressed
 void KeyMatrixCallback_BRTUP(void);
 
-/**
- * @brief BRTDN key callback
- *
- * Increases brightness setting down. Saturates at min.
- */
+/// Decrease brightness when BRTDN key pressed
 void KeyMatrixCallback_BRTDN(void);
 
-/**
- * @brief COLOR key callback
- *
- * Cycles through colors
- */
+/// Cycles colors when COLOR key pressed
 void KeyMatrixCallback_COLOR(void);
 
-/**
- * @brief PROF key callback
- *
- * Cycles through coloring profiles
- */
+/// Cycles coloring profiles when PROF key pressed
 void KeyMatrixCallback_PROF(void);
 
 #endif  // QAZ_LIGHTING_HPP_

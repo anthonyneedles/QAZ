@@ -25,28 +25,28 @@
 #include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-/// systick handler needs C linkage
+/// Systick handler needs C linkage
 extern "C" void SysTick_Handler(void);
 
 namespace {
 
-/// each registered task has an info struct
+/// Each registered task has an info struct
 struct task_info {
     unsigned loop_cnt;
     unsigned loops_per_period;
     void (*task_func)(void);
 };
 
-/// the current number of milliseconds elapsed
+/// The current number of milliseconds elapsed
 volatile std::uint32_t ms_cnt = 0;
 
-/// the millisecond count the last time the manager task ran
+/// The millisecond count the last time the manager task ran
 std::uint32_t last_ms = 0;
 
-/// total tasks registered. can never be > MAX_NUM_TASKS
+/// Total tasks registered. can never be > MAX_NUM_TASKS
 unsigned ntasks = 0;
 
-/// task registry is just an array of task info, filled with each register
+/// Task registry is just an array of task info, filled with each register
 task_info task_registry[timeslice::MAX_NUM_TASKS] = { };
 
 }  // namespace
@@ -79,8 +79,9 @@ void timeslice::init(void)
  * function is invalid, or if the task period is 0, less than the loop period, and/or not a multiple
  * of the loop period.
  *
- * @param[in] period    task period, in millisecond
- * @param[in] task_func task function to be called at task period
+ * @param[in] period     task period, in millisecond
+ * @param[in] task_func  task function to be called at task period
+ *
  * @return timeslice::SUCCESS if the task has been registered
  *         timeslice::FAILURE if the task has not been registered
  */

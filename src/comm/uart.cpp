@@ -63,8 +63,9 @@ comm::Status UART::init(void)
  *
  * Blocks until USART is ready to transmit, then pushes character onto output buffer.
  *
- * @param[in] data   buffer to transmit
- * @param[in] nbytes number of bytes to transmit
+ * @param[in] data    buffer to transmit
+ * @param[in] nbytes  number of bytes to transmit
+ *
  * @return comm::SUCCESS - successful uart write
  *         comm::FAILURE - failed uart write (not ready, invalid buf)
  */

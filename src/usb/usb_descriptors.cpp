@@ -175,8 +175,8 @@ static const usb_desc_entry_t desc_table[] = {
  * Information for a given descriptor can be requested with this, and (if exists) a pointer to the
  * desc buffer and the size (in bytes) is returned via `desc`.
  *
- * @param[in]     desc_id ID of requested descriptor
- * @param[in,out] desc    Descriptor information struct that will be populated (if `desc_id` valid)
+ * @param[in]     desc_id  ID of requested descriptor
+ * @param[in,out] desc     Descriptor information struct that will be populated (if `desc_id` valid)
  * @return 0 if success, -1 if descriptor is not defined
  */
 int USBGetDescriptor(usb_desc_id_t desc_id, usb_desc_t *desc)

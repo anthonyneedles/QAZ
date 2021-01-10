@@ -2,6 +2,8 @@
 
 *STM32F042K6 Firmware for my 'QAZ' keyboard*
 
+**`make doc` generates useful doxygen html documentation**
+
 ![QAZ Logo](docs/media/qaz_logo_500x500.png)
 
 1. [About This Project](#about-this-project)

@@ -76,8 +76,9 @@ comm::Status I2C::init(void)
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
  *
- * @param[in] data   buffer to transmit
- * @param[in] nbytes number of bytes to transmit
+ * @param[in] data    buffer to transmit
+ * @param[in] nbytes  number of bytes to transmit
+ *
  * @return comm::SUCCCESS - successfully initialized i2c
  *         comm::FAILURE  - failed i2c init (already initialized)
  */

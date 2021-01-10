@@ -31,7 +31,7 @@ inline constexpr gpio::Id RGB_EN  = { gpio::B, gpio::PIN_2  };
 inline constexpr gpio::Id RGB_SDA = { gpio::B, gpio::PIN_10 };
 inline constexpr gpio::Id RGB_SCL = { gpio::B, gpio::PIN_11 };
 
-/// key matrix column gpio pins
+/// Key matrix column gpio pins
 inline constexpr gpio::Id COLS[] = {
     { gpio::A, gpio::PIN_5  },
     { gpio::A, gpio::PIN_6  },
@@ -50,7 +50,7 @@ inline constexpr gpio::Id COLS[] = {
     { gpio::C, gpio::PIN_15 },
 };
 
-/// key matrix row gpio pins
+/// Key matrix row gpio pins
 inline constexpr gpio::Id ROWS[] = {
     { gpio::B, gpio::PIN_0  },
     { gpio::B, gpio::PIN_1  },
@@ -61,7 +61,7 @@ inline constexpr gpio::Id ROWS[] = {
 
 }  // namespace bsp
 
-/// base key symbol table
+/// Base key symbol table
 ///     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define BASE_TABLE(K) \
     K(ESC)   K(1)     K(2)     K(3)     K(4)     K(5)     K(6)     K(7)     K(8)     K(9)     K(0)     K(DASH)  K(EQUAL) K(BKSPC) K(GRAVE)  /* NOLINT */  \
@@ -70,7 +70,7 @@ inline constexpr gpio::Id ROWS[] = {
     K(LSHFT) K(Z)     K(X)     K(C)     K(V)     K(B)     K(N)     K(M)     K(COMMA) K(PRIOD) K(FSLSH) K(RSHFT) K(NONE)  K(UARRW) K(DELET)  /* NOLINT */  \
     K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(SPACE) K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(LARRW) K(NONE)  K(DARRW) K(RARRW)  /* NOLINT */
 
-/// fn key symbol table - for when the FN key is pressed
+/// Fn key symbol table - for when the FN key is pressed
 ///     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define FN_TABLE(K) \
     K(NONE)  K(F1)    K(F2)    K(F3)    K(F4)    K(F5)    K(F6)    K(F7)    K(F8)    K(F9)    K(F10)   K(F11)   K(F12)   K(NONE)  K(PROF)   /* NOLINT */ \
@@ -79,7 +79,7 @@ inline constexpr gpio::Id ROWS[] = {
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(VOLUP) K(COLOR)  /* NOLINT */ \
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(NONE)  K(NONE)  K(VOLDN) K(NONE)   /* NOLINT */
 
-/// which keys get a callback function
+/// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
     K(BRTUP) K(BRTDN) K(COLOR) K(PROF)
 

@@ -23,7 +23,7 @@
  */
 namespace gpio {
 
-/// port enums set to the base address for port registers
+/// Port enums set to the base address for port registers
 enum Port : uint32_t {
     #ifdef GPIOA_BASE
     A = GPIOA_BASE,
@@ -51,7 +51,7 @@ enum Port : uint32_t {
     #endif
 };
 
-/// pins for each gpio port (may need to be port-specific?)
+/// Pins for each gpio port (may need to be port-specific?)
 enum Pin : uint32_t {
     PIN_0  =  0,
     PIN_1  =  1,
@@ -71,7 +71,7 @@ enum Pin : uint32_t {
     PIN_15 = 15,
 };
 
-/// modes in MODER register
+/// Modes in MODER register
 enum Mode : uint32_t {
     INPUT  = 0x0,
     OUTPUT = 0x1,
@@ -79,20 +79,20 @@ enum Mode : uint32_t {
     ANALOG = 0x3,
 };
 
-/// pulls in PUPDR register
+/// Pulls in PUPDR register
 enum Pull : uint32_t {
     NO_PULL    = 0x0,
     PULL_UP    = 0x1,
     PULL_DOWN  = 0x2,
 };
 
-/// output types in OTYPER register
+/// Output types in OTYPER register
 enum OutputType : uint32_t {
     PUSH_PULL  = 0x0,
     OPEN_DRAIN = 0x1,
 };
 
-/// alternate functions in AFL/AFH registers
+/// Alternate functions in AFL/AFH registers
 enum AltFn : uint32_t {
     ALTFN_0 = 0x0,
     ALTFN_1 = 0x1,
@@ -104,20 +104,20 @@ enum AltFn : uint32_t {
     ALTFN_7 = 0x7,
 };
 
-/// output speeds in OSPEEDR register
+/// Output speeds in OSPEEDR register
 enum OutputSpeed : uint32_t {
     LOW_SPEED  = 0x0,
     MED_SPEED  = 0x1,
     HIGH_SPEED = 0x3,
 };
 
-/// output/input states in ODR/IDR registers
+/// Output/input states in ODR/IDR registers
 enum PinState : uint32_t {
     CLR = 0x0,
     SET = 0x1,
 };
 
-/// identification structure for each gpio pin
+/// Identification structure for each gpio pin
 struct Id {
     Port port;
     Pin  pin;
@@ -130,8 +130,8 @@ struct Id {
  * struct maps the GPIO registers for each port. This method will convert this address to the
  * structure.
  *
- * @param[in] id   identification for gpio
- * @return    gpio structure pointer
+ * @param[in] id    identification for gpio
+ * @return    gpio  structure pointer
  */
 inline volatile GPIO_TypeDef *regs(Id id)
 {
@@ -144,7 +144,7 @@ inline volatile GPIO_TypeDef *regs(Id id)
  * Unfortunately, there doesn't seem to be a good way to do this. Since pin clocks are usually only
  * set upon initialization, this is good enough.
  *
- * @param[in] id identification for gpio
+ * @param[in] id  identification for gpio
  */
 inline void enable_port_clock(Id id)
 {
@@ -181,8 +181,8 @@ inline void enable_port_clock(Id id)
  *
  * A GPIO can be either an input, output, alternate function, or analog.
  *
- * @param[in] id   identification for gpio
- * @param[in] mode the mode option to set
+ * @param[in] id    identification for gpio
+ * @param[in] mode  the mode option to set
  */
 inline void set_mode(Id id, Mode mode)
 {
@@ -194,8 +194,8 @@ inline void set_mode(Id id, Mode mode)
  *
  * A GPIO can have a pull up, pull down, or neither.
  *
- * @param[in] id   identification for gpio
- * @param[in] pull the pull option to set
+ * @param[in] id    identification for gpio
+ * @param[in] pull  the pull option to set
  */
 inline void set_pull(Id id, Pull pull)
 {
@@ -207,8 +207,8 @@ inline void set_pull(Id id, Pull pull)
  *
  * A GPIO can be set to push/pull or open drain output.
  *
- * @param[in] id   identification for gpio
- * @param[in] type the output type option to set
+ * @param[in] id    identification for gpio
+ * @param[in] type  the output type option to set
  */
 inline void set_output_type(Id id, OutputType type)
 {
@@ -220,8 +220,8 @@ inline void set_output_type(Id id, OutputType type)
  *
  * A GPIO can be set to any available alternate function, which is different for every pin.
  *
- * @param[in] id  identification for gpio
- * @param[in] afn the alternate function option to set
+ * @param[in] id   identification for gpio
+ * @param[in] afn  the alternate function option to set
  */
 inline void set_altfn(Id id, AltFn afn)
 {
@@ -234,8 +234,8 @@ inline void set_altfn(Id id, AltFn afn)
  *
  * A GPIO can have low, medium, or fast output.
  *
- * @param[in] id    identification for gpio
- * @param[in] speed the output speed option to set
+ * @param[in] id     identification for gpio
+ * @param[in] speed  the output speed option to set
  */
 inline void set_output_speed(Id id, OutputSpeed speed)
 {
@@ -247,7 +247,7 @@ inline void set_output_speed(Id id, OutputSpeed speed)
  *
  * The output state is set low.
  *
- * @param[in] id identification for gpio
+ * @param[in] id  identification for gpio
  */
 inline void clr_output(Id id)
 {
@@ -259,7 +259,7 @@ inline void clr_output(Id id)
  *
  * The output state is set high.
  *
- * @param[in] id identification for gpio
+ * @param[in] id  identification for gpio
  */
 inline void set_output(Id id)
 {
@@ -272,8 +272,8 @@ inline void set_output(Id id)
  * Either set or clear the GPIO state. If the desired state is known at compile-time, `set_output`
  * or `clr_output` should be used instead.
  *
- * @param[in] id    identification for gpio
- * @param[in] state gpio output state
+ * @param[in] id     identification for gpio
+ * @param[in] state  gpio output state
  */
 inline void set_output_state(Id id, PinState state)
 {
@@ -285,7 +285,8 @@ inline void set_output_state(Id id, PinState state)
  *
  * Returns the state of the pin in the IDR register.
  *
- * @param[in] id identification for gpio
+ * @param[in] id  identification for gpio
+ *
  * @return read pin state
  */
 inline PinState read_input(Id id)

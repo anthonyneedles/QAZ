@@ -32,14 +32,14 @@ inline constexpr gpio::Id RGB_EN  = { gpio::B, gpio::PIN_2  };
 inline constexpr gpio::Id RGB_SDA = { gpio::B, gpio::PIN_10 };
 inline constexpr gpio::Id RGB_SCL = { gpio::B, gpio::PIN_11 };
 
-/// key matrix column gpio pins
+/// Key matrix column gpio pins
 inline constexpr gpio::Id COLS[] = {
     { gpio::A, gpio::PIN_15 },
     { gpio::B, gpio::PIN_3  },
     { gpio::B, gpio::PIN_6  },
 };
 
-/// key matrix row gpio pins
+/// Key matrix row gpio pins
 inline constexpr gpio::Id ROWS[] = {
     { gpio::B, gpio::PIN_4  },
     { gpio::B, gpio::PIN_5  },
@@ -48,21 +48,21 @@ inline constexpr gpio::Id ROWS[] = {
 
 }  // namespace bsp
 
-/// base key symbol table
+/// Base key symbol table
 ///     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define BASE_TABLE(K) \
     K(FN)    K(2)     K(3)     \
     K(4)     K(5)     K(6)     \
     K(7)     K(8)     K(9)
 
-/// fn key symbol table - for when the FN key is pressed
+/// Fn key symbol table - for when the FN key is pressed
 ///     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define FN_TABLE(K) \
     K(FN)    K(2)     K(3)     \
     K(4)     K(COLOR) K(BRTUP) \
     K(7)     K(PROF)  K(BRTDN)
 
-/// which keys get a callback function
+/// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
     K(BRTUP) K(BRTDN) K(COLOR) K(PROF)
 

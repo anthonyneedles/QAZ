@@ -22,13 +22,13 @@
 
 namespace {
 
-/// maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
+/// Maximum amount of characters a number can be expanded to ("45" = 2, "12345" = 5, etc.)
 constexpr unsigned MAX_EXPAND_CHARACTERS = 50;
 
-/// checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
+/// Checks for '0n' (for n = 0, 1, ..., 8) after a '%', signaling width specifier
 constexpr bool IS_WIDTH_SPECIFIER(char x, char y) { return ((x == '0') && (y >= '0' && y <= '8')); }
 
-/// debug uart class object
+/// Debug uart class object
 UART dbg_uart(DEBUG_UART);
 
 }  // namespace
@@ -72,12 +72,12 @@ void debug::init(void)
  *
  * For example: %08x with an arg of 0x1234 results in 00001234
  *
- * @param[in] fmt Format string, with or without format specifiers
- * @param[in] ... Variable arguments for format speifiers
+ * @param[in] fs   Format string, with or without format specifiers
+ * @param[in] ...  Variable arguments for format speifiers
  */
-void debug::printf(const char *fmt_ptr, ...)
+void debug::printf(const char *fs, ...)
 {
-    DBG_ASSERT(fmt_ptr);
+    DBG_ASSERT(fs);
 
     int      sint_arg;
     unsigned uint_arg;
@@ -85,21 +85,21 @@ void debug::printf(const char *fmt_ptr, ...)
     int      width;
 
     va_list arg;
-    va_start(arg, fmt_ptr);
+    va_start(arg, fs);
 
-    for (; *fmt_ptr != '\0'; ++fmt_ptr) {
-        if ( *fmt_ptr == '%' ) {
+    for (; *fs != '\0'; ++fs) {
+        if ( *fs == '%' ) {
             // handle format specifiers
-            fmt_ptr++;
+            fs++;
             width = 0;
 
             // if there is a '0n', we now have a specified width
-            if (IS_WIDTH_SPECIFIER(*fmt_ptr, *(fmt_ptr + 1))) {
-                width = *(fmt_ptr + 1) - '0';
-                fmt_ptr += 2;
+            if (IS_WIDTH_SPECIFIER(*fs, *(fs + 1))) {
+                width = *(fs + 1) - '0';
+                fs += 2;
             }
 
-            switch (*fmt_ptr) {
+            switch (*fs) {
             case 'c' :
                 // character specifier (char promoted to int)
                 sint_arg = va_arg(arg, int);
@@ -147,12 +147,12 @@ void debug::printf(const char *fmt_ptr, ...)
                 break;
 
             default:
-                putchar(*fmt_ptr);
+                putchar(*fs);
                 break;
             }
         } else {
             // print and 'normal' character
-            putchar(*fmt_ptr);
+            putchar(*fs);
         }
     }
 
@@ -165,13 +165,15 @@ void debug::printf(const char *fmt_ptr, ...)
  * Pushes each character in a string over Debug USART.
  *
  * Use when only a non-format string is needed to be sent.
+ *
+ * @param[in] s  string to print
  */
-void debug::puts(const char *data)
+void debug::puts(const char *s)
 {
-    DBG_ASSERT(data);
+    DBG_ASSERT(s);
 
-    for (int i = 0; data[i] != '\0'; ++i) {
-        putchar(data[i]);
+    for (int i = 0; s[i] != '\0'; ++i) {
+        putchar(s[i]);
     }
 }
 
@@ -181,10 +183,12 @@ void debug::puts(const char *data)
  * Blocks until Debug USART is ready to transmit, then pushes character onto output buffer.
  *
  * Use when only a single non-format character is needed to be sent.
+ *
+ * @param[in] c  character to print
  */
-void debug::putchar(char data)
+void debug::putchar(char c)
 {
-    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&data), 1);
+    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&c), 1);
 }
 
 /**
@@ -193,9 +197,9 @@ void debug::putchar(char data)
  * Print out the context and expression of the failed assertion.
  * We stop here, never to return.
  *
- * @param[in] file expression file name string
- * @param[in] base expression line number
- * @param[in] expr expression string
+ * @param[in] file  expression file name string
+ * @param[in] base  expression line number
+ * @param[in] expr  expression string
  */
 void debug::assert_failed(char *file, int line, char *expr)
 {
@@ -220,9 +224,9 @@ void debug::assert_failed(char *file, int line, char *expr)
  *
  * If a nonzero width is given, the output string will be atleast that size, padded with '0's.
  *
- * @param[in] num   absolute value of number to expand
- * @param[in] base  what base the number is to be represented in
- * @param[in] width the '0'-padded width of the output
+ * @param[in] num    absolute value of number to expand
+ * @param[in] base   what base the number is to be represented in
+ * @param[in] width  the '0'-padded width of the output
  *
  * @return pointer to expanded string
  */

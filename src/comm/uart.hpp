@@ -24,16 +24,19 @@
  */
 class UART : public CommBase {
  public:
-    // ctor, initialize private member variables
+    /// CTOR, initialize private member variables
     explicit UART(USART_TypeDef *regs) : _regs(regs) {}
 
-    // implementing base methods
+    /// UART init, enables peripheral clocking, 8-N-1 setup, and timing config for 115200 baud
     comm::Status init(void);
+
+    /// Transmit raw bytes, blocks each byte transfer for TXE (transmit buffer empty) flag
     comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes);
  private:
-    // must be set via ctor initializer list
+    /// Register structure pointer, required CTOR init
     USART_TypeDef *const _regs;
 
+    /// State of the UART driver
     comm::State _state = comm::RESET;
 };
 
