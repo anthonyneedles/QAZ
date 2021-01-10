@@ -22,10 +22,10 @@
 namespace {
 
 /// LP500x broadcast address
-constexpr std::uint8_t LP500X_I2C_ADDR = 0x14;
+constexpr uint8_t LP500X_I2C_ADDR = 0x14;
 
 /// Self address of our I2C master peripheral
-constexpr std::uint8_t SELF_ADDR = 0x53;
+constexpr uint8_t SELF_ADDR = 0x53;
 
 /// RGB LED I2C class object
 I2C rgb_i2c(RGB_LED_I2C, SELF_ADDR, LP500X_I2C_ADDR);
@@ -62,7 +62,7 @@ void lp500x::init(void)
     rgb_i2c.init();
 
     // init config registers, starting at DEVICE_CONFIG_0 register
-    const std::uint8_t init_data[] = {
+    const uint8_t init_data[] = {
         lp500x::DEVICE_CONFIG0_R,
         lp500x::CHIP_EN,
         lp500x::LOG_SCALE_EN | lp500x::POWER_SAVE_EN | lp500x::AUTO_INCR_EN | lp500x::PWM_DITHER_EN,
@@ -80,7 +80,7 @@ void lp500x::init(void)
  *
  * @param[in] rgb_code  RGB hex code to set
  */
-void lp500x::bank_set_color(std::uint32_t rgb_code)
+void lp500x::bank_set_color(uint32_t rgb_code)
 {
     uint8_t data[4];
     data[0] = lp500x::BANK_A_COLOR_R;
@@ -97,7 +97,7 @@ void lp500x::bank_set_color(std::uint32_t rgb_code)
  *
  * @param[in] val  brightness value 0x00-0xFF
  */
-void lp500x::bank_set_brightness(std::uint8_t val)
+void lp500x::bank_set_brightness(uint8_t val)
 {
     uint8_t data[2];
     data[0] = lp500x::BANK_BRIGHTNESS_R;

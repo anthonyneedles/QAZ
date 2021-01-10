@@ -19,7 +19,7 @@
 namespace {
 
 /// Calculated for 115200 baud with 48MHz UART clock
-constexpr std::uint16_t BAUD_115200 = 0x1A1;
+constexpr uint16_t BAUD_115200 = 0x1A1;
 
 }
 
@@ -69,7 +69,7 @@ comm::Status UART::init(void)
  * @return comm::SUCCESS - successful uart write
  *         comm::FAILURE - failed uart write (not ready, invalid buf)
  */
-comm::Status UART::write_blocking(const std::uint8_t *data, unsigned nbytes)
+comm::Status UART::write_blocking(const uint8_t *data, unsigned nbytes)
 {
     if (!data || (nbytes <= 0)) {
         DBG_ASSERT(debug::FORCE_ASSERT);

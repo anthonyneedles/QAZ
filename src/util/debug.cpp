@@ -188,7 +188,7 @@ void debug::puts(const char *s)
  */
 void debug::putchar(char c)
 {
-    dbg_uart.write_blocking(reinterpret_cast<std::uint8_t *>(&c), 1);
+    dbg_uart.write_blocking(reinterpret_cast<uint8_t *>(&c), 1);
 }
 
 /**

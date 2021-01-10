@@ -39,7 +39,7 @@ constexpr unsigned RAINBOW_STEPS = 5;
 constexpr unsigned BRIGHTNESS_LEVELS = 5;
 
 /// Converts brightness index to percent, then percent to 256 value
-constexpr std::uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
+constexpr uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
 {
     return static_cast<uint8_t>(lp500x::BRIGHTNESS_PERCENT_TO_256((idx*100)/BRIGHTNESS_LEVELS));
 }

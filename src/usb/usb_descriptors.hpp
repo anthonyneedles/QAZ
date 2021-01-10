@@ -34,8 +34,8 @@ enum USBDescId {
 
 /// Descriptor information struct
 struct USBDesc {
-    const std::uint8_t *buf_ptr;
-    std::uint16_t size;
+    const uint8_t *buf_ptr;
+    uint16_t size;
 };
 
 /// Obtain a USB descriptor from ID

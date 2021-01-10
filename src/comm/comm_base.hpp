@@ -47,7 +47,7 @@ class CommBase {
     virtual comm::Status init(void) = 0;
 
     /// Write raw bytes, can block between writes (e.g. waiting for a register flag)
-    virtual comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes) = 0;
+    virtual comm::Status write_blocking(const uint8_t *data, unsigned nbytes) = 0;
 };
 
 #endif  // COMM_COMM_BASE_HPP_

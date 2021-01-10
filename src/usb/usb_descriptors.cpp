@@ -18,7 +18,7 @@
 namespace {
 
 /// Device descriptor. Contains basic information about the device and specify string desc indicies.
-constexpr std::uint8_t DESCRIPTOR_DEVICE[] = {
+constexpr uint8_t DESCRIPTOR_DEVICE[] = {
       18,        // bLength
        1,        // bDescriptorType        Device
     0x00, 0x02,  // bcdUSB                 USB 2.0
@@ -39,7 +39,7 @@ constexpr std::uint8_t DESCRIPTOR_DEVICE[] = {
 /// Configuration, Interface, HID, and Endpoint  descriptors. These are eventually asked for, all at
 /// once. These define the device interface as USB HID Keyboard, the report size, and the interrupt
 /// endpoint config.
-constexpr std::uint8_t DESCRIPTOR_CONFIG[] = {
+constexpr uint8_t DESCRIPTOR_CONFIG[] = {
 // Configuration Descriptor
        9,        // bLength
        2,        // bDescriptorType        Configuration
@@ -77,14 +77,14 @@ constexpr std::uint8_t DESCRIPTOR_CONFIG[] = {
 };
 
 /// Language String Descriptor (index 0). Our string descs are in English.
-constexpr std::uint8_t DESCRIPTOR_LANG[] = {
+constexpr uint8_t DESCRIPTOR_LANG[] = {
        4,        // bLength                2 + 2*2
        3,        // bDescriptorType        String
     0x09, 0x04,  // wLANGID[0]             English (US)
 };
 
 /// Manufactrurer String Descriptor (index 1). In Unicode format.
-constexpr std::uint8_t DESCRIPTOR_MANUFACT[] = {
+constexpr uint8_t DESCRIPTOR_MANUFACT[] = {
       30,         // bLength                2 + 14*2
        3,         // bDescriptorType        String
       'a', 0x00,  // wString                anthonyneedles
@@ -104,7 +104,7 @@ constexpr std::uint8_t DESCRIPTOR_MANUFACT[] = {
 };
 
 /// Product String Descriptor (index 2). In Unicode format.
-constexpr std::uint8_t DESCRIPTOR_PRODUCT[] = {
+constexpr uint8_t DESCRIPTOR_PRODUCT[] = {
       26,         // bLength                2 + 14*2
        3,         // bDescriptorType        String
       'q', 0x00,  // wString                qaz keyboard
@@ -122,7 +122,7 @@ constexpr std::uint8_t DESCRIPTOR_PRODUCT[] = {
 };
 
 /// HID Report Descriptor. Defines the format of key packets we send.
-constexpr std::uint8_t DESCRIPTOR_HIDREPORT[] = {
+constexpr uint8_t DESCRIPTOR_HIDREPORT[] = {
     0x05, 0x01,  // Usage Page   = Desktop,
     0x09, 0x06,  // Usage        = Keyboard,
     0xA1, 0x01,  // Collection   = Application,

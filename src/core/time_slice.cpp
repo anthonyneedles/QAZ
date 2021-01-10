@@ -38,10 +38,10 @@ struct task_info {
 };
 
 /// The current number of milliseconds elapsed
-volatile std::uint32_t ms_cnt = 0;
+volatile uint32_t ms_cnt = 0;
 
 /// The millisecond count the last time the manager task ran
-std::uint32_t last_ms = 0;
+uint32_t last_ms = 0;
 
 /// Total tasks registered. can never be > MAX_NUM_TASKS
 unsigned ntasks = 0;
@@ -61,7 +61,7 @@ static void manager_task(void);
  */
 void timeslice::init(void)
 {
-    std::uint32_t st_error = SysTick_Config(clock::SYSCLK_HZ/1000);
+    uint32_t st_error = SysTick_Config(clock::SYSCLK_HZ/1000);
     if (st_error != SUCCESS) {
         DBG_ASSERT(debug::FORCE_ASSERT);
     }
@@ -145,10 +145,10 @@ void timeslice::enter_loop(void)
  */
 void manager_task(void)
 {
-    std::uint32_t elapsed_ms;
+    uint32_t elapsed_ms;
 
     // copy value now, it can change at any time
-    std::uint32_t current_ms = ms_cnt;
+    uint32_t current_ms = ms_cnt;
 
     if (current_ms >= last_ms) {
         // find the time we spent in the loop so far

@@ -21,7 +21,7 @@
 namespace {
 
 /// Calculated for 100kHz with 48MHz I2C clock
-constexpr std::uint32_t TIMING_CONFIG = 0xB0240F13;
+constexpr uint32_t TIMING_CONFIG = 0xB0240F13;
 
 }
 
@@ -82,7 +82,7 @@ comm::Status I2C::init(void)
  * @return comm::SUCCCESS - successfully initialized i2c
  *         comm::FAILURE  - failed i2c init (already initialized)
  */
-comm::Status I2C::write_blocking(const std::uint8_t *data, unsigned nbytes)
+comm::Status I2C::write_blocking(const uint8_t *data, unsigned nbytes)
 {
     if (!data || (nbytes <= 0)) {
         DBG_ASSERT(debug::FORCE_ASSERT);

@@ -32,14 +32,14 @@ constexpr unsigned USB_HID_TASK_PERIOD_MS = 20;
 constexpr unsigned INTERRUPT_EPN = 1;
 
 // Bits in modifier byte in HID report
-constexpr std::uint8_t MODIFIER_LCTRL_MSK  = 0x01;
-constexpr std::uint8_t MODIFIER_LSHIFT_MSK = 0x02;
-constexpr std::uint8_t MODIFIER_LALT_MSK   = 0x04;
-constexpr std::uint8_t MODIFIER_LGUI_MSK   = 0x08;
-constexpr std::uint8_t MODIFIER_RCTRL_MSK  = 0x10;
-constexpr std::uint8_t MODIFIER_RSHIFT_MSK = 0x20;
-constexpr std::uint8_t MODIFIER_RALT_MSK   = 0x40;
-constexpr std::uint8_t MODIFIER_RGUI_MSK   = 0x80;
+constexpr uint8_t MODIFIER_LCTRL_MSK  = 0x01;
+constexpr uint8_t MODIFIER_LSHIFT_MSK = 0x02;
+constexpr uint8_t MODIFIER_LALT_MSK   = 0x04;
+constexpr uint8_t MODIFIER_LGUI_MSK   = 0x08;
+constexpr uint8_t MODIFIER_RCTRL_MSK  = 0x10;
+constexpr uint8_t MODIFIER_RSHIFT_MSK = 0x20;
+constexpr uint8_t MODIFIER_RALT_MSK   = 0x40;
+constexpr uint8_t MODIFIER_RGUI_MSK   = 0x80;
 
 /// Both previous key buffer and current key buffer so we can detect a change
 struct KeyBuf {
@@ -162,5 +162,5 @@ static void send_report(void)
     report.key3      = key_buf.curr[3];
     report.key4      = key_buf.curr[4];
     report.key5      = key_buf.curr[5];
-    USBWrite(INTERRUPT_EPN, (std::uint8_t  *)(&report), sizeof(report));
+    USBWrite(INTERRUPT_EPN, (uint8_t  *)(&report), sizeof(report));
 }

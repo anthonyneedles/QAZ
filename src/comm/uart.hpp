@@ -31,7 +31,7 @@ class UART : public CommBase {
     comm::Status init(void);
 
     /// Transmit raw bytes, blocks each byte transfer for TXE (transmit buffer empty) flag
-    comm::Status write_blocking(const std::uint8_t *data, unsigned nbytes);
+    comm::Status write_blocking(const uint8_t *data, unsigned nbytes);
  private:
     /// Register structure pointer, required CTOR init
     USART_TypeDef *const _regs;
