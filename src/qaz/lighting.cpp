@@ -44,11 +44,22 @@ constexpr std::uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
     return static_cast<uint8_t>(lp500x::BRIGHTNESS_PERCENT_TO_256((idx*100)/BRIGHTNESS_LEVELS));
 }
 
+/// Colors to cycle through
+constexpr uint32_t COLORS[] = {
+    lp500x::WHITE, lp500x::RED,     lp500x::GREEN, lp500x::BLUE,
+    lp500x::CYAN,  lp500x::MAGENTA, lp500x::YELLOW
+};
+
 /// The backlight coloring profiles
 enum ColorProfile {
     PROFILE_SOLID,
     PROFILE_BREATHING,
     PROFILE_RAINBOW,
+};
+
+/// Profiles to cycle through
+constexpr ColorProfile PROFILES[] = {
+    PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
 };
 
 /// Rainbow profile states
@@ -65,45 +76,34 @@ enum RainbowState{
 struct LightingCtrl{
     unsigned bright_idx;
     unsigned color_idx;
-    unsigned profile_idx;
-};
-
-/// Colors to cycle through
-const uint32_t COLORS[] = {
-    lp500x::WHITE, lp500x::RED,     lp500x::GREEN, lp500x::BLUE,
-    lp500x::CYAN,  lp500x::MAGENTA, lp500x::YELLOW
-};
-
-/// Profiles to cycle through
-const ColorProfile PROFILES[] = {
-    PROFILE_SOLID, PROFILE_BREATHING, PROFILE_RAINBOW,
+    unsigned prof_idx;
 };
 
 /// Lighting control structure instantiation
-LightingCtrl lighting = {
+LightingCtrl lighting_ctrl = {
     .bright_idx  = BRIGHTNESS_LEVELS - 1,
     .color_idx   = 0,
-    .profile_idx = 0,
+    .prof_idx = 0,
 };
 
 }  // namespace
 
-static void lightingProfileBreathing(void);
-static void lightingProfileRainbow(void);
+static void profile_breathing(void);
+static void profile_rainbow(void);
 
 /**
  * @brief Initializes lighting profile
  *
  * Initializes the LP500x driver for control of the RGB LEDs.
  */
-void LightingInit(void)
+void lighting::init(void)
 {
     lp500x::init();
 
-    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
+    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
     lp500x::bank_set_color(lp500x::WHITE);
 
-    auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, LightingTask);
+    auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
 }
 
@@ -112,23 +112,23 @@ void LightingInit(void)
  *
  * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
  */
-void LightingTask(void)
+void lighting::task(void)
 {
-    if (lighting.bright_idx > 0) {
-        switch (PROFILES[lighting.profile_idx]) {
+    if (lighting_ctrl.bright_idx > 0) {
+        switch (PROFILES[lighting_ctrl.prof_idx]) {
         case PROFILE_SOLID:
-            lp500x::bank_set_color(COLORS[lighting.color_idx]);
-            lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
+            lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
+            lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
             break;
         case PROFILE_BREATHING:
-            lightingProfileBreathing();
+            profile_breathing();
             break;
         case PROFILE_RAINBOW:
-            lightingProfileRainbow();
+            profile_rainbow();
             break;
         default:
-            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting.profile_idx);
-            lighting.profile_idx = 0;
+            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting_ctrl.prof_idx);
+            lighting_ctrl.prof_idx = 0;
             break;
         }
     } else {
@@ -142,13 +142,13 @@ void LightingTask(void)
  * Ramps brightness level all the way up, then all the way down, over and over. Since the LED driver
  * brightness is in logarithmic mode, this should result in a (roughly) linear brightness change.
  */
-static void lightingProfileBreathing(void)
+static void profile_breathing(void)
 {
     static uint8_t  brightness = 0;
     static bool     ramp_up    = true;
     static unsigned loop_cnt   = 0;
 
-    lp500x::bank_set_color(COLORS[lighting.color_idx]);
+    lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
 
     if (loop_cnt < N_LOOP_UPDATE_BREATHING - 1) {
         loop_cnt++;
@@ -158,7 +158,7 @@ static void lightingProfileBreathing(void)
     }
 
     if (ramp_up) {
-        if (brightness >= BRIGHTNESS_INDEX_TO_256(lighting.bright_idx)) {
+        if (brightness >= BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx)) {
             ramp_up = false;
         } else {
             brightness++;
@@ -181,7 +181,7 @@ static void lightingProfileBreathing(void)
  * little awkward. The state machine will cycle through increasing/decreasing each color intensity,
  * which works well enough.
  */
-static void lightingProfileRainbow(void)
+static void profile_rainbow(void)
 {
     static uint8_t red   = 0xff;
     static uint8_t green = 0x00;
@@ -189,7 +189,7 @@ static void lightingProfileRainbow(void)
     static RainbowState rainbow_state = BLUE_UP;
 
     lp500x::bank_set_color(lp500x::RGB_CODE(red, green, blue));
-    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting.bright_idx));
+    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
 
     switch (rainbow_state) {
     case BLUE_UP:
@@ -248,7 +248,7 @@ static void lightingProfileRainbow(void)
  */
 void keymatrix::callback_BRTUP(void)
 {
-    lighting.bright_idx = NEXT_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
+    lighting_ctrl.bright_idx = NEXT_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -258,7 +258,7 @@ void keymatrix::callback_BRTUP(void)
  */
 void keymatrix::callback_BRTDN(void)
 {
-    lighting.bright_idx = PREV_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
+    lighting_ctrl.bright_idx = PREV_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
 }
 
 /**
@@ -268,7 +268,7 @@ void keymatrix::callback_BRTDN(void)
  */
 void keymatrix::callback_COLOR(void)
 {
-    lighting.color_idx = NEXT_CIRCULAR_INDEX(lighting.color_idx, N_ELEMENTS(COLORS));
+    lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, N_ELEMENTS(COLORS));
 }
 
 /**
@@ -278,5 +278,5 @@ void keymatrix::callback_COLOR(void)
  */
 void keymatrix::callback_PROF(void)
 {
-    lighting.profile_idx = NEXT_CIRCULAR_INDEX(lighting.profile_idx, N_ELEMENTS(PROFILES));
+    lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, N_ELEMENTS(PROFILES));
 }

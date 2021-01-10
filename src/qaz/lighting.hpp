@@ -12,10 +12,19 @@
 #ifndef QAZ_LIGHTING_HPP_
 #define QAZ_LIGHTING_HPP_
 
+/**
+ * @brief Lighting namespace
+ *
+ * This namespace holds the LP500x lighting module init and task routines.
+ */
+namespace lighting {
+
 /// Init lighting by initializing the LP500x driver
-void LightingInit(void);
+void init(void);
 
 /// Runs given lighting profile
-void LightingTask(void);
+void task(void);
+
+}  // namespace lighting
 
 #endif  // QAZ_LIGHTING_HPP_

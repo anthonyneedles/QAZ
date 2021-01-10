@@ -29,7 +29,7 @@ int main(void)
     // inits - no required order
     heartbeat::init();
     keymatrix::init();
-    LightingInit();
+    lighting::init();
     USBHIDInit();
 
     // enter the loop - no return
