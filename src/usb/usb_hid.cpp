@@ -30,12 +30,12 @@ constexpr unsigned INTERRUPT_EPN = 1;
 
 }
 
-static_assert(KEY_BUF_SIZE >= 6, "USB HID: Key buffer size must be >= 6");
+static_assert(keymatrix::KEY_BUF_SIZE >= 6, "USB HID: Key buffer size must be >= 6");
 
 // both previous key buffer and current key buffer
 typedef struct {
-    keys_t curr[KEY_BUF_SIZE];
-    keys_t prev[KEY_BUF_SIZE];
+    keymatrix::Key curr[keymatrix::KEY_BUF_SIZE];
+    keymatrix::Key prev[keymatrix::KEY_BUF_SIZE];
 } key_buf_t;
 
 static key_buf_t key_buf;
@@ -50,7 +50,7 @@ static void usbhidSendReport(void);
 void USBHIDInit(void)
 {
     // clear out the 'previous' key buffer
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
         key_buf.prev[i] = KEY(NOEVT);
     }
 
@@ -70,10 +70,10 @@ void USBHIDInit(void)
  */
 void USBHIDTask(void)
 {
-    KeyMatrixGetKeyBuffer(key_buf.curr);
+    keymatrix::copy_key_buffer(key_buf.curr);
 
     // we only want to send a report when keys states change
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
         if (key_buf.curr[i] != key_buf.prev[i]) {
             usbhidSendReport();
             break;
@@ -81,7 +81,7 @@ void USBHIDTask(void)
     }
 
     // copy over 'current' keys to 'previous' keys
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
         key_buf.prev[i] = key_buf.curr[i];
     }
 }
@@ -101,7 +101,7 @@ static void usbhidSendReport(void)
     hid_keyboard_report_t report;
 
     report.modifiers = 0x00;
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
         switch (key_buf.curr[i]) {
         case KEY(LCTRL):
             report.modifiers |= MODIFIER_LCTRL_MSK;

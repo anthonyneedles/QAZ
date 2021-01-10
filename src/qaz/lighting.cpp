@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "qaz/key_matrix.hpp"
 #include "core/time_slice.hpp"
 #include "lp500x/lp500x.hpp"
 #include "util/debug.hpp"
@@ -245,7 +246,7 @@ static void lightingProfileRainbow(void)
  *
  * Increases brightness setting up. Saturates at max.
  */
-void KeyMatrixCallback_BRTUP(void)
+void keymatrix::callback_BRTUP(void)
 {
     lighting.bright_idx = NEXT_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
 }
@@ -255,7 +256,7 @@ void KeyMatrixCallback_BRTUP(void)
  *
  * Increases brightness setting down. Saturates at min.
  */
-void KeyMatrixCallback_BRTDN(void)
+void keymatrix::callback_BRTDN(void)
 {
     lighting.bright_idx = PREV_LINEAR_INDEX(lighting.bright_idx, BRIGHTNESS_LEVELS);
 }
@@ -265,7 +266,7 @@ void KeyMatrixCallback_BRTDN(void)
  *
  * Cycles through colors
  */
-void KeyMatrixCallback_COLOR(void)
+void keymatrix::callback_COLOR(void)
 {
     lighting.color_idx = NEXT_CIRCULAR_INDEX(lighting.color_idx, N_ELEMENTS(COLORS));
 }
@@ -275,7 +276,7 @@ void KeyMatrixCallback_COLOR(void)
  *
  * Cycles through coloring profiles
  */
-void KeyMatrixCallback_PROF(void)
+void keymatrix::callback_PROF(void)
 {
     lighting.profile_idx = NEXT_CIRCULAR_INDEX(lighting.profile_idx, N_ELEMENTS(PROFILES));
 }

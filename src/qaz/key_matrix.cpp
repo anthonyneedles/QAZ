@@ -17,8 +17,7 @@
 
 #include "qaz/key_matrix.hpp"
 
-#include <stdbool.h>
-
+#include "core/gpio.hpp"
 #include "core/time_slice.hpp"
 #include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
@@ -27,7 +26,7 @@
 namespace {
 
 /// Task fuction will execute every 20ms
-constexpr unsigned  KEY_MATRIX_TASK_PERIOD_MS = 20;
+constexpr unsigned KEY_MATRIX_TASK_PERIOD_MS = 20;
 
 /// Number of physical columns in matrix
 constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
@@ -35,67 +34,73 @@ constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
 /// Number of physical rows in martrix
 constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
 
-}  // namespace
-
-// index into key symbol array for corresponding symbol
-#define BASE_KEY(col, row) (base_keys[row*NUM_COLS + col])
-#define FN_KEY(col, row)   (fn_keys[row*NUM_COLS + col])
-
-// SET/CLR does not mean driving the column 3.3V/GND, but rather (respectively)
-// activating/deactivating it. Since the inputs are pulled HIGH, and the outputs
-// are open drain, SET/CLR corresponds to (respectively) GND/HIGH-Z
-#define ACTIVATE_COL(col)   GPIO_OUTPUT_CLR(col.port, col.pin)
-#define DEACTIVATE_COL(col) GPIO_OUTPUT_SET(col.port, col.pin)
-
-// Row inputs are pulled HIGH, and active LOW, this will evaulate to '1' if the
-// row is active (LOW) and '0' if the row is inactive (HIGH)
-#define READ_ROW(row) (!GPIO_READ_INPUT(row.port, row.pin))
-#define ROW_SET (1)
-#define ROW_CLR (0)
-
-// state of callback keys, so we only call the callback function once per press
-typedef enum {
+/// State of callback keys, so we only call the callback function once per press
+enum CallbackState{
     KEYUP = 0,
     PRESSED,
     UP_CHECK,
-} callback_state_t;
+};
 
-// states for each of the callback keys
-typedef struct {
-#define K(symbol) callback_state_t symbol;
+/// Each physical key has 'base' key, and a 'fn' key. which is considered 'pressed' depends on if
+/// the FN key is pressed
+struct KeyLayer {
+    keymatrix::Key base;
+    keymatrix::Key fn;
+};
+
+/// The key buffer filled when when scanning
+struct KeyBuf {
+    KeyLayer buf[keymatrix::KEY_BUF_SIZE];
+    bool is_fn;
+    unsigned idx;
+};
+
+/// States for each of the callback keys
+struct CallbackStates {
+#define K(symbol) CallbackState symbol;
     CALLBACK_KEY_TABLE(K)
 #undef K
-} callback_states_t;
+};
 
-// the buffer when reading the keys when scanning
-typedef struct {
-    key_layer_t buf[KEY_BUF_SIZE];
-    bool is_fn;
-    int idx;
-} key_buf_t;
-
-// macro expand base key symbol array. this holds every KEY_* enumeration value corresponding to
-// every key, in order (for N columns and M rows):
-//   col0_row0, col1_row0, ..., colN_row0, col0_row1, col1_row1, ... colN_rowM
-static const keys_t base_keys[NUM_COLS*NUM_ROWS] = {
+/// Macro expand base key symbol array. this holds every KEY_* enumeration value corresponding to
+/// every key, in order (for N columns and M rows):
+///   col0_row0, col1_row0, ..., colN_row0, col0_row1, col1_row1, ... colN_rowM
+constexpr keymatrix::Key base_keys[NUM_COLS*NUM_ROWS] = {
 #define K(symbol) HID_USAGE_KEYBOARD_##symbol,
         BASE_TABLE(K)
 #undef K
 };
 
-static const keys_t fn_keys[NUM_COLS*NUM_ROWS] = {
+/// Macro expand fn key symbol array. this holds every KEY_* enumeration value corresponding to
+/// every key, in order (for N columns and M rows):
+///   col0_row0, col1_row0, ..., colN_row0, col0_row1, col1_row1, ... colN_rowM
+constexpr keymatrix::Key fn_keys[NUM_COLS*NUM_ROWS] = {
 #define K(symbol) HID_USAGE_KEYBOARD_##symbol,
         FN_TABLE(K)
 #undef K
 };
 
-// buffer for current validated key, after checking for FN
-static keys_t keys_in[KEY_BUF_SIZE];
+/// index into key symbol array for corresponding base layer symbol
+constexpr keymatrix::Key GET_BASE_KEY(unsigned ncol, unsigned nrow)
+{
+    return base_keys[nrow*NUM_COLS + ncol];
+}
 
-// all callback key states
-static callback_states_t callback_states = { };
+/// index into key symbol array for corresponding fn layer symbol
+constexpr keymatrix::Key GET_FN_KEY(unsigned ncol, unsigned nrow)
+{
+    return fn_keys[nrow*NUM_COLS + ncol];
+}
 
-void keyMatrixScan(key_buf_t *keybuf);
+/// buffer for current validated key, after checking for FN
+keymatrix::Key keys_in[keymatrix::KEY_BUF_SIZE];
+
+/// callback key states for all callback keys
+CallbackStates callback_states = { };
+
+}  // namespace
+
+static void scan_matrix(KeyBuf *keybuf);
 
 /**
  * @brief Initializes columns/rows
@@ -103,26 +108,26 @@ void keyMatrixScan(key_buf_t *keybuf);
  * Takes the given row/columns gpio definitions and inits them as needed.
  * The inputs need a pullup or else they will float.
  */
-void KeyMatrixInit(void)
+void keymatrix::init(void)
 {
     // init each col gpio as open drain output
-    for (int i = 0; i < NUM_COLS; ++i) {
+    for (unsigned i = 0; i < NUM_COLS; ++i) {
         gpio::enable_port_clock(bsp::COLS[i]);
         gpio::set_mode(bsp::COLS[i], gpio::OUTPUT);
         gpio::set_output_type(bsp::COLS[i], gpio::OPEN_DRAIN);
     }
 
     // init each row gpio as pullup input
-    for (int i = 0; i < NUM_ROWS; ++i) {
+    for (unsigned i = 0; i < NUM_ROWS; ++i) {
         gpio::enable_port_clock(bsp::ROWS[i]);
         gpio::set_mode(bsp::ROWS[i], gpio::INPUT);
         gpio::set_pull(bsp::ROWS[i], gpio::PULL_UP);
     }
 
-    auto status = timeslice::register_task(KEY_MATRIX_TASK_PERIOD_MS, KeyMatrixTask);
+    auto status = timeslice::register_task(KEY_MATRIX_TASK_PERIOD_MS, keymatrix::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
 
-    debug::puts("Initialized: Key Matrix\r\n");
+    debug::puts("Initialized: keymatrix::Key Matrix\r\n");
 }
 
 /**
@@ -133,13 +138,13 @@ void KeyMatrixInit(void)
  * of the callback keys are newly pressed, the callbacks get called, otherwise their states get
  * updated accordingly.
  */
-void KeyMatrixTask(void)
+void keymatrix::task(void)
 {
-    key_buf_t keybuf;
-    keys_t key;
+    KeyBuf keybuf;
+    keymatrix::Key key;
 
     // clear our key buffer and key_in buffer
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < KEY_BUF_SIZE; ++i) {
         keys_in[i]         = KEY(NOEVT);
         keybuf.buf[i].base = KEY(NOEVT);
         keybuf.buf[i].fn   = KEY(NOEVT);
@@ -148,9 +153,9 @@ void KeyMatrixTask(void)
     keybuf.is_fn = false;
 
     // fill buffer with pressed keys
-    keyMatrixScan(&keybuf);
+    scan_matrix(&keybuf);
 
-    for (int i = 0; i < keybuf.idx; ++i) {
+    for (unsigned i = 0; i < keybuf.idx; ++i) {
         // find the keycode for the given key layer in buffer
         if (keybuf.is_fn) {
             key = keybuf.buf[i].fn;
@@ -163,7 +168,7 @@ void KeyMatrixTask(void)
     #define K(symbol)                              \
         case KEY(symbol):                          \
             if (callback_states.symbol == KEYUP) { \
-                KeyMatrixCallback_##symbol();      \
+                keymatrix::callback_##symbol();      \
             }                                      \
             callback_states.symbol = PRESSED;      \
             break;
@@ -196,11 +201,11 @@ void KeyMatrixTask(void)
  *
  * @param[in,out] keybuf  buffer/info to fill into (assumed size = KEY_BUF_SIZE)
  */
-void KeyMatrixGetKeyBuffer(keys_t *keybuf)
+void keymatrix::copy_key_buffer(keymatrix::Key *keybuf)
 {
     DBG_ASSERT(keybuf);
 
-    for (int i = 0; i < KEY_BUF_SIZE; ++i) {
+    for (unsigned i = 0; i < KEY_BUF_SIZE; ++i) {
         keybuf[i] = keys_in[i];
     }
 }
@@ -213,31 +218,34 @@ void KeyMatrixGetKeyBuffer(keys_t *keybuf)
  *
  * @param[in,out] keybuf  buffer/info to fill
  */
-void keyMatrixScan(key_buf_t *keybuf)
+void scan_matrix(KeyBuf *keybuf)
 {
     DBG_ASSERT(keybuf);
 
-    // ensure all columns are off
+    // ensure all columns are inactive
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
+        // when set, the columns are open drain (i.e. high-z)
         gpio::set_output(bsp::COLS[ncol]);
     }
 
     // set columns, one by one
     for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
+        // when cleared, the columns are GND
         gpio::clr_output(bsp::COLS[ncol]);
 
         // and read each row for each set column
         for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
+            // input is active low, since the active column is GND, and a button connects the input
+            // to the column. if the button is not pressed, the input is pulled high via pullup
             gpio::PinState state = gpio::read_input(bsp::ROWS[nrow]);
             if (state == gpio::CLR) {
-                // found pressed key...
-                keybuf->buf[keybuf->idx].base = BASE_KEY(ncol, nrow);
+                keybuf->buf[keybuf->idx].base = GET_BASE_KEY(ncol, nrow);
                 if (keybuf->buf[keybuf->idx].base == KEY(FN)) {
                     keybuf->is_fn = true;
                 } else {
-                    keybuf->buf[keybuf->idx].fn = FN_KEY(ncol, nrow);
+                    keybuf->buf[keybuf->idx].fn = GET_FN_KEY(ncol, nrow);
                     keybuf->idx++;
-                    if (keybuf->idx >= KEY_BUF_SIZE) {
+                    if (keybuf->idx >= keymatrix::KEY_BUF_SIZE) {
                         break;
                     }
                 }

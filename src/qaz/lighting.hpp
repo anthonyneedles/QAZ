@@ -18,16 +18,4 @@ void LightingInit(void);
 /// Runs given lighting profile
 void LightingTask(void);
 
-/// Increase brightness when BRTUP key pressed
-void KeyMatrixCallback_BRTUP(void);
-
-/// Decrease brightness when BRTDN key pressed
-void KeyMatrixCallback_BRTDN(void);
-
-/// Cycles colors when COLOR key pressed
-void KeyMatrixCallback_COLOR(void);
-
-/// Cycles coloring profiles when PROF key pressed
-void KeyMatrixCallback_PROF(void);
-
 #endif  // QAZ_LIGHTING_HPP_

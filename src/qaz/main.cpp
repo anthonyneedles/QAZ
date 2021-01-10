@@ -28,7 +28,7 @@ int main(void)
 
     // inits - no required order
     heartbeat::init();
-    KeyMatrixInit();
+    keymatrix::init();
     LightingInit();
     USBHIDInit();
 

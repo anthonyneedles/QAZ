@@ -27,40 +27,43 @@
 #ifndef QAZ_KEY_MATRIX_HPP_
 #define QAZ_KEY_MATRIX_HPP_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "bsp/bsp.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
-/// Weak callbacks for each of the callback keys. these are called ONCE PER BUTTON PRESS. The user
+/**
+ * @brief Key Matrix namespace
+ *
+ * This namespace pertains to the detection of keys pressed in a key matrix, and the generation
+ * of weak callback functions for each key with callback functionality.
+ */
+namespace keymatrix {
+
+/// Keys that can be detected at once
+inline constexpr unsigned KEY_BUF_SIZE = 6;
+
+/// Get the keycode from a symbol
+#define KEY(x) (HID_USAGE_KEYBOARD_##x)
+
+/// Weak callbacks for each of the callback keys. These are called ONCE PER BUTTON PRESS. The user
 /// must release then repress the key for a second call
-#define K(symbol) __WEAK void KeyMatrixCallback_##symbol(void);
+#define K(symbol) __WEAK void callback_##symbol(void);
 CALLBACK_KEY_TABLE(K)
 #undef K
 
-// Keycodes in HID standard are 16-bit values
-typedef int16_t keys_t;
-
-/// Get the keycode from a symbol
-#define KEY(x) ((keys_t)(HID_USAGE_KEYBOARD_##x))
-
-/// Keys that can be detected at once
-#define KEY_BUF_SIZE (6)
-
-// Each physical key has 'base' key, and a 'fn' key. which is considered 'pressed' depends on if
-// the FN key is pressed
-typedef struct {
-    keys_t base;
-    keys_t fn;
-} key_layer_t;
+/// Keycodes in HID standard are 16-bit values
+typedef int16_t Key;
 
 /// Init all rows as pullup inputs and columns as open-drain outputs
-void KeyMatrixInit(void);
+void init(void);
 
 /// Run scan routine, fill internal key buffer, and call any key callbacks
-void KeyMatrixTask(void);
+void task(void);
 
 /// Fills input buffer (OF SIZE `KEY_BUF_SIZE`) with current key buffer
-void KeyMatrixGetKeyBuffer(keys_t *key_buf);
+void copy_key_buffer(Key *key_buf);
+
+}  // namespace keymatrix
 
 #endif  // QAZ_KEY_MATRIX_HPP_
