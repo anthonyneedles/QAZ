@@ -129,13 +129,13 @@ $(BIN): $(ELF) | $(BIN_DIR)
 		@echo $(call hdr_print,"Creating $@ from $^:")
 		rm -f $(BIN_DIR)/*.bin
 		$(CP) $(CPFLAGS) $(ELF) $(BIN)
-		sh $(SRP_DIR)/git-hash-bin-copy.sh $(BIN)
+		bash $(SRP_DIR)/verbose-bin-copy.sh $(BIN) $(BOARD) $(BUILD_TYPE)
 
 $(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@ from $^:")
 		rm -f $(BIN_DIR)/*.elf
 		$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
-		sh $(SRP_DIR)/git-hash-bin-copy.sh $(ELF)
+		bash $(SRP_DIR)/verbose-bin-copy.sh $(ELF) $(BOARD) $(BUILD_TYPE)
 		$(SZ) $(ELF)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIRS) $(DEP_DIRS)
