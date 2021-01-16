@@ -19,6 +19,7 @@
 
 #include "core/gpio.hpp"
 #include "core/time_slice.hpp"
+#include "qaz/lighting.hpp"
 #include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
@@ -34,7 +35,9 @@ constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
 /// Number of physical rows in martrix
 constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
 
-/// State of callback keys, so we only call the callback function once per press
+/// Number of idle loops until lighting enters sleep mode
+constexpr unsigned IDLE_LOOPS_SLEEP = lighting::IDLE_MS_SLEEP/KEY_MATRIX_TASK_PERIOD_MS;
+
 enum CallbackState{
     KEYUP = 0,
     PRESSED,
@@ -80,23 +83,26 @@ constexpr keymatrix::Key fn_keys[NUM_COLS*NUM_ROWS] = {
 #undef K
 };
 
-/// index into key symbol array for corresponding base layer symbol
+/// Index into key symbol array for corresponding base layer symbol
 constexpr keymatrix::Key GET_BASE_KEY(unsigned ncol, unsigned nrow)
 {
     return base_keys[nrow*NUM_COLS + ncol];
 }
 
-/// index into key symbol array for corresponding fn layer symbol
+/// Index into key symbol array for corresponding fn layer symbol
 constexpr keymatrix::Key GET_FN_KEY(unsigned ncol, unsigned nrow)
 {
     return fn_keys[nrow*NUM_COLS + ncol];
 }
 
-/// buffer for current validated key, after checking for FN
+/// Buffer for current validated key, after checking for FN
 keymatrix::Key keys_in[keymatrix::KEY_BUF_SIZE];
 
 /// callback key states for all callback keys
 CallbackStates callback_states = { };
+
+/// Counting consecutive task loops without a key press
+unsigned idle_loops = 0;
 
 }  // namespace
 
@@ -160,6 +166,16 @@ void keymatrix::task(void)
     // fill buffer with pressed keys
     scan_matrix(&keybuf);
 
+    // if there hasn't been any keypresses, we consider the keyboard idle
+    if (keybuf.idx == 0) {
+        // saturate counter
+        if (idle_loops < IDLE_LOOPS_SLEEP) {
+            idle_loops++;
+        }
+    } else {
+        idle_loops = 0;
+    }
+
     for (unsigned i = 0; i < keybuf.idx; ++i) {
         // find the keycode for the given key layer in buffer
         if (keybuf.is_fn) {
@@ -213,6 +229,18 @@ void keymatrix::copy_key_buffer(keymatrix::Key *keybuf)
     for (unsigned i = 0; i < KEY_BUF_SIZE; ++i) {
         keybuf[i] = keys_in[i];
     }
+}
+
+/**
+ * @brief Returns whether the keyboard is idle
+ *
+ * If no key presses have occurred in `IDLE_MS_SLEEP`, the keyboard is considered idle.
+ *
+ * @return if keyboard is idle
+ */
+bool keymatrix::is_idle(void)
+{
+    return (idle_loops >= IDLE_LOOPS_SLEEP);
 }
 
 /**

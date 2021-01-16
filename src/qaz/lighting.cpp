@@ -113,10 +113,12 @@ void lighting::init(void)
  * @brief Task for updating RGB LEDs.
  *
  * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
+ *
+ * If the keyboard has been idle, coloring is turned off.
  */
 void lighting::task(void)
 {
-    if (lighting_ctrl.bright_idx > 0) {
+    if ((lighting_ctrl.bright_idx > 0) && !keymatrix::is_idle()) {
         switch (PROFILES[lighting_ctrl.prof_idx]) {
         case PROFILE_SOLID:
             lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);

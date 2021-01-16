@@ -64,6 +64,9 @@ void task(void);
 /// Fills input buffer (OF SIZE `KEY_BUF_SIZE`) with current key buffer
 void copy_key_buffer(Key *key_buf);
 
+/// Returns whether the keyboard is idle (no keypresses)
+bool is_idle(void);
+
 }  // namespace keymatrix
 
 #endif  // QAZ_KEY_MATRIX_HPP_
