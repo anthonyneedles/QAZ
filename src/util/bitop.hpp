@@ -31,7 +31,7 @@ namespace bitop {
 template <typename T>
 inline void set_bit(T &x, unsigned bitn)
 {
-    x |= (1 << bitn);
+    x |= (1u << bitn);
 }
 
 /**
@@ -44,7 +44,7 @@ inline void set_bit(T &x, unsigned bitn)
 template <typename T>
 inline void clr_bit(T &x, unsigned bitn)
 {
-    x &= ~(1 << bitn);
+    x &= ~(1u << bitn);
 }
 
 /**
@@ -58,7 +58,7 @@ inline void clr_bit(T &x, unsigned bitn)
 template <typename T>
 inline void update_bit(T &x, unsigned bitn, unsigned val)
 {
-    x = ((x & ~(1 << bitn)) | ((val & 1) << bitn));
+    x = ((x & ~(1u << bitn)) | ((val & 1u) << bitn));
 }
 
 /**
@@ -73,7 +73,7 @@ inline void update_bit(T &x, unsigned bitn, unsigned val)
 template <typename T>
 inline T read_bit(const T &x, unsigned bitn)
 {
-    return (x >> bitn) & 1;
+    return (x >> bitn) & 1u;
 }
 
 /**

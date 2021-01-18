@@ -31,10 +31,10 @@ class I2C : public CommBase {
         _regs(regs), _self_addr(self_addr), _send_addr(send_addr) {}
 
     /// I2C init, enables peripheral clocking, self address, and timing config for 100kHz SCL
-    comm::Status init(void);
+    comm::Status init(void) override;
 
     /// Master transmit raw bytes, blocks each byte transfer for TXE (transmit buffer empty) flag
-    comm::Status write_blocking(const uint8_t *data, unsigned nbytes);
+    comm::Status write_blocking(const uint8_t *data, unsigned nbytes) override;
 
     /// Set the I2C slave address
     inline void set_send_addr(uint8_t addr);

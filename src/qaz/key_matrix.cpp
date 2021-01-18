@@ -30,10 +30,10 @@ namespace {
 constexpr unsigned KEY_MATRIX_TASK_PERIOD_MS = 20;
 
 /// Number of physical columns in matrix
-constexpr int NUM_COLS = N_ELEMENTS(bsp::COLS);
+constexpr unsigned NUM_COLS = N_ELEMENTS(bsp::COLS);
 
 /// Number of physical rows in martrix
-constexpr int NUM_ROWS = N_ELEMENTS(bsp::ROWS);
+constexpr unsigned NUM_ROWS = N_ELEMENTS(bsp::ROWS);
 
 /// Number of idle loops until lighting enters sleep mode
 constexpr unsigned IDLE_LOOPS_SLEEP = lighting::IDLE_MS_SLEEP/KEY_MATRIX_TASK_PERIOD_MS;
@@ -256,18 +256,18 @@ void scan_matrix(KeyBuf *keybuf)
     DBG_ASSERT(keybuf);
 
     // ensure all columns are inactive
-    for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
+    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
         // when set, the columns are open drain (i.e. high-z)
         gpio::set_output(bsp::COLS[ncol]);
     }
 
     // set columns, one by one
-    for (int ncol = 0; ncol < NUM_COLS; ++ncol) {
+    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
         // when cleared, the columns are GND
         gpio::clr_output(bsp::COLS[ncol]);
 
         // and read each row for each set column
-        for (int nrow = 0; nrow < NUM_ROWS; ++nrow) {
+        for (unsigned nrow = 0; nrow < NUM_ROWS; ++nrow) {
             // input is active low, since the active column is GND, and a button connects the input
             // to the column. if the button is not pressed, the input is pulled high via pullup
             gpio::PinState state = gpio::read_input(bsp::ROWS[nrow]);

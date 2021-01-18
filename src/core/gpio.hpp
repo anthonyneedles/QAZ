@@ -186,7 +186,7 @@ inline void enable_port_clock(Id id)
  */
 inline void set_mode(Id id, Mode mode)
 {
-    bitop::update_msk(regs(id)->MODER, 0x3 << id.pin*2, mode << id.pin*2);
+    bitop::update_msk(regs(id)->MODER, 0x3u << id.pin*2, mode << id.pin*2);
 }
 
 /**
@@ -199,7 +199,7 @@ inline void set_mode(Id id, Mode mode)
  */
 inline void set_pull(Id id, Pull pull)
 {
-    bitop::update_msk(regs(id)->PUPDR, 0x3 << id.pin*2, pull << id.pin*2);
+    bitop::update_msk(regs(id)->PUPDR, 0x3u << id.pin*2, pull << id.pin*2);
 }
 
 /**
@@ -212,7 +212,7 @@ inline void set_pull(Id id, Pull pull)
  */
 inline void set_output_type(Id id, OutputType type)
 {
-    bitop::update_msk(regs(id)->OTYPER, 0x3 << id.pin*2, type << id.pin*2);
+    bitop::update_msk(regs(id)->OTYPER, 0x3u << id.pin*2, type << id.pin*2);
 }
 
 /**
@@ -225,7 +225,7 @@ inline void set_output_type(Id id, OutputType type)
  */
 inline void set_altfn(Id id, AltFn afn)
 {
-    bitop::update_msk(regs(id)->AFR[id.pin < 8 ? 0 : 1], 0xF << (id.pin % 8)*4,
+    bitop::update_msk(regs(id)->AFR[id.pin < 8 ? 0 : 1], 0xFu << (id.pin % 8)*4,
             afn << (id.pin % 8)*4);
 }
 
@@ -239,7 +239,7 @@ inline void set_altfn(Id id, AltFn afn)
  */
 inline void set_output_speed(Id id, OutputSpeed speed)
 {
-    bitop::update_msk(regs(id)->OSPEEDR, 0x3 << id.pin*2, speed << id.pin*2);
+    bitop::update_msk(regs(id)->OSPEEDR, 0x3u << id.pin*2, speed << id.pin*2);
 }
 
 /**

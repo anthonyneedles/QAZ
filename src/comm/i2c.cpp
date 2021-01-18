@@ -59,7 +59,7 @@ comm::Status I2C::init(void)
 
     // set own address
     bitop::update_msk(_regs->OAR1, (I2C_OAR1_OA1EN_Msk | I2C_OAR1_OA1_Msk),
-            (_self_addr << 1) | I2C_OAR1_OA1EN);
+            (_self_addr << 1u) | I2C_OAR1_OA1EN);
 
     _state = comm::READY;
 
@@ -95,7 +95,7 @@ comm::Status I2C::write_blocking(const uint8_t *data, unsigned nbytes)
     }
 
     bitop::clr_msk(_regs->CR2, I2C_CR2_SADD_Msk | I2C_CR2_NBYTES_Msk | I2C_CR2_RD_WRN);
-    bitop::set_msk(_regs->CR2, ((uint32_t)_send_addr << 1U) | I2C_CR2_AUTOEND |
+    bitop::set_msk(_regs->CR2, ((uint32_t)_send_addr << 1u) | I2C_CR2_AUTOEND |
             ((uint32_t)nbytes << I2C_CR2_NBYTES_Pos) | I2C_CR2_START);
 
     for (unsigned i = 0; i < nbytes; ++i) {

@@ -192,6 +192,8 @@ void USBInit(void)
  *
  * Only works because MCU architecture and USB protocol is little endian.
  *
+ * `buf` MUST be a pointer to a 16-bit aligned buffer...
+ *
  * @param[in] ep   the endpoint to write with
  * @param[in] buf  input buffer that contains data to be tranmitted
  * @param[in] len  number of bytes in `buf`

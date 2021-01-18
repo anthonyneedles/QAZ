@@ -28,10 +28,10 @@ class UART : public CommBase {
     explicit UART(USART_TypeDef *regs) : _regs(regs) {}
 
     /// UART init, enables peripheral clocking, 8-N-1 setup, and timing config for 115200 baud
-    comm::Status init(void);
+    comm::Status init(void) override;
 
     /// Transmit raw bytes, blocks each byte transfer for TXE (transmit buffer empty) flag
-    comm::Status write_blocking(const uint8_t *data, unsigned nbytes);
+    comm::Status write_blocking(const uint8_t *data, unsigned nbytes) override;
  private:
     /// Register structure pointer, required CTOR init
     USART_TypeDef *const _regs;

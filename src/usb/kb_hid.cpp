@@ -48,7 +48,7 @@ struct KeyBuf {
 };
 
 /// HID report structure defined by HID Report Descriptor
-struct  HIDKBReport{
+struct HIDKBReport{
     uint8_t modifiers;
     uint8_t reserved;
     uint8_t key0;
@@ -162,5 +162,5 @@ static void send_report(void)
     report.key3      = key_buf.curr[3];
     report.key4      = key_buf.curr[4];
     report.key5      = key_buf.curr[5];
-    USBWrite(INTERRUPT_EPN, (uint8_t  *)(&report), sizeof(report));
+    USBWrite(INTERRUPT_EPN, reinterpret_cast<uint8_t *>(&report), sizeof(report));
 }

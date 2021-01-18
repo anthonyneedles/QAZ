@@ -33,7 +33,7 @@ constexpr unsigned N_LOOP_UPDATE_BREATHING = 2;
 constexpr unsigned LOWEST_BREATHING_BRIGHTNESS = 0x10;
 
 /// Amount decremented/incremented each rainbow profile step
-constexpr unsigned RAINBOW_STEPS = 5;
+constexpr uint8_t RAINBOW_STEPS = 5;
 
 /// Number of different brightness levels to cycle through
 constexpr unsigned BRIGHTNESS_LEVELS = 5;
@@ -80,11 +80,7 @@ struct LightingCtrl{
 };
 
 /// Lighting control structure instantiation
-LightingCtrl lighting_ctrl = {
-    .bright_idx  = BRIGHTNESS_LEVELS - 1,
-    .color_idx   = 0,
-    .prof_idx = 0,
-};
+LightingCtrl lighting_ctrl = { };
 
 }  // namespace
 
@@ -98,6 +94,8 @@ static void profile_rainbow(void);
  */
 void lighting::init(void)
 {
+    lighting_ctrl.bright_idx = BRIGHTNESS_LEVELS - 1,
+
     lp500x::init();
 
     lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
@@ -187,7 +185,7 @@ static void profile_breathing(void)
  */
 static void profile_rainbow(void)
 {
-    static uint8_t red   = 0xff;
+    static uint8_t red   = 0xFF;
     static uint8_t green = 0x00;
     static uint8_t blue  = 0x00;
     static RainbowState rainbow_state = BLUE_UP;
@@ -197,7 +195,7 @@ static void profile_rainbow(void)
 
     switch (rainbow_state) {
     case BLUE_UP:
-        if (blue == 0xff) {
+        if (blue == 0xFF) {
             rainbow_state = RED_DOWN;
         } else {
             blue += RAINBOW_STEPS;
@@ -211,7 +209,7 @@ static void profile_rainbow(void)
         }
         break;
     case GREEN_UP:
-        if (green == 0xff) {
+        if (green == 0xFF) {
             rainbow_state = BLUE_DOWN;
         } else {
             green += RAINBOW_STEPS;
@@ -225,7 +223,7 @@ static void profile_rainbow(void)
         }
         break;
     case RED_UP:
-        if (red == 0xff) {
+        if (red == 0xFF) {
             rainbow_state = GREEN_DOWN;
         } else {
             red += RAINBOW_STEPS;
