@@ -15,6 +15,7 @@
 #include "core/time_slice.hpp"
 #include "qaz/key_matrix.hpp"
 #include "qaz/lighting.hpp"
+#include "qaz/persist.hpp"
 #include "usb/kb_hid.hpp"
 #include "util/debug.hpp"
 #include "util/hb.hpp"
@@ -25,6 +26,7 @@ int main(void)
     clock::init();
     debug::init();
     timeslice::init();
+    persist::init();
 
     // inits - no required order
     heartbeat::init();

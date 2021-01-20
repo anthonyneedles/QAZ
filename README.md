@@ -167,7 +167,7 @@ peripheral.
 
 The QAZ firmware does not operate on an RTOS, because it doesn't require
 stringent timing, but rather a time slice superloop. The configuration of
-this is defined in [core/time_slice.h](src/core/time_slice.h)
+this is defined in [core/time_slice.hpp](src/core/time_slice.hpp).
 
 Tasks must be registered to the timeslice scheduler by calling
 `timeslice::register_task()`, with the task period and function as parameters.
@@ -224,6 +224,21 @@ placed in the output key buffer (used by the USB KB HID task to send keycodes
 to the host), but having a callback (initally defined as `weak`) called. This
 allows other modules defining the callback and implementing a hook to execute
 when the given key is pressed (seen in RGB LED module).
+
+### Persistent Data
+
+There are several data words that are saved in the interal flash, as it is
+desired that they persist between PORs (for instance, the lighting settings).
+This is achieved by emulating the flash as EEPROM.
+
+This emulation requires two full flash pages be used. In order to maximize the
+available flash for the program, the last two pages are used. Since each page
+is 1kB, this means that the availble flash in the STM32F042K6 for the program
+is 30kB, with the last 2kB being reserved.
+
+New data words can be added by adding entries to the `PERSIST_DATA_TABLE` in
+[src/qaz/persist.hpp](src/qaz/persist.hpp), and increasing `NB_OF_VAR` in
+[src/flash/eeprom.h](src/flash/eeprom.h).
 
 ## Hardware
 

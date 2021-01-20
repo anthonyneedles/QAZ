@@ -10,13 +10,15 @@ CXX_SRC = core/clock.cpp                 \
 					qaz/key_matrix.cpp             \
 					qaz/lighting.cpp               \
 					qaz/main.cpp                   \
+					qaz/persist.cpp                \
 					usb/usb.cpp                    \
 					usb/kb_hid.cpp                 \
 					usb/usb_descriptors.cpp        \
 					util/debug.cpp                 \
-		      util/hb.cpp                             
+		      util/hb.cpp
 
-C_SRC   =
+C_SRC   = flash/stm32f0xx_flash.c \
+          flash/eeprom.c
 
 S_SRC	  = core/startup_stm32f042.s
 
@@ -119,7 +121,7 @@ SF = st-flash
 SFFLAGS  = write
 SF_ADDR  = 0x08000000
 
-LINTFLAGS  = --linelength=100 --recursive --root $(SRC_DIR)
+LINTFLAGS  = --linelength=100 --recursive --root $(SRC_DIR) --extensions=hpp,cpp
 LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-runtime/references
 
 # Build Rules ##################################################################

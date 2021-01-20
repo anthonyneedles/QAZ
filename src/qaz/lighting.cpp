@@ -15,6 +15,7 @@
 #include <stdbool.h>
 
 #include "qaz/key_matrix.hpp"
+#include "qaz/persist.hpp"
 #include "core/time_slice.hpp"
 #include "lp500x/lp500x.hpp"
 #include "util/debug.hpp"
@@ -37,6 +38,15 @@ constexpr uint8_t RAINBOW_STEPS = 5;
 
 /// Number of different brightness levels to cycle through
 constexpr unsigned BRIGHTNESS_LEVELS = 5;
+
+/// Default value for brightness index, if the last value isn't stored in FLASH
+constexpr uint16_t DEFAULT_BRIGHT_IDX = BRIGHTNESS_LEVELS - 1;
+
+/// Default value for color index, if the last value isn't stored in FLASH
+constexpr uint16_t DEFAULT_COLOR_IDX  = 0;
+
+/// Default value for profile index, if the last value isn't stored in FLASH
+constexpr uint16_t DEFAULT_PROFIE_IDX = 0;
 
 /// Converts brightness index to percent, then percent to 256 value
 constexpr uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
@@ -74,13 +84,13 @@ enum RainbowState{
 
 /// Our lighting  control structure
 struct LightingCtrl{
-    unsigned bright_idx;
-    unsigned color_idx;
-    unsigned prof_idx;
+    uint16_t bright_idx;
+    uint16_t color_idx;
+    uint16_t prof_idx;
 };
 
 /// Lighting control structure instantiation
-LightingCtrl lighting_ctrl = { };
+LightingCtrl lighting_ctrl;
 
 }  // namespace
 
@@ -94,12 +104,15 @@ static void profile_rainbow(void);
  */
 void lighting::init(void)
 {
-    lighting_ctrl.bright_idx = BRIGHTNESS_LEVELS - 1,
+    // read our persistent data. if it doesn't exist in flash, define it with the default value
+    persist::read_or_create_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx, DEFAULT_BRIGHT_IDX);
+    persist::read_or_create_data(persist::COLOR_IDX, lighting_ctrl.color_idx, DEFAULT_COLOR_IDX);
+    persist::read_or_create_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx, DEFAULT_COLOR_IDX);
 
     lp500x::init();
 
     lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
-    lp500x::bank_set_color(lp500x::WHITE);
+    lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
 
     auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
@@ -251,41 +264,45 @@ static void profile_rainbow(void)
 /**
  * @brief BRTUP key callback __WEAK override
  *
- * Increases brightness setting up. Saturates at max.
+ * Increases brightness setting up. Saturates at max. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_BRTUP(void)
 {
     lighting_ctrl.bright_idx = NEXT_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
+    persist::write_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx);
 }
 
 /**
  * @brief BRTDN key callback __WEAK override
  *
- * Increases brightness setting down. Saturates at min.
+ * Increases brightness setting down. Saturates at min. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_BRTDN(void)
 {
     lighting_ctrl.bright_idx = PREV_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
+    persist::write_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx);
 }
 
 /**
  * @brief COLOR key callback __WEAK override
  *
- * Cycles through colors.
+ * Cycles through colors. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_COLOR(void)
 {
     lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, N_ELEMENTS(COLORS));
+    persist::write_data(persist::COLOR_IDX, lighting_ctrl.color_idx);
 }
 
 /**
  * @brief PROF key callback __WEAK override
  *
- * Cycles through coloring profiles.
+ * Cycles through coloring profiles. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_PROF(void)
 {
     lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, N_ELEMENTS(PROFILES));
+    persist::write_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx);
 }
 
 //! @endcond
