@@ -123,8 +123,10 @@ SF = st-flash
 SFFLAGS  = write
 SF_ADDR  = 0x08000000
 
-LINTFLAGS  = --linelength=100 --recursive --root $(SRC_DIR) --extensions=hpp,cpp
+LINT_EXCLUDED_FILES := $(shell cat $(BLD_DIR)/clint-excluded-files.txt)
+LINTFLAGS  = --linelength=100 --recursive --root=$(SRC_DIR) --extensions=hpp,cpp,c,h
 LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-runtime/references
+LINTFLAGS += $(foreach x, $(LINT_EXCLUDED_FILES), --exclude=$(x))
 
 # Build Rules ##################################################################
 
@@ -190,8 +192,9 @@ doc:
 
 .PHONY: lint
 lint:
-	@echo $(call hdr_print,"Running cpplint:")
-		$(SRP_DIR)/cpplint.py $(LINTFLAGS) $(SRC_DIR)/*
+		@echo $(call hdr_print,"Running cpplint:")
+		@echo -n $(foreach x, $(LINT_EXCLUDED_FILES), "\rExcluding $(x)\n")
+		@$(SRP_DIR)/cpplint.py $(LINTFLAGS) $(SRC_DIR)/*
 
 .PHONY: flash
 flash: $(BIN)

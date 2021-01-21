@@ -857,7 +857,9 @@ INPUT_ENCODING         = UTF-8
 # *.vhdl, *.ucf, *.qsf and *.ice.
 
 FILE_PATTERNS          = *.hpp \
-                         *.cpp
+                         *.cpp \
+                         *.c   \
+                         *.h
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
 # be searched for input files as well.
@@ -872,7 +874,10 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                =
+EXCLUDE                = src/flash/eeprom.c          \
+                         src/flash/eeprom.h          \
+                         src/flash/stm32f0xx_flash.c \
+                         src/flash/stm32f0xx_flash.h
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
