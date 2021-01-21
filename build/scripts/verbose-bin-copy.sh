@@ -25,7 +25,7 @@ shift
 # update the index
 git update-index -q --refresh
 
-# _C_ for clean, _D_ for dirty
+# CLEAN for clean, DIRTY for dirty
 state='CLEAN'
 
 # check for any unstaged changes in working tree

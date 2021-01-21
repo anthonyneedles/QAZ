@@ -38,6 +38,8 @@ BOARD = QAZ_65
 
 # Paths and Output #############################################################
 
+VERSION = $(SRC_DIR)/version.hpp
+
 ALL_SRC = $(CXX_SRC) $(C_SRC) $(S_SRC)
 
 BLD_DIR = ./build
@@ -69,7 +71,7 @@ ODS = $(LOG_DIR)/$(TARGET)-od.sym
 RES = $(LOG_DIR)/$(TARGET)-re.sym
 LOG = $(LST) $(MAP) $(ODS) $(RES)
 
-CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOX_DIR)
+CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOX_DIR) $(VERSION)
 
 hdr_print = "\033[1;38;5;74m"$(1)"\033[0m"
 
@@ -139,7 +141,7 @@ $(BIN): $(ELF) | $(BIN_DIR)
 		@$(CP) $(CPFLAGS) $(ELF) $(BIN)
 		@bash $(SRP_DIR)/verbose-bin-copy.sh $(BIN) $(BOARD) $(BUILD_TYPE)
 
-$(ELF): $(OBJ) | $(BIN_DIR) $(LOG_DIR)
+$(ELF): $(VERSION) $(OBJ) | $(BIN_DIR) $(LOG_DIR)
 		@echo $(call hdr_print,"Linking $@")
 		@rm -f $(BIN_DIR)/*.elf
 		@$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
@@ -165,6 +167,10 @@ $(LOG): $(ELF) | $(LOG_DIR)
 		@$(OD) -S $(ELF) > $(LST)
 		@$(OD) -x $(ELF) > $(ODS)
 		@$(RE) -a $(ELF) > $(RES)
+
+.PHONY: $(VERSION)
+$(VERSION):
+		@bash $(SRP_DIR)/create-version.sh $(VERSION) $(BOARD)
 
 # include dependency files, which hold all dependency targets for all sources
 # so if a file changes (header or source), all dependent files will rebuild

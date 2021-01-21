@@ -20,6 +20,7 @@
 
 #include "flash/eeprom.h"
 #include "util/debug.hpp"
+#include "version.hpp"
 
 /// Macro expand entry in virtual address array, for eeprom.c
 /// "Virtual Address" value doesn't matter (except 0xFFFF), used like an ID for the EEPROM emulator
@@ -69,6 +70,12 @@ void persist::init(void)
         DBG_ASSERT(debug::FORCE_ASSERT);
         return;
     }
+
+    // HASH_BYTE[3:0] is left-to-right git hash. we store it in "big endian"
+    persist::write_data(persist::HASH_BYTE3, version::CHAR_GIT_HASH[0]);
+    persist::write_data(persist::HASH_BYTE2, version::CHAR_GIT_HASH[1]);
+    persist::write_data(persist::HASH_BYTE1, version::CHAR_GIT_HASH[2]);
+    persist::write_data(persist::HASH_BYTE0, version::CHAR_GIT_HASH[3]);
 
     debug::puts("Initialized: Persist Data\r\n");
 }

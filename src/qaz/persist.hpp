@@ -24,9 +24,13 @@
 /// Identifier for each data word. Valid values = 0x0000 - 0xFFFE, no duplicates.
 /// # of entries must be equal to NB_OF_VAR in flash/eeprom.h
 #define PERSIST_DATA_TABLE(ENTRY) \
-    ENTRY(BRIGHT_IDX,  0x0000)  \
-    ENTRY(COLOR_IDX,   0x0001)  \
-    ENTRY(PROFILE_IDX, 0x0002)
+    ENTRY(HASH_BYTE3,  0x0000) \
+    ENTRY(HASH_BYTE2,  0x0001) \
+    ENTRY(HASH_BYTE1,  0x0002) \
+    ENTRY(HASH_BYTE0,  0x0003) \
+    ENTRY(BRIGHT_IDX,  0x0004) \
+    ENTRY(COLOR_IDX,   0x0005) \
+    ENTRY(PROFILE_IDX, 0x0006)
 
 /**
  * @brief Persist data management namespace

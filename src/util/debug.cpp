@@ -17,6 +17,7 @@
 #include "bsp/bsp.hpp"
 #include "comm/uart.hpp"
 #include "util/macros.hpp"
+#include "version.hpp"
 
 #if defined(DEBUG)
 
@@ -49,7 +50,11 @@ void debug::init(void)
 
     dbg_uart.init();
 
-    debug::puts("\r\n=== QAZ ===\r\n");
+    // print project information
+    debug::puts("\r\n===== QAZ =====\r\n");
+    debug::printf("Board: %s\r\n", version::BOARD);
+    debug::printf("Hash:  %s (%s)\r\n\r\n", version::GIT_HASH, version::GIT_STATE);
+
     debug::puts("Initialized: Debug\r\n");
 }
 

@@ -5,6 +5,8 @@
 
 /docs/doxygen
 
+/src/version.hpp
+
 *.zip
 *.tar
 *~*
