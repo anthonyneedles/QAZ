@@ -133,6 +133,11 @@ static volatile uint8_t *const ep0_rx =
 static volatile uint8_t *const ep1_tx =
     reinterpret_cast<volatile uint8_t *>(USB_PMAADDR + TX1_ADDR);
 
+// TODO: restructure so these aren't needed
+static volatile bool set_addr = false;
+static volatile uint16_t addr = 0x02;
+static volatile bool resend_rpt = false;
+
 static void usbReset(void);
 static void usbEP0Init(void);
 static void usbEP1Init(void);
@@ -317,12 +322,9 @@ static void usbEP0Setup(void)
             ret = usb_desc::get_desc(usb_desc::PRODUCT_ID,   &desc);
         } else if (setup_pkt.wValue == 0x2200) {
             debug::puts("RPT ");
-
-            // TODO: why the hell does Windows request twice the size
+            ret = usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
             if (setup_pkt.wLength == 0x80) {
-                ret = usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
-                USBWrite(0, desc.buf_ptr, desc.size);
-                LOOP_DELAY(1000);
+                resend_rpt = true;
             }
         } else {
             // Stall for unknown descriptors
@@ -339,6 +341,7 @@ static void usbEP0Setup(void)
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
         debug::puts("SET IDLE ");
+        USBWrite(0, 0, 0);
         break;
 
     // this is a class-specific request
@@ -352,13 +355,8 @@ static void usbEP0Setup(void)
 
         // Send 0 length packet with address 0
         USBWrite(0, 0, 0);
-
-        // TODO: determine required delay
-        LOOP_DELAY(1000);
-
-        // Set device address to new address
-        USB->DADDR |= setup_pkt.wValue & USB_DADDR_ADD;
-        SET_RX_STATUS(0, USB_EP_RX_VALID);
+        set_addr = true;
+        addr = setup_pkt.wValue & USB_DADDR_ADD;
         break;
 
     // our device has now been configured, can use ep1 now
@@ -465,6 +463,19 @@ void USB_IRQHandler(void)
     }
 
     if (int_reg & USB_ISTR_CTR) {
+        if (set_addr) {
+            set_addr = false;
+            // Set device address to new address
+            USB->DADDR |= addr;
+            SET_RX_STATUS(0, USB_EP_RX_VALID);
+        }
+        if (resend_rpt) {
+            resend_rpt = false;
+            usb_desc::USBDesc desc;
+            usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
+            USBWrite(0, desc.buf_ptr, desc.size);
+        }
+
         debug::puts("CTR ");
         ep_reg = EP_REG(int_ep);
 
@@ -475,6 +486,7 @@ void USB_IRQHandler(void)
                 debug::puts("SETUP ");
                 usbEP0Setup();
             }
+
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_RX;
         }
 

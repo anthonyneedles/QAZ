@@ -29,7 +29,7 @@ INC     = ./CMSIS/Core/Include                \
 # The type of build we want:
 #   DEBUG   - All print statements
 #   RELEASE - No print statements, greatly reduces .text section size
-BUILD_TYPE = DEBUG
+BUILD_TYPE = RELEASE
 
 # The board we are using, dictating pinouts
 #   QAZ_65        - QAZ 65% board
