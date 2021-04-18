@@ -4,7 +4,9 @@
 
 **`make doc` generates useful doxygen html documentation**
 
-![QAZ Logo](docs/media/qaz_logo_500x500.png)
+![QAZ Logo](docs/media/qaz_logo_500x500_rounded.png)
+
+## Table of Contents
 
 1. [About This Project](#about-this-project)
     1. [File Structure](#file-structure)
