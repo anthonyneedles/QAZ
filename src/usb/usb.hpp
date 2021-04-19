@@ -18,12 +18,10 @@
 
 #include <stdint.h>
 
-#define USB_TASK_PERIOD_MS (20U)
-
 /// Init the USB module and enter USB RESET
 void USBInit(void);
 
 /// Write via USB with a given endpoint
-void USBWrite(int ep, const uint8_t *buf, uint16_t len);
+void USBWrite(uint16_t ep, const uint8_t *buf, uint16_t len);
 
 #endif  // USB_USB_HPP_

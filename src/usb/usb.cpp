@@ -33,22 +33,18 @@ extern "C" void USB_IRQHandler(void);
 // Buffer descriptor table offset in PMA
 #define BDT_OFFSET (0x0000U)
 
-// Mask for getting # of bytes received in packet
-#define USB_CNT_RX_MSK (0x03FF)
+// Value to set into USB_COUNTn_RX BDT register to set max bytes to receive
+#define RX_MAX_64BYTES  (0x8400U)  // BL_SIZE = 1, NUM_BLOCK = 2, Total size = 64 bytes
+#define RX_MAX_0BYTES   (0x0000U)  // BL_SIZE = 0, NUM_BLOCK = 0, Total size =  0 bytes
 
-// EP0 BDT entry (TX_SIZE is filled right before transmission)
-#define TX0_ADDR (0x0080U)
-#define RX0_ADDR (0x0100U)
-#define RX0_CNT  (0x8400U)  // BL_SIZE = 1, NUM_BLOCK = 2, Total size = 64 bytes
+// Mask for getting # of bytes received in packet from USB_COUNTn_RX BDT register
+#define RX_CNT_MSK (0x03FF)
 
-// EP1 BDT entry (TX only)
-#define TX1_ADDR (0x0180U)
+// set tx/rx pointer to this if no data is sent/received
+#define NO_PMA_USE (0)
 
 // access a specific EP register
 #define EP_REG(epn) (*((&USB->EP0R) + (epn << 1U)))
-
-// Combines SETUP packet bRequest/bmRequestType fields
-#define REQ(type, req) (((uint16_t)(type) << 8) | ((uint16_t)(req) & 0xFF))
 
 // Set the TX_STATUS EP register bits (they are toggle-bits)
 #define SET_TX_STATUS(epn, status) \
@@ -84,21 +80,37 @@ typedef struct {
     buf_desc_t bd_ep[NUM_EP];
 } buf_desc_table_t;
 
+typedef struct {
+    const uint16_t flags;
+    const uint16_t tx_pma_offset;
+    uint16_t tx_len;
+    const uint16_t rx_pma_offset;
+    uint16_t rx_len;
+    uint16_t rx_max;
+} ep_ctrl_t;
+
+static ep_ctrl_t ep_ctrl[NUM_EP] = {
+    {   // Endpoint 0
+        USB_EP_CONTROL,    // flags
+        0x0080,            // tx_pma_offset
+        0,                 // tx_len
+        0x0100,            // rx_pma_offset
+        0,                 // rx_len
+        RX_MAX_64BYTES,    // rx_max
+    },
+    {   // Endpoint 1 (not using RX)
+        USB_EP_INTERRUPT,  // flags
+        0x0180,            // tx_pma_offset
+        0,                 // tx_len
+        NO_PMA_USE,        // rx_pma_offset
+        0,                 // rx_len
+        RX_MAX_0BYTES,     // rx_max
+    },
+};
+
 // The buffer descriptor table itself, at the given offset
 static volatile buf_desc_table_t *const BDT =
     reinterpret_cast<volatile buf_desc_table_t *>(USB_PMAADDR + BDT_OFFSET);
-
-// EP0 tx buffer in the PMA memory space
-static volatile uint8_t *const ep0_tx =
-    reinterpret_cast<volatile uint8_t *>(USB_PMAADDR + TX0_ADDR);
-
-// EP0 rx buffer in the PMA memory space
-static volatile uint8_t *const ep0_rx =
-    reinterpret_cast<volatile uint8_t *>(USB_PMAADDR + RX0_ADDR);
-
-// EP1 tx buffer in the PMA memory space
-static volatile uint8_t *const ep1_tx =
-    reinterpret_cast<volatile uint8_t *>(USB_PMAADDR + TX1_ADDR);
 
 // TODO: restructure so these aren't needed
 static volatile bool set_addr = false;
@@ -106,10 +118,9 @@ static volatile uint16_t addr = 0x02;
 static volatile bool resend_rpt = false;
 
 static void usbReset(void);
-static void usbEP0Init(void);
-static void usbEP1Init(void);
+static void usbEPnInit(uint16_t ep);
 static void usbEP0Setup(void);
-static void usbEP0Read(uint8_t *in_buf);
+static void usbEPnRead(uint16_t ep, uint8_t *in_buf);
 
 /**
  * @brief Performs USB port, clock, and peripheral initialization
@@ -170,64 +181,22 @@ void USBInit(void)
  * @param[in] buf  input buffer that contains data to be tranmitted
  * @param[in] len  number of bytes in `buf`
  */
-void USBWrite(int ep, const uint8_t *buf, uint16_t len)
+void USBWrite(uint16_t ep, const uint8_t *buf, uint16_t len)
 {
+    if ((ep >= NUM_EP) || (ep_ctrl[ep].tx_pma_offset == NO_PMA_USE)) {
+        DBG_ASSERT(debug::FORCE_ASSERT);
+        return;
+    }
+    debug::printf("write %d", len/2);
+
     BDT->bd_ep[ep].tx_size = len;
 
-    switch (ep) {
-    case 0:
-        for (int i = 0; i < len/2; ++i) {
-            reinterpret_cast<volatile uint16_t *>(ep0_tx)[i] =
-                reinterpret_cast<const uint16_t *>(buf)[i];
-        }
-        break;
-    case 1:
-        for (int i = 0; i < len/2; ++i) {
-            reinterpret_cast<volatile uint16_t *>(ep1_tx)[i] =
-                reinterpret_cast<const uint16_t *>(buf)[i];
-        }
-        break;
-    default:
-        return;
+    for (int i = 0; i < len/2; ++i) {
+        reinterpret_cast<uint16_t *>(USB_PMAADDR + ep_ctrl[ep].tx_pma_offset)[i] =
+            reinterpret_cast<const uint16_t *>(buf)[i];
     }
 
     SET_TX_STATUS(ep, USB_EP_TX_VALID);
-}
-
-/**
- * @brief Initialize endpoint 0 as control endpoint
- *
- * Set buffer locations/sizes in the PMA for transmission and reception.
- */
-static void usbEP0Init(void)
-{
-    EP_REG(0) = USB_EP_CONTROL | (0 & USB_EPADDR_FIELD);
-
-    // set our TX and RX PMA addresses
-    BDT->bd_ep[0].tx_addr = TX0_ADDR;
-    BDT->bd_ep[0].rx_addr = RX0_ADDR;
-
-    // set max # of bytes to RX (64)
-    BDT->bd_ep[0].rx_size = RX0_CNT;
-
-    SET_RX_STATUS(0, USB_EP_RX_VALID);
-}
-
-/**
- * @brief Initialize endpoint 1 as interrupt endpoint
- *
- * Set buffer locations/sizes in the PMA for transmission only.
- */
-static void usbEP1Init(void)
-{
-    EP_REG(1) = USB_EP_INTERRUPT | (1 & USB_EPADDR_FIELD);
-
-    // set our TX and RX PMA addresses
-    BDT->bd_ep[1].tx_addr = TX1_ADDR;
-    BDT->bd_ep[1].tx_size = 4;
-
-    // we NAK until we get something to send
-    SET_TX_STATUS(1, USB_EP_TX_NAK);
 }
 
 /**
@@ -235,14 +204,49 @@ static void usbEP1Init(void)
  *
  * @param[in, out] buf  output buffer that is filled with received data
  */
-static void usbEP0Read(uint8_t *buf) {
-    int rx_size = BDT->bd_ep[0].rx_size & USB_CNT_RX_MSK;
-
-    for (int i = 0; i < rx_size; ++i) {
-        buf[i] = ep0_rx[i];
+static void usbEPnRead(uint16_t ep, uint8_t *buf)
+{
+    if ((ep >= NUM_EP) || (ep_ctrl[ep].rx_pma_offset == NO_PMA_USE)) {
+        DBG_ASSERT(debug::FORCE_ASSERT);
+        return;
     }
 
-    SET_RX_STATUS(0, USB_EP_RX_VALID);
+    int rx_size = BDT->bd_ep[ep].rx_size & RX_CNT_MSK;
+
+    debug::printf("read %d", rx_size);
+
+    for (int i = 0; i < rx_size; ++i) {
+        buf[i] = reinterpret_cast<uint8_t *>(USB_PMAADDR + ep_ctrl[ep].rx_pma_offset)[i];
+    }
+
+    SET_RX_STATUS(ep, USB_EP_RX_VALID);
+}
+
+/**
+ * @brief Initialize endpoint 0 as control endpoint
+ *
+ * Set buffer locations/sizes in the PMA for transmission and reception.
+ */
+static void usbEPnInit(uint16_t ep)
+{
+    EP_REG(ep) = (ep & USB_EPADDR_FIELD) | ep_ctrl[ep].flags;
+
+    // set our TX and RX PMA addresses in BDT
+    BDT->bd_ep[ep].tx_addr = ep_ctrl[ep].tx_pma_offset;
+    BDT->bd_ep[ep].rx_addr = ep_ctrl[ep].rx_pma_offset;
+
+    // set max # of bytes to RX (64) in BDT (TX set right before sending)
+    BDT->bd_ep[ep].rx_size = ep_ctrl[ep].rx_max;
+
+    if (ep_ctrl[ep].tx_pma_offset != NO_PMA_USE) {
+        // we NAK until we get something to send
+        SET_TX_STATUS(ep, USB_EP_TX_NAK);
+    }
+
+    if (ep_ctrl[ep].rx_pma_offset != NO_PMA_USE) {
+        // allow reception of data from host
+        SET_RX_STATUS(ep, USB_EP_RX_VALID);
+    }
 }
 
 /**
@@ -259,7 +263,7 @@ static void usbEP0Setup(void)
     usb_desc::USBDesc  desc;
 
     // get the setup packet contents
-    usbEP0Read(reinterpret_cast<uint8_t *>(&setup_pkt));
+    usbEPnRead(0, reinterpret_cast<uint8_t *>(&setup_pkt));
     PRINT_SETUP(setup_pkt);
 
     // determine request type, and proceed accordingly
@@ -330,7 +334,7 @@ static void usbEP0Setup(void)
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
         debug::printf("SET CFG (%x) ", setup_pkt.wValue);
         USBWrite(0, 0, 0);
-        usbEP1Init();
+        usbEPnInit(1);
         break;
 
     // host request status
@@ -367,7 +371,7 @@ static void usbReset(void)
     // set our BDT offset in PMA
     USB->BTABLE = BDT_OFFSET;
 
-    usbEP0Init();
+    usbEPnInit(0);
 
     // enable reset/transfer interrupts
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM | USB_CNTR_RESETM;
