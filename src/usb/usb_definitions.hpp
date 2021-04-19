@@ -1,16 +1,49 @@
 /**
- * @file      usb_hid_usages.hpp
- * @brief     Keyboard/Keypad Page (0x07) HID usages
+ * @file      usb_definitions.hpp
+ * @brief     USB constants
  *
  * @author    Anthony Needles
  * @date      2020/11/02
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * HID usages keys to be sent to the USB HID host
+ * Define values in packets, HID usages, etc.
  */
 
-#ifndef USB_USB_HID_USAGES_HPP_
-#define USB_USB_HID_USAGES_HPP_
+#ifndef USB_USB_DEFINITIONS_HPP_
+#define USB_USB_DEFINITIONS_HPP_
+
+// SETUP packet bmRequestType[7]
+#define REQ_DIR_IN   (0x80U)
+#define REQ_DIR_OUT  (0x00U)
+
+// SETUP packet bmRequestType[6:5]
+#define REQ_TYP_STD  (0x00U)
+#define REQ_TYP_CLS  (0x20U)
+#define REQ_TYP_VDR  (0x40U)
+
+// SETUP packet bmRequestType[4:0]
+#define REQ_RCP_DEV  (0x00U)
+#define REQ_RCP_ITF  (0x01U)
+#define REQ_RCP_EP   (0x02U)
+
+// Entire bmRequestType field
+#define REQ_IN_STD_DEV  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_DEV)
+#define REQ_IN_STD_ITF  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_ITF)
+#define REQ_OUT_CLS_ITF (REQ_DIR_OUT | REQ_TYP_CLS | REQ_RCP_ITF)
+#define REQ_OUT_STD_DEV (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_DEV)
+#define REQ_OUT_STD_EP  (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_EP)
+
+// SETUP packet bRequest
+#define REQ_GET_STAT (0x00U)
+#define REQ_CLR_STAT (0x01U)
+#define REQ_SET_ADDR (0x05U)
+#define REQ_GET_DESC (0x06U)
+#define REQ_SET_CFG  (0x09U)
+#define REQ_SET_IDLE (0x0AU)
+#define REQ_SET_RPT  (0x09U)
+
+// Combines SETUP packet bRequest/bmRequestType fields
+#define REQ(type, req) (((uint16_t)(type) << 8) | ((uint16_t)(req) & 0xFF))
 
 // Keyboard/Keypad Page (0x07)
 
@@ -128,4 +161,4 @@
 #define HID_USAGE_KEYBOARD_VOLUP (0x80)
 #define HID_USAGE_KEYBOARD_VOLDN (0x81)
 
-#endif  // USB_USB_HID_USAGES_HPP_
+#endif  // USB_USB_DEFINITIONS_HPP_

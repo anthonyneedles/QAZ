@@ -17,6 +17,7 @@
 
 #include <stdbool.h>
 
+#include "usb/usb_definitions.hpp"
 #include "usb/usb_descriptors.hpp"
 #include "util/bitop.hpp"
 #include "util/debug.hpp"
@@ -43,41 +44,7 @@ extern "C" void USB_IRQHandler(void);
 // EP1 BDT entry (TX only)
 #define TX1_ADDR (0x0180U)
 
-// SETUP packet bmRequestType[7]
-#define REQ_DIR_IN   (0x80U)
-#define REQ_DIR_OUT  (0x00U)
-
-// SETUP packet bmRequestType[6:5]
-#define REQ_TYP_STD  (0x00U)
-#define REQ_TYP_CLS  (0x20U)
-#define REQ_TYP_VDR  (0x40U)
-
-// SETUP packet bmRequestType[4:0]
-#define REQ_RCP_DEV  (0x00U)
-#define REQ_RCP_ITF  (0x01U)
-#define REQ_RCP_EP   (0x02U)
-
-// Entire bmRequestType field
-#define REQ_IN_STD_DEV  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_DEV)
-#define REQ_IN_STD_ITF  (REQ_DIR_IN  | REQ_TYP_STD | REQ_RCP_ITF)
-#define REQ_OUT_CLS_ITF (REQ_DIR_OUT | REQ_TYP_CLS | REQ_RCP_ITF)
-#define REQ_OUT_STD_DEV (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_DEV)
-#define REQ_OUT_STD_EP  (REQ_DIR_OUT | REQ_TYP_STD | REQ_RCP_EP)
-
-// SETUP packet bRequest
-#define REQ_GET_STAT (0x00U)
-#define REQ_CLR_STAT (0x01U)
-#define REQ_SET_ADDR (0x05U)
-#define REQ_GET_DESC (0x06U)
-#define REQ_SET_CFG  (0x09U)
-#define REQ_SET_IDLE (0x0AU)
-#define REQ_SET_RPT  (0x09U)
-
-//  -------------------------------------------------------------------
-// |    THIS MONUMENT MARKS THE SPOT AT WHICH I WAS STUCK FOR WEEKS    |
-// |       UNTIL I REALIZED I FORGOT THIS WAS POINTER ARITHMETIC       |
-// |      AND HAD "2U" INSTEAD OF "1U", SO EP1 WAS NOT BEING SET       |
-//  -------------------------------------------------------------------
+// access a specific EP register
 #define EP_REG(epn) (*((&USB->EP0R) + (epn << 1U)))
 
 // Combines SETUP packet bRequest/bmRequestType fields

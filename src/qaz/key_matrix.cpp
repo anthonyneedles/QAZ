@@ -20,7 +20,7 @@
 #include "core/gpio.hpp"
 #include "core/time_slice.hpp"
 #include "qaz/lighting.hpp"
-#include "usb/usb_hid_usages.hpp"
+#include "usb/usb_definitions.hpp"
 #include "util/debug.hpp"
 #include "util/macros.hpp"
 

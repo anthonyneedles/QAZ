@@ -15,8 +15,8 @@
 #include "core/time_slice.hpp"
 #include "qaz/key_matrix.hpp"
 #include "usb/usb.hpp"
+#include "usb/usb_definitions.hpp"
 #include "usb/usb_descriptors.hpp"
-#include "usb/usb_hid_usages.hpp"
 #include "util/debug.hpp"
 #include "stm32f0xx.h" // NOLINT
 
