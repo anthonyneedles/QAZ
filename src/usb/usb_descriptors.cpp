@@ -164,8 +164,8 @@ constexpr uint8_t DESCRIPTOR_HIDREPORT[] = {
 
 /// Descriptor table entry, pairing the desc ID with desc info
 struct USBDescTableEntry{
-    usb_desc::USBDescId id;
-    usb_desc::USBDesc   desc;
+    uint16_t id;
+    usb_desc::USBDesc desc;
 };
 
 /// Descriptor table, with an entry for each descriptor
@@ -191,9 +191,11 @@ constexpr USBDescTableEntry desc_table[] = {
  *
  * @return 0 if success, -1 if descriptor is not defined
  */
-int usb_desc::get_desc(USBDescId desc_id, USBDesc *desc)
+int usb_desc::get_desc(uint16_t desc_id, USBDesc *desc)
 {
     int ret = -1;
+
+    debug::printf("<<0x%04x>> ", desc_id);
 
     for (int i = 0; i < static_cast<int>(N_ELEMENTS(desc_table)); ++i) {
         if (desc_table[i].id == desc_id) {

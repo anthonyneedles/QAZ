@@ -117,10 +117,9 @@ static volatile bool set_addr = false;
 static volatile uint16_t addr = 0x02;
 static volatile bool resend_rpt = false;
 
-static void usbReset(void);
-static void usbEPnInit(uint16_t ep);
-static void usbEP0Setup(void);
-static void usbEPnRead(uint16_t ep, uint8_t *in_buf);
+static void usb_reset(void);
+static void init_ep(uint16_t ep);
+static void ep0_setup(void);
 
 /**
  * @brief Performs USB port, clock, and peripheral initialization
@@ -128,7 +127,7 @@ static void usbEPnRead(uint16_t ep, uint8_t *in_buf);
  * USB port is used in startup (for DFU), so the ports come up configured. Host detects device upon
  * DP pullup enable.
  */
-void USBInit(void)
+void usb::init(void)
 {
     // Disble embedded pullup on DP
     bitop::clr_msk(USB->BCDR, USB_BCDR_DPPU);
@@ -181,13 +180,14 @@ void USBInit(void)
  * @param[in] buf  input buffer that contains data to be tranmitted
  * @param[in] len  number of bytes in `buf`
  */
-void USBWrite(uint16_t ep, const uint8_t *buf, uint16_t len)
+void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
 {
     if ((ep >= NUM_EP) || (ep_ctrl[ep].tx_pma_offset == NO_PMA_USE)) {
         DBG_ASSERT(debug::FORCE_ASSERT);
         return;
     }
-    debug::printf("write %d", len/2);
+
+    debug::printf("[write %d] ", len);
 
     BDT->bd_ep[ep].tx_size = len;
 
@@ -204,7 +204,7 @@ void USBWrite(uint16_t ep, const uint8_t *buf, uint16_t len)
  *
  * @param[in, out] buf  output buffer that is filled with received data
  */
-static void usbEPnRead(uint16_t ep, uint8_t *buf)
+void usb::read(uint16_t ep, uint8_t *buf)
 {
     if ((ep >= NUM_EP) || (ep_ctrl[ep].rx_pma_offset == NO_PMA_USE)) {
         DBG_ASSERT(debug::FORCE_ASSERT);
@@ -213,7 +213,7 @@ static void usbEPnRead(uint16_t ep, uint8_t *buf)
 
     int rx_size = BDT->bd_ep[ep].rx_size & RX_CNT_MSK;
 
-    debug::printf("read %d", rx_size);
+    debug::printf("[read %d] ", rx_size);
 
     for (int i = 0; i < rx_size; ++i) {
         buf[i] = reinterpret_cast<uint8_t *>(USB_PMAADDR + ep_ctrl[ep].rx_pma_offset)[i];
@@ -223,11 +223,11 @@ static void usbEPnRead(uint16_t ep, uint8_t *buf)
 }
 
 /**
- * @brief Initialize endpoint 0 as control endpoint
+ * @brief Initialize an endpoint
  *
  * Set buffer locations/sizes in the PMA for transmission and reception.
  */
-static void usbEPnInit(uint16_t ep)
+static void init_ep(uint16_t ep)
 {
     EP_REG(ep) = (ep & USB_EPADDR_FIELD) | ep_ctrl[ep].flags;
 
@@ -256,14 +256,14 @@ static void usbEPnInit(uint16_t ep)
  * (control ep) are set, indicating a SETUP packet has been received. This is read into a buffer,
  * then the request contained in the packet is handled.
  */
-static void usbEP0Setup(void)
+static void ep0_setup(void)
 {
     int ret = -1;
     usb_setup_packet_t setup_pkt;
     usb_desc::USBDesc  desc;
 
     // get the setup packet contents
-    usbEPnRead(0, reinterpret_cast<uint8_t *>(&setup_pkt));
+    usb::read(0, reinterpret_cast<uint8_t *>(&setup_pkt));
     PRINT_SETUP(setup_pkt);
 
     // determine request type, and proceed accordingly
@@ -273,25 +273,25 @@ static void usbEP0Setup(void)
     case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
         debug::puts("GET DESC ");
 
-        if (setup_pkt.wValue == 0x100) {
+        if (setup_pkt.wValue == usb_desc::DEVICE_ID) {
             debug::puts("DEV ");
             ret = usb_desc::get_desc(usb_desc::DEVICE_ID,    &desc);
-        } else if (setup_pkt.wValue == 0x200) {
+        } else if (setup_pkt.wValue == usb_desc::CONFIG_ID) {
             debug::puts("CFG ");
             ret = usb_desc::get_desc(usb_desc::CONFIG_ID,    &desc);
 
             // TODO: Windows gives 255 for "compatability reasons"
             desc.size = (setup_pkt.wLength == 0xff) ? desc.size : setup_pkt.wLength;
-        } else if (setup_pkt.wValue == 0x300) {
+        } else if (setup_pkt.wValue == usb_desc::LANG_ID) {
             debug::puts("STR0 ");
             ret = usb_desc::get_desc(usb_desc::LANG_ID,      &desc);
-        } else if (setup_pkt.wValue == 0x301) {
+        } else if (setup_pkt.wValue == usb_desc::MANUFACT_ID) {
             debug::puts("STR1 ");
             ret = usb_desc::get_desc(usb_desc::MANUFACT_ID,  &desc);
-        } else if (setup_pkt.wValue == 0x302) {
+        } else if (setup_pkt.wValue == usb_desc::PRODUCT_ID) {
             debug::puts("STR2 ");
             ret = usb_desc::get_desc(usb_desc::PRODUCT_ID,   &desc);
-        } else if (setup_pkt.wValue == 0x2200) {
+        } else if (setup_pkt.wValue == usb_desc::HIDREPORT_ID) {
             debug::puts("RPT ");
             ret = usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
             if (setup_pkt.wLength == 0x80) {
@@ -305,14 +305,14 @@ static void usbEP0Setup(void)
         }
 
         if (ret >= 0) {
-            USBWrite(0, desc.buf_ptr, desc.size);
+            usb::write(0, desc.buf_ptr, desc.size);
         }
         break;
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
         debug::puts("SET IDLE ");
-        USBWrite(0, 0, 0);
+        usb::write(0, 0, 0);
         break;
 
     // this is a class-specific request
@@ -325,7 +325,7 @@ static void usbEP0Setup(void)
         debug::puts("SET ADDR ");
 
         // Send 0 length packet with address 0
-        USBWrite(0, 0, 0);
+        usb::write(0, 0, 0);
         set_addr = true;
         addr = setup_pkt.wValue & USB_DADDR_ADD;
         break;
@@ -333,8 +333,8 @@ static void usbEP0Setup(void)
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
         debug::printf("SET CFG (%x) ", setup_pkt.wValue);
-        USBWrite(0, 0, 0);
-        usbEPnInit(1);
+        usb::write(0, 0, 0);
+        init_ep(1);
         break;
 
     // host request status
@@ -342,7 +342,7 @@ static void usbEP0Setup(void)
     {
         const uint8_t status[] = { 0x01, 0x00 };  // self powered
         debug::puts("GET STAT ");
-        USBWrite(0, status, sizeof(status));
+        usb::write(0, status, sizeof(status));
         break;
     }
 
@@ -363,7 +363,7 @@ static void usbEP0Setup(void)
  * Called when reset interrupt recieved. Restores peripheral to known starting state, with address
  * 0. Only EP0 (control ep) is initialized. SETUP packets should follow.
  */
-static void usbReset(void)
+static void usb_reset(void)
 {
     // clear interrupts
     USB->ISTR = 0;
@@ -371,7 +371,7 @@ static void usbReset(void)
     // set our BDT offset in PMA
     USB->BTABLE = BDT_OFFSET;
 
-    usbEPnInit(0);
+    init_ep(0);
 
     // enable reset/transfer interrupts
     USB->CNTR = USB_CNTR_RESETM | USB_CNTR_ERRM | USB_CNTR_RESETM;
@@ -414,7 +414,7 @@ void USB_IRQHandler(void)
     }
 
     if (int_reg & USB_ISTR_RESET) {
-        usbReset();
+        usb_reset();
         USB->ISTR = ~USB_ISTR_RESET;
         debug::puts("RESET ");
     }
@@ -434,19 +434,6 @@ void USB_IRQHandler(void)
     }
 
     if (int_reg & USB_ISTR_CTR) {
-        if (set_addr) {
-            set_addr = false;
-            // Set device address to new address
-            USB->DADDR |= addr;
-            SET_RX_STATUS(0, USB_EP_RX_VALID);
-        }
-        if (resend_rpt) {
-            resend_rpt = false;
-            usb_desc::USBDesc desc;
-            usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
-            USBWrite(0, desc.buf_ptr, desc.size);
-        }
-
         debug::puts("CTR ");
         ep_reg = EP_REG(int_ep);
 
@@ -455,7 +442,7 @@ void USB_IRQHandler(void)
 
             if (ep_reg & USB_EP_SETUP) {
                 debug::puts("SETUP ");
-                usbEP0Setup();
+                ep0_setup();
             }
 
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_RX;
@@ -464,6 +451,18 @@ void USB_IRQHandler(void)
         if (ep_reg & USB_EP_CTR_TX) {
             debug::puts("TX ");
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_TX;
+
+            if (set_addr) {
+                set_addr = false;
+                // Set device address to new address
+                USB->DADDR |= addr;
+                SET_RX_STATUS(0, USB_EP_RX_VALID);
+            }
+
+            if (resend_rpt) {
+                resend_rpt = false;
+                usb::write(0, 0, 0);
+            }
         }
     }
 

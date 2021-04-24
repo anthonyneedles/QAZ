@@ -78,7 +78,7 @@ void kb_hid::init(void)
         key_buf.prev[i] = KEY(NOEVT);
     }
 
-    USBInit();
+    usb::init();
 
     auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, kb_hid::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
@@ -162,5 +162,5 @@ static void send_report(void)
     report.key3      = key_buf.curr[3];
     report.key4      = key_buf.curr[4];
     report.key5      = key_buf.curr[5];
-    USBWrite(INTERRUPT_EPN, reinterpret_cast<uint8_t *>(&report), sizeof(report));
+    usb::write(INTERRUPT_EPN, reinterpret_cast<uint8_t *>(&report), sizeof(report));
 }

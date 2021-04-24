@@ -18,10 +18,22 @@
 
 #include <stdint.h>
 
+/**
+ * @brief USB driver namespace
+ *
+ * This namespace holds the means to communicate using USB.
+ */
+namespace usb {
+
 /// Init the USB module and enter USB RESET
-void USBInit(void);
+void init(void);
 
 /// Write via USB with a given endpoint
-void USBWrite(uint16_t ep, const uint8_t *buf, uint16_t len);
+void write(uint16_t ep, const uint8_t *buf, uint16_t len);
+
+/// Read via USB with a given endpoint
+void read(uint16_t ep, uint8_t *in_buf);
+
+}  // namespace usb
 
 #endif  // USB_USB_HPP_

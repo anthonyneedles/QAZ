@@ -23,14 +23,12 @@
 namespace usb_desc {
 
 /// Each valid descriptor gets an ID
-enum USBDescId {
-    DEVICE_ID,
-    CONFIG_ID,
-    LANG_ID,
-    MANUFACT_ID,
-    PRODUCT_ID,
-    HIDREPORT_ID,
-};
+inline constexpr uint16_t DEVICE_ID    = 0x0100;
+inline constexpr uint16_t CONFIG_ID    = 0x0200;
+inline constexpr uint16_t LANG_ID      = 0x0300;
+inline constexpr uint16_t MANUFACT_ID  = 0x0301;
+inline constexpr uint16_t PRODUCT_ID   = 0x0302;
+inline constexpr uint16_t HIDREPORT_ID = 0x2200;
 
 /// Descriptor information struct
 struct USBDesc {
@@ -39,7 +37,7 @@ struct USBDesc {
 };
 
 /// Obtain a USB descriptor from ID
-int get_desc(USBDescId desc_id, USBDesc *desc);
+int get_desc(uint16_t desc_id, USBDesc *desc);
 
 }  // namespace usb_desc
 
