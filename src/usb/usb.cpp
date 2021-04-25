@@ -54,10 +54,6 @@ extern "C" void USB_IRQHandler(void);
 #define SET_RX_STATUS(epn, status) \
     (EP_REG(epn) = (EP_REG(epn) ^ (status & USB_EPRX_STAT)) & (USB_EPREG_MASK | USB_EPRX_STAT));
 
-#define PRINT_SETUP(pkt) \
-    debug::printf("%02x %02x %04x %04x %04x ", pkt.bmRequestType, pkt.bRequest, pkt.wValue, \
-        pkt.wIndex, pkt.wLength);
-
 // SETUP packet as it will appear in memory
 typedef struct {
     uint8_t bmRequestType;
@@ -83,27 +79,27 @@ typedef struct {
 typedef struct {
     const uint16_t flags;
     const uint16_t tx_pma_offset;
-    uint16_t tx_len;
+    const uint16_t tx_max;
+    bool tx_done;
     const uint16_t rx_pma_offset;
-    uint16_t rx_len;
-    uint16_t rx_max;
+    const uint16_t rx_max;
 } ep_ctrl_t;
 
 static ep_ctrl_t ep_ctrl[NUM_EP] = {
     {   // Endpoint 0
         USB_EP_CONTROL,    // flags
         0x0080,            // tx_pma_offset
-        0,                 // tx_len
+        128,               // tx_max
+        true,              // tx_done
         0x0100,            // rx_pma_offset
-        0,                 // rx_len
         RX_MAX_64BYTES,    // rx_max
     },
     {   // Endpoint 1 (not using RX)
         USB_EP_INTERRUPT,  // flags
         0x0180,            // tx_pma_offset
-        0,                 // tx_len
+        128,               // tx_max
+        true,              // tx_done
         NO_PMA_USE,        // rx_pma_offset
-        0,                 // rx_len
         RX_MAX_0BYTES,     // rx_max
     },
 };
@@ -113,13 +109,12 @@ static volatile buf_desc_table_t *const BDT =
     reinterpret_cast<volatile buf_desc_table_t *>(USB_PMAADDR + BDT_OFFSET);
 
 // TODO: restructure so these aren't needed
-static volatile bool set_addr = false;
-static volatile uint16_t addr = 0x02;
-static volatile bool resend_rpt = false;
+static usb_setup_packet_t last_setup;
 
 static void usb_reset(void);
 static void init_ep(uint16_t ep);
 static void ep0_setup(void);
+static void ep0_tx_sent(void);
 
 /**
  * @brief Performs USB port, clock, and peripheral initialization
@@ -182,7 +177,7 @@ void usb::init(void)
  */
 void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
 {
-    if ((ep >= NUM_EP) || (ep_ctrl[ep].tx_pma_offset == NO_PMA_USE)) {
+    if ((ep >= NUM_EP) || (ep_ctrl[ep].tx_pma_offset == NO_PMA_USE) || (len > ep_ctrl[ep].tx_max)) {
         DBG_ASSERT(debug::FORCE_ASSERT);
         return;
     }
@@ -250,6 +245,27 @@ static void init_ep(uint16_t ep)
 }
 
 /**
+ * @brief Handle ep0 IN packet completion
+ *
+ * This will be called when an IN for ep0 has completed.
+ */
+static void ep0_tx_sent(void)
+{
+    if (REQ(last_setup.bmRequestType, last_setup.bRequest)
+            == REQ(REQ_OUT_STD_DEV, REQ_SET_ADDR)) {
+        // set device address to new address, if our last setup was SET_ADDR
+        USB->DADDR |= last_setup.wValue & USB_DADDR_ADD;
+        SET_RX_STATUS(0, USB_EP_RX_VALID);
+    }
+
+    if (ep_ctrl[0].tx_done == false) {
+        // host will want more, prep empty packet
+        usb::write(0, 0, 0);
+        ep_ctrl[0].tx_done = true;
+    }
+}
+
+/**
  * @brief Handle SETUP packet
  *
  * Called when a CTR interrupt is received, and CTR_RX and SETUP field in the endpoint 0 register
@@ -259,53 +275,36 @@ static void init_ep(uint16_t ep)
 static void ep0_setup(void)
 {
     int ret = -1;
-    usb_setup_packet_t setup_pkt;
     usb_desc::USBDesc  desc;
 
     // get the setup packet contents
-    usb::read(0, reinterpret_cast<uint8_t *>(&setup_pkt));
-    PRINT_SETUP(setup_pkt);
+    usb::read(0, reinterpret_cast<uint8_t *>(&last_setup));
+    debug::printf("%02x %02x %04x %04x %04x ", last_setup.bmRequestType, last_setup.bRequest,
+            last_setup.wValue, last_setup.wIndex, last_setup.wLength);
 
     // determine request type, and proceed accordingly
-    switch (REQ(setup_pkt.bmRequestType, setup_pkt.bRequest)) {
+    switch (REQ(last_setup.bmRequestType, last_setup.bRequest)) {
     // handle both device and interface get descriptor
     case REQ(REQ_IN_STD_DEV, REQ_GET_DESC):
     case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
-        debug::puts("GET DESC ");
-
-        if (setup_pkt.wValue == usb_desc::DEVICE_ID) {
-            debug::puts("DEV ");
-            ret = usb_desc::get_desc(usb_desc::DEVICE_ID,    &desc);
-        } else if (setup_pkt.wValue == usb_desc::CONFIG_ID) {
-            debug::puts("CFG ");
-            ret = usb_desc::get_desc(usb_desc::CONFIG_ID,    &desc);
-
-            // TODO: Windows gives 255 for "compatability reasons"
-            desc.size = (setup_pkt.wLength == 0xff) ? desc.size : setup_pkt.wLength;
-        } else if (setup_pkt.wValue == usb_desc::LANG_ID) {
-            debug::puts("STR0 ");
-            ret = usb_desc::get_desc(usb_desc::LANG_ID,      &desc);
-        } else if (setup_pkt.wValue == usb_desc::MANUFACT_ID) {
-            debug::puts("STR1 ");
-            ret = usb_desc::get_desc(usb_desc::MANUFACT_ID,  &desc);
-        } else if (setup_pkt.wValue == usb_desc::PRODUCT_ID) {
-            debug::puts("STR2 ");
-            ret = usb_desc::get_desc(usb_desc::PRODUCT_ID,   &desc);
-        } else if (setup_pkt.wValue == usb_desc::HIDREPORT_ID) {
-            debug::puts("RPT ");
-            ret = usb_desc::get_desc(usb_desc::HIDREPORT_ID, &desc);
-            if (setup_pkt.wLength == 0x80) {
-                resend_rpt = true;
+        debug::printf("GET DESC 0x%04x ", last_setup.wValue);
+        ret = usb_desc::get_desc(last_setup.wValue, &desc);
+        if (ret >= 0) {
+            if (last_setup.wLength > desc.size) {
+                // more data is requested than needs to be sent, we will need to handle
+                // the host expecting more
+                ep_ctrl[0].tx_done = false;
+            } else if (last_setup.wLength < desc.size){
+                // less data is requested than can be sent, make sure to only send requested
+                desc.size = last_setup.wLength;
             }
+
+            usb::write(0, desc.buf_ptr, desc.size);
         } else {
             // Stall for unknown descriptors
-            debug::printf("0x%04x? (STALLING) ", setup_pkt.wValue);
+            debug::puts("? (STALLING) ");
             SET_RX_STATUS(0, USB_EP_RX_STALL);
             SET_TX_STATUS(0, USB_EP_TX_STALL);
-        }
-
-        if (ret >= 0) {
-            usb::write(0, desc.buf_ptr, desc.size);
         }
         break;
 
@@ -326,13 +325,11 @@ static void ep0_setup(void)
 
         // Send 0 length packet with address 0
         usb::write(0, 0, 0);
-        set_addr = true;
-        addr = setup_pkt.wValue & USB_DADDR_ADD;
         break;
 
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
-        debug::printf("SET CFG (%x) ", setup_pkt.wValue);
+        debug::printf("SET CFG (%x) ", last_setup.wValue);
         usb::write(0, 0, 0);
         init_ep(1);
         break;
@@ -452,16 +449,8 @@ void USB_IRQHandler(void)
             debug::puts("TX ");
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_TX;
 
-            if (set_addr) {
-                set_addr = false;
-                // Set device address to new address
-                USB->DADDR |= addr;
-                SET_RX_STATUS(0, USB_EP_RX_VALID);
-            }
-
-            if (resend_rpt) {
-                resend_rpt = false;
-                usb::write(0, 0, 0);
+            if (int_ep == 0) {
+                ep0_tx_sent();
             }
         }
     }
