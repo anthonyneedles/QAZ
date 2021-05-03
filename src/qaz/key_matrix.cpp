@@ -255,6 +255,8 @@ void scan_matrix(KeyBuf *keybuf)
 {
     DBG_ASSERT(keybuf);
 
+    bool full_break = false;
+
     // ensure all columns are inactive
     for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
         // when set, the columns are open drain (i.e. high-z)
@@ -263,6 +265,10 @@ void scan_matrix(KeyBuf *keybuf)
 
     // set columns, one by one
     for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
+        if (full_break) {
+            break;
+        }
+
         // when cleared, the columns are GND
         gpio::clr_output(bsp::COLS[ncol]);
 
@@ -279,6 +285,7 @@ void scan_matrix(KeyBuf *keybuf)
                     keybuf->buf[keybuf->idx].fn = GET_FN_KEY(ncol, nrow);
                     keybuf->idx++;
                     if (keybuf->idx >= keymatrix::KEY_BUF_SIZE) {
+                        full_break = true;
                         break;
                     }
                 }
