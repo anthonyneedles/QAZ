@@ -1,230 +1,93 @@
-# User Definitions  ############################################################
+# User Definitions ############################################################
 
-TARGET  = qaz
-
-CXX_SRC = core/clock.cpp                 \
-					core/time_slice.cpp            \
-					comm/i2c.cpp                   \
-					comm/uart.cpp                  \
-					lp500x/lp500x.cpp              \
-					qaz/key_matrix.cpp             \
-					qaz/lighting.cpp               \
-					qaz/main.cpp                   \
-					qaz/persist.cpp                \
-					usb/usb.cpp                    \
-					usb/kb_hid.cpp                 \
-					usb/usb_descriptors.cpp        \
-					util/debug.cpp                 \
-		      util/hb.cpp
-
-C_SRC   = flash/stm32f0xx_flash.c \
-          flash/eeprom.c
-
-S_SRC	  = core/startup_stm32f042.s
-
-INC     = ./CMSIS/Core/Include                \
-					./CMSIS/Device/ST/STM32F0xx/Include \
-					./src
+TARGET = QAZ
 
 # The type of build we want:
-#   DEBUG   - All print statements
-#   RELEASE - No print statements, greatly reduces .text section size
-BUILD_TYPE = RELEASE
+#   Debug   - All print statements
+#   Release - No print statements, greatly reduces .text section size
+BUILD_TYPE = Release
 
 # The board we are using, dictating pinouts
 #   QAZ_65        - QAZ 65% board
 #   QAZ_TESTBOARD - QAZ Testboard
 BOARD = QAZ_65
 
-# Paths and Output #############################################################
+# Paths and Options  ##########################################################
 
-VERSION = $(SRC_DIR)/version.hpp
+BUILD_DIR   = build
+SOURCE_DIR  = src
+SCRIPT_DIR  = scripts
+DOCS_DIR    = docs
+DOXYGEN_DIR = $(DOCS_DIR)/doxygen
+VERSION     = $(SOURCE_DIR)/version.hpp
+EXECUTABLE  = $(BUILD_DIR)/$(SOURCE_DIR)/$(TARGET)
 
-ALL_SRC = $(CXX_SRC) $(C_SRC) $(S_SRC)
-
-BLD_DIR = ./build
-SRC_DIR = ./src
-DOC_DIR = ./docs
-
-OBJ_DIR = $(BLD_DIR)/obj
-DEP_DIR = $(BLD_DIR)/dep
-BIN_DIR = $(BLD_DIR)/bin
-LOG_DIR = $(BLD_DIR)/log
-OCD_DIR = $(BLD_DIR)/openocd
-SRP_DIR = $(BLD_DIR)/scripts
-DOX_DIR = $(DOC_DIR)/doxygen
-
-BIN = $(BIN_DIR)/$(TARGET).bin
-ELF = $(BIN_DIR)/$(TARGET).elf
-
-# list of every subdir in src/ but with dep/obj dir prefixes
-OBJ_DIRS = $(sort $(addprefix $(OBJ_DIR)/, $(dir $(ALL_SRC))))
-DEP_DIRS = $(sort $(addprefix $(DEP_DIR)/, $(dir $(ALL_SRC))))
-
-# startup .o must be first so -flto doesn't optimize away ISRs...
-OBJ = $(S_SRC:%.s=$(OBJ_DIR)/%.o) $(C_SRC:%.c=$(OBJ_DIR)/%.o) $(CXX_SRC:%.cpp=$(OBJ_DIR)/%.o)
-DEP = $(S_SRC:%.s=$(DEP_DIR)/%.d) $(C_SRC:%.c=$(DEP_DIR)/%.d) $(CXX_SRC:%.cpp=$(DEP_DIR)/%.d)
-
-LST = $(LOG_DIR)/$(TARGET).lst
-MAP = $(LOG_DIR)/$(TARGET).map
-ODS = $(LOG_DIR)/$(TARGET)-od.sym
-RES = $(LOG_DIR)/$(TARGET)-re.sym
-LOG = $(LST) $(MAP) $(ODS) $(RES)
-
-CLEAN = $(BIN_DIR) $(DEP_DIR) $(LOG_DIR) $(OBJ_DIR) $(DOX_DIR) $(VERSION)
-
-hdr_print = "\033[1;38;5;74m"$(1)"\033[0m"
-
-# Tool Definitions #############################################################
-
-PREFIX      = arm-none-eabi-
-
-ARCH_FLAGS  = -mcpu=cortex-m0 -mthumb -msoft-float
-
-BUILD_FLAGS = $(BUILD_TYPE) $(BOARD)
-
-COMMONFLAGS  = -Werror -Wall -Wextra -pedantic
-COMMONFLAGS += -ffunction-sections -fdata-sections
-COMMONFLAGS += -MMD -MP -MF $(DEP_DIR)/$*.d
-COMMONFLAGS += $(foreach d, $(BUILD_FLAGS), -D$(d))
-COMMONFLAGS += $(foreach i, $(INC), -I$(i))
-COMMONFLAGS += $(ARCH_FLAGS)
-ifeq ($(BUILD_TYPE),DEBUG)
-		COMMONFLAGS += -Og -ggdb3
-else
-		COMMONFLAGS += -O2 -flto
-endif
-
-CC = $(PREFIX)gcc
-CCFLAGS  = $(COMMONFLAGS)
-CCFLAGS += -std=gnu99
-
-CXX = $(PREFIX)g++
-CXXFLAGS  = $(COMMONFLAGS)
-CXXFLAGS += -std=c++17 -fno-rtti -fno-exceptions -fno-threadsafe-statics
-CXXFLAGS += -Wshadow -Wlogical-op -Wsuggest-override
-CXXFLAGS += -Wsuggest-final-types -Wsuggest-final-methods
-
-CP = $(PREFIX)objcopy
-CPFLAGS  = -O binary
-
-OD = $(PREFIX)objdump
-
-RE = $(PREFIX)readelf
-
-SZ = $(PREFIX)size
-
-LD = $(PREFIX)g++
-LDFLAGS  = -T $(BLD_DIR)/stm32f042k6.ld --specs=nosys.specs
-LDFLAGS += -Wl,-Map,$(MAP),-gc-sections
-LDFLAGS += $(ARCH_FLAGS)
-
-SF = st-flash
-SFFLAGS  = write
-SF_ADDR  = 0x08000000
-
-LINT_EXCLUDED_FILES := $(shell cat $(BLD_DIR)/clint-excluded-files.txt)
-LINTFLAGS  = --linelength=100 --recursive --root=$(SRC_DIR) --extensions=hpp,cpp,c,h
+LINT_EXCLUDED_FILES := $(shell cat $(SCRIPT_DIR)/clint-excluded-files.txt)
+LINTFLAGS  = --linelength=100 --recursive --root=$(SOURCE_DIR) --extensions=hpp,cpp,c,h
 LINTFLAGS += --filter=-whitespace/braces,-readability/todo,-runtime/references
 LINTFLAGS += $(foreach x, $(LINT_EXCLUDED_FILES), --exclude=$(x))
+
+SF_ADDR = 0x08000000
+
+CLEAN_DIRS = $(BUILD_DIR) $(DOXYGEN_DIR)
+
+hdr_print = "\033[1;38;5;74m"$(1)"\033[0m"
 
 # Build Rules ##################################################################
 
 .PHONY: $(TARGET)
-$(TARGET): $(BIN) $(ELF) $(LOG)
-		@echo $(call hdr_print,"Make success for target '$(TARGET)'")
-		@$(SZ) $(ELF)
+$(TARGET): $(BUILD_DIR)/Makefile
+		@bash $(SCRIPT_DIR)/create-version.sh $(VERSION) $(BOARD)
+		@make -C $(BUILD_DIR) --no-print-directory
+		@arm-none-eabi-objcopy -O binary $(EXECUTABLE).elf $(EXECUTABLE).bin
+		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).elf $(BOARD) $(BUILD_TYPE)
+		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).bin $(BOARD) $(BUILD_TYPE)
 
 .PHONY: all
-all: clean $(TARGET) doc lint
+all: build docs lint
 
-$(BIN): $(ELF) | $(BIN_DIR)
-		@rm -f $(BIN_DIR)/*.bin
-		@$(CP) $(CPFLAGS) $(ELF) $(BIN)
-		@bash $(SRP_DIR)/verbose-bin-copy.sh $(BIN) $(BOARD) $(BUILD_TYPE)
-
-$(ELF): $(VERSION) $(OBJ) | $(BIN_DIR) $(LOG_DIR)
-		@echo $(call hdr_print,"Linking $@")
-		@rm -f $(BIN_DIR)/*.elf
-		@$(LD) $(LDFLAGS) $(OBJ) -o $(ELF)
-		@bash $(SRP_DIR)/verbose-bin-copy.sh $(ELF) $(BOARD) $(BUILD_TYPE)
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIRS) $(DEP_DIRS)
-		@echo $(call hdr_print,"Compiling $<")
-		@$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIRS) $(DEP_DIRS)
-		@echo $(call hdr_print,"Compiling $<")
-		@$(CC) $(CCFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.s | $(OBJ_DIRS) $(DEP_DIRS)
-		@echo $(call hdr_print,"Compiling $<")
-		@$(CC) $(CCFLAGS) -c $< -o $@
-
-$(BIN_DIR) $(OBJ_DIRS) $(DEP_DIRS) $(LOG_DIR) $(DOX_DIR):
-		@mkdir --parents $@
-
-$(LOG): $(ELF) | $(LOG_DIR)
-		@echo $(call hdr_print,"Generating $(LOG)")
-		@$(OD) -S $(ELF) > $(LST)
-		@$(OD) -x $(ELF) > $(ODS)
-		@$(RE) -a $(ELF) > $(RES)
-
-.PHONY: $(VERSION)
-$(VERSION):
-		@bash $(SRP_DIR)/create-version.sh $(VERSION) $(BOARD)
-
-# include dependency files, which hold all dependency targets for all sources
-# so if a file changes (header or source), all dependent files will rebuild
--include $(DEP)
-
-# Utility Rules ################################################################
+$(BUILD_DIR)/Makefile:
+		@cmake -DCMAKE_BUILD_TYPE="$(BUILD_TYPE)" -DBSP="$(BOARD)" -DTARGET=$(TARGET) \
+				--no-print-directory -S . -B $(BUILD_DIR)
 
 .PHONY: clean
 clean:
-		@echo $(call hdr_print,"Cleaning $(CLEAN)")
-		@rm -rf $(CLEAN)
+	  @echo "Cleaning: $(CLEAN_DIRS)"
+		@rm -rf $(CLEAN_DIRS)
 
-.PHONY: doc | $(DOC_DIR)
-doc:
+.PHONY: docs
+docs:
 	  @echo $(call hdr_print,"Running Doxygen:")
-		doxygen $(BLD_DIR)/Doxyfile
+		doxygen $(SCRIPT_DIR)/Doxyfile
 
 .PHONY: lint
 lint:
 		@echo $(call hdr_print,"Running cpplint:")
 		@echo -n $(foreach x, $(LINT_EXCLUDED_FILES), "\rExcluding $(x)\n")
-		@$(SRP_DIR)/cpplint.py $(LINTFLAGS) $(SRC_DIR)/*
+		@$(SCRIPT_DIR)/cpplint.py $(LINTFLAGS) $(SOURCE_DIR)/*
 
 .PHONY: flash
-flash: $(BIN)
+flash: $(TARGET)
 		@echo $(call hdr_print,"Flashing $^ at $(SF_ADDR)")
-		$(SF) $(SFFLAGS) $(BIN) $(SF_ADDR)
-
-.PHONY: tmux
-tmux:
-		sh $(SRP_DIR)/tmux-bootstrap.sh $(TARGET)
+		st-flash write $(EXECUTABLE).bin $(SF_ADDR)
 
 .PHONY: help
 help:
 		@echo ""
-		@echo "clean"
-		@echo "  Removes all generated files"
-		@echo ""
-		@echo "$(TARGET)"
+		@echo $(call hdr_print,"$(TARGET)")
 		@echo "  Build complete software target"
 		@echo ""
-		@echo "all"
+		@echo $(call hdr_print,"all")
 		@echo "  Build software target, doxygen, and lint"
 		@echo ""
-		@echo "doc"
+		@echo $(call hdr_print,"clean")
+		@echo "  Removes all generated files"
+		@echo ""
+		@echo $(call hdr_print,"docs")
 		@echo "  Use Doxygen to create project documentation"
 		@echo ""
-		@echo "lint"
-		@echo "  Run cpplint.py on $(SRC_DIR)"
+		@echo $(call hdr_print,"lint")
+		@echo "  Run cpplint.py on $(SOURCE_DIR)"
 		@echo ""
-		@echo "flash"
+		@echo $(call hdr_print,"flash")
 		@echo "  Flash binary at $(SF_ADDR), make '$(TARGET)' if no binary"
-		@echo ""
-		@echo "tmux"
-		@echo "  Run tmux bootstrap (only if '$(TARGET)' session doesn't already exist)"

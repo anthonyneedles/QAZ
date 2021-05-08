@@ -1,7 +1,4 @@
-/build/bin
-/build/dep
-/build/log
-/build/obj
+/build
 
 /docs/doxygen
 

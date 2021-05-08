@@ -50,4 +50,6 @@ do
     flags+="${flag}_"
 done
 
-cp -- "$file" "${file%/*}/${flags}${state}_${hash}.${file##*.}"
+base=$(basename -- "$file")
+
+cp -- "$file" "${file%/*}/${flags}${state}_${hash}.${base##*.}"

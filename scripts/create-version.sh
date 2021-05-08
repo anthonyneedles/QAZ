@@ -43,9 +43,18 @@ fi
 hash="$(git rev-parse --short HEAD)"
 hash=${hash^^}
 
-# populate all the variables in the template
+# populate all the variables in the template, and populate a .tmp version
 sed -e "s/\${CHAR_GIT_HASH}/0x${state_char}${hash:0:1}, 0x${hash:1:2}, 0x${hash:3:2}, 0x${hash:5:2}/" \
     -e "s/\${GIT_HASH}/\"${hash}\"/" \
     -e "s/\${GIT_STATE}/\"${state_str}\"/" \
     -e "s/\${BOARD}/\"$2\"/" \
-    $1.in >| $1
+    $1.in >| $1.tmp
+
+# we only want to update the header if:
+#  1. it doesn't exist
+#  2. our new .tmp file is different than the exisiting one
+if [ ! -f $1 ] || ! cmp -s "$1" "$1.tmp"; then
+    mv "$1.tmp" "$1"
+else
+    rm "$1.tmp"
+fi
