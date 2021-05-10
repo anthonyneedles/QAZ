@@ -1,3 +1,11 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP IS31FL3732A
+D LED Driver IC 9x8x2 Output Linear - Analog Dimming 34mA 40-QFN (5x5)
+$ENDCMP
+#
+$CMP IS31FL3746A
+D LED Driver IC 12x4 Output Linear - PWM Dimming 34.5mA 32-QFN (4x4)
+$ENDCMP
+#
 #End Doc Library
