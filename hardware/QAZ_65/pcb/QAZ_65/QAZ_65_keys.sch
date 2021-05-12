@@ -6,7 +6,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
 Title "QAZ 65% Keys"
-Date "2020-12-23"
+Date "2021-05-16"
 Rev "v1.1"
 Comp "Anthony Needles"
 Comment1 ""
@@ -48,12 +48,12 @@ Wire Wire Line
 Text Notes 850  5050 2    50   ~ 0
 LCTRL
 $Comp
-L Diode:1N4148 D5
+L Diode:1N4148 D8
 U 1 1 5F315CBD
 P 1000 5350
-AR Path="/5EEB2DAF/5F315CBD" Ref="D5"  Part="1" 
+AR Path="/5EEB2DAF/5F315CBD" Ref="D8"  Part="1" 
 AR Path="/600F2ED5/5F315CBD" Ref="D?"  Part="1" 
-F 0 "D5" V 1100 5250 50  0000 C CNN
+F 0 "D8" V 1100 5250 50  0000 C CNN
 F 1 "1N4148" V 1100 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1000 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 5350 50  0001 C CNN
@@ -78,12 +78,12 @@ $EndComp
 Text Notes 850  2350 2    50   ~ 0
 TAB
 $Comp
-L Diode:1N4148 D1
+L Diode:1N4148 D4
 U 1 1 5F2DC5D8
 P 1000 1750
-AR Path="/5EEB2DAF/5F2DC5D8" Ref="D1"  Part="1" 
+AR Path="/5EEB2DAF/5F2DC5D8" Ref="D4"  Part="1" 
 AR Path="/600F2ED5/5F2DC5D8" Ref="D?"  Part="1" 
-F 0 "D1" V 1100 1650 50  0000 C CNN
+F 0 "D4" V 1100 1650 50  0000 C CNN
 F 1 "1N4148" V 1100 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1000 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 1750 50  0001 C CNN
@@ -91,12 +91,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D2
+L Diode:1N4148 D5
 U 1 1 5F3117C8
 P 1000 2650
-AR Path="/5EEB2DAF/5F3117C8" Ref="D2"  Part="1" 
+AR Path="/5EEB2DAF/5F3117C8" Ref="D5"  Part="1" 
 AR Path="/600F2ED5/5F3117C8" Ref="D?"  Part="1" 
-F 0 "D2" V 1100 2550 50  0000 C CNN
+F 0 "D5" V 1100 2550 50  0000 C CNN
 F 1 "1N4148" V 1100 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1000 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 2650 50  0001 C CNN
@@ -146,12 +146,12 @@ $EndComp
 Wire Wire Line
 	1700 5600 1700 5500
 $Comp
-L Diode:1N4148 D10
+L Diode:1N4148 D13
 U 1 1 5F447C9D
 P 1700 5350
-AR Path="/5EEB2DAF/5F447C9D" Ref="D10"  Part="1" 
+AR Path="/5EEB2DAF/5F447C9D" Ref="D13"  Part="1" 
 AR Path="/600F2ED5/5F447C9D" Ref="D?"  Part="1" 
-F 0 "D10" V 1800 5250 50  0000 C CNN
+F 0 "D13" V 1800 5250 50  0000 C CNN
 F 1 "1N4148" V 1800 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1700 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 5350 50  0001 C CNN
@@ -172,12 +172,12 @@ F 3 "~" H 1700 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D6
+L Diode:1N4148 D9
 U 1 1 5F447CA9
 P 1700 1750
-AR Path="/5EEB2DAF/5F447CA9" Ref="D6"  Part="1" 
+AR Path="/5EEB2DAF/5F447CA9" Ref="D9"  Part="1" 
 AR Path="/600F2ED5/5F447CA9" Ref="D?"  Part="1" 
-F 0 "D6" V 1800 1650 50  0000 C CNN
+F 0 "D9" V 1800 1650 50  0000 C CNN
 F 1 "1N4148" V 1800 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1700 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 1750 50  0001 C CNN
@@ -185,12 +185,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D7
+L Diode:1N4148 D10
 U 1 1 5F447CAF
 P 1700 2650
-AR Path="/5EEB2DAF/5F447CAF" Ref="D7"  Part="1" 
+AR Path="/5EEB2DAF/5F447CAF" Ref="D10"  Part="1" 
 AR Path="/600F2ED5/5F447CAF" Ref="D?"  Part="1" 
-F 0 "D7" V 1800 2550 50  0000 C CNN
+F 0 "D10" V 1800 2550 50  0000 C CNN
 F 1 "1N4148" V 1800 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1700 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 2650 50  0001 C CNN
@@ -246,12 +246,12 @@ $EndComp
 Wire Wire Line
 	10800 5600 10800 5500
 $Comp
-L Diode:1N4148 D68
+L Diode:1N4148 D71
 U 1 1 5F4794CA
 P 10800 5350
-AR Path="/5EEB2DAF/5F4794CA" Ref="D68"  Part="1" 
+AR Path="/5EEB2DAF/5F4794CA" Ref="D71"  Part="1" 
 AR Path="/600F2ED5/5F4794CA" Ref="D?"  Part="1" 
-F 0 "D68" V 10900 5250 50  0000 C CNN
+F 0 "D71" V 10900 5250 50  0000 C CNN
 F 1 "1N4148" V 10900 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10800 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800 5350 50  0001 C CNN
@@ -272,12 +272,12 @@ F 3 "~" H 10800 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D64
+L Diode:1N4148 D67
 U 1 1 5F4794D6
 P 10800 1750
-AR Path="/5EEB2DAF/5F4794D6" Ref="D64"  Part="1" 
+AR Path="/5EEB2DAF/5F4794D6" Ref="D67"  Part="1" 
 AR Path="/600F2ED5/5F4794D6" Ref="D?"  Part="1" 
-F 0 "D64" V 10900 1650 50  0000 C CNN
+F 0 "D67" V 10900 1650 50  0000 C CNN
 F 1 "1N4148" V 10900 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10800 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800 1750 50  0001 C CNN
@@ -285,12 +285,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D65
+L Diode:1N4148 D68
 U 1 1 5F4794DC
 P 10800 2650
-AR Path="/5EEB2DAF/5F4794DC" Ref="D65"  Part="1" 
+AR Path="/5EEB2DAF/5F4794DC" Ref="D68"  Part="1" 
 AR Path="/600F2ED5/5F4794DC" Ref="D?"  Part="1" 
-F 0 "D65" V 10900 2550 50  0000 C CNN
+F 0 "D68" V 10900 2550 50  0000 C CNN
 F 1 "1N4148" V 10900 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10800 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800 2650 50  0001 C CNN
@@ -369,12 +369,12 @@ $EndComp
 Wire Wire Line
 	2400 5600 2400 5500
 $Comp
-L Diode:1N4148 D15
+L Diode:1N4148 D18
 U 1 1 5FC57612
 P 2400 5350
-AR Path="/5EEB2DAF/5FC57612" Ref="D15"  Part="1" 
+AR Path="/5EEB2DAF/5FC57612" Ref="D18"  Part="1" 
 AR Path="/600F2ED5/5FC57612" Ref="D?"  Part="1" 
-F 0 "D15" V 2500 5250 50  0000 C CNN
+F 0 "D18" V 2500 5250 50  0000 C CNN
 F 1 "1N4148" V 2500 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2400 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 5350 50  0001 C CNN
@@ -395,12 +395,12 @@ F 3 "~" H 2400 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D11
+L Diode:1N4148 D14
 U 1 1 5FC5761E
 P 2400 1750
-AR Path="/5EEB2DAF/5FC5761E" Ref="D11"  Part="1" 
+AR Path="/5EEB2DAF/5FC5761E" Ref="D14"  Part="1" 
 AR Path="/600F2ED5/5FC5761E" Ref="D?"  Part="1" 
-F 0 "D11" V 2500 1650 50  0000 C CNN
+F 0 "D14" V 2500 1650 50  0000 C CNN
 F 1 "1N4148" V 2500 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2400 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 1750 50  0001 C CNN
@@ -408,12 +408,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D12
+L Diode:1N4148 D15
 U 1 1 5FC57624
 P 2400 2650
-AR Path="/5EEB2DAF/5FC57624" Ref="D12"  Part="1" 
+AR Path="/5EEB2DAF/5FC57624" Ref="D15"  Part="1" 
 AR Path="/600F2ED5/5FC57624" Ref="D?"  Part="1" 
-F 0 "D12" V 2500 2550 50  0000 C CNN
+F 0 "D15" V 2500 2550 50  0000 C CNN
 F 1 "1N4148" V 2500 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2400 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 2650 50  0001 C CNN
@@ -473,12 +473,12 @@ F 3 "~" H 3100 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D16
+L Diode:1N4148 D19
 U 1 1 5FC60238
 P 3100 1750
-AR Path="/5EEB2DAF/5FC60238" Ref="D16"  Part="1" 
+AR Path="/5EEB2DAF/5FC60238" Ref="D19"  Part="1" 
 AR Path="/600F2ED5/5FC60238" Ref="D?"  Part="1" 
-F 0 "D16" V 3200 1650 50  0000 C CNN
+F 0 "D19" V 3200 1650 50  0000 C CNN
 F 1 "1N4148" V 3200 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3100 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3100 1750 50  0001 C CNN
@@ -486,12 +486,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3100 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D17
+L Diode:1N4148 D20
 U 1 1 5FC6023E
 P 3100 2650
-AR Path="/5EEB2DAF/5FC6023E" Ref="D17"  Part="1" 
+AR Path="/5EEB2DAF/5FC6023E" Ref="D20"  Part="1" 
 AR Path="/600F2ED5/5FC6023E" Ref="D?"  Part="1" 
-F 0 "D17" V 3200 2550 50  0000 C CNN
+F 0 "D20" V 3200 2550 50  0000 C CNN
 F 1 "1N4148" V 3200 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3100 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3100 2650 50  0001 C CNN
@@ -543,12 +543,12 @@ F 3 "~" H 3800 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D20
+L Diode:1N4148 D23
 U 1 1 5FC66C1A
 P 3800 1750
-AR Path="/5EEB2DAF/5FC66C1A" Ref="D20"  Part="1" 
+AR Path="/5EEB2DAF/5FC66C1A" Ref="D23"  Part="1" 
 AR Path="/600F2ED5/5FC66C1A" Ref="D?"  Part="1" 
-F 0 "D20" V 3900 1650 50  0000 C CNN
+F 0 "D23" V 3900 1650 50  0000 C CNN
 F 1 "1N4148" V 3900 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3800 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3800 1750 50  0001 C CNN
@@ -556,12 +556,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3800 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D21
+L Diode:1N4148 D24
 U 1 1 5FC66C20
 P 3800 2650
-AR Path="/5EEB2DAF/5FC66C20" Ref="D21"  Part="1" 
+AR Path="/5EEB2DAF/5FC66C20" Ref="D24"  Part="1" 
 AR Path="/600F2ED5/5FC66C20" Ref="D?"  Part="1" 
-F 0 "D21" V 3900 2550 50  0000 C CNN
+F 0 "D24" V 3900 2550 50  0000 C CNN
 F 1 "1N4148" V 3900 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3800 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3800 2650 50  0001 C CNN
@@ -615,12 +615,12 @@ $EndComp
 Wire Wire Line
 	4500 5600 4500 5500
 $Comp
-L Diode:1N4148 D28
+L Diode:1N4148 D31
 U 1 1 5FC6B7D1
 P 4500 5350
-AR Path="/5EEB2DAF/5FC6B7D1" Ref="D28"  Part="1" 
+AR Path="/5EEB2DAF/5FC6B7D1" Ref="D31"  Part="1" 
 AR Path="/600F2ED5/5FC6B7D1" Ref="D?"  Part="1" 
-F 0 "D28" V 4600 5250 50  0000 C CNN
+F 0 "D31" V 4600 5250 50  0000 C CNN
 F 1 "1N4148" V 4600 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 4500 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 5350 50  0001 C CNN
@@ -641,12 +641,12 @@ F 3 "~" H 4500 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D24
+L Diode:1N4148 D27
 U 1 1 5FC6B7DD
 P 4500 1750
-AR Path="/5EEB2DAF/5FC6B7DD" Ref="D24"  Part="1" 
+AR Path="/5EEB2DAF/5FC6B7DD" Ref="D27"  Part="1" 
 AR Path="/600F2ED5/5FC6B7DD" Ref="D?"  Part="1" 
-F 0 "D24" V 4600 1650 50  0000 C CNN
+F 0 "D27" V 4600 1650 50  0000 C CNN
 F 1 "1N4148" V 4600 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 4500 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 1750 50  0001 C CNN
@@ -654,12 +654,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D25
+L Diode:1N4148 D28
 U 1 1 5FC6B7E3
 P 4500 2650
-AR Path="/5EEB2DAF/5FC6B7E3" Ref="D25"  Part="1" 
+AR Path="/5EEB2DAF/5FC6B7E3" Ref="D28"  Part="1" 
 AR Path="/600F2ED5/5FC6B7E3" Ref="D?"  Part="1" 
-F 0 "D25" V 4600 2550 50  0000 C CNN
+F 0 "D28" V 4600 2550 50  0000 C CNN
 F 1 "1N4148" V 4600 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 4500 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 2650 50  0001 C CNN
@@ -718,12 +718,12 @@ F 3 "~" H 5200 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D29
+L Diode:1N4148 D32
 U 1 1 5FC7467E
 P 5200 1750
-AR Path="/5EEB2DAF/5FC7467E" Ref="D29"  Part="1" 
+AR Path="/5EEB2DAF/5FC7467E" Ref="D32"  Part="1" 
 AR Path="/600F2ED5/5FC7467E" Ref="D?"  Part="1" 
-F 0 "D29" V 5300 1650 50  0000 C CNN
+F 0 "D32" V 5300 1650 50  0000 C CNN
 F 1 "1N4148" V 5300 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5200 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5200 1750 50  0001 C CNN
@@ -731,12 +731,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5200 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D30
+L Diode:1N4148 D33
 U 1 1 5FC74684
 P 5200 2650
-AR Path="/5EEB2DAF/5FC74684" Ref="D30"  Part="1" 
+AR Path="/5EEB2DAF/5FC74684" Ref="D33"  Part="1" 
 AR Path="/600F2ED5/5FC74684" Ref="D?"  Part="1" 
-F 0 "D30" V 5300 2550 50  0000 C CNN
+F 0 "D33" V 5300 2550 50  0000 C CNN
 F 1 "1N4148" V 5300 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5200 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5200 2650 50  0001 C CNN
@@ -788,12 +788,12 @@ F 3 "~" H 5900 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D33
+L Diode:1N4148 D36
 U 1 1 5FC7AB79
 P 5900 1750
-AR Path="/5EEB2DAF/5FC7AB79" Ref="D33"  Part="1" 
+AR Path="/5EEB2DAF/5FC7AB79" Ref="D36"  Part="1" 
 AR Path="/600F2ED5/5FC7AB79" Ref="D?"  Part="1" 
-F 0 "D33" V 6000 1650 50  0000 C CNN
+F 0 "D36" V 6000 1650 50  0000 C CNN
 F 1 "1N4148" V 6000 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5900 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5900 1750 50  0001 C CNN
@@ -801,12 +801,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5900 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D34
+L Diode:1N4148 D37
 U 1 1 5FC7AB7F
 P 5900 2650
-AR Path="/5EEB2DAF/5FC7AB7F" Ref="D34"  Part="1" 
+AR Path="/5EEB2DAF/5FC7AB7F" Ref="D37"  Part="1" 
 AR Path="/600F2ED5/5FC7AB7F" Ref="D?"  Part="1" 
-F 0 "D34" V 6000 2550 50  0000 C CNN
+F 0 "D37" V 6000 2550 50  0000 C CNN
 F 1 "1N4148" V 6000 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5900 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5900 2650 50  0001 C CNN
@@ -860,12 +860,12 @@ $EndComp
 Wire Wire Line
 	6600 5600 6600 5500
 $Comp
-L Diode:1N4148 D41
+L Diode:1N4148 D44
 U 1 1 5FC82A24
 P 6600 5350
-AR Path="/5EEB2DAF/5FC82A24" Ref="D41"  Part="1" 
+AR Path="/5EEB2DAF/5FC82A24" Ref="D44"  Part="1" 
 AR Path="/600F2ED5/5FC82A24" Ref="D?"  Part="1" 
-F 0 "D41" V 6700 5250 50  0000 C CNN
+F 0 "D44" V 6700 5250 50  0000 C CNN
 F 1 "1N4148" V 6700 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 6600 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 5350 50  0001 C CNN
@@ -886,12 +886,12 @@ F 3 "~" H 6600 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D37
+L Diode:1N4148 D40
 U 1 1 5FC82A30
 P 6600 1750
-AR Path="/5EEB2DAF/5FC82A30" Ref="D37"  Part="1" 
+AR Path="/5EEB2DAF/5FC82A30" Ref="D40"  Part="1" 
 AR Path="/600F2ED5/5FC82A30" Ref="D?"  Part="1" 
-F 0 "D37" V 6700 1650 50  0000 C CNN
+F 0 "D40" V 6700 1650 50  0000 C CNN
 F 1 "1N4148" V 6700 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 6600 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 1750 50  0001 C CNN
@@ -899,12 +899,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D38
+L Diode:1N4148 D41
 U 1 1 5FC82A36
 P 6600 2650
-AR Path="/5EEB2DAF/5FC82A36" Ref="D38"  Part="1" 
+AR Path="/5EEB2DAF/5FC82A36" Ref="D41"  Part="1" 
 AR Path="/600F2ED5/5FC82A36" Ref="D?"  Part="1" 
-F 0 "D38" V 6700 2550 50  0000 C CNN
+F 0 "D41" V 6700 2550 50  0000 C CNN
 F 1 "1N4148" V 6700 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 6600 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 2650 50  0001 C CNN
@@ -966,12 +966,12 @@ $EndComp
 Wire Wire Line
 	7300 5600 7300 5500
 $Comp
-L Diode:1N4148 D46
+L Diode:1N4148 D49
 U 1 1 5FC89A11
 P 7300 5350
-AR Path="/5EEB2DAF/5FC89A11" Ref="D46"  Part="1" 
+AR Path="/5EEB2DAF/5FC89A11" Ref="D49"  Part="1" 
 AR Path="/600F2ED5/5FC89A11" Ref="D?"  Part="1" 
-F 0 "D46" V 7400 5250 50  0000 C CNN
+F 0 "D49" V 7400 5250 50  0000 C CNN
 F 1 "1N4148" V 7400 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 7300 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 5350 50  0001 C CNN
@@ -992,12 +992,12 @@ F 3 "~" H 7300 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D42
+L Diode:1N4148 D45
 U 1 1 5FC89A1D
 P 7300 1750
-AR Path="/5EEB2DAF/5FC89A1D" Ref="D42"  Part="1" 
+AR Path="/5EEB2DAF/5FC89A1D" Ref="D45"  Part="1" 
 AR Path="/600F2ED5/5FC89A1D" Ref="D?"  Part="1" 
-F 0 "D42" V 7400 1650 50  0000 C CNN
+F 0 "D45" V 7400 1650 50  0000 C CNN
 F 1 "1N4148" V 7400 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 7300 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 1750 50  0001 C CNN
@@ -1005,12 +1005,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D43
+L Diode:1N4148 D46
 U 1 1 5FC89A23
 P 7300 2650
-AR Path="/5EEB2DAF/5FC89A23" Ref="D43"  Part="1" 
+AR Path="/5EEB2DAF/5FC89A23" Ref="D46"  Part="1" 
 AR Path="/600F2ED5/5FC89A23" Ref="D?"  Part="1" 
-F 0 "D43" V 7400 2550 50  0000 C CNN
+F 0 "D46" V 7400 2550 50  0000 C CNN
 F 1 "1N4148" V 7400 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 7300 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 2650 50  0001 C CNN
@@ -1074,12 +1074,12 @@ $EndComp
 Wire Wire Line
 	8000 5600 8000 5500
 $Comp
-L Diode:1N4148 D51
+L Diode:1N4148 D54
 U 1 1 5FC95739
 P 8000 5350
-AR Path="/5EEB2DAF/5FC95739" Ref="D51"  Part="1" 
+AR Path="/5EEB2DAF/5FC95739" Ref="D54"  Part="1" 
 AR Path="/600F2ED5/5FC95739" Ref="D?"  Part="1" 
-F 0 "D51" V 8100 5250 50  0000 C CNN
+F 0 "D54" V 8100 5250 50  0000 C CNN
 F 1 "1N4148" V 8100 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8000 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 5350 50  0001 C CNN
@@ -1100,12 +1100,12 @@ F 3 "~" H 8000 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D47
+L Diode:1N4148 D50
 U 1 1 5FC95745
 P 8000 1750
-AR Path="/5EEB2DAF/5FC95745" Ref="D47"  Part="1" 
+AR Path="/5EEB2DAF/5FC95745" Ref="D50"  Part="1" 
 AR Path="/600F2ED5/5FC95745" Ref="D?"  Part="1" 
-F 0 "D47" V 8100 1650 50  0000 C CNN
+F 0 "D50" V 8100 1650 50  0000 C CNN
 F 1 "1N4148" V 8100 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8000 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 1750 50  0001 C CNN
@@ -1113,12 +1113,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D48
+L Diode:1N4148 D51
 U 1 1 5FC9574B
 P 8000 2650
-AR Path="/5EEB2DAF/5FC9574B" Ref="D48"  Part="1" 
+AR Path="/5EEB2DAF/5FC9574B" Ref="D51"  Part="1" 
 AR Path="/600F2ED5/5FC9574B" Ref="D?"  Part="1" 
-F 0 "D48" V 8100 2550 50  0000 C CNN
+F 0 "D51" V 8100 2550 50  0000 C CNN
 F 1 "1N4148" V 8100 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8000 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 2650 50  0001 C CNN
@@ -1182,12 +1182,12 @@ $EndComp
 Wire Wire Line
 	8700 5600 8700 5500
 $Comp
-L Diode:1N4148 D56
+L Diode:1N4148 D59
 U 1 1 5FC9EB34
 P 8700 5350
-AR Path="/5EEB2DAF/5FC9EB34" Ref="D56"  Part="1" 
+AR Path="/5EEB2DAF/5FC9EB34" Ref="D59"  Part="1" 
 AR Path="/600F2ED5/5FC9EB34" Ref="D?"  Part="1" 
-F 0 "D56" V 8800 5250 50  0000 C CNN
+F 0 "D59" V 8800 5250 50  0000 C CNN
 F 1 "1N4148" V 8800 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 5350 50  0001 C CNN
@@ -1208,12 +1208,12 @@ F 3 "~" H 8700 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D52
+L Diode:1N4148 D55
 U 1 1 5FC9EB40
 P 8700 1750
-AR Path="/5EEB2DAF/5FC9EB40" Ref="D52"  Part="1" 
+AR Path="/5EEB2DAF/5FC9EB40" Ref="D55"  Part="1" 
 AR Path="/600F2ED5/5FC9EB40" Ref="D?"  Part="1" 
-F 0 "D52" V 8800 1650 50  0000 C CNN
+F 0 "D55" V 8800 1650 50  0000 C CNN
 F 1 "1N4148" V 8800 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 1750 50  0001 C CNN
@@ -1221,12 +1221,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D53
+L Diode:1N4148 D56
 U 1 1 5FC9EB46
 P 8700 2650
-AR Path="/5EEB2DAF/5FC9EB46" Ref="D53"  Part="1" 
+AR Path="/5EEB2DAF/5FC9EB46" Ref="D56"  Part="1" 
 AR Path="/600F2ED5/5FC9EB46" Ref="D?"  Part="1" 
-F 0 "D53" V 8800 2550 50  0000 C CNN
+F 0 "D56" V 8800 2550 50  0000 C CNN
 F 1 "1N4148" V 8800 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 2650 50  0001 C CNN
@@ -1288,12 +1288,12 @@ F 3 "~" H 9400 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D57
+L Diode:1N4148 D60
 U 1 1 5FCB4F09
 P 9400 1750
-AR Path="/5EEB2DAF/5FCB4F09" Ref="D57"  Part="1" 
+AR Path="/5EEB2DAF/5FCB4F09" Ref="D60"  Part="1" 
 AR Path="/600F2ED5/5FCB4F09" Ref="D?"  Part="1" 
-F 0 "D57" V 9500 1650 50  0000 C CNN
+F 0 "D60" V 9500 1650 50  0000 C CNN
 F 1 "1N4148" V 9500 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 9400 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 9400 1750 50  0001 C CNN
@@ -1301,12 +1301,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 9400 
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D58
+L Diode:1N4148 D61
 U 1 1 5FCB4F0F
 P 9400 2650
-AR Path="/5EEB2DAF/5FCB4F0F" Ref="D58"  Part="1" 
+AR Path="/5EEB2DAF/5FCB4F0F" Ref="D61"  Part="1" 
 AR Path="/600F2ED5/5FCB4F0F" Ref="D?"  Part="1" 
-F 0 "D58" V 9500 2550 50  0000 C CNN
+F 0 "D61" V 9500 2550 50  0000 C CNN
 F 1 "1N4148" V 9500 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 9400 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 9400 2650 50  0001 C CNN
@@ -1360,12 +1360,12 @@ $EndComp
 Wire Wire Line
 	10100 5600 10100 5500
 $Comp
-L Diode:1N4148 D63
+L Diode:1N4148 D66
 U 1 1 5FCC015E
 P 10100 5350
-AR Path="/5EEB2DAF/5FCC015E" Ref="D63"  Part="1" 
+AR Path="/5EEB2DAF/5FCC015E" Ref="D66"  Part="1" 
 AR Path="/600F2ED5/5FCC015E" Ref="D?"  Part="1" 
-F 0 "D63" V 10200 5250 50  0000 C CNN
+F 0 "D66" V 10200 5250 50  0000 C CNN
 F 1 "1N4148" V 10200 5550 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10100 5175 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100 5350 50  0001 C CNN
@@ -1386,12 +1386,12 @@ F 3 "~" H 10100 1600 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D59
+L Diode:1N4148 D62
 U 1 1 5FCC016A
 P 10100 1750
-AR Path="/5EEB2DAF/5FCC016A" Ref="D59"  Part="1" 
+AR Path="/5EEB2DAF/5FCC016A" Ref="D62"  Part="1" 
 AR Path="/600F2ED5/5FCC016A" Ref="D?"  Part="1" 
-F 0 "D59" V 10200 1650 50  0000 C CNN
+F 0 "D62" V 10200 1650 50  0000 C CNN
 F 1 "1N4148" V 10200 1950 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10100 1575 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100 1750 50  0001 C CNN
@@ -1399,12 +1399,12 @@ F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Diode:1N4148 D60
+L Diode:1N4148 D63
 U 1 1 5FCC0170
 P 10100 2650
-AR Path="/5EEB2DAF/5FCC0170" Ref="D60"  Part="1" 
+AR Path="/5EEB2DAF/5FCC0170" Ref="D63"  Part="1" 
 AR Path="/600F2ED5/5FCC0170" Ref="D?"  Part="1" 
-F 0 "D60" V 10200 2550 50  0000 C CNN
+F 0 "D63" V 10200 2550 50  0000 C CNN
 F 1 "1N4148" V 10200 2850 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10100 2475 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100 2650 50  0001 C CNN
@@ -1451,12 +1451,12 @@ Wire Wire Line
 Text Notes 850  3250 2    50   ~ 0
 CPCLK
 $Comp
-L Diode:1N4148 D3
+L Diode:1N4148 D6
 U 1 1 5FD7894B
 P 1000 3550
-AR Path="/5EEB2DAF/5FD7894B" Ref="D3"  Part="1" 
+AR Path="/5EEB2DAF/5FD7894B" Ref="D6"  Part="1" 
 AR Path="/600F2ED5/5FD7894B" Ref="D?"  Part="1" 
-F 0 "D3" V 1100 3450 50  0000 C CNN
+F 0 "D6" V 1100 3450 50  0000 C CNN
 F 1 "1N4148" V 1100 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1000 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 3550 50  0001 C CNN
@@ -1481,12 +1481,12 @@ Wire Wire Line
 Wire Wire Line
 	1700 3800 1700 3700
 $Comp
-L Diode:1N4148 D8
+L Diode:1N4148 D11
 U 1 1 5FD7895A
 P 1700 3550
-AR Path="/5EEB2DAF/5FD7895A" Ref="D8"  Part="1" 
+AR Path="/5EEB2DAF/5FD7895A" Ref="D11"  Part="1" 
 AR Path="/600F2ED5/5FD7895A" Ref="D?"  Part="1" 
-F 0 "D8" V 1800 3450 50  0000 C CNN
+F 0 "D11" V 1800 3450 50  0000 C CNN
 F 1 "1N4148" V 1800 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1700 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 3550 50  0001 C CNN
@@ -1515,12 +1515,12 @@ Wire Wire Line
 Wire Wire Line
 	10800 3800 10800 3700
 $Comp
-L Diode:1N4148 D66
+L Diode:1N4148 D69
 U 1 1 5FD7896B
 P 10800 3550
-AR Path="/5EEB2DAF/5FD7896B" Ref="D66"  Part="1" 
+AR Path="/5EEB2DAF/5FD7896B" Ref="D69"  Part="1" 
 AR Path="/600F2ED5/5FD7896B" Ref="D?"  Part="1" 
-F 0 "D66" V 10900 3450 50  0000 C CNN
+F 0 "D69" V 10900 3450 50  0000 C CNN
 F 1 "1N4148" V 10900 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10800 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800 3550 50  0001 C CNN
@@ -1553,12 +1553,12 @@ Connection ~ 1700 3000
 Wire Wire Line
 	2400 3800 2400 3700
 $Comp
-L Diode:1N4148 D13
+L Diode:1N4148 D16
 U 1 1 5FD7897F
 P 2400 3550
-AR Path="/5EEB2DAF/5FD7897F" Ref="D13"  Part="1" 
+AR Path="/5EEB2DAF/5FD7897F" Ref="D16"  Part="1" 
 AR Path="/600F2ED5/5FD7897F" Ref="D?"  Part="1" 
-F 0 "D13" V 2500 3450 50  0000 C CNN
+F 0 "D16" V 2500 3450 50  0000 C CNN
 F 1 "1N4148" V 2500 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2400 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 3550 50  0001 C CNN
@@ -1588,12 +1588,12 @@ Connection ~ 2400 3000
 Wire Wire Line
 	3100 3800 3100 3700
 $Comp
-L Diode:1N4148 D18
+L Diode:1N4148 D21
 U 1 1 5FD78990
 P 3100 3550
-AR Path="/5EEB2DAF/5FD78990" Ref="D18"  Part="1" 
+AR Path="/5EEB2DAF/5FD78990" Ref="D21"  Part="1" 
 AR Path="/600F2ED5/5FD78990" Ref="D?"  Part="1" 
-F 0 "D18" V 3200 3450 50  0000 C CNN
+F 0 "D21" V 3200 3450 50  0000 C CNN
 F 1 "1N4148" V 3200 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3100 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3100 3550 50  0001 C CNN
@@ -1623,12 +1623,12 @@ Connection ~ 3100 3000
 Wire Wire Line
 	3800 3800 3800 3700
 $Comp
-L Diode:1N4148 D22
+L Diode:1N4148 D25
 U 1 1 5FD789A1
 P 3800 3550
-AR Path="/5EEB2DAF/5FD789A1" Ref="D22"  Part="1" 
+AR Path="/5EEB2DAF/5FD789A1" Ref="D25"  Part="1" 
 AR Path="/600F2ED5/5FD789A1" Ref="D?"  Part="1" 
-F 0 "D22" V 3900 3450 50  0000 C CNN
+F 0 "D25" V 3900 3450 50  0000 C CNN
 F 1 "1N4148" V 3900 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3800 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3800 3550 50  0001 C CNN
@@ -1658,12 +1658,12 @@ Connection ~ 3800 3000
 Wire Wire Line
 	4500 3800 4500 3700
 $Comp
-L Diode:1N4148 D26
+L Diode:1N4148 D29
 U 1 1 5FD789B2
 P 4500 3550
-AR Path="/5EEB2DAF/5FD789B2" Ref="D26"  Part="1" 
+AR Path="/5EEB2DAF/5FD789B2" Ref="D29"  Part="1" 
 AR Path="/600F2ED5/5FD789B2" Ref="D?"  Part="1" 
-F 0 "D26" V 4600 3450 50  0000 C CNN
+F 0 "D29" V 4600 3450 50  0000 C CNN
 F 1 "1N4148" V 4600 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 4500 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 3550 50  0001 C CNN
@@ -1693,12 +1693,12 @@ Connection ~ 4500 3000
 Wire Wire Line
 	5200 3800 5200 3700
 $Comp
-L Diode:1N4148 D31
+L Diode:1N4148 D34
 U 1 1 5FD789C3
 P 5200 3550
-AR Path="/5EEB2DAF/5FD789C3" Ref="D31"  Part="1" 
+AR Path="/5EEB2DAF/5FD789C3" Ref="D34"  Part="1" 
 AR Path="/600F2ED5/5FD789C3" Ref="D?"  Part="1" 
-F 0 "D31" V 5300 3450 50  0000 C CNN
+F 0 "D34" V 5300 3450 50  0000 C CNN
 F 1 "1N4148" V 5300 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5200 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5200 3550 50  0001 C CNN
@@ -1728,12 +1728,12 @@ Connection ~ 5200 3000
 Wire Wire Line
 	5900 3800 5900 3700
 $Comp
-L Diode:1N4148 D35
+L Diode:1N4148 D38
 U 1 1 5FD789D4
 P 5900 3550
-AR Path="/5EEB2DAF/5FD789D4" Ref="D35"  Part="1" 
+AR Path="/5EEB2DAF/5FD789D4" Ref="D38"  Part="1" 
 AR Path="/600F2ED5/5FD789D4" Ref="D?"  Part="1" 
-F 0 "D35" V 6000 3450 50  0000 C CNN
+F 0 "D38" V 6000 3450 50  0000 C CNN
 F 1 "1N4148" V 6000 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5900 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5900 3550 50  0001 C CNN
@@ -1763,12 +1763,12 @@ Connection ~ 5900 3000
 Wire Wire Line
 	6600 3800 6600 3700
 $Comp
-L Diode:1N4148 D39
+L Diode:1N4148 D42
 U 1 1 5FD789E5
 P 6600 3550
-AR Path="/5EEB2DAF/5FD789E5" Ref="D39"  Part="1" 
+AR Path="/5EEB2DAF/5FD789E5" Ref="D42"  Part="1" 
 AR Path="/600F2ED5/5FD789E5" Ref="D?"  Part="1" 
-F 0 "D39" V 6700 3450 50  0000 C CNN
+F 0 "D42" V 6700 3450 50  0000 C CNN
 F 1 "1N4148" V 6700 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 6600 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 3550 50  0001 C CNN
@@ -1798,12 +1798,12 @@ Connection ~ 6600 3000
 Wire Wire Line
 	7300 3800 7300 3700
 $Comp
-L Diode:1N4148 D44
+L Diode:1N4148 D47
 U 1 1 5FD789F6
 P 7300 3550
-AR Path="/5EEB2DAF/5FD789F6" Ref="D44"  Part="1" 
+AR Path="/5EEB2DAF/5FD789F6" Ref="D47"  Part="1" 
 AR Path="/600F2ED5/5FD789F6" Ref="D?"  Part="1" 
-F 0 "D44" V 7400 3450 50  0000 C CNN
+F 0 "D47" V 7400 3450 50  0000 C CNN
 F 1 "1N4148" V 7400 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 7300 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 3550 50  0001 C CNN
@@ -1833,12 +1833,12 @@ Connection ~ 7300 3000
 Wire Wire Line
 	8000 3800 8000 3700
 $Comp
-L Diode:1N4148 D49
+L Diode:1N4148 D52
 U 1 1 5FD78A07
 P 8000 3550
-AR Path="/5EEB2DAF/5FD78A07" Ref="D49"  Part="1" 
+AR Path="/5EEB2DAF/5FD78A07" Ref="D52"  Part="1" 
 AR Path="/600F2ED5/5FD78A07" Ref="D?"  Part="1" 
-F 0 "D49" V 8100 3450 50  0000 C CNN
+F 0 "D52" V 8100 3450 50  0000 C CNN
 F 1 "1N4148" V 8100 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8000 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 3550 50  0001 C CNN
@@ -1868,12 +1868,12 @@ Connection ~ 8000 3000
 Wire Wire Line
 	8700 3800 8700 3700
 $Comp
-L Diode:1N4148 D54
+L Diode:1N4148 D57
 U 1 1 5FD78A18
 P 8700 3550
-AR Path="/5EEB2DAF/5FD78A18" Ref="D54"  Part="1" 
+AR Path="/5EEB2DAF/5FD78A18" Ref="D57"  Part="1" 
 AR Path="/600F2ED5/5FD78A18" Ref="D?"  Part="1" 
-F 0 "D54" V 8800 3450 50  0000 C CNN
+F 0 "D57" V 8800 3450 50  0000 C CNN
 F 1 "1N4148" V 8800 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 3550 50  0001 C CNN
@@ -1903,12 +1903,12 @@ Connection ~ 8700 3000
 Wire Wire Line
 	10100 3800 10100 3700
 $Comp
-L Diode:1N4148 D61
+L Diode:1N4148 D64
 U 1 1 5FD78A3A
 P 10100 3550
-AR Path="/5EEB2DAF/5FD78A3A" Ref="D61"  Part="1" 
+AR Path="/5EEB2DAF/5FD78A3A" Ref="D64"  Part="1" 
 AR Path="/600F2ED5/5FD78A3A" Ref="D?"  Part="1" 
-F 0 "D61" V 10200 3450 50  0000 C CNN
+F 0 "D64" V 10200 3450 50  0000 C CNN
 F 1 "1N4148" V 10200 3750 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10100 3375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100 3550 50  0001 C CNN
@@ -1959,12 +1959,12 @@ Wire Wire Line
 Text Notes 850  4150 2    50   ~ 0
 LSHFT
 $Comp
-L Diode:1N4148 D4
+L Diode:1N4148 D7
 U 1 1 5FDB90FA
 P 1000 4450
-AR Path="/5EEB2DAF/5FDB90FA" Ref="D4"  Part="1" 
+AR Path="/5EEB2DAF/5FDB90FA" Ref="D7"  Part="1" 
 AR Path="/600F2ED5/5FDB90FA" Ref="D?"  Part="1" 
-F 0 "D4" V 1100 4350 50  0000 C CNN
+F 0 "D7" V 1100 4350 50  0000 C CNN
 F 1 "1N4148" V 1100 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1000 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1000 4450 50  0001 C CNN
@@ -1989,12 +1989,12 @@ Wire Wire Line
 Wire Wire Line
 	1700 4700 1700 4600
 $Comp
-L Diode:1N4148 D9
+L Diode:1N4148 D12
 U 1 1 5FDB9108
 P 1700 4450
-AR Path="/5EEB2DAF/5FDB9108" Ref="D9"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9108" Ref="D12"  Part="1" 
 AR Path="/600F2ED5/5FDB9108" Ref="D?"  Part="1" 
-F 0 "D9" V 1800 4350 50  0000 C CNN
+F 0 "D12" V 1800 4350 50  0000 C CNN
 F 1 "1N4148" V 1800 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 1700 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 1700 4450 50  0001 C CNN
@@ -2023,12 +2023,12 @@ Wire Wire Line
 Wire Wire Line
 	10800 4700 10800 4600
 $Comp
-L Diode:1N4148 D67
+L Diode:1N4148 D70
 U 1 1 5FDB9119
 P 10800 4450
-AR Path="/5EEB2DAF/5FDB9119" Ref="D67"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9119" Ref="D70"  Part="1" 
 AR Path="/600F2ED5/5FDB9119" Ref="D?"  Part="1" 
-F 0 "D67" V 10900 4350 50  0000 C CNN
+F 0 "D70" V 10900 4350 50  0000 C CNN
 F 1 "1N4148" V 10900 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10800 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10800 4450 50  0001 C CNN
@@ -2061,12 +2061,12 @@ Connection ~ 1700 3900
 Wire Wire Line
 	2400 4700 2400 4600
 $Comp
-L Diode:1N4148 D14
+L Diode:1N4148 D17
 U 1 1 5FDB912D
 P 2400 4450
-AR Path="/5EEB2DAF/5FDB912D" Ref="D14"  Part="1" 
+AR Path="/5EEB2DAF/5FDB912D" Ref="D17"  Part="1" 
 AR Path="/600F2ED5/5FDB912D" Ref="D?"  Part="1" 
-F 0 "D14" V 2500 4350 50  0000 C CNN
+F 0 "D17" V 2500 4350 50  0000 C CNN
 F 1 "1N4148" V 2500 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 2400 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 2400 4450 50  0001 C CNN
@@ -2096,12 +2096,12 @@ Connection ~ 2400 3900
 Wire Wire Line
 	3100 4700 3100 4600
 $Comp
-L Diode:1N4148 D19
+L Diode:1N4148 D22
 U 1 1 5FDB913E
 P 3100 4450
-AR Path="/5EEB2DAF/5FDB913E" Ref="D19"  Part="1" 
+AR Path="/5EEB2DAF/5FDB913E" Ref="D22"  Part="1" 
 AR Path="/600F2ED5/5FDB913E" Ref="D?"  Part="1" 
-F 0 "D19" V 3200 4350 50  0000 C CNN
+F 0 "D22" V 3200 4350 50  0000 C CNN
 F 1 "1N4148" V 3200 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3100 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3100 4450 50  0001 C CNN
@@ -2131,12 +2131,12 @@ Connection ~ 3100 3900
 Wire Wire Line
 	3800 4700 3800 4600
 $Comp
-L Diode:1N4148 D23
+L Diode:1N4148 D26
 U 1 1 5FDB914F
 P 3800 4450
-AR Path="/5EEB2DAF/5FDB914F" Ref="D23"  Part="1" 
+AR Path="/5EEB2DAF/5FDB914F" Ref="D26"  Part="1" 
 AR Path="/600F2ED5/5FDB914F" Ref="D?"  Part="1" 
-F 0 "D23" V 3900 4350 50  0000 C CNN
+F 0 "D26" V 3900 4350 50  0000 C CNN
 F 1 "1N4148" V 3900 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 3800 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3800 4450 50  0001 C CNN
@@ -2166,12 +2166,12 @@ Connection ~ 3800 3900
 Wire Wire Line
 	4500 4700 4500 4600
 $Comp
-L Diode:1N4148 D27
+L Diode:1N4148 D30
 U 1 1 5FDB9160
 P 4500 4450
-AR Path="/5EEB2DAF/5FDB9160" Ref="D27"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9160" Ref="D30"  Part="1" 
 AR Path="/600F2ED5/5FDB9160" Ref="D?"  Part="1" 
-F 0 "D27" V 4600 4350 50  0000 C CNN
+F 0 "D30" V 4600 4350 50  0000 C CNN
 F 1 "1N4148" V 4600 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 4500 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 4500 4450 50  0001 C CNN
@@ -2201,12 +2201,12 @@ Connection ~ 4500 3900
 Wire Wire Line
 	5200 4700 5200 4600
 $Comp
-L Diode:1N4148 D32
+L Diode:1N4148 D35
 U 1 1 5FDB9171
 P 5200 4450
-AR Path="/5EEB2DAF/5FDB9171" Ref="D32"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9171" Ref="D35"  Part="1" 
 AR Path="/600F2ED5/5FDB9171" Ref="D?"  Part="1" 
-F 0 "D32" V 5300 4350 50  0000 C CNN
+F 0 "D35" V 5300 4350 50  0000 C CNN
 F 1 "1N4148" V 5300 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5200 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5200 4450 50  0001 C CNN
@@ -2236,12 +2236,12 @@ Connection ~ 5200 3900
 Wire Wire Line
 	5900 4700 5900 4600
 $Comp
-L Diode:1N4148 D36
+L Diode:1N4148 D39
 U 1 1 5FDB9182
 P 5900 4450
-AR Path="/5EEB2DAF/5FDB9182" Ref="D36"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9182" Ref="D39"  Part="1" 
 AR Path="/600F2ED5/5FDB9182" Ref="D?"  Part="1" 
-F 0 "D36" V 6000 4350 50  0000 C CNN
+F 0 "D39" V 6000 4350 50  0000 C CNN
 F 1 "1N4148" V 6000 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 5900 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 5900 4450 50  0001 C CNN
@@ -2271,12 +2271,12 @@ Connection ~ 5900 3900
 Wire Wire Line
 	6600 4700 6600 4600
 $Comp
-L Diode:1N4148 D40
+L Diode:1N4148 D43
 U 1 1 5FDB9193
 P 6600 4450
-AR Path="/5EEB2DAF/5FDB9193" Ref="D40"  Part="1" 
+AR Path="/5EEB2DAF/5FDB9193" Ref="D43"  Part="1" 
 AR Path="/600F2ED5/5FDB9193" Ref="D?"  Part="1" 
-F 0 "D40" V 6700 4350 50  0000 C CNN
+F 0 "D43" V 6700 4350 50  0000 C CNN
 F 1 "1N4148" V 6700 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 6600 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 6600 4450 50  0001 C CNN
@@ -2306,12 +2306,12 @@ Connection ~ 6600 3900
 Wire Wire Line
 	7300 4700 7300 4600
 $Comp
-L Diode:1N4148 D45
+L Diode:1N4148 D48
 U 1 1 5FDB91A4
 P 7300 4450
-AR Path="/5EEB2DAF/5FDB91A4" Ref="D45"  Part="1" 
+AR Path="/5EEB2DAF/5FDB91A4" Ref="D48"  Part="1" 
 AR Path="/600F2ED5/5FDB91A4" Ref="D?"  Part="1" 
-F 0 "D45" V 7400 4350 50  0000 C CNN
+F 0 "D48" V 7400 4350 50  0000 C CNN
 F 1 "1N4148" V 7400 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 7300 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 7300 4450 50  0001 C CNN
@@ -2341,12 +2341,12 @@ Connection ~ 7300 3900
 Wire Wire Line
 	8000 4700 8000 4600
 $Comp
-L Diode:1N4148 D50
+L Diode:1N4148 D53
 U 1 1 5FDB91B5
 P 8000 4450
-AR Path="/5EEB2DAF/5FDB91B5" Ref="D50"  Part="1" 
+AR Path="/5EEB2DAF/5FDB91B5" Ref="D53"  Part="1" 
 AR Path="/600F2ED5/5FDB91B5" Ref="D?"  Part="1" 
-F 0 "D50" V 8100 4350 50  0000 C CNN
+F 0 "D53" V 8100 4350 50  0000 C CNN
 F 1 "1N4148" V 8100 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8000 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8000 4450 50  0001 C CNN
@@ -2376,12 +2376,12 @@ Connection ~ 8000 3900
 Wire Wire Line
 	8700 4700 8700 4600
 $Comp
-L Diode:1N4148 D55
+L Diode:1N4148 D58
 U 1 1 5FDB91C6
 P 8700 4450
-AR Path="/5EEB2DAF/5FDB91C6" Ref="D55"  Part="1" 
+AR Path="/5EEB2DAF/5FDB91C6" Ref="D58"  Part="1" 
 AR Path="/600F2ED5/5FDB91C6" Ref="D?"  Part="1" 
-F 0 "D55" V 8800 4350 50  0000 C CNN
+F 0 "D58" V 8800 4350 50  0000 C CNN
 F 1 "1N4148" V 8800 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 4450 50  0001 C CNN
@@ -2411,12 +2411,12 @@ Connection ~ 8700 3900
 Wire Wire Line
 	10100 4700 10100 4600
 $Comp
-L Diode:1N4148 D62
+L Diode:1N4148 D65
 U 1 1 5FDB91E8
 P 10100 4450
-AR Path="/5EEB2DAF/5FDB91E8" Ref="D62"  Part="1" 
+AR Path="/5EEB2DAF/5FDB91E8" Ref="D65"  Part="1" 
 AR Path="/600F2ED5/5FDB91E8" Ref="D?"  Part="1" 
-F 0 "D62" V 10200 4350 50  0000 C CNN
+F 0 "D65" V 10200 4350 50  0000 C CNN
 F 1 "1N4148" V 10200 4650 50  0000 C CNN
 F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 10100 4275 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 10100 4450 50  0001 C CNN

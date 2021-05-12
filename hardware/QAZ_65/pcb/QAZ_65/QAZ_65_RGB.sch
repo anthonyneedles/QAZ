@@ -1,0 +1,1286 @@
+EESchema Schematic File Version 4
+LIBS:QAZ_65-cache
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title "QAZ 65% RGB LEDs"
+Date "2021-05-16"
+Rev "v1.1"
+Comp "Anthony Needles"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	7400 3850 7400 3750
+$Comp
+L power:+5V #PWR?
+U 1 1 60A11B72
+P 7650 3600
+AR Path="/60A11B72" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11B72" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11B72" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11B72" Ref="#PWR030"  Part="1" 
+F 0 "#PWR030" H 7650 3450 50  0001 C CNN
+F 1 "+5V" H 7665 3773 50  0000 C CNN
+F 2 "" H 7650 3600 50  0001 C CNN
+F 3 "" H 7650 3600 50  0001 C CNN
+	1    7650 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 60A11B78
+P 7400 3600
+AR Path="/60A11B78" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11B78" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11B78" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11B78" Ref="#PWR028"  Part="1" 
+F 0 "#PWR028" H 7400 3450 50  0001 C CNN
+F 1 "+3.3V" H 7415 3773 50  0000 C CNN
+F 2 "" H 7400 3600 50  0001 C CNN
+F 3 "" H 7400 3600 50  0001 C CNN
+	1    7400 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 60A11B91
+P 9350 5850
+AR Path="/60A11B91" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11B91" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11B91" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11B91" Ref="#PWR034"  Part="1" 
+F 0 "#PWR034" H 9350 5600 50  0001 C CNN
+F 1 "GND" H 9355 5677 50  0001 C CNN
+F 2 "" H 9350 5850 50  0001 C CNN
+F 3 "" H 9350 5850 50  0001 C CNN
+	1    9350 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8500 5650 8550 5650
+Connection ~ 8500 5650
+Wire Wire Line
+	8450 5650 8500 5650
+Connection ~ 9350 5850
+Wire Wire Line
+	9450 5850 9450 5750
+Wire Wire Line
+	9350 5850 9450 5850
+Wire Wire Line
+	9350 5850 9350 5750
+Wire Wire Line
+	9250 5850 9350 5850
+Wire Wire Line
+	9250 5750 9250 5850
+$Comp
+L power:GND #PWR?
+U 1 1 60A11BA6
+P 8500 5650
+AR Path="/60A11BA6" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11BA6" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11BA6" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11BA6" Ref="#PWR033"  Part="1" 
+F 0 "#PWR033" H 8500 5400 50  0001 C CNN
+F 1 "GND" H 8505 5477 50  0001 C CNN
+F 2 "" H 8500 5650 50  0001 C CNN
+F 3 "" H 8500 5650 50  0001 C CNN
+	1    8500 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8550 5550 8550 5650
+Connection ~ 8550 5550
+Wire Wire Line
+	8650 5550 8550 5550
+Wire Wire Line
+	8550 5450 8550 5550
+Wire Wire Line
+	8650 5450 8550 5450
+Wire Wire Line
+	8450 5600 8450 5650
+Wire Wire Line
+	8450 5400 8450 5350
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A11BB3
+P 8450 5500
+AR Path="/60A11BB3" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A11BB3" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A11BB3" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A11BB3" Ref="R35"  Part="1" 
+F 0 "R35" H 8600 5500 50  0000 R CNN
+F 1 "10kΩ" H 8700 5600 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 8450 5500 50  0001 C CNN
+F 3 "~" H 8450 5500 50  0001 C CNN
+	1    8450 5500
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8650 5350 8450 5350
+Text Label 8200 4300 0    50   ~ 0
+SW1
+Wire Wire Line
+	8650 4300 8200 4300
+Text Label 8200 4400 0    50   ~ 0
+SW2
+Wire Wire Line
+	8650 4400 8200 4400
+Text Label 8200 4500 0    50   ~ 0
+SW3
+Wire Wire Line
+	8650 4500 8200 4500
+Text Label 10400 5550 2    50   ~ 0
+CS1
+Wire Wire Line
+	9950 5550 10400 5550
+Text Label 10400 5450 2    50   ~ 0
+CS2
+Wire Wire Line
+	9950 5450 10400 5450
+Text Label 10400 5350 2    50   ~ 0
+CS3
+Wire Wire Line
+	9950 5350 10400 5350
+Text Label 10400 5250 2    50   ~ 0
+CS4
+Wire Wire Line
+	9950 5250 10400 5250
+Text Label 10400 5150 2    50   ~ 0
+CS5
+Wire Wire Line
+	9950 5150 10400 5150
+Text Label 10400 5050 2    50   ~ 0
+CS6
+Wire Wire Line
+	9950 5050 10400 5050
+Text Label 10400 4950 2    50   ~ 0
+CS7
+Wire Wire Line
+	9950 4950 10400 4950
+Text Label 10400 4850 2    50   ~ 0
+CS8
+Wire Wire Line
+	9950 4850 10400 4850
+Text Label 10400 4750 2    50   ~ 0
+CS9
+Wire Wire Line
+	9950 4750 10400 4750
+Text Label 10400 4650 2    50   ~ 0
+CS10
+Wire Wire Line
+	9950 4650 10400 4650
+Text Label 10400 4550 2    50   ~ 0
+CS11
+Wire Wire Line
+	9950 4550 10400 4550
+Text Label 10400 4450 2    50   ~ 0
+CS12
+Wire Wire Line
+	9950 4450 10400 4450
+Text Label 10400 4350 2    50   ~ 0
+CS13
+Wire Wire Line
+	9950 4350 10400 4350
+Text Label 10400 4250 2    50   ~ 0
+CS14
+Wire Wire Line
+	9950 4250 10400 4250
+Text Label 10400 4150 2    50   ~ 0
+CS15
+Wire Wire Line
+	9950 4150 10400 4150
+Text Label 10400 4050 2    50   ~ 0
+CS16
+Wire Wire Line
+	9950 4050 10400 4050
+Text Label 10400 3950 2    50   ~ 0
+CS17
+Wire Wire Line
+	9950 3950 10400 3950
+Text Label 10400 3850 2    50   ~ 0
+CS18
+Wire Wire Line
+	9950 3850 10400 3850
+$Comp
+L QAZ:SolderBridge SB?
+U 1 1 60A11BE7
+P 7650 3750
+AR Path="/60A11BE7" Ref="SB?"  Part="1" 
+AR Path="/60F8D352/60A11BE7" Ref="SB?"  Part="1" 
+AR Path="/60A08089/60A11BE7" Ref="SB?"  Part="1" 
+AR Path="/609D4C4B/60A11BE7" Ref="SB21"  Part="1" 
+F 0 "SB21" V 7650 3650 50  0000 C CNN
+F 1 "SolderBridge" H 7710 3700 50  0001 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7650 3850 50  0001 C CNN
+F 3 "" H 7650 3850 50  0001 C CNN
+	1    7650 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L QAZ:SolderBridge SB?
+U 1 1 60A11BED
+P 7400 3750
+AR Path="/60A11BED" Ref="SB?"  Part="1" 
+AR Path="/60F8D352/60A11BED" Ref="SB?"  Part="1" 
+AR Path="/60A08089/60A11BED" Ref="SB?"  Part="1" 
+AR Path="/609D4C4B/60A11BED" Ref="SB20"  Part="1" 
+F 0 "SB20" V 7400 3850 50  0000 C CNN
+F 1 "SolderBridge" H 7460 3700 50  0001 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7400 3850 50  0001 C CNN
+F 3 "" H 7400 3850 50  0001 C CNN
+	1    7400 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L QAZ:IS31FL3746A U?
+U 1 1 60A11BF3
+P 8750 3750
+AR Path="/60A11BF3" Ref="U?"  Part="1" 
+AR Path="/60F8D352/60A11BF3" Ref="U?"  Part="1" 
+AR Path="/60A08089/60A11BF3" Ref="U?"  Part="1" 
+AR Path="/609D4C4B/60A11BF3" Ref="U3"  Part="1" 
+F 0 "U3" H 9300 3915 50  0000 C CNN
+F 1 "IS31FL3746A" H 9300 3824 50  0000 C CNN
+F 2 "QAZ:QFN-32-1EP_4x4mm_P0.4mm_EP2.9x2.9mm_HS" H 9400 3800 50  0001 C CNN
+F 3 "" H 8750 3750 50  0001 C CNN
+	1    8750 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 5050 8100 5100
+Wire Wire Line
+	7950 5050 7950 5150
+Wire Wire Line
+	7950 5350 7950 5450
+Wire Wire Line
+	8100 5400 8100 5450
+Wire Wire Line
+	7950 5450 8100 5450
+Wire Wire Line
+	7950 5050 8100 5050
+$Comp
+L Device:C C?
+U 1 1 60A11C00
+P 8100 5250
+AR Path="/60A11C00" Ref="C?"  Part="1" 
+AR Path="/60F8D352/60A11C00" Ref="C?"  Part="1" 
+AR Path="/60A08089/60A11C00" Ref="C?"  Part="1" 
+AR Path="/609D4C4B/60A11C00" Ref="C14"  Part="1" 
+F 0 "C14" H 8000 5200 50  0000 R CNN
+F 1 "1uF" H 8000 5300 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 8138 5100 50  0001 C CNN
+F 3 "~" H 8100 5250 50  0001 C CNN
+	1    8100 5250
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A11C07
+P 7950 5250
+AR Path="/60A11C07" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A11C07" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A11C07" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A11C07" Ref="R34"  Part="1" 
+F 0 "R34" H 8150 5250 50  0000 R CNN
+F 1 "100kΩ" H 8250 5350 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7950 5250 50  0001 C CNN
+F 3 "~" H 7950 5250 50  0001 C CNN
+	1    7950 5250
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 60A11C0E
+P 7400 4100
+AR Path="/60A11C0E" Ref="C?"  Part="1" 
+AR Path="/60F8D352/60A11C0E" Ref="C?"  Part="1" 
+AR Path="/60A08089/60A11C0E" Ref="C?"  Part="1" 
+AR Path="/609D4C4B/60A11C0E" Ref="C11"  Part="1" 
+F 0 "C11" H 7700 4050 50  0000 R CNN
+F 1 "0.1uF" H 7750 4150 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7438 3950 50  0001 C CNN
+F 3 "~" H 7400 4100 50  0001 C CNN
+	1    7400 4100
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 60A11C14
+P 7400 4250
+AR Path="/60A11C14" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11C14" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11C14" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11C14" Ref="#PWR029"  Part="1" 
+F 0 "#PWR029" H 7400 4000 50  0001 C CNN
+F 1 "GND" H 7405 4077 50  0001 C CNN
+F 2 "" H 7400 4250 50  0001 C CNN
+F 3 "" H 7400 4250 50  0001 C CNN
+	1    7400 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 60A11C20
+P 8100 4100
+AR Path="/60A11C20" Ref="C?"  Part="1" 
+AR Path="/60F8D352/60A11C20" Ref="C?"  Part="1" 
+AR Path="/60A08089/60A11C20" Ref="C?"  Part="1" 
+AR Path="/609D4C4B/60A11C20" Ref="C13"  Part="1" 
+F 0 "C13" H 7985 4054 50  0000 R CNN
+F 1 "0.1uF" H 7985 4145 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 8138 3950 50  0001 C CNN
+F 3 "~" H 8100 4100 50  0001 C CNN
+	1    8100 4100
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 60A11C2C
+P 7650 4100
+AR Path="/60A11C2C" Ref="C?"  Part="1" 
+AR Path="/60F8D352/60A11C2C" Ref="C?"  Part="1" 
+AR Path="/60A08089/60A11C2C" Ref="C?"  Part="1" 
+AR Path="/609D4C4B/60A11C2C" Ref="C12"  Part="1" 
+F 0 "C12" H 7535 4054 50  0000 R CNN
+F 1 "1uF" H 7535 4145 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 7688 3950 50  0001 C CNN
+F 3 "~" H 7650 4100 50  0001 C CNN
+	1    7650 4100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8100 4250 7650 4250
+$Comp
+L power:GND #PWR?
+U 1 1 60A11C37
+P 7650 4250
+AR Path="/60A11C37" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11C37" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11C37" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11C37" Ref="#PWR031"  Part="1" 
+F 0 "#PWR031" H 7650 4000 50  0001 C CNN
+F 1 "GND" H 7655 4077 50  0001 C CNN
+F 2 "" H 7650 4250 50  0001 C CNN
+F 3 "" H 7650 4250 50  0001 C CNN
+	1    7650 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 60A11C3D
+P 7950 5450
+AR Path="/60A11C3D" Ref="#PWR?"  Part="1" 
+AR Path="/60F8D352/60A11C3D" Ref="#PWR?"  Part="1" 
+AR Path="/60A08089/60A11C3D" Ref="#PWR?"  Part="1" 
+AR Path="/609D4C4B/60A11C3D" Ref="#PWR032"  Part="1" 
+F 0 "#PWR032" H 7950 5200 50  0001 C CNN
+F 1 "GND" H 7955 5277 50  0001 C CNN
+F 2 "" H 7950 5450 50  0001 C CNN
+F 3 "" H 7950 5450 50  0001 C CNN
+	1    7950 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 5050 8650 5050
+Connection ~ 8100 5050
+Text HLabel 7950 4850 0    50   Input ~ 0
+LED_SDA
+Text HLabel 7950 4950 0    50   Input ~ 0
+LED_SCL
+Text HLabel 7950 5050 0    50   Input ~ 0
+LED_SDB
+Wire Wire Line
+	7950 4950 8650 4950
+Wire Wire Line
+	7950 4850 8650 4850
+Connection ~ 7950 5450
+Text Notes 7000 3300 0    50   ~ 0
+RGB LED Driver\n
+$Comp
+L Device:R_Small_US R?
+U 1 1 609DD48F
+P 2800 2150
+AR Path="/609DD48F" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609DD48F" Ref="R?"  Part="1" 
+AR Path="/60A08089/609DD48F" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609DD48F" Ref="R16"  Part="1" 
+F 0 "R16" V 2750 2300 50  0000 R CNN
+F 1 "51Ω" V 2750 2050 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 2150 50  0001 C CNN
+F 3 "~" H 2800 2150 50  0001 C CNN
+	1    2800 2150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 2150 2900 2150
+$Comp
+L Device:R_Small_US R?
+U 1 1 609DF810
+P 2800 2350
+AR Path="/609DF810" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609DF810" Ref="R?"  Part="1" 
+AR Path="/60A08089/609DF810" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609DF810" Ref="R17"  Part="1" 
+F 0 "R17" V 2750 2500 50  0000 R CNN
+F 1 "20Ω" V 2750 2250 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 2350 50  0001 C CNN
+F 3 "~" H 2800 2350 50  0001 C CNN
+	1    2800 2350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609E09E5
+P 2800 2550
+AR Path="/609E09E5" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609E09E5" Ref="R?"  Part="1" 
+AR Path="/60A08089/609E09E5" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609E09E5" Ref="R18"  Part="1" 
+F 0 "R18" V 2750 2700 50  0000 R CNN
+F 1 "20Ω" V 2750 2450 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 2550 50  0001 C CNN
+F 3 "~" H 2800 2550 50  0001 C CNN
+	1    2800 2550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 2350 2900 2350
+Wire Wire Line
+	2950 2550 2900 2550
+Text Label 2250 2550 0    50   ~ 0
+CS3
+Wire Wire Line
+	2700 2550 2250 2550
+Text Label 2250 2350 0    50   ~ 0
+CS2
+Wire Wire Line
+	2700 2350 2250 2350
+Text Label 2250 2150 0    50   ~ 0
+CS1
+Wire Wire Line
+	2700 2150 2250 2150
+Wire Wire Line
+	2950 2050 2950 2150
+Wire Wire Line
+	2950 2150 3450 2150
+Wire Wire Line
+	2950 2350 3450 2350
+Wire Wire Line
+	2950 2450 2950 2550
+Wire Wire Line
+	2950 2350 2950 2250
+$Comp
+L Device:LED_RABG D78
+U 1 1 609D5551
+P 3650 2250
+F 0 "D78" H 3650 2747 50  0000 C CNN
+F 1 "LED_RABG" H 3650 2656 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 2200 50  0001 C CNN
+F 3 "~" H 3650 2200 50  0001 C CNN
+	1    3650 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 2050 3450 2150
+Wire Wire Line
+	3450 2350 3450 2250
+Wire Wire Line
+	2950 2550 3450 2550
+Wire Wire Line
+	3450 2550 3450 2450
+Connection ~ 3450 2550
+Connection ~ 3450 2350
+Connection ~ 3450 2150
+$Comp
+L Device:LED_RABG D84
+U 1 1 609DB48D
+P 4150 2250
+F 0 "D84" H 4150 2747 50  0000 C CNN
+F 1 "LED_RABG" H 4150 2656 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 2200 50  0001 C CNN
+F 3 "~" H 4150 2200 50  0001 C CNN
+	1    4150 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 2150 3950 2150
+Wire Wire Line
+	3450 2350 3950 2350
+Wire Wire Line
+	3450 2550 3950 2550
+Wire Wire Line
+	3950 2050 3950 2150
+Wire Wire Line
+	3950 2250 3950 2350
+Wire Wire Line
+	3950 2450 3950 2550
+$Comp
+L Device:LED_RABG D73
+U 1 1 609EFE45
+P 3150 3100
+F 0 "D73" H 3150 3597 50  0000 C CNN
+F 1 "LED_RABG" H 3150 3506 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 3050 50  0001 C CNN
+F 3 "~" H 3150 3050 50  0001 C CNN
+	1    3150 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609EFE4B
+P 2800 3000
+AR Path="/609EFE4B" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609EFE4B" Ref="R?"  Part="1" 
+AR Path="/60A08089/609EFE4B" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609EFE4B" Ref="R19"  Part="1" 
+F 0 "R19" V 2750 3150 50  0000 R CNN
+F 1 "51Ω" V 2750 2900 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 3000 50  0001 C CNN
+F 3 "~" H 2800 3000 50  0001 C CNN
+	1    2800 3000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 3000 2900 3000
+$Comp
+L Device:R_Small_US R?
+U 1 1 609EFE52
+P 2800 3200
+AR Path="/609EFE52" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609EFE52" Ref="R?"  Part="1" 
+AR Path="/60A08089/609EFE52" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609EFE52" Ref="R20"  Part="1" 
+F 0 "R20" V 2750 3350 50  0000 R CNN
+F 1 "20Ω" V 2750 3100 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 3200 50  0001 C CNN
+F 3 "~" H 2800 3200 50  0001 C CNN
+	1    2800 3200
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609EFE58
+P 2800 3400
+AR Path="/609EFE58" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609EFE58" Ref="R?"  Part="1" 
+AR Path="/60A08089/609EFE58" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609EFE58" Ref="R21"  Part="1" 
+F 0 "R21" V 2750 3550 50  0000 R CNN
+F 1 "20Ω" V 2750 3300 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 3400 50  0001 C CNN
+F 3 "~" H 2800 3400 50  0001 C CNN
+	1    2800 3400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 3200 2900 3200
+Wire Wire Line
+	2950 3400 2900 3400
+Text Label 2250 3400 0    50   ~ 0
+CS6
+Wire Wire Line
+	2700 3400 2250 3400
+Text Label 2250 3200 0    50   ~ 0
+CS5
+Wire Wire Line
+	2700 3200 2250 3200
+Text Label 2250 3000 0    50   ~ 0
+CS4
+Wire Wire Line
+	2700 3000 2250 3000
+Wire Wire Line
+	2950 2900 2950 3000
+Wire Wire Line
+	2950 3000 3450 3000
+Wire Wire Line
+	2950 3200 3450 3200
+Wire Wire Line
+	2950 3300 2950 3400
+Wire Wire Line
+	2950 3200 2950 3100
+$Comp
+L Device:LED_RABG D79
+U 1 1 609EFE6E
+P 3650 3100
+F 0 "D79" H 3650 3597 50  0000 C CNN
+F 1 "LED_RABG" H 3650 3506 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 3050 50  0001 C CNN
+F 3 "~" H 3650 3050 50  0001 C CNN
+	1    3650 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 2900 3450 3000
+Wire Wire Line
+	3450 3200 3450 3100
+Wire Wire Line
+	2950 3400 3450 3400
+Wire Wire Line
+	3450 3400 3450 3300
+Connection ~ 3450 3400
+Connection ~ 3450 3200
+Connection ~ 3450 3000
+$Comp
+L Device:LED_RABG D85
+U 1 1 609EFE7B
+P 4150 3100
+F 0 "D85" H 4150 3597 50  0000 C CNN
+F 1 "LED_RABG" H 4150 3506 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 3050 50  0001 C CNN
+F 3 "~" H 4150 3050 50  0001 C CNN
+	1    4150 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 3000 3950 3000
+Wire Wire Line
+	3450 3200 3950 3200
+Wire Wire Line
+	3450 3400 3950 3400
+Wire Wire Line
+	3950 2900 3950 3000
+Wire Wire Line
+	3950 3100 3950 3200
+Wire Wire Line
+	3950 3300 3950 3400
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE5C7
+P 2800 3850
+AR Path="/609FE5C7" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE5C7" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE5C7" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE5C7" Ref="R22"  Part="1" 
+F 0 "R22" V 2750 4000 50  0000 R CNN
+F 1 "51Ω" V 2750 3750 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 3850 50  0001 C CNN
+F 3 "~" H 2800 3850 50  0001 C CNN
+	1    2800 3850
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 3850 2900 3850
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE5CE
+P 2800 4050
+AR Path="/609FE5CE" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE5CE" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE5CE" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE5CE" Ref="R23"  Part="1" 
+F 0 "R23" V 2750 4200 50  0000 R CNN
+F 1 "20Ω" V 2750 3950 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 4050 50  0001 C CNN
+F 3 "~" H 2800 4050 50  0001 C CNN
+	1    2800 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE5D4
+P 2800 4250
+AR Path="/609FE5D4" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE5D4" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE5D4" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE5D4" Ref="R24"  Part="1" 
+F 0 "R24" V 2750 4400 50  0000 R CNN
+F 1 "20Ω" V 2750 4150 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 4250 50  0001 C CNN
+F 3 "~" H 2800 4250 50  0001 C CNN
+	1    2800 4250
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 4050 2900 4050
+Wire Wire Line
+	2950 4250 2900 4250
+Text Label 2250 4250 0    50   ~ 0
+CS9
+Wire Wire Line
+	2700 4250 2250 4250
+Text Label 2250 4050 0    50   ~ 0
+CS8
+Wire Wire Line
+	2700 4050 2250 4050
+Text Label 2250 3850 0    50   ~ 0
+CS7
+Wire Wire Line
+	2700 3850 2250 3850
+Wire Wire Line
+	2950 3750 2950 3850
+Wire Wire Line
+	2950 3850 3450 3850
+Wire Wire Line
+	2950 4050 3450 4050
+Wire Wire Line
+	2950 4150 2950 4250
+Wire Wire Line
+	2950 4050 2950 3950
+$Comp
+L Device:LED_RABG D80
+U 1 1 609FE5EA
+P 3650 3950
+F 0 "D80" H 3650 4447 50  0000 C CNN
+F 1 "LED_RABG" H 3650 4356 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 3900 50  0001 C CNN
+F 3 "~" H 3650 3900 50  0001 C CNN
+	1    3650 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 3750 3450 3850
+Wire Wire Line
+	3450 4050 3450 3950
+Wire Wire Line
+	2950 4250 3450 4250
+Wire Wire Line
+	3450 4250 3450 4150
+Connection ~ 3450 4250
+Connection ~ 3450 4050
+Connection ~ 3450 3850
+$Comp
+L Device:LED_RABG D86
+U 1 1 609FE5F7
+P 4150 3950
+F 0 "D86" H 4150 4447 50  0000 C CNN
+F 1 "LED_RABG" H 4150 4356 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 3900 50  0001 C CNN
+F 3 "~" H 4150 3900 50  0001 C CNN
+	1    4150 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 3850 3950 3850
+Wire Wire Line
+	3450 4050 3950 4050
+Wire Wire Line
+	3450 4250 3950 4250
+Wire Wire Line
+	3950 3750 3950 3850
+Wire Wire Line
+	3950 3950 3950 4050
+Wire Wire Line
+	3950 4150 3950 4250
+$Comp
+L Device:LED_RABG D75
+U 1 1 609FE612
+P 3150 4800
+F 0 "D75" H 3150 5297 50  0000 C CNN
+F 1 "LED_RABG" H 3150 5206 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 4750 50  0001 C CNN
+F 3 "~" H 3150 4750 50  0001 C CNN
+	1    3150 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE618
+P 2800 4700
+AR Path="/609FE618" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE618" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE618" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE618" Ref="R25"  Part="1" 
+F 0 "R25" V 2750 4850 50  0000 R CNN
+F 1 "51Ω" V 2750 4600 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 4700 50  0001 C CNN
+F 3 "~" H 2800 4700 50  0001 C CNN
+	1    2800 4700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 4700 2900 4700
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE61F
+P 2800 4900
+AR Path="/609FE61F" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE61F" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE61F" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE61F" Ref="R26"  Part="1" 
+F 0 "R26" V 2750 5050 50  0000 R CNN
+F 1 "20Ω" V 2750 4800 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 4900 50  0001 C CNN
+F 3 "~" H 2800 4900 50  0001 C CNN
+	1    2800 4900
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 609FE625
+P 2800 5100
+AR Path="/609FE625" Ref="R?"  Part="1" 
+AR Path="/60F8D352/609FE625" Ref="R?"  Part="1" 
+AR Path="/60A08089/609FE625" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/609FE625" Ref="R27"  Part="1" 
+F 0 "R27" V 2750 5250 50  0000 R CNN
+F 1 "20Ω" V 2750 5000 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 5100 50  0001 C CNN
+F 3 "~" H 2800 5100 50  0001 C CNN
+	1    2800 5100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 4900 2900 4900
+Wire Wire Line
+	2950 5100 2900 5100
+Text Label 2250 5100 0    50   ~ 0
+CS12
+Wire Wire Line
+	2700 5100 2250 5100
+Text Label 2250 4900 0    50   ~ 0
+CS11
+Wire Wire Line
+	2700 4900 2250 4900
+Text Label 2250 4700 0    50   ~ 0
+CS10
+Wire Wire Line
+	2700 4700 2250 4700
+Wire Wire Line
+	2950 4600 2950 4700
+Wire Wire Line
+	2950 4700 3450 4700
+Wire Wire Line
+	2950 4900 3450 4900
+Wire Wire Line
+	2950 5000 2950 5100
+Wire Wire Line
+	2950 4900 2950 4800
+$Comp
+L Device:LED_RABG D81
+U 1 1 609FE63B
+P 3650 4800
+F 0 "D81" H 3650 5297 50  0000 C CNN
+F 1 "LED_RABG" H 3650 5206 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 4750 50  0001 C CNN
+F 3 "~" H 3650 4750 50  0001 C CNN
+	1    3650 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 4600 3450 4700
+Wire Wire Line
+	3450 4900 3450 4800
+Wire Wire Line
+	2950 5100 3450 5100
+Wire Wire Line
+	3450 5100 3450 5000
+Connection ~ 3450 5100
+Connection ~ 3450 4900
+Connection ~ 3450 4700
+$Comp
+L Device:LED_RABG D87
+U 1 1 609FE648
+P 4150 4800
+F 0 "D87" H 4150 5297 50  0000 C CNN
+F 1 "LED_RABG" H 4150 5206 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 4750 50  0001 C CNN
+F 3 "~" H 4150 4750 50  0001 C CNN
+	1    4150 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 4700 3950 4700
+Wire Wire Line
+	3450 4900 3950 4900
+Wire Wire Line
+	3450 5100 3950 5100
+Wire Wire Line
+	3950 4600 3950 4700
+Wire Wire Line
+	3950 4800 3950 4900
+Wire Wire Line
+	3950 5000 3950 5100
+$Comp
+L Device:LED_RABG D76
+U 1 1 60A166ED
+P 3150 5650
+F 0 "D76" H 3150 6147 50  0000 C CNN
+F 1 "LED_RABG" H 3150 6056 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 5600 50  0001 C CNN
+F 3 "~" H 3150 5600 50  0001 C CNN
+	1    3150 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A166F3
+P 2800 5550
+AR Path="/60A166F3" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A166F3" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A166F3" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A166F3" Ref="R28"  Part="1" 
+F 0 "R28" V 2750 5700 50  0000 R CNN
+F 1 "51Ω" V 2750 5450 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 5550 50  0001 C CNN
+F 3 "~" H 2800 5550 50  0001 C CNN
+	1    2800 5550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 5550 2900 5550
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A166FA
+P 2800 5750
+AR Path="/60A166FA" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A166FA" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A166FA" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A166FA" Ref="R29"  Part="1" 
+F 0 "R29" V 2750 5900 50  0000 R CNN
+F 1 "20Ω" V 2750 5650 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 5750 50  0001 C CNN
+F 3 "~" H 2800 5750 50  0001 C CNN
+	1    2800 5750
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A16700
+P 2800 5950
+AR Path="/60A16700" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A16700" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A16700" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A16700" Ref="R30"  Part="1" 
+F 0 "R30" V 2750 6100 50  0000 R CNN
+F 1 "20Ω" V 2750 5850 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 5950 50  0001 C CNN
+F 3 "~" H 2800 5950 50  0001 C CNN
+	1    2800 5950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 5750 2900 5750
+Wire Wire Line
+	2950 5950 2900 5950
+Text Label 2250 5950 0    50   ~ 0
+CS15
+Wire Wire Line
+	2700 5950 2250 5950
+Text Label 2250 5750 0    50   ~ 0
+CS14
+Wire Wire Line
+	2700 5750 2250 5750
+Text Label 2250 5550 0    50   ~ 0
+CS13
+Wire Wire Line
+	2700 5550 2250 5550
+Wire Wire Line
+	2950 5450 2950 5550
+Wire Wire Line
+	2950 5550 3450 5550
+Wire Wire Line
+	2950 5750 3450 5750
+Wire Wire Line
+	2950 5850 2950 5950
+Wire Wire Line
+	2950 5750 2950 5650
+$Comp
+L Device:LED_RABG D82
+U 1 1 60A16716
+P 3650 5650
+F 0 "D82" H 3650 6147 50  0000 C CNN
+F 1 "LED_RABG" H 3650 6056 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 5600 50  0001 C CNN
+F 3 "~" H 3650 5600 50  0001 C CNN
+	1    3650 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 5450 3450 5550
+Wire Wire Line
+	3450 5750 3450 5650
+Wire Wire Line
+	2950 5950 3450 5950
+Wire Wire Line
+	3450 5950 3450 5850
+Connection ~ 3450 5950
+Connection ~ 3450 5750
+Connection ~ 3450 5550
+$Comp
+L Device:LED_RABG D88
+U 1 1 60A16723
+P 4150 5650
+F 0 "D88" H 4150 6147 50  0000 C CNN
+F 1 "LED_RABG" H 4150 6056 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 5600 50  0001 C CNN
+F 3 "~" H 4150 5600 50  0001 C CNN
+	1    4150 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 5550 3950 5550
+Wire Wire Line
+	3450 5750 3950 5750
+Wire Wire Line
+	3450 5950 3950 5950
+Wire Wire Line
+	3950 5450 3950 5550
+Wire Wire Line
+	3950 5650 3950 5750
+Wire Wire Line
+	3950 5850 3950 5950
+$Comp
+L Device:LED_RABG D77
+U 1 1 60A1673E
+P 3150 6500
+F 0 "D77" H 3150 6997 50  0000 C CNN
+F 1 "LED_RABG" H 3150 6906 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 6450 50  0001 C CNN
+F 3 "~" H 3150 6450 50  0001 C CNN
+	1    3150 6500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A16744
+P 2800 6400
+AR Path="/60A16744" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A16744" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A16744" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A16744" Ref="R31"  Part="1" 
+F 0 "R31" V 2750 6550 50  0000 R CNN
+F 1 "51Ω" V 2750 6300 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 6400 50  0001 C CNN
+F 3 "~" H 2800 6400 50  0001 C CNN
+	1    2800 6400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 6400 2900 6400
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A1674B
+P 2800 6600
+AR Path="/60A1674B" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A1674B" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A1674B" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A1674B" Ref="R32"  Part="1" 
+F 0 "R32" V 2750 6750 50  0000 R CNN
+F 1 "20Ω" V 2750 6500 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 6600 50  0001 C CNN
+F 3 "~" H 2800 6600 50  0001 C CNN
+	1    2800 6600
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 60A16751
+P 2800 6800
+AR Path="/60A16751" Ref="R?"  Part="1" 
+AR Path="/60F8D352/60A16751" Ref="R?"  Part="1" 
+AR Path="/60A08089/60A16751" Ref="R?"  Part="1" 
+AR Path="/609D4C4B/60A16751" Ref="R33"  Part="1" 
+F 0 "R33" V 2750 6950 50  0000 R CNN
+F 1 "20Ω" V 2750 6700 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 2800 6800 50  0001 C CNN
+F 3 "~" H 2800 6800 50  0001 C CNN
+	1    2800 6800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2950 6600 2900 6600
+Wire Wire Line
+	2950 6800 2900 6800
+Text Label 2250 6800 0    50   ~ 0
+CS18
+Wire Wire Line
+	2700 6800 2250 6800
+Text Label 2250 6600 0    50   ~ 0
+CS17
+Wire Wire Line
+	2700 6600 2250 6600
+Text Label 2250 6400 0    50   ~ 0
+CS16
+Wire Wire Line
+	2700 6400 2250 6400
+Wire Wire Line
+	2950 6300 2950 6400
+Wire Wire Line
+	2950 6400 3450 6400
+Wire Wire Line
+	2950 6600 3450 6600
+Wire Wire Line
+	2950 6700 2950 6800
+Wire Wire Line
+	2950 6600 2950 6500
+$Comp
+L Device:LED_RABG D83
+U 1 1 60A16767
+P 3650 6500
+F 0 "D83" H 3650 6997 50  0000 C CNN
+F 1 "LED_RABG" H 3650 6906 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3650 6450 50  0001 C CNN
+F 3 "~" H 3650 6450 50  0001 C CNN
+	1    3650 6500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 6300 3450 6400
+Wire Wire Line
+	3450 6600 3450 6500
+Wire Wire Line
+	2950 6800 3450 6800
+Wire Wire Line
+	3450 6800 3450 6700
+Connection ~ 3450 6800
+Connection ~ 3450 6600
+Connection ~ 3450 6400
+$Comp
+L Device:LED_RABG D89
+U 1 1 60A16774
+P 4150 6500
+F 0 "D89" H 4150 6997 50  0000 C CNN
+F 1 "LED_RABG" H 4150 6906 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4150 6450 50  0001 C CNN
+F 3 "~" H 4150 6450 50  0001 C CNN
+	1    4150 6500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 6400 3950 6400
+Wire Wire Line
+	3450 6600 3950 6600
+Wire Wire Line
+	3450 6800 3950 6800
+Wire Wire Line
+	3950 6300 3950 6400
+Wire Wire Line
+	3950 6500 3950 6600
+Wire Wire Line
+	3950 6700 3950 6800
+Wire Wire Line
+	3350 6500 3350 5650
+Wire Wire Line
+	3350 5650 3350 4800
+Connection ~ 3350 5650
+Connection ~ 3350 3100
+Connection ~ 3350 3950
+Wire Wire Line
+	3350 3950 3350 3100
+Connection ~ 3350 4800
+Wire Wire Line
+	3350 4800 3350 3950
+Wire Wire Line
+	3850 6500 3850 5650
+Connection ~ 3850 3100
+Wire Wire Line
+	3850 3100 3850 2250
+Connection ~ 3850 3950
+Wire Wire Line
+	3850 3950 3850 3100
+Connection ~ 3850 4800
+Wire Wire Line
+	3850 4800 3850 3950
+Connection ~ 3850 5650
+Wire Wire Line
+	3850 5650 3850 4800
+Wire Wire Line
+	4350 6500 4350 5650
+Connection ~ 4350 3100
+Wire Wire Line
+	4350 3100 4350 2250
+Connection ~ 4350 3950
+Wire Wire Line
+	4350 3950 4350 3100
+Connection ~ 4350 4800
+Wire Wire Line
+	4350 4800 4350 3950
+Connection ~ 4350 5650
+Wire Wire Line
+	4350 5650 4350 4800
+Text Label 3350 1550 3    50   ~ 0
+SW1
+Text Label 3850 1550 3    50   ~ 0
+SW2
+Text Label 4350 1550 3    50   ~ 0
+SW3
+Wire Notes Line
+	2150 6900 4950 6900
+Wire Notes Line
+	4950 6900 4950 1350
+Wire Notes Line
+	4950 1350 2150 1350
+Wire Notes Line
+	2150 1350 2150 6900
+Connection ~ 3850 2250
+Connection ~ 4350 2250
+Text Notes 2150 1350 0    50   ~ 0
+RGB LED Matrix\n
+Connection ~ 2950 2150
+Connection ~ 2950 2350
+Connection ~ 2950 2550
+Connection ~ 2950 3000
+Connection ~ 2950 3200
+Connection ~ 2950 3400
+Connection ~ 2950 3850
+Connection ~ 2950 4050
+Connection ~ 2950 4250
+Connection ~ 2950 4700
+Connection ~ 2950 4900
+Connection ~ 2950 5100
+Connection ~ 2950 5550
+Connection ~ 2950 5750
+Connection ~ 2950 5950
+Connection ~ 2950 6400
+Connection ~ 2950 6600
+Connection ~ 2950 6800
+Connection ~ 3350 2250
+Wire Wire Line
+	3350 3100 3350 2250
+$Comp
+L Device:LED_RABG D72
+U 1 1 609D923E
+P 3150 2250
+F 0 "D72" H 3150 2747 50  0000 C CNN
+F 1 "LED_RABG" H 3150 2656 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 2200 50  0001 C CNN
+F 3 "~" H 3150 2200 50  0001 C CNN
+	1    3150 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7650 3950 7650 3750
+Wire Wire Line
+	7400 3850 7400 3950
+Connection ~ 7400 3850
+Wire Wire Line
+	7400 3850 8650 3850
+Wire Notes Line
+	10500 3300 10500 6050
+Wire Notes Line
+	7000 6050 7000 3300
+Wire Notes Line
+	7000 3300 10500 3300
+Wire Notes Line
+	7000 6050 10500 6050
+Connection ~ 7650 3950
+Connection ~ 7650 4250
+Wire Wire Line
+	7650 3950 8100 3950
+Connection ~ 8100 3950
+Wire Wire Line
+	8100 3950 8650 3950
+$Comp
+L Device:LED_RABG D74
+U 1 1 609FE5C1
+P 3150 3950
+F 0 "D74" H 3150 4447 50  0000 C CNN
+F 1 "LED_RABG" H 3150 4356 50  0000 C CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 3150 3900 50  0001 C CNN
+F 3 "~" H 3150 3900 50  0001 C CNN
+	1    3150 3950
+	1    0    0    -1  
+$EndComp
+NoConn ~ 8650 4600
+Wire Wire Line
+	3850 1550 3850 2250
+Wire Wire Line
+	4350 1550 4350 2250
+Wire Wire Line
+	3350 1550 3350 2250
+$EndSCHEMATC

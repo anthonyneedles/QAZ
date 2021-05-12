@@ -1,0 +1,3592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>C:\opt\QAZ\hardware\QAZ_65\pcb\QAZ_65\QAZ_65.sch</source>
+    <date>5/12/2021 10:32:32 PM</date>
+    <tool>Eeschema (5.1.6)-1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>QAZ 65% Main</title>
+        <company>Anthony Needles</company>
+        <rev>v1.1</rev>
+        <date>2021-05-11</date>
+        <source>QAZ_65.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/QAZ External/" tstamps="/5F96C310/">
+      <title_block>
+        <title>QAZ 65% External</title>
+        <company>Anthony Needles</company>
+        <rev>v1.1</rev>
+        <date>2021-05-11</date>
+        <source>QAZ_65_externals.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/QAZ Keys/" tstamps="/5EEB2DAF/">
+      <title_block>
+        <title>QAZ 65% Keys</title>
+        <company>Anthony Needles</company>
+        <rev>v1.1</rev>
+        <date>2021-05-11</date>
+        <source>QAZ_65_keys.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/QAZ RGB/" tstamps="/609D4C4B/">
+      <title_block>
+        <title>QAZ 65% RGB LEDs</title>
+        <company>Anthony Needles</company>
+        <rev>v1.1</rev>
+        <date>2021-05-11</date>
+        <source>QAZ_65_RGB.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C3">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DA5D9</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DAC7A</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DACAE</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DCB8C</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>10kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DEDBB</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>AP2112K-3.3</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5</footprint>
+      <datasheet>https://www.diodes.com/assets/Datasheets/AP2112.pdf</datasheet>
+      <libsource lib="Regulator_Linear" part="AP2112K-3.3" description="600mA low dropout linear regulator, with enable pin, 3.8V-6V input voltage range, 3.3V fixed positive output, SOT-23-5"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2E3AE6</tstamp>
+    </comp>
+    <comp ref="TP1">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2E5B26</tstamp>
+    </comp>
+    <comp ref="TP5">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2E9482</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2EA441</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2EEF35</tstamp>
+    </comp>
+    <comp ref="SB1">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2EFD55</tstamp>
+    </comp>
+    <comp ref="SB2">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2F5A6F</tstamp>
+    </comp>
+    <comp ref="SB3">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2F6825</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E32AA90</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E32AA97</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>4.7uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E5D8D7E</tstamp>
+    </comp>
+    <comp ref="TP7">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F8CC6B3</tstamp>
+    </comp>
+    <comp ref="TP2">
+      <value>TestPoint_SMD_1812</value>
+      <footprint>QAZ:TestPoint_SMD_1812_HS</footprint>
+      <libsource lib="QAZ" part="TestPoint_SMD_1812" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FCFC0E1</tstamp>
+    </comp>
+    <comp ref="TP3">
+      <value>TestPoint_SMD_1812</value>
+      <footprint>QAZ:TestPoint_SMD_1812_HS</footprint>
+      <libsource lib="QAZ" part="TestPoint_SMD_1812" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FCFD2A8</tstamp>
+    </comp>
+    <comp ref="TP4">
+      <value>TestPoint_SMD_1812</value>
+      <footprint>QAZ:TestPoint_SMD_1812_HS</footprint>
+      <libsource lib="QAZ" part="TestPoint_SMD_1812" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FCFD6F2</tstamp>
+    </comp>
+    <comp ref="TP6">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FC14493</tstamp>
+    </comp>
+    <comp ref="SW1">
+      <value>PTS525</value>
+      <footprint>QAZ:PTS525SM15</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2DC9F1</tstamp>
+    </comp>
+    <comp ref="SW2">
+      <value>JS102011SCQN</value>
+      <footprint>QAZ:JS102011SCQN_SPDT</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_SPDT" description="Switch, single pole double throw"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FE5583C</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>RED</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_ALT" description="Light emitting diode, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E300961</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>1.3kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E30095A</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>GREEN</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_ALT" description="Light emitting diode, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2FCC3B</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>1.3kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2FCBBB</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>BLUE</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_ALT" description="Light emitting diode, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2F9BE9</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>1.69kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2F9708</tstamp>
+    </comp>
+    <comp ref="Y1">
+      <value>8.0000MHz</value>
+      <footprint>QAZ:Crystal_SMD_Abracon_ABM7-2Pin_6.0x3.5mm_HS</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Crystal" description="Two pin crystal"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2D72FB</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>16pF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2D7571</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>16pF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2D7619</tstamp>
+    </comp>
+    <comp ref="SB27">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F716361</tstamp>
+    </comp>
+    <comp ref="SB16">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F715D63</tstamp>
+    </comp>
+    <comp ref="SB15">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F7153A9</tstamp>
+    </comp>
+    <comp ref="SB14">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F712156</tstamp>
+    </comp>
+    <comp ref="SB12">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F70BDB9</tstamp>
+    </comp>
+    <comp ref="SB26">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6012DCE7</tstamp>
+    </comp>
+    <comp ref="SB25">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6012DAB7</tstamp>
+    </comp>
+    <comp ref="SB24">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6012D8D0</tstamp>
+    </comp>
+    <comp ref="SB23">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6012D61D</tstamp>
+    </comp>
+    <comp ref="SB22">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>600F2EE7</tstamp>
+    </comp>
+    <comp ref="SB21">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>600F2EE1</tstamp>
+    </comp>
+    <comp ref="SB20">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>600F2EDB</tstamp>
+    </comp>
+    <comp ref="SB8">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60064365</tstamp>
+    </comp>
+    <comp ref="SB7">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60057CAA</tstamp>
+    </comp>
+    <comp ref="SB6">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6004BC73</tstamp>
+    </comp>
+    <comp ref="SB5">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60040097</tstamp>
+    </comp>
+    <comp ref="SB4">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6002780D</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFD1216</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFD1210</tstamp>
+    </comp>
+    <comp ref="SB19">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F78A386</tstamp>
+    </comp>
+    <comp ref="SB18">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F78A164</tstamp>
+    </comp>
+    <comp ref="SB17">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F7895CA</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F27B0EC</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F27B0E6</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F27B0E0</tstamp>
+    </comp>
+    <comp ref="SB13">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F711852</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>2kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>61028747</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>2kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6102874D</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>STM32F042C6Tx</value>
+      <footprint>Package_QFP:LQFP-48_7x7mm_P0.5mm</footprint>
+      <datasheet>http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00105814.pdf</datasheet>
+      <libsource lib="MCU_ST_STM32F0" part="STM32F042C6Tx" description="ARM Cortex-M0 MCU, 32KB flash, 6KB RAM, 48MHz, 2-3.6V, 38 GPIO, LQFP-48"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E2D729B</tstamp>
+    </comp>
+    <comp ref="TP9">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FB5B54A</tstamp>
+    </comp>
+    <comp ref="TP11">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FB5B2AA</tstamp>
+    </comp>
+    <comp ref="TP10">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FB5AE7D</tstamp>
+    </comp>
+    <comp ref="TP8">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F900472</tstamp>
+    </comp>
+    <comp ref="TP12">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E45FCEF</tstamp>
+    </comp>
+    <comp ref="TP14">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E460CFC</tstamp>
+    </comp>
+    <comp ref="TP13">
+      <value>TestPoint</value>
+      <footprint>QAZ:TestPoint_Thruhole_1.0mm</footprint>
+      <libsource lib="QAZ" part="TestPoint_Thruhole_0.7mm" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E460D6E</tstamp>
+    </comp>
+    <comp ref="SB10">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60FEA561</tstamp>
+    </comp>
+    <comp ref="SB9">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60FEA567</tstamp>
+    </comp>
+    <comp ref="SB11">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60CAC6B5</tstamp>
+    </comp>
+    <comp ref="R14">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>5F98A28C</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>5F98A292</tstamp>
+    </comp>
+    <comp ref="CN1">
+      <value>USB2.0_TYPE_C</value>
+      <footprint>QAZ:USB_C_GCT_USB4085</footprint>
+      <libsource lib="QAZ" part="USB2.0_TYPE_C" description=""/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>5F98A2C3</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>5.1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>5F98A2FB</tstamp>
+    </comp>
+    <comp ref="R15">
+      <value>5.1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>5F98A30A</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>1x6 2.54mm</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/QAZ External/" tstamps="/5F96C310/"/>
+      <tstamp>603DD2B3</tstamp>
+    </comp>
+    <comp ref="SW7">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F315CC3</tstamp>
+    </comp>
+    <comp ref="D8">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F315CBD</tstamp>
+    </comp>
+    <comp ref="SW3">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F30B6DF</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F2DC5D8</tstamp>
+    </comp>
+    <comp ref="D5">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F3117C8</tstamp>
+    </comp>
+    <comp ref="SW4">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.50u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F3117CE</tstamp>
+    </comp>
+    <comp ref="SW12">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447C77</tstamp>
+    </comp>
+    <comp ref="D13">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447C9D</tstamp>
+    </comp>
+    <comp ref="SW8">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447CA3</tstamp>
+    </comp>
+    <comp ref="D9">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447CA9</tstamp>
+    </comp>
+    <comp ref="D10">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447CAF</tstamp>
+    </comp>
+    <comp ref="SW9">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F447CB5</tstamp>
+    </comp>
+    <comp ref="SW70">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794A7</tstamp>
+    </comp>
+    <comp ref="D71">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794CA</tstamp>
+    </comp>
+    <comp ref="SW66">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794D0</tstamp>
+    </comp>
+    <comp ref="D67">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794D6</tstamp>
+    </comp>
+    <comp ref="D68">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794DC</tstamp>
+    </comp>
+    <comp ref="SW67">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5F4794E2</tstamp>
+    </comp>
+    <comp ref="SW17">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC5760A</tstamp>
+    </comp>
+    <comp ref="D18">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC57612</tstamp>
+    </comp>
+    <comp ref="SW13">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC57618</tstamp>
+    </comp>
+    <comp ref="D14">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC5761E</tstamp>
+    </comp>
+    <comp ref="D15">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC57624</tstamp>
+    </comp>
+    <comp ref="SW14">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC5762A</tstamp>
+    </comp>
+    <comp ref="SW18">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC60232</tstamp>
+    </comp>
+    <comp ref="D19">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC60238</tstamp>
+    </comp>
+    <comp ref="D20">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6023E</tstamp>
+    </comp>
+    <comp ref="SW19">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC60244</tstamp>
+    </comp>
+    <comp ref="SW22">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC66C14</tstamp>
+    </comp>
+    <comp ref="D23">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC66C1A</tstamp>
+    </comp>
+    <comp ref="D24">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC66C20</tstamp>
+    </comp>
+    <comp ref="SW23">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC66C26</tstamp>
+    </comp>
+    <comp ref="SW30">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_6.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7CA</tstamp>
+    </comp>
+    <comp ref="D31">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7D1</tstamp>
+    </comp>
+    <comp ref="SW26">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7D7</tstamp>
+    </comp>
+    <comp ref="D27">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7DD</tstamp>
+    </comp>
+    <comp ref="D28">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7E3</tstamp>
+    </comp>
+    <comp ref="SW27">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC6B7E9</tstamp>
+    </comp>
+    <comp ref="SW31">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC74678</tstamp>
+    </comp>
+    <comp ref="D32">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7467E</tstamp>
+    </comp>
+    <comp ref="D33">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC74684</tstamp>
+    </comp>
+    <comp ref="SW32">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7468A</tstamp>
+    </comp>
+    <comp ref="SW35">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7AB73</tstamp>
+    </comp>
+    <comp ref="D36">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7AB79</tstamp>
+    </comp>
+    <comp ref="D37">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7AB7F</tstamp>
+    </comp>
+    <comp ref="SW36">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC7AB85</tstamp>
+    </comp>
+    <comp ref="SW43">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A1D</tstamp>
+    </comp>
+    <comp ref="D44">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A24</tstamp>
+    </comp>
+    <comp ref="SW39">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A2A</tstamp>
+    </comp>
+    <comp ref="D40">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A30</tstamp>
+    </comp>
+    <comp ref="D41">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A36</tstamp>
+    </comp>
+    <comp ref="SW40">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC82A3C</tstamp>
+    </comp>
+    <comp ref="SW48">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A0A</tstamp>
+    </comp>
+    <comp ref="D49">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A11</tstamp>
+    </comp>
+    <comp ref="SW44">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A17</tstamp>
+    </comp>
+    <comp ref="D45">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A1D</tstamp>
+    </comp>
+    <comp ref="D46">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A23</tstamp>
+    </comp>
+    <comp ref="SW45">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC89A29</tstamp>
+    </comp>
+    <comp ref="SW53">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC95732</tstamp>
+    </comp>
+    <comp ref="D54">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC95739</tstamp>
+    </comp>
+    <comp ref="SW49">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9573F</tstamp>
+    </comp>
+    <comp ref="D50">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC95745</tstamp>
+    </comp>
+    <comp ref="D51">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9574B</tstamp>
+    </comp>
+    <comp ref="SW50">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC95751</tstamp>
+    </comp>
+    <comp ref="SW58">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB2D</tstamp>
+    </comp>
+    <comp ref="D59">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB34</tstamp>
+    </comp>
+    <comp ref="SW54">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB3A</tstamp>
+    </comp>
+    <comp ref="D55">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB40</tstamp>
+    </comp>
+    <comp ref="D56">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB46</tstamp>
+    </comp>
+    <comp ref="SW55">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FC9EB4C</tstamp>
+    </comp>
+    <comp ref="SW59">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCB4F03</tstamp>
+    </comp>
+    <comp ref="D60">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCB4F09</tstamp>
+    </comp>
+    <comp ref="D61">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCB4F0F</tstamp>
+    </comp>
+    <comp ref="SW60">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCB4F15</tstamp>
+    </comp>
+    <comp ref="SW65">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC0157</tstamp>
+    </comp>
+    <comp ref="D66">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC015E</tstamp>
+    </comp>
+    <comp ref="SW61">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_2.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC0164</tstamp>
+    </comp>
+    <comp ref="D62">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC016A</tstamp>
+    </comp>
+    <comp ref="D63">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC0170</tstamp>
+    </comp>
+    <comp ref="SW62">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.50u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FCC0176</tstamp>
+    </comp>
+    <comp ref="D6">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD7894B</tstamp>
+    </comp>
+    <comp ref="SW5">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.75u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78951</tstamp>
+    </comp>
+    <comp ref="D11">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD7895A</tstamp>
+    </comp>
+    <comp ref="SW10">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78960</tstamp>
+    </comp>
+    <comp ref="D69">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD7896B</tstamp>
+    </comp>
+    <comp ref="SW68">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78971</tstamp>
+    </comp>
+    <comp ref="D16">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD7897F</tstamp>
+    </comp>
+    <comp ref="SW15">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78985</tstamp>
+    </comp>
+    <comp ref="D21">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78990</tstamp>
+    </comp>
+    <comp ref="SW20">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78996</tstamp>
+    </comp>
+    <comp ref="D25">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789A1</tstamp>
+    </comp>
+    <comp ref="SW24">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789A7</tstamp>
+    </comp>
+    <comp ref="D29">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789B2</tstamp>
+    </comp>
+    <comp ref="SW28">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789B8</tstamp>
+    </comp>
+    <comp ref="D34">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789C3</tstamp>
+    </comp>
+    <comp ref="SW33">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789C9</tstamp>
+    </comp>
+    <comp ref="D38">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789D4</tstamp>
+    </comp>
+    <comp ref="SW37">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789DA</tstamp>
+    </comp>
+    <comp ref="D42">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789E5</tstamp>
+    </comp>
+    <comp ref="SW41">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789EB</tstamp>
+    </comp>
+    <comp ref="D47">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789F6</tstamp>
+    </comp>
+    <comp ref="SW46">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD789FC</tstamp>
+    </comp>
+    <comp ref="D52">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A07</tstamp>
+    </comp>
+    <comp ref="SW51">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A0D</tstamp>
+    </comp>
+    <comp ref="D57">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A18</tstamp>
+    </comp>
+    <comp ref="SW56">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A1E</tstamp>
+    </comp>
+    <comp ref="D64">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A3A</tstamp>
+    </comp>
+    <comp ref="SW63">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_2.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FD78A40</tstamp>
+    </comp>
+    <comp ref="D7">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB90FA</tstamp>
+    </comp>
+    <comp ref="SW6">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_2.25u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9100</tstamp>
+    </comp>
+    <comp ref="D12">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9108</tstamp>
+    </comp>
+    <comp ref="SW11">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB910E</tstamp>
+    </comp>
+    <comp ref="D70">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9119</tstamp>
+    </comp>
+    <comp ref="SW69">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB911F</tstamp>
+    </comp>
+    <comp ref="D17">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB912D</tstamp>
+    </comp>
+    <comp ref="SW16">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9133</tstamp>
+    </comp>
+    <comp ref="D22">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB913E</tstamp>
+    </comp>
+    <comp ref="SW21">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9144</tstamp>
+    </comp>
+    <comp ref="D26">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB914F</tstamp>
+    </comp>
+    <comp ref="SW25">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9155</tstamp>
+    </comp>
+    <comp ref="D30">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9160</tstamp>
+    </comp>
+    <comp ref="SW29">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9166</tstamp>
+    </comp>
+    <comp ref="D35">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9171</tstamp>
+    </comp>
+    <comp ref="SW34">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9177</tstamp>
+    </comp>
+    <comp ref="D39">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9182</tstamp>
+    </comp>
+    <comp ref="SW38">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9188</tstamp>
+    </comp>
+    <comp ref="D43">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9193</tstamp>
+    </comp>
+    <comp ref="SW42">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB9199</tstamp>
+    </comp>
+    <comp ref="D48">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91A4</tstamp>
+    </comp>
+    <comp ref="SW47">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91AA</tstamp>
+    </comp>
+    <comp ref="D53">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91B5</tstamp>
+    </comp>
+    <comp ref="SW52">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91BB</tstamp>
+    </comp>
+    <comp ref="D58">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91C6</tstamp>
+    </comp>
+    <comp ref="SW57">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.75u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91CC</tstamp>
+    </comp>
+    <comp ref="D65">
+      <value>1N4148</value>
+      <footprint>Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</datasheet>
+      <libsource lib="Diode" part="1N4148" description="100V 0.15A standard switching diode, DO-35"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91E8</tstamp>
+    </comp>
+    <comp ref="SW64">
+      <value>Cherry MX</value>
+      <footprint>Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Switch" part="SW_Push" description="Push button switch, generic, two pins"/>
+      <sheetpath names="/QAZ Keys/" tstamps="/5EEB2DAF/"/>
+      <tstamp>5FDB91EE</tstamp>
+    </comp>
+    <comp ref="R35">
+      <value>10kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11BB3</tstamp>
+    </comp>
+    <comp ref="SB33">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11BE7</tstamp>
+    </comp>
+    <comp ref="SB32">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11BED</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>IS31FL3746A</value>
+      <footprint>Package_DFN_QFN:QFN-32-1EP_4x4mm_P0.4mm_EP2.9x2.9mm</footprint>
+      <libsource lib="QAZ" part="IS31FL3746A" description="LED Driver IC 12x4 Output Linear - PWM Dimming 34.5mA 32-QFN (4x4)"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11BF3</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11C00</tstamp>
+    </comp>
+    <comp ref="R34">
+      <value>100kΩ</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11C07</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11C0E</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>0.1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11C20</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A11C2C</tstamp>
+    </comp>
+    <comp ref="R16">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609DD48F</tstamp>
+    </comp>
+    <comp ref="R17">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609DF810</tstamp>
+    </comp>
+    <comp ref="R18">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609E09E5</tstamp>
+    </comp>
+    <comp ref="D78">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609D5551</tstamp>
+    </comp>
+    <comp ref="D84">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609DB48D</tstamp>
+    </comp>
+    <comp ref="D90">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609DDA3E</tstamp>
+    </comp>
+    <comp ref="D73">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE45</tstamp>
+    </comp>
+    <comp ref="R19">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE4B</tstamp>
+    </comp>
+    <comp ref="R20">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE52</tstamp>
+    </comp>
+    <comp ref="R21">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE58</tstamp>
+    </comp>
+    <comp ref="D79">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE6E</tstamp>
+    </comp>
+    <comp ref="D85">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE7B</tstamp>
+    </comp>
+    <comp ref="D91">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609EFE81</tstamp>
+    </comp>
+    <comp ref="D74">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5C1</tstamp>
+    </comp>
+    <comp ref="R22">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5C7</tstamp>
+    </comp>
+    <comp ref="R23">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5CE</tstamp>
+    </comp>
+    <comp ref="R24">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5D4</tstamp>
+    </comp>
+    <comp ref="D80">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5EA</tstamp>
+    </comp>
+    <comp ref="D86">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5F7</tstamp>
+    </comp>
+    <comp ref="D92">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE5FD</tstamp>
+    </comp>
+    <comp ref="D75">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE612</tstamp>
+    </comp>
+    <comp ref="R25">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE618</tstamp>
+    </comp>
+    <comp ref="R26">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE61F</tstamp>
+    </comp>
+    <comp ref="R27">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE625</tstamp>
+    </comp>
+    <comp ref="D81">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE63B</tstamp>
+    </comp>
+    <comp ref="D87">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE648</tstamp>
+    </comp>
+    <comp ref="D93">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609FE64E</tstamp>
+    </comp>
+    <comp ref="D76">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A166ED</tstamp>
+    </comp>
+    <comp ref="R28">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A166F3</tstamp>
+    </comp>
+    <comp ref="R29">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A166FA</tstamp>
+    </comp>
+    <comp ref="R30">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16700</tstamp>
+    </comp>
+    <comp ref="D82">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16716</tstamp>
+    </comp>
+    <comp ref="D88">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16723</tstamp>
+    </comp>
+    <comp ref="D94">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16729</tstamp>
+    </comp>
+    <comp ref="D77">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A1673E</tstamp>
+    </comp>
+    <comp ref="R31">
+      <value>51Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16744</tstamp>
+    </comp>
+    <comp ref="R32">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A1674B</tstamp>
+    </comp>
+    <comp ref="R33">
+      <value>20Ω</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small_US" description="Resistor, small US symbol"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16751</tstamp>
+    </comp>
+    <comp ref="D83">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16767</tstamp>
+    </comp>
+    <comp ref="D89">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A16774</tstamp>
+    </comp>
+    <comp ref="D95">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A1677A</tstamp>
+    </comp>
+    <comp ref="SB28">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A2F175</tstamp>
+    </comp>
+    <comp ref="SB29">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A491B9</tstamp>
+    </comp>
+    <comp ref="SB30">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A5644A</tstamp>
+    </comp>
+    <comp ref="SB31">
+      <value>SolderBridge</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</footprint>
+      <libsource lib="QAZ" part="SolderBridge" description=""/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>60A63380</tstamp>
+    </comp>
+    <comp ref="D72">
+      <value>LED_RABG</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_RABG" description="RGB LED, red/anode/blue/green"/>
+      <sheetpath names="/QAZ RGB/" tstamps="/609D4C4B/"/>
+      <tstamp>609D923E</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector_Generic" part="Conn_01x06">
+      <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Crystal">
+      <description>Two pin crystal</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Crystal*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Y</field>
+        <field name="Value">Crystal</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED_ALT">
+      <description>Light emitting diode, filled shape</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_ALT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED_RABG">
+      <description>RGB LED, red/anode/blue/green</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_RABG</field>
+      </fields>
+      <pins>
+        <pin num="1" name="RK" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+        <pin num="3" name="BK" type="passive"/>
+        <pin num="4" name="GK" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Small_US">
+      <description>Resistor, small US symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small_US</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode" part="1N4148">
+      <aliases>
+        <alias>1N4448</alias>
+        <alias>1N4149</alias>
+        <alias>1N4151</alias>
+        <alias>1N914</alias>
+        <alias>BA243</alias>
+        <alias>BA244</alias>
+        <alias>BA282</alias>
+        <alias>BA283</alias>
+        <alias>BAV17</alias>
+        <alias>BAV18</alias>
+        <alias>BAV19</alias>
+        <alias>BAV20</alias>
+        <alias>BAV21</alias>
+        <alias>BAW75</alias>
+        <alias>BAW76</alias>
+        <alias>BAY93</alias>
+      </aliases>
+      <description>100V 0.15A standard switching diode, DO-35</description>
+      <docs>https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf</docs>
+      <footprints>
+        <fp>D*DO?35*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">1N4148</field>
+        <field name="Footprint">Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_ST_STM32F0" part="STM32F042C4Tx">
+      <aliases>
+        <alias>STM32F042C6Tx</alias>
+      </aliases>
+      <description>ARM Cortex-M0 MCU, 16KB flash, 6KB RAM, 48MHz, 2-3.6V, 38 GPIO, LQFP-48</description>
+      <docs>http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00105814.pdf</docs>
+      <footprints>
+        <fp>LQFP*7x7mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">STM32F042C4Tx</field>
+        <field name="Footprint">Package_QFP:LQFP-48_7x7mm_P0.5mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VBAT" type="power_in"/>
+        <pin num="2" name="PC13" type="BiDi"/>
+        <pin num="3" name="PC14" type="BiDi"/>
+        <pin num="4" name="PC15" type="BiDi"/>
+        <pin num="5" name="PF0" type="input"/>
+        <pin num="6" name="PF1" type="input"/>
+        <pin num="7" name="NRST" type="input"/>
+        <pin num="8" name="VSSA" type="power_in"/>
+        <pin num="9" name="VDDA" type="power_in"/>
+        <pin num="10" name="PA0" type="BiDi"/>
+        <pin num="11" name="PA1" type="BiDi"/>
+        <pin num="12" name="PA2" type="BiDi"/>
+        <pin num="13" name="PA3" type="BiDi"/>
+        <pin num="14" name="PA4" type="BiDi"/>
+        <pin num="15" name="PA5" type="BiDi"/>
+        <pin num="16" name="PA6" type="BiDi"/>
+        <pin num="17" name="PA7" type="BiDi"/>
+        <pin num="18" name="PB0" type="BiDi"/>
+        <pin num="19" name="PB1" type="BiDi"/>
+        <pin num="20" name="PB2" type="BiDi"/>
+        <pin num="21" name="PB10" type="BiDi"/>
+        <pin num="22" name="PB11" type="BiDi"/>
+        <pin num="23" name="VSS" type="power_in"/>
+        <pin num="24" name="VDD" type="power_in"/>
+        <pin num="25" name="PB12" type="BiDi"/>
+        <pin num="26" name="PB13" type="BiDi"/>
+        <pin num="27" name="PB14" type="BiDi"/>
+        <pin num="28" name="PB15" type="BiDi"/>
+        <pin num="29" name="PA8" type="BiDi"/>
+        <pin num="30" name="PA9" type="BiDi"/>
+        <pin num="31" name="PA10" type="BiDi"/>
+        <pin num="32" name="PA11" type="BiDi"/>
+        <pin num="33" name="PA12" type="BiDi"/>
+        <pin num="34" name="PA13" type="BiDi"/>
+        <pin num="35" name="VSS" type="power_in"/>
+        <pin num="36" name="VDDIO2" type="power_in"/>
+        <pin num="37" name="PA14" type="BiDi"/>
+        <pin num="38" name="PA15" type="BiDi"/>
+        <pin num="39" name="PB3" type="BiDi"/>
+        <pin num="40" name="PB4" type="BiDi"/>
+        <pin num="41" name="PB5" type="BiDi"/>
+        <pin num="42" name="PB6" type="BiDi"/>
+        <pin num="43" name="PB7" type="BiDi"/>
+        <pin num="44" name="PF11" type="BiDi"/>
+        <pin num="45" name="PB8" type="BiDi"/>
+        <pin num="46" name="PB9" type="BiDi"/>
+        <pin num="47" name="VSS" type="power_in"/>
+        <pin num="48" name="VDD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="QAZ" part="IS31FL3746A">
+      <description>LED Driver IC 12x4 Output Linear - PWM Dimming 34.5mA 32-QFN (4x4)</description>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">IS31FL3746A</field>
+        <field name="Footprint">Package_DFN_QFN:QFN-32-1EP_4x4mm_P0.4mm_EP2.9x2.9mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="CS2" type="BiDi"/>
+        <pin num="2" name="CS3" type="BiDi"/>
+        <pin num="3" name="CS4" type="BiDi"/>
+        <pin num="4" name="CS5" type="BiDi"/>
+        <pin num="5" name="CS6" type="BiDi"/>
+        <pin num="6" name="CS7" type="BiDi"/>
+        <pin num="7" name="CS8" type="BiDi"/>
+        <pin num="8" name="CS9" type="BiDi"/>
+        <pin num="9" name="GND" type="input"/>
+        <pin num="10" name="CS10" type="BiDi"/>
+        <pin num="11" name="CS11" type="BiDi"/>
+        <pin num="12" name="CS12" type="BiDi"/>
+        <pin num="13" name="CS13" type="BiDi"/>
+        <pin num="14" name="CS14" type="BiDi"/>
+        <pin num="15" name="CS15" type="BiDi"/>
+        <pin num="16" name="CS16" type="BiDi"/>
+        <pin num="17" name="CS17" type="BiDi"/>
+        <pin num="18" name="CS18" type="BiDi"/>
+        <pin num="19" name="VIO" type="power_in"/>
+        <pin num="20" name="SDB" type="input"/>
+        <pin num="21" name="SCL" type="input"/>
+        <pin num="22" name="ADDR1" type="input"/>
+        <pin num="23" name="SDA" type="BiDi"/>
+        <pin num="24" name="ADDR2" type="input"/>
+        <pin num="25" name="SW4" type="BiDi"/>
+        <pin num="26" name="SW3" type="BiDi"/>
+        <pin num="27" name="SW2" type="BiDi"/>
+        <pin num="28" name="SW1" type="BiDi"/>
+        <pin num="29" name="VCC" type="power_in"/>
+        <pin num="30" name="GND" type="input"/>
+        <pin num="31" name="ISET" type="input"/>
+        <pin num="32" name="CS1" type="BiDi"/>
+        <pin num="33" name="EP" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="QAZ" part="SolderBridge">
+      <fields>
+        <field name="Reference">SB</field>
+        <field name="Value">SolderBridge</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="QAZ" part="TestPoint_SMD_1812">
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint_SMD_1812</field>
+        <field name="Footprint">QAZ:TestPoint_SMD_1812_HS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="TP" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="QAZ" part="TestPoint_Thruhole_0.7mm">
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint_Thruhole_0.7mm</field>
+        <field name="Footprint">QAZ:TestPoint_Thruhole_0.7mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="TP" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="QAZ" part="USB2.0_TYPE_C">
+      <fields>
+        <field name="Reference">CN</field>
+        <field name="Value">USB2.0_TYPE_C</field>
+        <field name="Footprint">QAZ:USB_C_GCT_USB4085</field>
+      </fields>
+      <pins>
+        <pin num="A1" name="GND" type="input"/>
+        <pin num="A4" name="VBUS" type="input"/>
+        <pin num="A5" name="CC1" type="input"/>
+        <pin num="A6" name="D+" type="input"/>
+        <pin num="A7" name="D-" type="input"/>
+        <pin num="A8" name="SBU1" type="input"/>
+        <pin num="A9" name="VBUS" type="input"/>
+        <pin num="A12" name="GND" type="input"/>
+        <pin num="B1" name="GND" type="input"/>
+        <pin num="B4" name="VBUS" type="input"/>
+        <pin num="B5" name="CC2" type="input"/>
+        <pin num="B6" name="D+" type="input"/>
+        <pin num="B7" name="D-" type="input"/>
+        <pin num="B8" name="SBU2" type="input"/>
+        <pin num="B9" name="VBUS" type="input"/>
+        <pin num="B12" name="GND" type="input"/>
+        <pin num="S1" name="SHIELD" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="AP2204K-1.5">
+      <aliases>
+        <alias>AP2204K-1.8</alias>
+        <alias>AP2204K-2.5</alias>
+        <alias>AP2204K-2.8</alias>
+        <alias>AP2204K-3.0</alias>
+        <alias>AP2204K-3.3</alias>
+        <alias>AP2204K-5.0</alias>
+        <alias>AP2127K-1.0</alias>
+        <alias>AP2127K-1.2</alias>
+        <alias>AP2127K-1.5</alias>
+        <alias>AP2127K-1.8</alias>
+        <alias>AP2127K-2.5</alias>
+        <alias>AP2127K-2.8</alias>
+        <alias>AP2127K-3.0</alias>
+        <alias>AP2127K-3.3</alias>
+        <alias>AP2127K-4.2</alias>
+        <alias>AP2127K-4.75</alias>
+        <alias>AP2112K-1.2</alias>
+        <alias>AP2112K-1.8</alias>
+        <alias>AP2112K-2.5</alias>
+        <alias>AP2112K-2.6</alias>
+        <alias>AP2112K-3.3</alias>
+      </aliases>
+      <description>150mA low dropout linear regulator, wide input voltage range, 1.5V fixed positive output, SOT-23-5</description>
+      <docs>https://www.diodes.com/assets/Datasheets/AP2204.pdf</docs>
+      <footprints>
+        <fp>SOT?23?5*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AP2204K-1.5</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="NC" type="NotConnected"/>
+        <pin num="5" name="VOUT" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="Switch" part="SW_Push">
+      <description>Push button switch, generic, two pins</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_Push</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Switch" part="SW_SPDT">
+      <description>Switch, single pole double throw</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_SPDT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector_Generic">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="Diode">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Diode.lib</uri>
+    </library>
+    <library logical="MCU_ST_STM32F0">
+      <uri>C:\Program Files\KiCad\share\kicad\library/MCU_ST_STM32F0.lib</uri>
+    </library>
+    <library logical="QAZ">
+      <uri>C:\opt\QAZ\hardware\QAZ_65\pcb\QAZ_65/../../../common/pcb/QAZ_lib.pretty/QAZ.lib</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Regulator_Linear.lib</uri>
+    </library>
+    <library logical="Switch">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Switch.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(U2-Pad12)">
+      <node ref="U2" pin="12"/>
+    </net>
+    <net code="2" name="Net-(U2-Pad14)">
+      <node ref="U2" pin="14"/>
+    </net>
+    <net code="3" name="Net-(U2-Pad13)">
+      <node ref="U2" pin="13"/>
+    </net>
+    <net code="4" name="Net-(U2-Pad11)">
+      <node ref="U2" pin="11"/>
+    </net>
+    <net code="5" name="Net-(U2-Pad10)">
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="6" name="/LED_SCL">
+      <node ref="U2" pin="21"/>
+      <node ref="R5" pin="1"/>
+      <node ref="TP10" pin="1"/>
+      <node ref="SB10" pin="1"/>
+    </net>
+    <net code="7" name="/LED_SDA">
+      <node ref="R6" pin="1"/>
+      <node ref="U2" pin="22"/>
+      <node ref="TP11" pin="1"/>
+      <node ref="SB9" pin="1"/>
+    </net>
+    <net code="8" name="+3V3">
+      <node ref="TP7" pin="1"/>
+      <node ref="C3" pin="2"/>
+      <node ref="U2" pin="9"/>
+      <node ref="R2" pin="2"/>
+      <node ref="C6" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="SB3" pin="2"/>
+      <node ref="J1" pin="4"/>
+      <node ref="SB32" pin="1"/>
+      <node ref="C13" pin="2"/>
+      <node ref="C11" pin="2"/>
+      <node ref="C9" pin="2"/>
+      <node ref="SW2" pin="3"/>
+      <node ref="R13" pin="2"/>
+      <node ref="U2" pin="24"/>
+      <node ref="U2" pin="48"/>
+      <node ref="R5" pin="2"/>
+      <node ref="R6" pin="2"/>
+      <node ref="U2" pin="1"/>
+      <node ref="U2" pin="36"/>
+    </net>
+    <net code="9" name="/COL12">
+      <node ref="U2" pin="42"/>
+      <node ref="SB6" pin="1"/>
+    </net>
+    <net code="10" name="/ROW04">
+      <node ref="U2" pin="41"/>
+      <node ref="R11" pin="2"/>
+    </net>
+    <net code="11" name="/COL07">
+      <node ref="SB24" pin="2"/>
+      <node ref="U2" pin="40"/>
+    </net>
+    <net code="12" name="/COL14">
+      <node ref="U2" pin="4"/>
+      <node ref="SB8" pin="1"/>
+    </net>
+    <net code="13" name="/HB_LED">
+      <node ref="U2" pin="39"/>
+      <node ref="R3" pin="2"/>
+    </net>
+    <net code="14" name="/USB_D-">
+      <node ref="U2" pin="32"/>
+      <node ref="TP13" pin="1"/>
+      <node ref="SB14" pin="2"/>
+    </net>
+    <net code="15" name="/COL06">
+      <node ref="SB23" pin="2"/>
+      <node ref="U2" pin="31"/>
+    </net>
+    <net code="16" name="/DBG_TX">
+      <node ref="U2" pin="30"/>
+      <node ref="SB12" pin="1"/>
+    </net>
+    <net code="17" name="/COL13">
+      <node ref="U2" pin="3"/>
+      <node ref="SB7" pin="1"/>
+    </net>
+    <net code="18" name="/COL03">
+      <node ref="SB20" pin="2"/>
+      <node ref="U2" pin="26"/>
+    </net>
+    <net code="19" name="/QAZ Keys/COL01">
+      <node ref="SB18" pin="1"/>
+      <node ref="D12" pin="1"/>
+      <node ref="D9" pin="1"/>
+      <node ref="D11" pin="1"/>
+      <node ref="D10" pin="1"/>
+      <node ref="D13" pin="1"/>
+    </net>
+    <net code="20" name="/QAZ Keys/ROW00">
+      <node ref="SW3" pin="2"/>
+      <node ref="SW13" pin="2"/>
+      <node ref="SW66" pin="2"/>
+      <node ref="SW31" pin="2"/>
+      <node ref="SW61" pin="2"/>
+      <node ref="R7" pin="1"/>
+      <node ref="SW54" pin="2"/>
+      <node ref="SW35" pin="2"/>
+      <node ref="SW44" pin="2"/>
+      <node ref="SW18" pin="2"/>
+      <node ref="SW39" pin="2"/>
+      <node ref="SW59" pin="2"/>
+      <node ref="SW49" pin="2"/>
+      <node ref="SW8" pin="2"/>
+      <node ref="SW22" pin="2"/>
+      <node ref="SW26" pin="2"/>
+    </net>
+    <net code="21" name="/ROW00">
+      <node ref="U2" pin="18"/>
+      <node ref="R7" pin="2"/>
+    </net>
+    <net code="22" name="/QAZ Keys/COL00">
+      <node ref="D7" pin="1"/>
+      <node ref="D4" pin="1"/>
+      <node ref="SB17" pin="1"/>
+      <node ref="D8" pin="1"/>
+      <node ref="D6" pin="1"/>
+      <node ref="D5" pin="1"/>
+    </net>
+    <net code="23" name="/QAZ Keys/COL02">
+      <node ref="SB19" pin="1"/>
+      <node ref="D16" pin="1"/>
+      <node ref="D15" pin="1"/>
+      <node ref="D17" pin="1"/>
+      <node ref="D14" pin="1"/>
+      <node ref="D18" pin="1"/>
+    </net>
+    <net code="24" name="/QAZ Keys/ROW03">
+      <node ref="SW42" pin="2"/>
+      <node ref="SW38" pin="2"/>
+      <node ref="SW6" pin="2"/>
+      <node ref="SW34" pin="2"/>
+      <node ref="SW64" pin="2"/>
+      <node ref="SW11" pin="2"/>
+      <node ref="R10" pin="1"/>
+      <node ref="SW47" pin="2"/>
+      <node ref="SW52" pin="2"/>
+      <node ref="SW21" pin="2"/>
+      <node ref="SW16" pin="2"/>
+      <node ref="SW25" pin="2"/>
+      <node ref="SW29" pin="2"/>
+      <node ref="SW69" pin="2"/>
+      <node ref="SW57" pin="2"/>
+    </net>
+    <net code="25" name="/QAZ Keys/ROW04">
+      <node ref="SW65" pin="2"/>
+      <node ref="SW58" pin="2"/>
+      <node ref="R11" pin="1"/>
+      <node ref="SW12" pin="2"/>
+      <node ref="SW7" pin="2"/>
+      <node ref="SW30" pin="2"/>
+      <node ref="SW70" pin="2"/>
+      <node ref="SW43" pin="2"/>
+      <node ref="SW53" pin="2"/>
+      <node ref="SW17" pin="2"/>
+      <node ref="SW48" pin="2"/>
+    </net>
+    <net code="26" name="/ROW03">
+      <node ref="R10" pin="2"/>
+      <node ref="U2" pin="25"/>
+    </net>
+    <net code="27" name="/USB_D+">
+      <node ref="TP14" pin="1"/>
+      <node ref="SB13" pin="2"/>
+      <node ref="U2" pin="33"/>
+    </net>
+    <net code="28" name="/QAZ External/USB_D+">
+      <node ref="CN1" pin="A6"/>
+      <node ref="SB13" pin="1"/>
+      <node ref="CN1" pin="B6"/>
+    </net>
+    <net code="29" name="/ROW01">
+      <node ref="R8" pin="2"/>
+      <node ref="U2" pin="19"/>
+    </net>
+    <net code="30" name="/QAZ Keys/ROW01">
+      <node ref="SW45" pin="2"/>
+      <node ref="SW50" pin="2"/>
+      <node ref="SW55" pin="2"/>
+      <node ref="SW36" pin="2"/>
+      <node ref="SW19" pin="2"/>
+      <node ref="SW4" pin="2"/>
+      <node ref="SW67" pin="2"/>
+      <node ref="SW23" pin="2"/>
+      <node ref="SW9" pin="2"/>
+      <node ref="SW27" pin="2"/>
+      <node ref="SW62" pin="2"/>
+      <node ref="SW60" pin="2"/>
+      <node ref="SW40" pin="2"/>
+      <node ref="SW32" pin="2"/>
+      <node ref="SW14" pin="2"/>
+      <node ref="R8" pin="1"/>
+    </net>
+    <net code="31" name="/QAZ Keys/ROW02">
+      <node ref="SW24" pin="2"/>
+      <node ref="SW20" pin="2"/>
+      <node ref="SW46" pin="2"/>
+      <node ref="SW33" pin="2"/>
+      <node ref="SW15" pin="2"/>
+      <node ref="SW28" pin="2"/>
+      <node ref="SW37" pin="2"/>
+      <node ref="SW68" pin="2"/>
+      <node ref="SW5" pin="2"/>
+      <node ref="R9" pin="1"/>
+      <node ref="SW56" pin="2"/>
+      <node ref="SW51" pin="2"/>
+      <node ref="SW63" pin="2"/>
+      <node ref="SW10" pin="2"/>
+      <node ref="SW41" pin="2"/>
+    </net>
+    <net code="32" name="/ROW02">
+      <node ref="R9" pin="2"/>
+      <node ref="U2" pin="38"/>
+    </net>
+    <net code="33" name="/COL02">
+      <node ref="SB19" pin="2"/>
+      <node ref="U2" pin="17"/>
+    </net>
+    <net code="34" name="/COL01">
+      <node ref="U2" pin="16"/>
+      <node ref="SB18" pin="2"/>
+    </net>
+    <net code="35" name="/COL00">
+      <node ref="U2" pin="15"/>
+      <node ref="SB17" pin="2"/>
+    </net>
+    <net code="36" name="/CLKOUT">
+      <node ref="TP12" pin="1"/>
+      <node ref="U2" pin="29"/>
+    </net>
+    <net code="37" name="/SWCLK">
+      <node ref="SB16" pin="2"/>
+      <node ref="U2" pin="37"/>
+    </net>
+    <net code="38" name="/SWDIO">
+      <node ref="SB15" pin="2"/>
+      <node ref="U2" pin="34"/>
+    </net>
+    <net code="39" name="GND">
+      <node ref="U3" pin="33"/>
+      <node ref="U3" pin="22"/>
+      <node ref="R15" pin="1"/>
+      <node ref="U3" pin="30"/>
+      <node ref="U2" pin="8"/>
+      <node ref="U3" pin="24"/>
+      <node ref="C2" pin="1"/>
+      <node ref="J1" pin="5"/>
+      <node ref="U1" pin="2"/>
+      <node ref="C12" pin="1"/>
+      <node ref="C4" pin="1"/>
+      <node ref="CN1" pin="S1"/>
+      <node ref="CN1" pin="A12"/>
+      <node ref="CN1" pin="A1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="TP3" pin="1"/>
+      <node ref="TP2" pin="1"/>
+      <node ref="R14" pin="1"/>
+      <node ref="R12" pin="1"/>
+      <node ref="C10" pin="1"/>
+      <node ref="C11" pin="1"/>
+      <node ref="D3" pin="1"/>
+      <node ref="CN1" pin="B12"/>
+      <node ref="C9" pin="1"/>
+      <node ref="SW2" pin="1"/>
+      <node ref="CN1" pin="B1"/>
+      <node ref="SW1" pin="1"/>
+      <node ref="TP6" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="TP4" pin="1"/>
+      <node ref="C6" pin="1"/>
+      <node ref="C13" pin="1"/>
+      <node ref="U2" pin="23"/>
+      <node ref="C15" pin="1"/>
+      <node ref="C7" pin="2"/>
+      <node ref="U3" pin="9"/>
+      <node ref="D2" pin="1"/>
+      <node ref="C14" pin="1"/>
+      <node ref="D1" pin="1"/>
+      <node ref="R34" pin="1"/>
+      <node ref="C8" pin="2"/>
+      <node ref="R35" pin="1"/>
+      <node ref="U2" pin="47"/>
+      <node ref="U2" pin="35"/>
+      <node ref="C3" pin="1"/>
+    </net>
+    <net code="40" name="/LED_SDB">
+      <node ref="SB11" pin="1"/>
+      <node ref="TP9" pin="1"/>
+      <node ref="U2" pin="20"/>
+    </net>
+    <net code="41" name="/QAZ RGB/LED_SDB">
+      <node ref="U3" pin="20"/>
+      <node ref="SB11" pin="2"/>
+      <node ref="C14" pin="2"/>
+      <node ref="R34" pin="2"/>
+    </net>
+    <net code="42" name="/QAZ RGB/LED_SCL">
+      <node ref="U3" pin="21"/>
+      <node ref="SB10" pin="2"/>
+    </net>
+    <net code="43" name="/QAZ RGB/LED_SDA">
+      <node ref="U3" pin="23"/>
+      <node ref="SB9" pin="2"/>
+    </net>
+    <net code="44" name="/BOOT0">
+      <node ref="U2" pin="44"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="45" name="/OSC_OUT">
+      <node ref="C8" pin="1"/>
+      <node ref="Y1" pin="2"/>
+      <node ref="U2" pin="6"/>
+    </net>
+    <net code="46" name="/OSC_IN">
+      <node ref="C7" pin="1"/>
+      <node ref="U2" pin="5"/>
+      <node ref="Y1" pin="1"/>
+    </net>
+    <net code="47" name="/nRESET">
+      <node ref="U2" pin="7"/>
+      <node ref="TP8" pin="1"/>
+      <node ref="SB27" pin="1"/>
+      <node ref="SB1" pin="2"/>
+    </net>
+    <net code="48" name="/COL08">
+      <node ref="SB25" pin="2"/>
+      <node ref="U2" pin="43"/>
+    </net>
+    <net code="49" name="/COL09">
+      <node ref="U2" pin="45"/>
+      <node ref="SB26" pin="2"/>
+    </net>
+    <net code="50" name="/COL04">
+      <node ref="U2" pin="27"/>
+      <node ref="SB21" pin="2"/>
+    </net>
+    <net code="51" name="/COL05">
+      <node ref="U2" pin="28"/>
+      <node ref="SB22" pin="2"/>
+    </net>
+    <net code="52" name="Net-(SB2-Pad2)">
+      <node ref="U1" pin="1"/>
+      <node ref="U1" pin="3"/>
+      <node ref="SB2" pin="2"/>
+    </net>
+    <net code="53" name="Net-(D3-Pad2)">
+      <node ref="D3" pin="2"/>
+      <node ref="R3" pin="1"/>
+    </net>
+    <net code="54" name="+5V">
+      <node ref="C2" pin="2"/>
+      <node ref="C12" pin="2"/>
+      <node ref="SB2" pin="1"/>
+      <node ref="SB33" pin="1"/>
+      <node ref="CN1" pin="A9"/>
+      <node ref="CN1" pin="A4"/>
+      <node ref="C15" pin="2"/>
+      <node ref="CN1" pin="B4"/>
+      <node ref="CN1" pin="B9"/>
+      <node ref="C4" pin="2"/>
+      <node ref="TP1" pin="1"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="55" name="Net-(R4-Pad1)">
+      <node ref="SW2" pin="2"/>
+      <node ref="R4" pin="1"/>
+    </net>
+    <net code="56" name="Net-(C1-Pad2)">
+      <node ref="SW1" pin="2"/>
+      <node ref="SB1" pin="1"/>
+      <node ref="C1" pin="2"/>
+    </net>
+    <net code="57" name="Net-(C10-Pad2)">
+      <node ref="TP5" pin="1"/>
+      <node ref="U1" pin="5"/>
+      <node ref="C10" pin="2"/>
+      <node ref="SB3" pin="1"/>
+    </net>
+    <net code="58" name="Net-(U1-Pad4)">
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="59" name="/QAZ Keys/COL03">
+      <node ref="D21" pin="1"/>
+      <node ref="SB20" pin="1"/>
+      <node ref="D22" pin="1"/>
+      <node ref="D20" pin="1"/>
+      <node ref="D19" pin="1"/>
+    </net>
+    <net code="60" name="/QAZ Keys/COL04">
+      <node ref="D23" pin="1"/>
+      <node ref="D25" pin="1"/>
+      <node ref="SB21" pin="1"/>
+      <node ref="D24" pin="1"/>
+      <node ref="D26" pin="1"/>
+    </net>
+    <net code="61" name="/QAZ Keys/COL05">
+      <node ref="D31" pin="1"/>
+      <node ref="D30" pin="1"/>
+      <node ref="D27" pin="1"/>
+      <node ref="D29" pin="1"/>
+      <node ref="D28" pin="1"/>
+      <node ref="SB22" pin="1"/>
+    </net>
+    <net code="62" name="/QAZ Keys/COL06">
+      <node ref="D34" pin="1"/>
+      <node ref="D35" pin="1"/>
+      <node ref="SB23" pin="1"/>
+      <node ref="D32" pin="1"/>
+      <node ref="D33" pin="1"/>
+    </net>
+    <net code="63" name="/QAZ Keys/COL07">
+      <node ref="D36" pin="1"/>
+      <node ref="D39" pin="1"/>
+      <node ref="D38" pin="1"/>
+      <node ref="SB24" pin="1"/>
+      <node ref="D37" pin="1"/>
+    </net>
+    <net code="64" name="/QAZ Keys/COL08">
+      <node ref="D42" pin="1"/>
+      <node ref="D40" pin="1"/>
+      <node ref="D43" pin="1"/>
+      <node ref="D44" pin="1"/>
+      <node ref="SB25" pin="1"/>
+      <node ref="D41" pin="1"/>
+    </net>
+    <net code="65" name="/QAZ Keys/COL09">
+      <node ref="D49" pin="1"/>
+      <node ref="D46" pin="1"/>
+      <node ref="D47" pin="1"/>
+      <node ref="D48" pin="1"/>
+      <node ref="D45" pin="1"/>
+      <node ref="SB26" pin="1"/>
+    </net>
+    <net code="66" name="/QAZ Keys/COL10">
+      <node ref="D54" pin="1"/>
+      <node ref="D51" pin="1"/>
+      <node ref="D50" pin="1"/>
+      <node ref="SB4" pin="2"/>
+      <node ref="D52" pin="1"/>
+      <node ref="D53" pin="1"/>
+    </net>
+    <net code="67" name="/COL10">
+      <node ref="U2" pin="46"/>
+      <node ref="SB4" pin="1"/>
+    </net>
+    <net code="68" name="/QAZ Keys/COL11">
+      <node ref="D59" pin="1"/>
+      <node ref="D55" pin="1"/>
+      <node ref="D58" pin="1"/>
+      <node ref="SB5" pin="2"/>
+      <node ref="D56" pin="1"/>
+      <node ref="D57" pin="1"/>
+    </net>
+    <net code="69" name="/COL11">
+      <node ref="U2" pin="2"/>
+      <node ref="SB5" pin="1"/>
+    </net>
+    <net code="70" name="/QAZ Keys/COL12">
+      <node ref="D60" pin="1"/>
+      <node ref="D61" pin="1"/>
+      <node ref="SB6" pin="2"/>
+    </net>
+    <net code="71" name="/QAZ Keys/COL13">
+      <node ref="D65" pin="1"/>
+      <node ref="D64" pin="1"/>
+      <node ref="D66" pin="1"/>
+      <node ref="D63" pin="1"/>
+      <node ref="D62" pin="1"/>
+      <node ref="SB7" pin="2"/>
+    </net>
+    <net code="72" name="/QAZ Keys/COL14">
+      <node ref="D70" pin="1"/>
+      <node ref="D69" pin="1"/>
+      <node ref="D71" pin="1"/>
+      <node ref="D67" pin="1"/>
+      <node ref="D68" pin="1"/>
+      <node ref="SB8" pin="2"/>
+    </net>
+    <net code="73" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="R1" pin="1"/>
+    </net>
+    <net code="74" name="Net-(D2-Pad2)">
+      <node ref="R2" pin="1"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="75" name="/QAZ External/DBG_TX">
+      <node ref="J1" pin="3"/>
+      <node ref="SB12" pin="2"/>
+    </net>
+    <net code="76" name="/QAZ External/USB_D-">
+      <node ref="CN1" pin="A7"/>
+      <node ref="CN1" pin="B7"/>
+      <node ref="SB14" pin="1"/>
+    </net>
+    <net code="77" name="/QAZ External/nRESET">
+      <node ref="SB27" pin="2"/>
+      <node ref="J1" pin="6"/>
+    </net>
+    <net code="78" name="/QAZ External/SWCLK">
+      <node ref="J1" pin="1"/>
+      <node ref="R14" pin="2"/>
+      <node ref="SB16" pin="1"/>
+    </net>
+    <net code="79" name="/QAZ External/SWDIO">
+      <node ref="J1" pin="2"/>
+      <node ref="R13" pin="1"/>
+      <node ref="SB15" pin="1"/>
+    </net>
+    <net code="80" name="Net-(D25-Pad2)">
+      <node ref="SW24" pin="1"/>
+      <node ref="D25" pin="2"/>
+    </net>
+    <net code="81" name="Net-(D21-Pad2)">
+      <node ref="SW20" pin="1"/>
+      <node ref="D21" pin="2"/>
+    </net>
+    <net code="82" name="Net-(D29-Pad2)">
+      <node ref="SW28" pin="1"/>
+      <node ref="D29" pin="2"/>
+    </net>
+    <net code="83" name="Net-(D69-Pad2)">
+      <node ref="D69" pin="2"/>
+      <node ref="SW68" pin="1"/>
+    </net>
+    <net code="84" name="Net-(D16-Pad2)">
+      <node ref="D16" pin="2"/>
+      <node ref="SW15" pin="1"/>
+    </net>
+    <net code="85" name="Net-(D47-Pad2)">
+      <node ref="SW46" pin="1"/>
+      <node ref="D47" pin="2"/>
+    </net>
+    <net code="86" name="Net-(D52-Pad2)">
+      <node ref="SW51" pin="1"/>
+      <node ref="D52" pin="2"/>
+    </net>
+    <net code="87" name="Net-(D34-Pad2)">
+      <node ref="SW33" pin="1"/>
+      <node ref="D34" pin="2"/>
+    </net>
+    <net code="88" name="Net-(D38-Pad2)">
+      <node ref="SW37" pin="1"/>
+      <node ref="D38" pin="2"/>
+    </net>
+    <net code="89" name="Net-(D42-Pad2)">
+      <node ref="D42" pin="2"/>
+      <node ref="SW41" pin="1"/>
+    </net>
+    <net code="90" name="Net-(D56-Pad2)">
+      <node ref="SW55" pin="1"/>
+      <node ref="D56" pin="2"/>
+    </net>
+    <net code="91" name="Net-(D60-Pad2)">
+      <node ref="D60" pin="2"/>
+      <node ref="SW59" pin="1"/>
+    </net>
+    <net code="92" name="Net-(D61-Pad2)">
+      <node ref="SW60" pin="1"/>
+      <node ref="D61" pin="2"/>
+    </net>
+    <net code="93" name="Net-(D59-Pad2)">
+      <node ref="D59" pin="2"/>
+      <node ref="SW58" pin="1"/>
+    </net>
+    <net code="94" name="Net-(D55-Pad2)">
+      <node ref="SW54" pin="1"/>
+      <node ref="D55" pin="2"/>
+    </net>
+    <net code="95" name="Net-(D63-Pad2)">
+      <node ref="SW62" pin="1"/>
+      <node ref="D63" pin="2"/>
+    </net>
+    <net code="96" name="Net-(D6-Pad2)">
+      <node ref="SW5" pin="1"/>
+      <node ref="D6" pin="2"/>
+    </net>
+    <net code="97" name="Net-(D11-Pad2)">
+      <node ref="D11" pin="2"/>
+      <node ref="SW10" pin="1"/>
+    </net>
+    <net code="98" name="Net-(D66-Pad2)">
+      <node ref="SW65" pin="1"/>
+      <node ref="D66" pin="2"/>
+    </net>
+    <net code="99" name="Net-(D62-Pad2)">
+      <node ref="D62" pin="2"/>
+      <node ref="SW61" pin="1"/>
+    </net>
+    <net code="100" name="Net-(D48-Pad2)">
+      <node ref="D48" pin="2"/>
+      <node ref="SW47" pin="1"/>
+    </net>
+    <net code="101" name="Net-(D53-Pad2)">
+      <node ref="SW52" pin="1"/>
+      <node ref="D53" pin="2"/>
+    </net>
+    <net code="102" name="Net-(D58-Pad2)">
+      <node ref="D58" pin="2"/>
+      <node ref="SW57" pin="1"/>
+    </net>
+    <net code="103" name="Net-(D39-Pad2)">
+      <node ref="D39" pin="2"/>
+      <node ref="SW38" pin="1"/>
+    </net>
+    <net code="104" name="Net-(D43-Pad2)">
+      <node ref="D43" pin="2"/>
+      <node ref="SW42" pin="1"/>
+    </net>
+    <net code="105" name="Net-(D65-Pad2)">
+      <node ref="SW64" pin="1"/>
+      <node ref="D65" pin="2"/>
+    </net>
+    <net code="106" name="Net-(D7-Pad2)">
+      <node ref="D7" pin="2"/>
+      <node ref="SW6" pin="1"/>
+    </net>
+    <net code="107" name="Net-(D12-Pad2)">
+      <node ref="D12" pin="2"/>
+      <node ref="SW11" pin="1"/>
+    </net>
+    <net code="108" name="Net-(D57-Pad2)">
+      <node ref="D57" pin="2"/>
+      <node ref="SW56" pin="1"/>
+    </net>
+    <net code="109" name="Net-(D64-Pad2)">
+      <node ref="SW63" pin="1"/>
+      <node ref="D64" pin="2"/>
+    </net>
+    <net code="110" name="Net-(D70-Pad2)">
+      <node ref="D70" pin="2"/>
+      <node ref="SW69" pin="1"/>
+    </net>
+    <net code="111" name="Net-(D26-Pad2)">
+      <node ref="SW25" pin="1"/>
+      <node ref="D26" pin="2"/>
+    </net>
+    <net code="112" name="Net-(D30-Pad2)">
+      <node ref="SW29" pin="1"/>
+      <node ref="D30" pin="2"/>
+    </net>
+    <net code="113" name="Net-(D35-Pad2)">
+      <node ref="SW34" pin="1"/>
+      <node ref="D35" pin="2"/>
+    </net>
+    <net code="114" name="Net-(D17-Pad2)">
+      <node ref="SW16" pin="1"/>
+      <node ref="D17" pin="2"/>
+    </net>
+    <net code="115" name="Net-(D22-Pad2)">
+      <node ref="D22" pin="2"/>
+      <node ref="SW21" pin="1"/>
+    </net>
+    <net code="116" name="Net-(D14-Pad2)">
+      <node ref="D14" pin="2"/>
+      <node ref="SW13" pin="1"/>
+    </net>
+    <net code="117" name="Net-(D18-Pad2)">
+      <node ref="D18" pin="2"/>
+      <node ref="SW17" pin="1"/>
+    </net>
+    <net code="118" name="Net-(D15-Pad2)">
+      <node ref="SW14" pin="1"/>
+      <node ref="D15" pin="2"/>
+    </net>
+    <net code="119" name="Net-(D23-Pad2)">
+      <node ref="SW22" pin="1"/>
+      <node ref="D23" pin="2"/>
+    </net>
+    <net code="120" name="Net-(D24-Pad2)">
+      <node ref="D24" pin="2"/>
+      <node ref="SW23" pin="1"/>
+    </net>
+    <net code="121" name="Net-(D19-Pad2)">
+      <node ref="D19" pin="2"/>
+      <node ref="SW18" pin="1"/>
+    </net>
+    <net code="122" name="Net-(D20-Pad2)">
+      <node ref="D20" pin="2"/>
+      <node ref="SW19" pin="1"/>
+    </net>
+    <net code="123" name="Net-(D5-Pad2)">
+      <node ref="D5" pin="2"/>
+      <node ref="SW4" pin="1"/>
+    </net>
+    <net code="124" name="Net-(D4-Pad2)">
+      <node ref="D4" pin="2"/>
+      <node ref="SW3" pin="1"/>
+    </net>
+    <net code="125" name="Net-(D13-Pad2)">
+      <node ref="SW12" pin="1"/>
+      <node ref="D13" pin="2"/>
+    </net>
+    <net code="126" name="Net-(D9-Pad2)">
+      <node ref="D9" pin="2"/>
+      <node ref="SW8" pin="1"/>
+    </net>
+    <net code="127" name="Net-(D8-Pad2)">
+      <node ref="SW7" pin="1"/>
+      <node ref="D8" pin="2"/>
+    </net>
+    <net code="128" name="Net-(D68-Pad2)">
+      <node ref="SW67" pin="1"/>
+      <node ref="D68" pin="2"/>
+    </net>
+    <net code="129" name="Net-(D71-Pad2)">
+      <node ref="D71" pin="2"/>
+      <node ref="SW70" pin="1"/>
+    </net>
+    <net code="130" name="Net-(D67-Pad2)">
+      <node ref="SW66" pin="1"/>
+      <node ref="D67" pin="2"/>
+    </net>
+    <net code="131" name="Net-(D10-Pad2)">
+      <node ref="D10" pin="2"/>
+      <node ref="SW9" pin="1"/>
+    </net>
+    <net code="132" name="Net-(D49-Pad2)">
+      <node ref="SW48" pin="1"/>
+      <node ref="D49" pin="2"/>
+    </net>
+    <net code="133" name="Net-(D45-Pad2)">
+      <node ref="D45" pin="2"/>
+      <node ref="SW44" pin="1"/>
+    </net>
+    <net code="134" name="Net-(D44-Pad2)">
+      <node ref="SW43" pin="1"/>
+      <node ref="D44" pin="2"/>
+    </net>
+    <net code="135" name="Net-(D40-Pad2)">
+      <node ref="SW39" pin="1"/>
+      <node ref="D40" pin="2"/>
+    </net>
+    <net code="136" name="Net-(D41-Pad2)">
+      <node ref="D41" pin="2"/>
+      <node ref="SW40" pin="1"/>
+    </net>
+    <net code="137" name="Net-(D54-Pad2)">
+      <node ref="D54" pin="2"/>
+      <node ref="SW53" pin="1"/>
+    </net>
+    <net code="138" name="Net-(D50-Pad2)">
+      <node ref="SW49" pin="1"/>
+      <node ref="D50" pin="2"/>
+    </net>
+    <net code="139" name="Net-(D51-Pad2)">
+      <node ref="SW50" pin="1"/>
+      <node ref="D51" pin="2"/>
+    </net>
+    <net code="140" name="Net-(D46-Pad2)">
+      <node ref="D46" pin="2"/>
+      <node ref="SW45" pin="1"/>
+    </net>
+    <net code="141" name="Net-(D27-Pad2)">
+      <node ref="SW26" pin="1"/>
+      <node ref="D27" pin="2"/>
+    </net>
+    <net code="142" name="Net-(D28-Pad2)">
+      <node ref="SW27" pin="1"/>
+      <node ref="D28" pin="2"/>
+    </net>
+    <net code="143" name="Net-(D31-Pad2)">
+      <node ref="D31" pin="2"/>
+      <node ref="SW30" pin="1"/>
+    </net>
+    <net code="144" name="Net-(D36-Pad2)">
+      <node ref="SW35" pin="1"/>
+      <node ref="D36" pin="2"/>
+    </net>
+    <net code="145" name="Net-(D37-Pad2)">
+      <node ref="SW36" pin="1"/>
+      <node ref="D37" pin="2"/>
+    </net>
+    <net code="146" name="Net-(D32-Pad2)">
+      <node ref="SW31" pin="1"/>
+      <node ref="D32" pin="2"/>
+    </net>
+    <net code="147" name="Net-(D33-Pad2)">
+      <node ref="SW32" pin="1"/>
+      <node ref="D33" pin="2"/>
+    </net>
+    <net code="148" name="Net-(CN1-PadA8)">
+      <node ref="CN1" pin="A8"/>
+    </net>
+    <net code="149" name="Net-(CN1-PadB8)">
+      <node ref="CN1" pin="B8"/>
+    </net>
+    <net code="150" name="Net-(CN1-PadA5)">
+      <node ref="CN1" pin="A5"/>
+      <node ref="R12" pin="2"/>
+    </net>
+    <net code="151" name="Net-(CN1-PadB5)">
+      <node ref="CN1" pin="B5"/>
+      <node ref="R15" pin="2"/>
+    </net>
+    <net code="152" name="/QAZ RGB/CS4">
+      <node ref="U3" pin="3"/>
+      <node ref="R30" pin="2"/>
+    </net>
+    <net code="153" name="/QAZ RGB/CS5">
+      <node ref="U3" pin="4"/>
+      <node ref="R29" pin="2"/>
+    </net>
+    <net code="154" name="/QAZ RGB/CS6">
+      <node ref="U3" pin="5"/>
+      <node ref="R28" pin="2"/>
+    </net>
+    <net code="155" name="Net-(D76-Pad1)">
+      <node ref="D76" pin="1"/>
+      <node ref="R28" pin="1"/>
+      <node ref="D88" pin="1"/>
+      <node ref="D82" pin="1"/>
+      <node ref="D94" pin="1"/>
+    </net>
+    <net code="156" name="Net-(D76-Pad3)">
+      <node ref="D94" pin="3"/>
+      <node ref="D82" pin="3"/>
+      <node ref="D76" pin="3"/>
+      <node ref="R30" pin="1"/>
+      <node ref="D88" pin="3"/>
+    </net>
+    <net code="157" name="Net-(D76-Pad4)">
+      <node ref="R29" pin="1"/>
+      <node ref="D82" pin="4"/>
+      <node ref="D76" pin="4"/>
+      <node ref="D94" pin="4"/>
+      <node ref="D88" pin="4"/>
+    </net>
+    <net code="158" name="Net-(D75-Pad1)">
+      <node ref="D87" pin="1"/>
+      <node ref="D81" pin="1"/>
+      <node ref="R25" pin="1"/>
+      <node ref="D75" pin="1"/>
+      <node ref="D93" pin="1"/>
+    </net>
+    <net code="159" name="Net-(D75-Pad4)">
+      <node ref="D87" pin="4"/>
+      <node ref="R26" pin="1"/>
+      <node ref="D75" pin="4"/>
+      <node ref="D81" pin="4"/>
+      <node ref="D93" pin="4"/>
+    </net>
+    <net code="160" name="Net-(D75-Pad3)">
+      <node ref="D81" pin="3"/>
+      <node ref="R27" pin="1"/>
+      <node ref="D87" pin="3"/>
+      <node ref="D75" pin="3"/>
+      <node ref="D93" pin="3"/>
+    </net>
+    <net code="161" name="/QAZ RGB/CS7">
+      <node ref="R27" pin="2"/>
+      <node ref="U3" pin="6"/>
+    </net>
+    <net code="162" name="/QAZ RGB/CS8">
+      <node ref="R26" pin="2"/>
+      <node ref="U3" pin="7"/>
+    </net>
+    <net code="163" name="/QAZ RGB/CS9">
+      <node ref="U3" pin="8"/>
+      <node ref="R25" pin="2"/>
+    </net>
+    <net code="164" name="Net-(D90-Pad2)">
+      <node ref="D90" pin="2"/>
+      <node ref="D95" pin="2"/>
+      <node ref="D91" pin="2"/>
+      <node ref="D92" pin="2"/>
+      <node ref="SB31" pin="1"/>
+      <node ref="D94" pin="2"/>
+      <node ref="D93" pin="2"/>
+    </net>
+    <net code="165" name="/QAZ RGB/SW1">
+      <node ref="U3" pin="28"/>
+      <node ref="SB28" pin="2"/>
+    </net>
+    <net code="166" name="Net-(D84-Pad2)">
+      <node ref="D86" pin="2"/>
+      <node ref="D89" pin="2"/>
+      <node ref="D88" pin="2"/>
+      <node ref="D85" pin="2"/>
+      <node ref="D84" pin="2"/>
+      <node ref="D87" pin="2"/>
+      <node ref="SB30" pin="1"/>
+    </net>
+    <net code="167" name="Net-(D77-Pad1)">
+      <node ref="D89" pin="1"/>
+      <node ref="D95" pin="1"/>
+      <node ref="D83" pin="1"/>
+      <node ref="R31" pin="1"/>
+      <node ref="D77" pin="1"/>
+    </net>
+    <net code="168" name="Net-(SB32-Pad2)">
+      <node ref="SB32" pin="2"/>
+      <node ref="U3" pin="19"/>
+    </net>
+    <net code="169" name="Net-(SB33-Pad2)">
+      <node ref="SB33" pin="2"/>
+      <node ref="U3" pin="29"/>
+    </net>
+    <net code="170" name="/QAZ RGB/SW2">
+      <node ref="SB29" pin="2"/>
+      <node ref="U3" pin="27"/>
+    </net>
+    <net code="171" name="/QAZ RGB/SW3">
+      <node ref="U3" pin="26"/>
+      <node ref="SB30" pin="2"/>
+    </net>
+    <net code="172" name="/QAZ RGB/SW4">
+      <node ref="U3" pin="25"/>
+      <node ref="SB31" pin="2"/>
+    </net>
+    <net code="173" name="Net-(D74-Pad4)">
+      <node ref="D86" pin="4"/>
+      <node ref="D92" pin="4"/>
+      <node ref="D74" pin="4"/>
+      <node ref="R23" pin="1"/>
+      <node ref="D80" pin="4"/>
+    </net>
+    <net code="174" name="/QAZ RGB/CS2">
+      <node ref="R32" pin="2"/>
+      <node ref="U3" pin="1"/>
+    </net>
+    <net code="175" name="/QAZ RGB/CS3">
+      <node ref="U3" pin="2"/>
+      <node ref="R31" pin="2"/>
+    </net>
+    <net code="176" name="Net-(D78-Pad2)">
+      <node ref="D80" pin="2"/>
+      <node ref="D83" pin="2"/>
+      <node ref="D82" pin="2"/>
+      <node ref="D78" pin="2"/>
+      <node ref="D79" pin="2"/>
+      <node ref="SB29" pin="1"/>
+      <node ref="D81" pin="2"/>
+    </net>
+    <net code="177" name="/QAZ RGB/CS1">
+      <node ref="R33" pin="2"/>
+      <node ref="U3" pin="32"/>
+    </net>
+    <net code="178" name="Net-(D77-Pad3)">
+      <node ref="D89" pin="3"/>
+      <node ref="D95" pin="3"/>
+      <node ref="D83" pin="3"/>
+      <node ref="D77" pin="3"/>
+      <node ref="R33" pin="1"/>
+    </net>
+    <net code="179" name="Net-(D72-Pad2)">
+      <node ref="SB28" pin="1"/>
+      <node ref="D72" pin="2"/>
+      <node ref="D77" pin="2"/>
+      <node ref="D73" pin="2"/>
+      <node ref="D74" pin="2"/>
+      <node ref="D76" pin="2"/>
+      <node ref="D75" pin="2"/>
+    </net>
+    <net code="180" name="Net-(D77-Pad4)">
+      <node ref="D89" pin="4"/>
+      <node ref="D95" pin="4"/>
+      <node ref="R32" pin="1"/>
+      <node ref="D77" pin="4"/>
+      <node ref="D83" pin="4"/>
+    </net>
+    <net code="181" name="/QAZ RGB/CS18">
+      <node ref="U3" pin="18"/>
+      <node ref="R16" pin="2"/>
+    </net>
+    <net code="182" name="/QAZ RGB/CS17">
+      <node ref="R17" pin="2"/>
+      <node ref="U3" pin="17"/>
+    </net>
+    <net code="183" name="Net-(R35-Pad2)">
+      <node ref="R35" pin="2"/>
+      <node ref="U3" pin="31"/>
+    </net>
+    <net code="184" name="/QAZ RGB/CS13">
+      <node ref="U3" pin="13"/>
+      <node ref="R21" pin="2"/>
+    </net>
+    <net code="185" name="/QAZ RGB/CS10">
+      <node ref="U3" pin="10"/>
+      <node ref="R24" pin="2"/>
+    </net>
+    <net code="186" name="/QAZ RGB/CS11">
+      <node ref="U3" pin="11"/>
+      <node ref="R23" pin="2"/>
+    </net>
+    <net code="187" name="/QAZ RGB/CS12">
+      <node ref="R22" pin="2"/>
+      <node ref="U3" pin="12"/>
+    </net>
+    <net code="188" name="/QAZ RGB/CS14">
+      <node ref="U3" pin="14"/>
+      <node ref="R20" pin="2"/>
+    </net>
+    <net code="189" name="/QAZ RGB/CS15">
+      <node ref="R19" pin="2"/>
+      <node ref="U3" pin="15"/>
+    </net>
+    <net code="190" name="/QAZ RGB/CS16">
+      <node ref="R18" pin="2"/>
+      <node ref="U3" pin="16"/>
+    </net>
+    <net code="191" name="Net-(D73-Pad3)">
+      <node ref="D79" pin="3"/>
+      <node ref="D73" pin="3"/>
+      <node ref="D91" pin="3"/>
+      <node ref="D85" pin="3"/>
+      <node ref="R21" pin="1"/>
+    </net>
+    <net code="192" name="Net-(D74-Pad3)">
+      <node ref="R24" pin="1"/>
+      <node ref="D74" pin="3"/>
+      <node ref="D86" pin="3"/>
+      <node ref="D80" pin="3"/>
+      <node ref="D92" pin="3"/>
+    </net>
+    <net code="193" name="Net-(D74-Pad1)">
+      <node ref="D92" pin="1"/>
+      <node ref="D80" pin="1"/>
+      <node ref="D74" pin="1"/>
+      <node ref="R22" pin="1"/>
+      <node ref="D86" pin="1"/>
+    </net>
+    <net code="194" name="Net-(D72-Pad4)">
+      <node ref="D78" pin="4"/>
+      <node ref="R17" pin="1"/>
+      <node ref="D90" pin="4"/>
+      <node ref="D84" pin="4"/>
+      <node ref="D72" pin="4"/>
+    </net>
+    <net code="195" name="Net-(D72-Pad3)">
+      <node ref="D72" pin="3"/>
+      <node ref="D90" pin="3"/>
+      <node ref="D84" pin="3"/>
+      <node ref="R18" pin="1"/>
+      <node ref="D78" pin="3"/>
+    </net>
+    <net code="196" name="Net-(D73-Pad1)">
+      <node ref="R19" pin="1"/>
+      <node ref="D73" pin="1"/>
+      <node ref="D85" pin="1"/>
+      <node ref="D91" pin="1"/>
+      <node ref="D79" pin="1"/>
+    </net>
+    <net code="197" name="Net-(D73-Pad4)">
+      <node ref="R20" pin="1"/>
+      <node ref="D85" pin="4"/>
+      <node ref="D73" pin="4"/>
+      <node ref="D79" pin="4"/>
+      <node ref="D91" pin="4"/>
+    </net>
+    <net code="198" name="Net-(D72-Pad1)">
+      <node ref="D90" pin="1"/>
+      <node ref="D78" pin="1"/>
+      <node ref="D72" pin="1"/>
+      <node ref="R16" pin="1"/>
+      <node ref="D84" pin="1"/>
+    </net>
+  </nets>
+</export>

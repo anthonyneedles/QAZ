@@ -5,9 +5,9 @@
     {
       "Vendor":      "KiCad",
       "Application": "Pcbnew",
-      "Version":     "(5.1.6)-1"
+      "Version":     "(5.1.4)-1"
     },
-    "CreationDate":  "2020-11-12T22:46:54-05:00"
+    "CreationDate":  "2021-05-16T21:03:27-04:00"
   },
   "GeneralSpecs":
   {
@@ -15,7 +15,7 @@
     {
       "Name": "QAZ_65",
       "GUID": "51415a5f-3635-42e6-9b69-6361645f7063",
-      "Revision": "v1.0"
+      "Revision": "v1.1"
     },
     "Size":
     {
@@ -29,12 +29,12 @@
   [
     {
       "Layers": "Outer",
-      "PadToPad":  0.152,
-      "PadToTrack":  0.152,
-      "TrackToTrack":  0.152,
-      "MinLineWidth":  0.229,
-      "TrackToRegion":  0.305,
-      "RegionToRegion":  0.305
+      "PadToPad":  0.127,
+      "PadToTrack":  0.127,
+      "TrackToTrack":  0.127,
+      "MinLineWidth":  0.250,
+      "TrackToRegion":  0.127,
+      "RegionToRegion":  0.127
     }
   ],
   "FilesAttributes":
