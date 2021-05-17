@@ -452,18 +452,18 @@ Wire Wire Line
 	2950 2350 2900 2350
 Wire Wire Line
 	2950 2550 2900 2550
-Text Label 2250 2550 0    50   ~ 0
+Text Label 2250 6800 0    50   ~ 0
 CS3
 Wire Wire Line
-	2700 2550 2250 2550
-Text Label 2250 2350 0    50   ~ 0
+	2700 6800 2250 6800
+Text Label 2250 6600 0    50   ~ 0
 CS2
 Wire Wire Line
-	2700 2350 2250 2350
-Text Label 2250 2150 0    50   ~ 0
+	2700 6600 2250 6600
+Text Label 2250 6400 0    50   ~ 0
 CS1
 Wire Wire Line
-	2700 2150 2250 2150
+	2700 6400 2250 6400
 Wire Wire Line
 	2950 2050 2950 2150
 Wire Wire Line
@@ -581,18 +581,18 @@ Wire Wire Line
 	2950 3200 2900 3200
 Wire Wire Line
 	2950 3400 2900 3400
-Text Label 2250 3400 0    50   ~ 0
+Text Label 2250 5950 0    50   ~ 0
 CS6
 Wire Wire Line
-	2700 3400 2250 3400
-Text Label 2250 3200 0    50   ~ 0
+	2700 5950 2250 5950
+Text Label 2250 5750 0    50   ~ 0
 CS5
 Wire Wire Line
-	2700 3200 2250 3200
-Text Label 2250 3000 0    50   ~ 0
+	2700 5750 2250 5750
+Text Label 2250 5550 0    50   ~ 0
 CS4
 Wire Wire Line
-	2700 3000 2250 3000
+	2700 5550 2250 5550
 Wire Wire Line
 	2950 2900 2950 3000
 Wire Wire Line
@@ -699,18 +699,18 @@ Wire Wire Line
 	2950 4050 2900 4050
 Wire Wire Line
 	2950 4250 2900 4250
-Text Label 2250 4250 0    50   ~ 0
+Text Label 2250 5100 0    50   ~ 0
 CS9
 Wire Wire Line
-	2700 4250 2250 4250
-Text Label 2250 4050 0    50   ~ 0
+	2700 5100 2250 5100
+Text Label 2250 4900 0    50   ~ 0
 CS8
 Wire Wire Line
-	2700 4050 2250 4050
-Text Label 2250 3850 0    50   ~ 0
+	2700 4900 2250 4900
+Text Label 2250 4700 0    50   ~ 0
 CS7
 Wire Wire Line
-	2700 3850 2250 3850
+	2700 4700 2250 4700
 Wire Wire Line
 	2950 3750 2950 3850
 Wire Wire Line
@@ -828,18 +828,18 @@ Wire Wire Line
 	2950 4900 2900 4900
 Wire Wire Line
 	2950 5100 2900 5100
-Text Label 2250 5100 0    50   ~ 0
+Text Label 2250 4250 0    50   ~ 0
 CS12
 Wire Wire Line
-	2700 5100 2250 5100
-Text Label 2250 4900 0    50   ~ 0
+	2700 4250 2250 4250
+Text Label 2250 4050 0    50   ~ 0
 CS11
 Wire Wire Line
-	2700 4900 2250 4900
-Text Label 2250 4700 0    50   ~ 0
+	2700 4050 2250 4050
+Text Label 2250 3850 0    50   ~ 0
 CS10
 Wire Wire Line
-	2700 4700 2250 4700
+	2700 3850 2250 3850
 Wire Wire Line
 	2950 4600 2950 4700
 Wire Wire Line
@@ -957,18 +957,18 @@ Wire Wire Line
 	2950 5750 2900 5750
 Wire Wire Line
 	2950 5950 2900 5950
-Text Label 2250 5950 0    50   ~ 0
+Text Label 2250 3400 0    50   ~ 0
 CS15
 Wire Wire Line
-	2700 5950 2250 5950
-Text Label 2250 5750 0    50   ~ 0
+	2700 3400 2250 3400
+Text Label 2250 3200 0    50   ~ 0
 CS14
 Wire Wire Line
-	2700 5750 2250 5750
-Text Label 2250 5550 0    50   ~ 0
+	2700 3200 2250 3200
+Text Label 2250 3000 0    50   ~ 0
 CS13
 Wire Wire Line
-	2700 5550 2250 5550
+	2700 3000 2250 3000
 Wire Wire Line
 	2950 5450 2950 5550
 Wire Wire Line
@@ -1086,18 +1086,18 @@ Wire Wire Line
 	2950 6600 2900 6600
 Wire Wire Line
 	2950 6800 2900 6800
-Text Label 2250 6800 0    50   ~ 0
+Text Label 2250 2550 0    50   ~ 0
 CS18
 Wire Wire Line
-	2700 6800 2250 6800
-Text Label 2250 6600 0    50   ~ 0
+	2700 2550 2250 2550
+Text Label 2250 2350 0    50   ~ 0
 CS17
 Wire Wire Line
-	2700 6600 2250 6600
-Text Label 2250 6400 0    50   ~ 0
+	2700 2350 2250 2350
+Text Label 2250 2150 0    50   ~ 0
 CS16
 Wire Wire Line
-	2700 6400 2250 6400
+	2700 2150 2250 2150
 Wire Wire Line
 	2950 6300 2950 6400
 Wire Wire Line
