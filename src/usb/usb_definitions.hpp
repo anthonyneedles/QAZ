@@ -54,6 +54,8 @@
 #define HID_USAGE_KEYBOARD_BRTDN (-3)  // brightness down
 #define HID_USAGE_KEYBOARD_COLOR (-4)  // cycle colors
 #define HID_USAGE_KEYBOARD_PROF  (-5)  // cycle profiles
+#define HID_USAGE_KEYBOARD_SPDUP (-6)  // profile speed up
+#define HID_USAGE_KEYBOARD_SPDDN (-7)  // profile speed down
 
 // Errors
 #define HID_USAGE_KEYBOARD_NOEVT (0x00)

@@ -5,7 +5,7 @@ set(CXX_SOURCES
     comm/uart.cpp
     core/clock.cpp
     core/time_slice.cpp
-    lp500x/lp500x.cpp
+    is31fl3746a/is31fl3746a.cpp
     qaz/key_matrix.cpp
     qaz/lighting.cpp
     qaz/main.cpp

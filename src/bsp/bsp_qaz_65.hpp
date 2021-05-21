@@ -77,16 +77,16 @@ constexpr gpio::Id ROWS[] = {
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTUP)  /* NOLINT */ \
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTDN)  /* NOLINT */ \
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(VOLUP) K(COLOR)  /* NOLINT */ \
-    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(NONE)  K(NONE)  K(VOLDN) K(NONE)   /* NOLINT */
+    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(SPDDN) K(NONE)  K(VOLDN) K(SPDUP)  /* NOLINT */
 
 /// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
-    K(BRTUP) K(BRTDN) K(COLOR) K(PROF)
+    K(BRTUP) K(BRTDN) K(COLOR) K(PROF) K(SPDUP) K(SPDDN)
 
 /// USART used for sending debug messages
 #define DEBUG_UART    USART1
 
 /// I2C used for talking to the LED controller
-#define RGB_LED_I2C      I2C1
+#define RGB_LED_I2C   I2C1
 
 #endif  // BSP_BSP_QAZ_65_HPP_

@@ -22,4 +22,10 @@
 /// Bypassing warnings
 #define UNUSED(x) do { (void)(x); } while (0)
 
+template <typename T>
+constexpr T DIVIDE_ROUND(T dividend, T divisor)
+{
+    return (dividend + divisor - 1) / divisor;
+}
+
 #endif  // UTIL_MACROS_HPP_

@@ -6,7 +6,7 @@
  * @date      2020/11/02
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * Uses LP500x driver to control the RGB LEDs with backlight coloring profiles.
+ * Uses IS31FL3746A driver to control the RGB LEDs with backlight coloring profiles.
  */
 
 #include "qaz/lighting.hpp"
@@ -17,7 +17,7 @@
 #include "qaz/key_matrix.hpp"
 #include "qaz/persist.hpp"
 #include "core/time_slice.hpp"
-#include "lp500x/lp500x.hpp"
+#include "is31fl3746a/is31fl3746a.hpp"
 #include "util/debug.hpp"
 #include "util/expressions.hpp"
 
@@ -26,18 +26,17 @@ namespace {
 /// Task fuction will execute every 10ms
 constexpr unsigned LIGHTING_TASK_PERIOD_MS = 10;
 
-/// Every n loops to update breathing profile, to make it go slower
-constexpr unsigned N_LOOP_UPDATE_BREATHING = 2;
-// TODO: set profile speeds from user input
-
 /// Lowest brightness that the breathing profile will go down to
-constexpr unsigned LOWEST_BREATHING_BRIGHTNESS = 0x10;
+constexpr unsigned LOWEST_BREATHING_BRIGHTNESS = 0x01;
 
 /// Amount decremented/incremented each rainbow profile step
 constexpr uint8_t RAINBOW_STEPS = 5;
 
 /// Number of different brightness levels to cycle through
 constexpr unsigned BRIGHTNESS_LEVELS = 5;
+
+/// Number of different speed levels to cycle through
+constexpr unsigned SPEED_LEVELS = 5;
 
 /// Default value for brightness index, if the last value isn't stored in FLASH
 constexpr uint16_t DEFAULT_BRIGHT_IDX = BRIGHTNESS_LEVELS - 1;
@@ -48,16 +47,20 @@ constexpr uint16_t DEFAULT_COLOR_IDX  = 0;
 /// Default value for profile index, if the last value isn't stored in FLASH
 constexpr uint16_t DEFAULT_PROFIE_IDX = 0;
 
-/// Converts brightness index to percent, then percent to 256 value
-constexpr uint8_t BRIGHTNESS_INDEX_TO_256(unsigned idx)
+/// Default value for speed index, if the last value isn't stored in FLASH
+constexpr uint16_t DEFAULT_SPEED_IDX = SPEED_LEVELS - 1;
+
+/// Converts brightness index to percent, then percent to 64 value
+constexpr uint8_t BRIGHTNESS_INDEX_TO_64(unsigned idx)
 {
-    return static_cast<uint8_t>(lp500x::BRIGHTNESS_PERCENT_TO_256((idx*100)/BRIGHTNESS_LEVELS));
+    return is31fl3746a::BRIGHTNESS_PERCENT_TO_64_STEP(
+            DIVIDE_ROUND<uint16_t>(idx*100, BRIGHTNESS_LEVELS - 1));
 }
 
 /// Colors to cycle through
 constexpr uint32_t COLORS[] = {
-    lp500x::WHITE, lp500x::RED,     lp500x::GREEN, lp500x::BLUE,
-    lp500x::CYAN,  lp500x::MAGENTA, lp500x::YELLOW
+    is31fl3746a::WHITE, is31fl3746a::RED,     is31fl3746a::GREEN, is31fl3746a::BLUE,
+    is31fl3746a::CYAN,  is31fl3746a::MAGENTA, is31fl3746a::YELLOW
 };
 
 /// The backlight coloring profiles
@@ -87,85 +90,28 @@ struct LightingCtrl{
     uint16_t bright_idx;
     uint16_t color_idx;
     uint16_t prof_idx;
+    uint16_t speed_idx;
 };
 
 /// Lighting control structure instantiation
 LightingCtrl lighting_ctrl;
 
-}  // namespace
-
-static void profile_breathing(void);
-static void profile_rainbow(void);
-
-/**
- * @brief Initializes lighting profile
- *
- * Initializes the LP500x driver for control of the RGB LEDs.
- */
-void lighting::init(void)
-{
-    // read our persistent data. if it doesn't exist in flash, define it with the default value
-    persist::read_or_create_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx, DEFAULT_BRIGHT_IDX);
-    persist::read_or_create_data(persist::COLOR_IDX, lighting_ctrl.color_idx, DEFAULT_COLOR_IDX);
-    persist::read_or_create_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx, DEFAULT_COLOR_IDX);
-
-    lp500x::init();
-
-    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
-    lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
-
-    auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
-    DBG_ASSERT(status == timeslice::SUCCESS);
-
-    debug::puts("Initialized: Lighting\r\n");
-}
-
-/**
- * @brief Task for updating RGB LEDs.
- *
- * Runs chosen lighting profile, unless at lowest brightness, where it will just turn off LEDs.
- *
- * If the keyboard has been idle, coloring is turned off.
- */
-void lighting::task(void)
-{
-    if ((lighting_ctrl.bright_idx > 0) && !keymatrix::is_idle()) {
-        switch (PROFILES[lighting_ctrl.prof_idx]) {
-        case PROFILE_SOLID:
-            lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
-            lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
-            break;
-        case PROFILE_BREATHING:
-            profile_breathing();
-            break;
-        case PROFILE_RAINBOW:
-            profile_rainbow();
-            break;
-        default:
-            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting_ctrl.prof_idx);
-            lighting_ctrl.prof_idx = 0;
-            break;
-        }
-    } else {
-        lp500x::bank_set_brightness(0);
-    }
-}
-
 /**
  * @brief Controls LED brightness for "breathing" profile
  *
  * Ramps brightness level all the way up, then all the way down, over and over. Since the LED driver
- * brightness is in logarithmic mode, this should result in a (roughly) linear brightness change.
+ * brightness is gamma scaled, this should result in a (roughly) linear brightness change.
  */
-static void profile_breathing(void)
+void profile_breathing(void)
 {
     static uint8_t  brightness = 0;
     static bool     ramp_up    = true;
     static unsigned loop_cnt   = 0;
 
-    lp500x::bank_set_color(COLORS[lighting_ctrl.color_idx]);
+    is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
 
-    if (loop_cnt < N_LOOP_UPDATE_BREATHING - 1) {
+    // the lower the speed index, the more loops until we update
+    if (loop_cnt < 4*(((SPEED_LEVELS - 1) - lighting_ctrl.speed_idx) + 1)) {
         loop_cnt++;
         return;
     } else {
@@ -173,7 +119,8 @@ static void profile_breathing(void)
     }
 
     if (ramp_up) {
-        if (brightness >= BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx)) {
+        // current bright_idx sets maximum brightness
+        if (brightness >= BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx)) {
             ramp_up = false;
         } else {
             brightness++;
@@ -186,7 +133,7 @@ static void profile_breathing(void)
         }
     }
 
-    lp500x::bank_set_brightness(brightness);
+    is31fl3746a::set_brightness(brightness);
 }
 
 /**
@@ -196,15 +143,24 @@ static void profile_breathing(void)
  * little awkward. The state machine will cycle through increasing/decreasing each color intensity,
  * which works well enough.
  */
-static void profile_rainbow(void)
+void profile_rainbow(void)
 {
     static uint8_t red   = 0xFF;
     static uint8_t green = 0x00;
     static uint8_t blue  = 0x00;
     static RainbowState rainbow_state = BLUE_UP;
+    static unsigned loop_cnt = 0;
 
-    lp500x::bank_set_color(lp500x::RGB_CODE(red, green, blue));
-    lp500x::bank_set_brightness(BRIGHTNESS_INDEX_TO_256(lighting_ctrl.bright_idx));
+    is31fl3746a::set_color(is31fl3746a::RGB_CODE(red, green, blue));
+    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
+
+    // the lower the speed index, the more loops until we update
+    if (loop_cnt < ((SPEED_LEVELS - 1) - lighting_ctrl.speed_idx)) {
+        loop_cnt++;
+        return;
+    } else {
+        loop_cnt = 0;
+    }
 
     switch (rainbow_state) {
     case BLUE_UP:
@@ -256,6 +212,73 @@ static void profile_rainbow(void)
     }
 }
 
+}  // namespace
+
+/**
+ * @brief Initializes lighting profile
+ *
+ * Initializes the is31fl3746a driver for control of the RGB LEDs.
+ */
+void lighting::init(void)
+{
+    // read our persistent data. if it doesn't exist in flash, define it with the default value
+    persist::read_or_create_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx, DEFAULT_BRIGHT_IDX);
+    persist::read_or_create_data(persist::COLOR_IDX,   lighting_ctrl.color_idx, DEFAULT_COLOR_IDX);
+    persist::read_or_create_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx, DEFAULT_COLOR_IDX);
+    persist::read_or_create_data(persist::SPEED_IDX,   lighting_ctrl.speed_idx, DEFAULT_SPEED_IDX);
+
+    is31fl3746a::init();
+
+    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
+    is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
+
+    auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
+    DBG_ASSERT(status == timeslice::SUCCESS);
+
+    debug::puts("Initialized: Lighting\r\n");
+}
+
+/**
+ * @brief Task for updating RGB LEDs.
+ *
+ * Runs chosen lighting profile. If the key matrix is idle, or the brightness is at 0, the LED
+ * driver will be put into sleep mode, where it will just turn off LEDs.
+ */
+void lighting::task(void)
+{
+    static bool was_idle = false;
+    bool is_idle = keymatrix::is_idle() || (lighting_ctrl.bright_idx == 0);
+
+    // if transitioning into idle, sleep. if transitioning out of idle, wake
+    if (!was_idle && is_idle) {
+        is31fl3746a::sleep();
+    } else if (was_idle && !is_idle) {
+        is31fl3746a::wake();
+    }
+
+    // don't run any coloring profiles if we are idle
+    if (!is_idle) {
+        switch (PROFILES[lighting_ctrl.prof_idx]) {
+        case PROFILE_SOLID:
+            is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
+            is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
+            break;
+        case PROFILE_BREATHING:
+            profile_breathing();
+            break;
+        case PROFILE_RAINBOW:
+            profile_rainbow();
+            break;
+        default:
+            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting_ctrl.prof_idx);
+            lighting_ctrl.prof_idx = 0;
+            break;
+        }
+    }
+
+    was_idle = is_idle;
+}
+
 // "WarNing: dOcumEnTed SYMboL 'vOid KEYMAtrix::callBaCk_*' WAs nOt DeCLarED Or DeFINed."
 //  - big dumb doxygen
 
@@ -303,6 +326,28 @@ extern void keymatrix::callback_PROF(void)
 {
     lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, COUNT_OF(PROFILES));
     persist::write_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx);
+}
+
+/**
+ * @brief SPDUP key callback __WEAK override
+ *
+ * Speeds up coloring of a given profile (if applicable). Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_SPDUP(void)
+{
+    lighting_ctrl.speed_idx = NEXT_LINEAR_INDEX(lighting_ctrl.speed_idx, SPEED_LEVELS);
+    persist::write_data(persist::SPEED_IDX, lighting_ctrl.speed_idx);
+}
+
+/**
+ * @brief SPDDN key callback __WEAK override
+ *
+ * Slows down coloring of a given profile (if applicable). Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_SPDDN(void)
+{
+    lighting_ctrl.speed_idx = PREV_LINEAR_INDEX(lighting_ctrl.speed_idx, SPEED_LEVELS);
+    persist::write_data(persist::SPEED_IDX, lighting_ctrl.speed_idx);
 }
 
 //! @endcond

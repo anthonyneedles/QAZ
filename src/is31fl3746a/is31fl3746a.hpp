@@ -1,31 +1,33 @@
 /**
- * @file      lp500x.hpp
+ * @file      IS31FL3746A.hpp
  * @brief     RGB LED driver
  *
  * @author    Anthony Needles
- * @date      2020/10/31
+ * @date      2021/05/19
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * Drives the RGB LED(s) via LP5009 LED driver in bank mode (all LEDs get set at once).
+ * TODO
  */
 
-#ifndef LP500X_LP500X_HPP_
-#define LP500X_LP500X_HPP_
+#ifndef IS31FL3746A_IS31FL3746A_HPP_
+#define IS31FL3746A_IS31FL3746A_HPP_
 
 #include <cstdint>
 
-/**
- * @brief LP500x namespace
- *
- * This namespace holds both the utility functions for controlling the LP500x external device (via
- * I2C), as well as the registers for that device.
- */
-namespace lp500x {
+#include "util/macros.hpp"
 
-/// Percent to 256 value
-constexpr uint8_t BRIGHTNESS_PERCENT_TO_256(unsigned percent)
+/**
+ * @brief IS31FL3746A namespace
+ *
+ * This namespace holds both the utility functions for controlling the IS31FL3746A external device
+ * (via I2C), as well as the registers for that device.
+ */
+namespace is31fl3746a {
+
+/// Percent to 64 value (results in value 0-63)
+constexpr uint8_t BRIGHTNESS_PERCENT_TO_64_STEP(unsigned percent)
 {
-    return static_cast<uint8_t>((0xFF*percent)/100);
+    return DIVIDE_ROUND<int>((63*percent), 100);
 }
 
 /// RGB values to 24-bit color code
@@ -54,15 +56,21 @@ constexpr uint32_t CYAN    = RGB_CODE(0x00, 0xFF, 0xFF);
 constexpr uint32_t MAGENTA = RGB_CODE(0xFF, 0x00, 0xFF);
 constexpr uint32_t YELLOW  = RGB_CODE(0xFF, 0xFF, 0x00);
 
-/// Init LP500x, including I2C driver instantiation and pin config
+/// Init IS31FL3746A, including I2C driver instantiation and pin config
 void init(void);
 
 /// Set color for ALL RGB LEDs
-void bank_set_color(uint32_t rgb_code);
+void set_color(uint32_t rgb_code);
 
-/// Set logarithmic brightness for ALL RGB LEDs
-void bank_set_brightness(uint8_t val);
+/// Set brightness for ALL RGB LEDs
+void set_brightness(uint8_t val);
 
-}  // namespace lp500x
+/// Put driver into sleep mode; turn off all LEDs
+void sleep(void);
 
-#endif  // LP500X_LP500X_HPP_
+/// Take driver out of sleep mode
+void wake(void);
+
+}  // namespace is31fl3746a
+
+#endif  // IS31FL3746A_IS31FL3746A_HPP_

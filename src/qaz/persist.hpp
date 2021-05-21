@@ -30,7 +30,8 @@
     ENTRY(HASH_BYTE0,  0x0003) \
     ENTRY(BRIGHT_IDX,  0x0004) \
     ENTRY(COLOR_IDX,   0x0005) \
-    ENTRY(PROFILE_IDX, 0x0006)
+    ENTRY(PROFILE_IDX, 0x0006) \
+    ENTRY(SPEED_IDX,   0x0007)
 
 /**
  * @brief Persist data management namespace

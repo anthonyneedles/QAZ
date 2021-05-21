@@ -24,6 +24,11 @@
 #include "util/debug.hpp"
 #include "util/expressions.hpp"
 
+/// Default implementation of the callbacks does nothing
+#define K(symbol) __WEAK void callback_##symbol(void) {}
+CALLBACK_KEY_TABLE(K)
+#undef K
+
 namespace {
 
 /// Task fuction will execute every 20ms
@@ -104,14 +109,63 @@ CallbackStates callback_states = { };
 /// Counting consecutive task loops without a key press
 unsigned idle_loops = 0;
 
+/**
+ * @brief Scans the key matrix to detect key presses
+ *
+ * Will set each column and read each row for each column. This allows detection of individual
+ * keys. If a key is found, its layer is pushed into the key buffer.
+ *
+ * @param[in,out] keybuf  buffer/info to fill
+ */
+void scan_matrix(KeyBuf *keybuf)
+{
+    DBG_ASSERT(keybuf);
+
+    bool full_break = false;
+
+    // ensure all columns are inactive
+    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
+        // when set, the columns are open drain (i.e. high-z)
+        gpio::set_output(bsp::COLS[ncol]);
+    }
+
+    // set columns, one by one
+    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
+        if (full_break) {
+            break;
+        }
+
+        // when cleared, the columns are GND
+        gpio::clr_output(bsp::COLS[ncol]);
+
+        // and read each row for each set column
+        for (unsigned nrow = 0; nrow < NUM_ROWS; ++nrow) {
+            // input is active low, since the active column is GND, and a button connects the input
+            // to the column. if the button is not pressed, the input is pulled high via pullup
+            gpio::PinState state = gpio::read_input(bsp::ROWS[nrow]);
+            if (state == gpio::CLR) {
+                keybuf->buf[keybuf->idx].base = GET_BASE_KEY(ncol, nrow);
+                if (keybuf->buf[keybuf->idx].base == KEY(FN)) {
+                    keybuf->is_fn = true;
+                } else {
+                    keybuf->buf[keybuf->idx].fn = GET_FN_KEY(ncol, nrow);
+                    keybuf->idx++;
+                    if (keybuf->idx >= keymatrix::KEY_BUF_SIZE) {
+                        full_break = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        gpio::set_output(bsp::COLS[ncol]);
+
+        // ~10us delay. allows row to pull back up to VCC
+        LOOP_DELAY(40);
+    }
+}
+
 }  // namespace
-
-static void scan_matrix(KeyBuf *keybuf);
-
-/// Default implementation of the callbacks does nothing
-#define K(symbol) __WEAK void callback_##symbol(void) {}
-CALLBACK_KEY_TABLE(K)
-#undef K
 
 /**
  * @brief Initializes columns/rows
@@ -241,60 +295,4 @@ void keymatrix::copy_key_buffer(keymatrix::Key *keybuf)
 bool keymatrix::is_idle(void)
 {
     return (idle_loops >= IDLE_LOOPS_SLEEP);
-}
-
-/**
- * @brief Scans the key matrix to detect key presses
- *
- * Will set each column and read each row for each column. This allows detection of individual
- * keys. If a key is found, its layer is pushed into the key buffer.
- *
- * @param[in,out] keybuf  buffer/info to fill
- */
-void scan_matrix(KeyBuf *keybuf)
-{
-    DBG_ASSERT(keybuf);
-
-    bool full_break = false;
-
-    // ensure all columns are inactive
-    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
-        // when set, the columns are open drain (i.e. high-z)
-        gpio::set_output(bsp::COLS[ncol]);
-    }
-
-    // set columns, one by one
-    for (unsigned ncol = 0; ncol < NUM_COLS; ++ncol) {
-        if (full_break) {
-            break;
-        }
-
-        // when cleared, the columns are GND
-        gpio::clr_output(bsp::COLS[ncol]);
-
-        // and read each row for each set column
-        for (unsigned nrow = 0; nrow < NUM_ROWS; ++nrow) {
-            // input is active low, since the active column is GND, and a button connects the input
-            // to the column. if the button is not pressed, the input is pulled high via pullup
-            gpio::PinState state = gpio::read_input(bsp::ROWS[nrow]);
-            if (state == gpio::CLR) {
-                keybuf->buf[keybuf->idx].base = GET_BASE_KEY(ncol, nrow);
-                if (keybuf->buf[keybuf->idx].base == KEY(FN)) {
-                    keybuf->is_fn = true;
-                } else {
-                    keybuf->buf[keybuf->idx].fn = GET_FN_KEY(ncol, nrow);
-                    keybuf->idx++;
-                    if (keybuf->idx >= keymatrix::KEY_BUF_SIZE) {
-                        full_break = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        gpio::set_output(bsp::COLS[ncol]);
-
-        // ~10us delay. allows row to pull back up to VCC
-        LOOP_DELAY(40);
-    }
 }
