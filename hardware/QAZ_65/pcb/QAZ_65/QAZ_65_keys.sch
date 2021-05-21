@@ -1,12 +1,11 @@
 EESchema Schematic File Version 4
-LIBS:QAZ_65-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 3
 Title "QAZ 65% Keys"
-Date "2021-05-16"
+Date "2021-05-30"
 Rev "v1.1"
 Comp "Anthony Needles"
 Comment1 ""
