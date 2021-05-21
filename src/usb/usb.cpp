@@ -198,6 +198,7 @@ void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
  * @brief Read RX byte count sized block from PMA into input buffer and set RX STATUS to VALID
  *
  * @param[in, out] buf  output buffer that is filled with received data
+ * @param[in]      ep   endpoint to read from
  */
 void usb::read(uint16_t ep, uint8_t *buf)
 {

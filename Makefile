@@ -42,9 +42,10 @@ $(TARGET): $(BUILD_DIR)/Makefile
 		@arm-none-eabi-objcopy -O binary $(EXECUTABLE).elf $(EXECUTABLE).bin
 		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).elf $(BOARD) $(BUILD_TYPE)
 		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).bin $(BOARD) $(BUILD_TYPE)
+		@arm-none-eabi-size $(EXECUTABLE).elf
 
 .PHONY: all
-all: build docs lint
+all: $(TARGET) docs lint
 
 $(BUILD_DIR)/Makefile:
 		@cmake -DCMAKE_BUILD_TYPE="$(BUILD_TYPE)" -DBSP="$(BOARD)" -DTARGET=$(TARGET) \

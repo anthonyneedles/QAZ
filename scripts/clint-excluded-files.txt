@@ -2,3 +2,4 @@ src/flash/eeprom.c
 src/flash/eeprom.h
 src/flash/stm32f0xx_flash.c
 src/flash/stm32f0xx_flash.h
+src/CMSIS/*
