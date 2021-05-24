@@ -177,6 +177,9 @@ void usb::init(void)
  */
 void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
 {
+    // CRITICAL REGION START
+    NVIC_DisableIRQ(USB_IRQn);
+
     if ((ep >= NUM_EP) || (ep_ctrl[ep].tx_pma_offset == NO_PMA_USE) || (len > ep_ctrl[ep].tx_max)) {
         DBG_ASSERT(debug::FORCE_ASSERT);
         return;
@@ -192,6 +195,9 @@ void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
     }
 
     SET_TX_STATUS(ep, USB_EP_TX_VALID);
+
+    // CRITICAL REGION END
+    NVIC_EnableIRQ(USB_IRQn);
 }
 
 /**
@@ -202,6 +208,9 @@ void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
  */
 void usb::read(uint16_t ep, uint8_t *buf)
 {
+    // CRITICAL REGION START
+    NVIC_DisableIRQ(USB_IRQn);
+
     if ((ep >= NUM_EP) || (ep_ctrl[ep].rx_pma_offset == NO_PMA_USE)) {
         DBG_ASSERT(debug::FORCE_ASSERT);
         return;
@@ -216,6 +225,9 @@ void usb::read(uint16_t ep, uint8_t *buf)
     }
 
     SET_RX_STATUS(ep, USB_EP_RX_VALID);
+
+    // CRITICAL REGION END
+    NVIC_EnableIRQ(USB_IRQn);
 }
 
 /**
