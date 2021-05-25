@@ -19,7 +19,7 @@
 #include "core/time_slice.hpp"
 #include "lp500x/lp500x.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
+#include "util/expressions.hpp"
 
 namespace {
 
@@ -290,7 +290,7 @@ extern void keymatrix::callback_BRTDN(void)
  */
 extern void keymatrix::callback_COLOR(void)
 {
-    lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, N_ELEMENTS(COLORS));
+    lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, COUNT_OF(COLORS));
     persist::write_data(persist::COLOR_IDX, lighting_ctrl.color_idx);
 }
 
@@ -301,7 +301,7 @@ extern void keymatrix::callback_COLOR(void)
  */
 extern void keymatrix::callback_PROF(void)
 {
-    lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, N_ELEMENTS(PROFILES));
+    lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, COUNT_OF(PROFILES));
     persist::write_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx);
 }
 

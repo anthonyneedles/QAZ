@@ -13,7 +13,7 @@
 #include "usb/usb_descriptors.hpp"
 
 #include "util/debug.hpp"
-#include "util/macros.hpp"
+#include "util/expressions.hpp"
 
 namespace {
 
@@ -197,7 +197,7 @@ int usb_desc::get_desc(uint16_t desc_id, USBDesc *desc)
 
     debug::printf("<<0x%04x>> ", desc_id);
 
-    for (int i = 0; i < static_cast<int>(N_ELEMENTS(desc_table)); ++i) {
+    for (unsigned i = 0; i < COUNT_OF(desc_table); ++i) {
         if (desc_table[i].id == desc_id) {
             desc->buf_ptr = desc_table[i].desc.buf_ptr;
             desc->size    = desc_table[i].desc.size;

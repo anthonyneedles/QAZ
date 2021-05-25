@@ -15,7 +15,6 @@
 #include "bsp/bsp.hpp"
 #include "core/time_slice.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 
 namespace {
 

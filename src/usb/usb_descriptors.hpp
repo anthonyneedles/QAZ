@@ -23,12 +23,12 @@
 namespace usb_desc {
 
 /// Each valid descriptor gets an ID
-inline constexpr uint16_t DEVICE_ID    = 0x0100;
-inline constexpr uint16_t CONFIG_ID    = 0x0200;
-inline constexpr uint16_t LANG_ID      = 0x0300;
-inline constexpr uint16_t MANUFACT_ID  = 0x0301;
-inline constexpr uint16_t PRODUCT_ID   = 0x0302;
-inline constexpr uint16_t HIDREPORT_ID = 0x2200;
+constexpr uint16_t DEVICE_ID    = 0x0100;
+constexpr uint16_t CONFIG_ID    = 0x0200;
+constexpr uint16_t LANG_ID      = 0x0300;
+constexpr uint16_t MANUFACT_ID  = 0x0301;
+constexpr uint16_t PRODUCT_ID   = 0x0302;
+constexpr uint16_t HIDREPORT_ID = 0x2200;
 
 /// Descriptor information struct
 struct USBDesc {

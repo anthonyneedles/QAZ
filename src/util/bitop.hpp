@@ -116,6 +116,23 @@ inline void update_msk(T &x, unsigned msk, unsigned val)
     x = ((x & ~msk) | (val & msk));
 }
 
+/**
+ * @brief Generate a bitmask
+ *
+ * `start` + `bits` shall never be > the number of bits in `T`
+ *
+ * e.g. `T` = uint32_t, `start` = 10, `bits` = 7 => 0x0001FC00
+ *
+ * @tparam    T     type to use for operations
+ * @param[in] start bitno to start the bitmask
+ * @param[in] bits  length, in bits, of the bitmask
+ */
+template <typename T>
+constexpr T gen_msk(unsigned start, unsigned bits)
+{
+    return ((1 << bits) - 1) << start;
+}
+
 }  // namespace bitop
 
 #endif  // UTIL_BITOP_HPP_

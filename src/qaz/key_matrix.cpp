@@ -22,7 +22,7 @@
 #include "qaz/lighting.hpp"
 #include "usb/usb_definitions.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
+#include "util/expressions.hpp"
 
 namespace {
 
@@ -30,10 +30,10 @@ namespace {
 constexpr unsigned KEY_MATRIX_TASK_PERIOD_MS = 20;
 
 /// Number of physical columns in matrix
-constexpr unsigned NUM_COLS = N_ELEMENTS(bsp::COLS);
+constexpr unsigned NUM_COLS = COUNT_OF(bsp::COLS);
 
 /// Number of physical rows in martrix
-constexpr unsigned NUM_ROWS = N_ELEMENTS(bsp::ROWS);
+constexpr unsigned NUM_ROWS = COUNT_OF(bsp::ROWS);
 
 /// Number of idle loops until lighting enters sleep mode
 constexpr unsigned IDLE_LOOPS_SLEEP = lighting::IDLE_MS_SLEEP/KEY_MATRIX_TASK_PERIOD_MS;

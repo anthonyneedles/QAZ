@@ -20,16 +20,16 @@
 namespace version {
 
 /// Character array of git hash. Upper nibble of element 0 is 0x0 for clean, 0xF for dirty
-inline constexpr const uint8_t CHAR_GIT_HASH[4] = { ${CHAR_GIT_HASH} };
+constexpr const uint8_t CHAR_GIT_HASH[4] = { ${CHAR_GIT_HASH} };
 
 /// String of git hash.
-inline constexpr const char *GIT_HASH = ${GIT_HASH};
+constexpr const char *GIT_HASH = ${GIT_HASH};
 
 /// String of git dirty/clean state.
-inline constexpr const char *GIT_STATE = ${GIT_STATE};
+constexpr const char *GIT_STATE = ${GIT_STATE};
 
 /// String of QAZ board type.
-inline constexpr const char *BOARD = ${BOARD};
+constexpr const char *BOARD = ${BOARD};
 
 }  // namespace version
 

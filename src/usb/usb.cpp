@@ -21,7 +21,7 @@
 #include "usb/usb_descriptors.hpp"
 #include "util/bitop.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
+#include "util/expressions.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 // usb handler needs C linkage

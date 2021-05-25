@@ -20,7 +20,7 @@
 namespace lighting {
 
 /// Length of idle time (in ms) until lighting enters sleep mode (5 minutes)
-inline constexpr unsigned IDLE_MS_SLEEP = 5*60*1000;
+constexpr unsigned IDLE_MS_SLEEP = 5*60*1000;
 
 /// Init lighting by initializing the LP500x driver
 void init(void);

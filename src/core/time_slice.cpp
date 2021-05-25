@@ -22,7 +22,6 @@
 
 #include "core/clock.hpp"
 #include "util/debug.hpp"
-#include "util/macros.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 /// Systick handler needs C linkage

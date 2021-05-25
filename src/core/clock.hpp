@@ -23,7 +23,7 @@
 namespace clock {
 
 /// The (after init) frequency of the core clock SYSCLK
-inline constexpr uint32_t SYSCLK_HZ = 48000000;
+constexpr uint32_t SYSCLK_HZ = 48000000;
 
 /// Init system clock for HSE
 void init(void);

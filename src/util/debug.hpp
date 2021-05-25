@@ -23,7 +23,7 @@
 namespace debug {
 
 /// Will force an assert when given to DBG_ASSERT
-inline constexpr bool FORCE_ASSERT = false;
+constexpr bool FORCE_ASSERT = false;
 
 #if defined(RELEASE)
 

@@ -41,7 +41,7 @@
 namespace keymatrix {
 
 /// Keys that can be detected at once
-inline constexpr unsigned KEY_BUF_SIZE = 6;
+constexpr unsigned KEY_BUF_SIZE = 6;
 
 /// Get the keycode from a symbol
 #define KEY(x) (HID_USAGE_KEYBOARD_##x)

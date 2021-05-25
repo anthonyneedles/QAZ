@@ -16,7 +16,6 @@
 
 #include "bsp/bsp.hpp"
 #include "comm/uart.hpp"
-#include "util/macros.hpp"
 #include "version.hpp"
 
 #if defined(DEBUG)
