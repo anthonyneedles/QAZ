@@ -6,9 +6,9 @@
  * @date      2020/10/12
  * @copyright (c) 2020 Anthony Needles. GNU GPL v3 (see LICENSE)
  *
- * Low-level I2C driver. Configured for 100kHz SCL frequency.
+ * Low-level I2C driver. Configured for 400kHz SCL frequency.
  *
- * 4.7k resistors are expected close to master device to pull SDA and SCL busses high.
+ * ~2k resistors are expected close to master device to pull SDA and SCL busses high.
  *
  * Assumes SYSCLK = 48MHz
  */
@@ -20,8 +20,8 @@
 
 namespace {
 
-/// Calculated for 100kHz with 48MHz I2C clock
-constexpr uint32_t TIMING_CONFIG = 0xB0240F13;
+/// Calculated for 400kHz with 48MHz I2C clock
+constexpr uint32_t TIMING_CONFIG = 0x2010091A;
 
 }
 
@@ -29,9 +29,8 @@ constexpr uint32_t TIMING_CONFIG = 0xB0240F13;
  * @brief Initializes I2C module
  *
  * Enables clocks for I2C pins as well as I2C module. GPIO configured as open drain with no pull
- * up/down resistors. Expected 4.7k resistors pulling SCL and SDA high. AF1 for both GPIO select
- * I2C SCL and SDA. Timing configuration constant gives a frequency of 100kHz. Clock stretching
- * disabled.
+ * up/down resistors. AF1 for both GPIO select I2C SCL and SDA. Timing configuration constant
+ * gives a frequency of 400kHz. Clock stretching disabled.
  *
  * @return comm::SUCCCESS - successfully initialized i2c
  *         comm::FAILURE  - failed i2c init (already initialized)
@@ -71,7 +70,7 @@ comm::Status I2C::init(void)
  *
  * Handles master transmission of data to slave. Clears current slave address and number of bytes
  * to be sent values from CR2 register, then populates with passed values. Also, AUTOEND is enabled
- * (stop condition is automatically generated when number of bytes is reached. Start condition is
+ * (stop condition is automatically generated when number of bytes is reached). Start condition is
  * initiated. Data is loaded into transmit data register when register is ready. Data array is
  * iterated through num_bytes number of times, passing all data. The stop condition is confirmed,
  * then stop flag is cleared and CR2 is cleared of set values.
