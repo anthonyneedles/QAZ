@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name QAZ)(type Legacy)(uri ${KIPRJMOD}/../../../common/pcb/QAZ_lib.pretty/QAZ.lib)(options "")(descr ""))
-)

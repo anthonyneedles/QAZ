@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name QAZ)(type KiCad)(uri ${KIPRJMOD}/../../../common/pcb/QAZ_lib.pretty/)(options "")(descr ""))
-)
