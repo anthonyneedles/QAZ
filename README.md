@@ -260,29 +260,37 @@ The USB-C connector symbol/footprint is from
 
 ### Case
 
-Each case is comprised of several acrylic layers, cut with a lazer cutter.
-The vector files for these layers are located in `hardware/QAZ_*/layers/`.
+Each case is comprised of several  layers. The vector files for these layers are 
+located in `hardware/QAZ_*/layers/`.
+
 There are four types of layers:
 
 - **Bottom Layer** - Mostly solid bottom layer, with only drill holes for mounting
-  screws.
-- **Closed Layer** - Board outline (middle) layer, with outside drill holes.
+  screws and the boot switch. 5mm acrylic.
+- **Closed Layer** - Board outline (middle) layer, with outside drill holes. 
+  3mm or 5mm acrylic.
 - **Open Layer** - Board outline (middle) layer, with outside drill holes and
-  opening for USB-C port.
+  opening for USB-C port. 3mm or 5mm acrylic.
 - **Plate Layer** - Top layer with cutouts for all of the key switches,
-  stabilizers, and drill holes.
+  stabilizers, and drill holes. 3mm acrylic or 1.6mm PCB.
 
 The plater layer on keyboards is traditionally make out of ~1.5mm thick metal,
 which allows the keycaps to actually "snap" into the plate, and sit flush with
-the PCB. Since I don't currently have functionality to cut metal, 3mm thick
-acrylic is used for the plate layer. 5mm thick acrylic is also used. This is a
-side-cut view of the case:
+the PCB. Since I don't currently have functionality to cut metal, there are two 
+options:
 
-![QAZ Case Side-cut](docs/media/qaz_sidecut.png)
+1. Fabricate a ~1.6mm PCB (<$50 for 5 from JLCPCB!). This is preferred as the
+  switches actually snap into the plate. Side-cut view of the case:
+
+![QAZ Case Side-cut](docs/media/qaz_v1.1_sidecut_pcbplate.png)
+
+2. Fabricate a ~3mm layer of acrylic. Side-cut view of the case:
+
+![QAZ Case Side-cut](docs/media/qaz_v1.1_sidecut_acrylicplate.png)
 
 The mounting screws/nuts used are of size #4-40. The quantities of screws and
 nuts for the QAZ 65% are:
 
 - 20x 3/4in. #4-40 panhead machine screw
-- 60x #4-40 hex nuts
+- 60x #4-40 hex nuts (1.5mm and 2mm width)
 - 20x #4-40 washers
