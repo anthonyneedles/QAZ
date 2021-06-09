@@ -2,7 +2,7 @@
 
 *STM32F042K6 Firmware for my 'QAZ' keyboard*
 
-**`make doc` generates useful doxygen html documentation**
+**`make doc` generates useful Doxygen html documentation**
 
 ![QAZ Logo](docs/media/qaz_logo_500x500_rounded.png)
 
@@ -106,7 +106,7 @@ handles all building commands. These are the available commands:
 
 - `all` - Build software target, doxygen, and lint
 
-- `docs` - Use Doxygen to create project documentaton (with Graphviz graphs)
+- `docs` - Use Doxygen to create project documentation (with Graphviz graphs)
 
 - `clean` - Removes all built files
 
@@ -126,7 +126,7 @@ There are several variables that the user can set in the top level `Makefile`.
 
 When building the output project, `cmake` will be invoked to generate the
 source-level [Makefile](Makefile) in the `build/` directory, which will
-then be used to compile and link the output excecutable.
+then be used to compile and link the output executable.
 
 The top-level [CMakeLists.txt](CMakeLists.txt) expects three variables:
 `TARGET`, `CMAKE_BUILD_TYPE`, and `BSP`, which is nominally passed in by
@@ -156,9 +156,9 @@ accuracy of +/-3% at room temperature, which is out of spec of USB 2.0
 tolerance. However, the USB peripheral has a special Clock Recovery System
 (CRS) which dynamically adjusts the oscillator an adequate amount.
 
-In the intial steps of this design, this HSI48 was used, but as of QAZ board
+In the initial steps of this design, this HSI48 was used, but as of QAZ board
 v0.1 an external 8MHz crystal supplies the HSE oscillator, which gets
-multiplied to 48MHz from the PLL, then finaly feeds the system core and USB
+multiplied to 48MHz from the PLL, then finally feeds the system core and USB
 peripheral.
 
 ### Time Slice Loop
@@ -172,7 +172,7 @@ Tasks must be registered to the timeslice scheduler by calling
 Registered tasks are entered in a statically defined task registry, so the
 maximum number of tasks is defined by `MAX_NUM_TASKS`.
 
-While the timeslice loop is running, the interal 'time slice mananger task'
+While the timeslice loop is running, the internal 'time slice manager task'
 will make sure that each task gets a chance to run every loop period. Specific
 task periods are created by only calling the task function every N time slices
 (where N = Task Period / Loop Period).
@@ -180,7 +180,7 @@ task periods are created by only calling the task function every N time slices
 **Task periods must be multiples of of the timeslice period. For a given set
 of task periods, the timeslice period should be as large as possible.**
 
-Curently, the time slice loop (`LOOP_PERIOD_MS`) is 10ms.
+Currently, the time slice loop (`LOOP_PERIOD_MS`) is 10ms.
 
 Task periods:
 - **LED Heartbeat Task** - 500ms
@@ -219,19 +219,19 @@ each table grid (and given a `NONE` value).
 Additionally, any of the keys can also be defined in `CALLBACK_KEY_TABLE`,
 which (when a key with that code is pressed) results in the key NOT being
 placed in the output key buffer (used by the USB KB HID task to send keycodes
-to the host), but having a callback (initally defined as `weak`) called. This
+to the host), but having a callback (initially defined as `weak`) called. This
 allows other modules defining the callback and implementing a hook to execute
 when the given key is pressed (seen in RGB LED module).
 
 ### Persistent Data
 
-There are several data words that are saved in the interal flash, as it is
+There are several data words that are saved in the internal flash, as it is
 desired that they persist between PORs (for instance, the lighting settings).
 This is achieved by emulating the flash as EEPROM.
 
 This emulation requires two full flash pages be used. In order to maximize the
 available flash for the program, the last two pages are used. Since each page
-is 1kB, this means that the availble flash in the STM32F042K6 for the program
+is 1kB, this means that the available flash in the STM32F042C6 for the program
 is 30kB, with the last 2kB being reserved.
 
 New data words can be added by adding entries to the `PERSIST_DATA_TABLE` in
@@ -288,9 +288,4 @@ options:
 
 ![QAZ Case Side-cut](docs/media/qaz_v1.1_sidecut_acrylicplate.png)
 
-The mounting screws/nuts used are of size #4-40. The quantities of screws and
-nuts for the QAZ 65% are:
-
-- 20x 3/4in. #4-40 panhead machine screw
-- 60x #4-40 hex nuts (1.5mm and 2mm width)
-- 20x #4-40 washers
+The mounting screws/nuts used are of size #4-40.

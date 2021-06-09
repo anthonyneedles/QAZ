@@ -24,39 +24,39 @@
 namespace bsp {
 
 // individual gpio pins
-constexpr gpio::Id HB_LED  = { gpio::B, gpio::PIN_3  };
+constexpr gpio::Id HB_LED  = { gpio::B, gpio::PIN_0  };
 constexpr gpio::Id MCO     = { gpio::A, gpio::PIN_8  };
 constexpr gpio::Id DBG_TX  = { gpio::A, gpio::PIN_9  };
 constexpr gpio::Id RGB_EN  = { gpio::B, gpio::PIN_2  };
-constexpr gpio::Id RGB_SDA = { gpio::B, gpio::PIN_10 };
-constexpr gpio::Id RGB_SCL = { gpio::B, gpio::PIN_11 };
+constexpr gpio::Id RGB_SDA = { gpio::B, gpio::PIN_11 };
+constexpr gpio::Id RGB_SCL = { gpio::B, gpio::PIN_10 };
 
 /// Key matrix column gpio pins
 constexpr gpio::Id COLS[] = {
-    { gpio::A, gpio::PIN_5  },
-    { gpio::A, gpio::PIN_6  },
-    { gpio::A, gpio::PIN_7  },
-    { gpio::B, gpio::PIN_13 },
-    { gpio::B, gpio::PIN_14 },
-    { gpio::B, gpio::PIN_15 },
-    { gpio::A, gpio::PIN_10 },
-    { gpio::B, gpio::PIN_4  },
-    { gpio::B, gpio::PIN_7  },
-    { gpio::B, gpio::PIN_8  },
-    { gpio::B, gpio::PIN_9  },
-    { gpio::C, gpio::PIN_13 },
-    { gpio::B, gpio::PIN_6  },
-    { gpio::C, gpio::PIN_14 },
-    { gpio::C, gpio::PIN_15 },
+    { gpio::C, gpio::PIN_13 },  // COL00
+    { gpio::C, gpio::PIN_14 },  // COL01
+    { gpio::C, gpio::PIN_15 },  // COL02
+    { gpio::B, gpio::PIN_12 },  // COL03
+    { gpio::B, gpio::PIN_13 },  // COL04
+    { gpio::B, gpio::PIN_14 },  // COL05
+    { gpio::B, gpio::PIN_15 },  // COL06
+    { gpio::A, gpio::PIN_10 },  // COL07
+    { gpio::A, gpio::PIN_15 },  // COL08
+    { gpio::B, gpio::PIN_3  },  // COL09
+    { gpio::B, gpio::PIN_4  },  // COL10
+    { gpio::B, gpio::PIN_5  },  // COL11
+    { gpio::B, gpio::PIN_6  },  // COL12
+    { gpio::B, gpio::PIN_7  },  // COL13
+    { gpio::B, gpio::PIN_8  },  // COL14
 };
 
 /// Key matrix row gpio pins
 constexpr gpio::Id ROWS[] = {
-    { gpio::B, gpio::PIN_0  },
-    { gpio::B, gpio::PIN_1  },
-    { gpio::A, gpio::PIN_15 },
-    { gpio::B, gpio::PIN_12 },
-    { gpio::B, gpio::PIN_5  },
+    { gpio::A, gpio::PIN_1  },  // ROW00
+    { gpio::A, gpio::PIN_2  },  // ROW01
+    { gpio::A, gpio::PIN_3  },  // ROW02
+    { gpio::A, gpio::PIN_4  },  // ROW03
+    { gpio::A, gpio::PIN_0  },  // ROW04
 };
 
 }  // namespace bsp
