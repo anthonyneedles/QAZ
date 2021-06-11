@@ -77,7 +77,7 @@ constexpr gpio::Id ROWS[] = {
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTUP)  /* NOLINT */ \
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTDN)  /* NOLINT */ \
     K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(VOLUP) K(COLOR)  /* NOLINT */ \
-    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(FN)    K(NONE)  K(SPDDN) K(NONE)  K(VOLDN) K(SPDUP)  /* NOLINT */
+    K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(SPDDN) K(NONE)  K(VOLDN) K(SPDUP)  /* NOLINT */
 
 /// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
