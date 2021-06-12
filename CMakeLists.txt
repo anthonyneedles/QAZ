@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=c++17 -fno-rtti -fno-exceptions -fno-t
 
 # linker and linker flags
 set(CMAKE_LINKER "arm-none-eabi-g++")
-set(CMAKE_EXE_LINKER_FLAGS "-T ${CMAKE_SOURCE_DIR}/stm32f042k6.ld --specs=nosys.specs -Wl,-gc-sections -mcpu=cortex-m0 -mthumb -msoft-float")
+set(CMAKE_EXE_LINKER_FLAGS "-T ${CMAKE_SOURCE_DIR}/STM32F042C6Tx_FLASH.ld --specs=nosys.specs -Wl,-gc-sections -mcpu=cortex-m0 -mthumb -msoft-float")
 
 # we want different compile options when building for Debug vs. Release
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

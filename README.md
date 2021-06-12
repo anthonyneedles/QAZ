@@ -1,6 +1,6 @@
 # QAZ
 
-*STM32F042K6 Firmware for my 'QAZ' keyboard*
+*STM32F042C6 Firmware for my 'QAZ' keyboard*
 
 **`make doc` generates useful Doxygen html documentation**
 
@@ -150,7 +150,7 @@ tracking .elf/.bin files, both are then copied and renamed to:
 
 ### Clocks
 
-The STM32F042C6T6 has a default HS clock of 8MHz, and a HSI48 48MHz clock,
+The STM32F042C6 has a default HS clock of 8MHz, and a HSI48 48MHz clock,
 which is specifically for the USB peripheral. This clock has a terrible
 accuracy of +/-3% at room temperature, which is out of spec of USB 2.0
 tolerance. However, the USB peripheral has a special Clock Recovery System
