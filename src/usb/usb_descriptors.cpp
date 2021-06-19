@@ -28,7 +28,7 @@ constexpr uint8_t DESCRIPTOR_DEVICE[] = {
       64,        // bMaxPacketSize         64 bytes
     0x1D, 0xC0,  // idVendor               0xC01D
     0x22, 0xAA,  // idProduct              0xAA22
-    0x00, 0x01,  // bcdDevice              0.1
+    0x10, 0x01,  // bcdDevice              1.10
        1,        // iManufacturer          'anthonyneedles'
        2,        // iProduct               'qaz keyboard'
        0,        // iSerialNumber
