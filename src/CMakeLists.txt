@@ -5,12 +5,8 @@ set(CXX_SOURCES
     comm/uart.cpp
     core/clock.cpp
     core/time_slice.cpp
-    is31fl3746a/is31fl3746a.cpp
-    qaz/key_matrix.cpp
-    qaz/lighting.cpp
     qaz/main.cpp
     qaz/persist.cpp
-    usb/kb_hid.cpp
     usb/usb.cpp
     usb/usb_descriptors.cpp
     util/debug.cpp
@@ -25,6 +21,31 @@ set(C_SOURCES
 set(ASM_SOURCES
     core/startup_stm32f042.s
 )
+
+# append our bsp source to source list
+if(BSP STREQUAL "QAZ_65")
+    set(CXX_SOURCES ${CXX_SOURCES}
+        bsp/qaz_65/bsp_qaz_65.cpp
+        is31fl3746a/is31fl3746a.cpp
+        qaz/key_matrix.cpp
+        qaz/lighting.cpp
+        usb/kb_hid.cpp
+    )
+elseif(BSP STREQUAL "QAZ_MEDIA")
+    set(CXX_SOURCES ${CXX_SOURCES}
+        bsp/qaz_media/bsp_qaz_media.cpp
+    )
+elseif(BSP STREQUAL "QAZ_TESTBOARD")
+    set(CXX_SOURCES ${CXX_SOURCES}
+        bsp/qaz_testboard/bsp_qaz_testboard.cpp
+        is31fl3746a/is31fl3746a.cpp
+        qaz/key_matrix.cpp
+        qaz/lighting.cpp
+        usb/kb_hid.cpp
+    )
+else()
+    message(FATAL_ERROR "Unknown BSP: '${BSP}'\n")
+endif()
 
 set(OUTPUT_TARGET ${PROJECT_NAME}.elf)
 add_executable(${OUTPUT_TARGET} ${CXX_SOURCES} ${C_SOURCES} ${ASM_SOURCES})

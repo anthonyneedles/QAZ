@@ -14,11 +14,15 @@
 
 #if defined(QAZ_65)
 
-#include "bsp/bsp_qaz_65.hpp"
+#include "bsp/qaz_65/bsp_qaz_65.hpp"
 
 #elif defined(QAZ_TESTBOARD)
 
-#include "bsp/bsp_qaz_testboard.hpp"
+#include "bsp/qaz_testboard/bsp_qaz_testboard.hpp"
+
+#elif defined(QAZ_MEDIA)
+
+#include "bsp/qaz_media/bsp_qaz_media.hpp"
 
 #else
 

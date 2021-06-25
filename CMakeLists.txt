@@ -32,13 +32,6 @@ else()
     message(FATAL_ERROR "CMAKE_BUILD_TYPE must be Debug or Release")
 endif()
 
-# our given BSP must be in our bsp list
-set(BSP_LIST "QAZ_65" "QAZ_TESTBOARD")
-if(NOT BSP IN_LIST BSP_LIST)
-    string(REPLACE ";" "' '" BSP_LIST "${BSP_LIST}")
-    message(FATAL_ERROR "Unknown BSP: '${BSP}'\nValid BSP: '${BSP_LIST}'")
-endif()
-
 # our code needs to know our BSP
 add_compile_definitions(${BSP})
 

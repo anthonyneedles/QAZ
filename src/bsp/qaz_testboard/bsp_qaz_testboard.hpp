@@ -9,8 +9,14 @@
  * Definitions specfic to the QAZ testboard.
  */
 
-#ifndef BSP_BSP_QAZ_TESTBOARD_HPP_
-#define BSP_BSP_QAZ_TESTBOARD_HPP_
+#if !defined(BSP_BSP_HPP_)
+
+#error Do not include board BSP header directly, please include bsp.hpp
+
+#endif
+
+#ifndef BSP_QAZ_TESTBOARD_BSP_QAZ_TESTBOARD_HPP_
+#define BSP_QAZ_TESTBOARD_BSP_QAZ_TESTBOARD_HPP_
 
 #include "core/gpio.hpp"
 
@@ -46,6 +52,9 @@ constexpr gpio::Id ROWS[] = {
     { gpio::B, gpio::PIN_7  },
 };
 
+/// bsp-specific initializations
+void init(void);
+
 }  // namespace bsp
 
 /// Base key symbol table
@@ -64,7 +73,7 @@ constexpr gpio::Id ROWS[] = {
 
 /// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
-    K(BRTUP) K(BRTDN) K(COLOR) K(PROF)
+    K(BRTUP) K(BRTDN) K(COLOR) K(PROF) K(SPDUP) K(SPDDN)
 
 /// USART used for sending debug messages
 #define DEBUG_UART USART1
@@ -72,4 +81,4 @@ constexpr gpio::Id ROWS[] = {
 /// I2C used for talking to the LED controller
 #define RGB_LED_I2C I2C1
 
-#endif  // BSP_BSP_QAZ_TESTBOARD_HPP_
+#endif  // BSP_QAZ_TESTBOARD_BSP_QAZ_TESTBOARD_HPP_
