@@ -28,7 +28,7 @@ The QAZ project was created as a way for me to learn the USB protocol by
 writing a bare-metal USB driver. Since a keyboard is a relatively simple
 USB device, and I like mechanical keyboards, I decided that it would be
 a perfect project. The QAZ project is planned to support various different
-keyboard layouts (only 65% and a testboard for now).
+keyboard layouts (only 65% and a Media board for now).
 
 This repository holds files for both the software and hardware portions
 of this project. The software consists of C++ source and header files,

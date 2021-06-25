@@ -35,14 +35,6 @@ elseif(BSP STREQUAL "QAZ_MEDIA")
     set(CXX_SOURCES ${CXX_SOURCES}
         bsp/qaz_media/bsp_qaz_media.cpp
     )
-elseif(BSP STREQUAL "QAZ_TESTBOARD")
-    set(CXX_SOURCES ${CXX_SOURCES}
-        bsp/qaz_testboard/bsp_qaz_testboard.cpp
-        is31fl3746a/is31fl3746a.cpp
-        qaz/key_matrix.cpp
-        qaz/lighting.cpp
-        usb/kb_hid.cpp
-    )
 else()
     message(FATAL_ERROR "Unknown BSP: '${BSP}'\n")
 endif()
