@@ -12,6 +12,8 @@
 #include "bsp/bsp.hpp"
 #include "bsp/qaz_media/bsp_qaz_media.hpp"
 
+#include "qaz/buttons.hpp"
+
 /**
  * @brief Board support package initialization
  *
@@ -19,4 +21,5 @@
  */
 void bsp::init(void)
 {
+    buttons::init();
 }

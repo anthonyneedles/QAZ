@@ -34,6 +34,24 @@ constexpr gpio::Id HB_LED  = { gpio::A, gpio::PIN_5  };
 constexpr gpio::Id MCO     = { gpio::A, gpio::PIN_8  };
 constexpr gpio::Id DBG_TX  = { gpio::A, gpio::PIN_9  };
 
+// An Id for each button
+enum ButtonId {
+    BUTTON_STOP = 0,
+    PREVIOUS    = 1,
+    PLAY_PAUSE  = 2,
+    NEXT        = 3,
+    MUTE        = 4,
+};
+
+/// Button gpio pins
+constexpr gpio::Id BUTTONS[] = {
+    { gpio::B, gpio::PIN_1  },  // STOP
+    { gpio::B, gpio::PIN_2  },  // PREVIOUS
+    { gpio::B, gpio::PIN_10 },  // PLAY/PAUSE
+    { gpio::B, gpio::PIN_11 },  // NEXT
+    { gpio::A, gpio::PIN_15 },  // MUTE
+};
+
 /// bsp-specific initializations
 void init(void);
 

@@ -117,6 +117,12 @@ enum PinState : uint32_t {
     SET = 0x1,
 };
 
+/// What type of active config does an input have
+enum InputConfig {
+    ACTIVE_LOW,
+    ACTIVE_HIGH,
+};
+
 /// Identification structure for each gpio pin
 struct Id {
     Port port;

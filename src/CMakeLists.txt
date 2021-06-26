@@ -34,6 +34,7 @@ if(BSP STREQUAL "QAZ_65")
 elseif(BSP STREQUAL "QAZ_MEDIA")
     set(CXX_SOURCES ${CXX_SOURCES}
         bsp/qaz_media/bsp_qaz_media.cpp
+        qaz/buttons.cpp
     )
 else()
     message(FATAL_ERROR "Unknown BSP: '${BSP}'\n")
