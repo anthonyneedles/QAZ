@@ -14,6 +14,7 @@
 
 #include "qaz/buttons.hpp"
 #include "qaz/rotary_encoder.hpp"
+#include "usb/consumer_hid.hpp"
 
 /**
  * @brief Board support package initialization
@@ -24,4 +25,5 @@ void bsp::init(void)
 {
     buttons::init();
     rotary_encoder::init();
+    consumer_hid::init();
 }

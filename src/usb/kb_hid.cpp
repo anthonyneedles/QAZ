@@ -8,6 +8,7 @@
  *
  * This module will use the USB driver to send HID keycodes to the USB host.
  */
+
 #include "usb/kb_hid.hpp"
 
 #include <cstdint>
@@ -64,52 +65,6 @@ KeyBuf key_buf;
 
 }  // namespace
 
-static void send_report(void);
-
-/**
- * @brief Intialize the USB HID module
- *
- * We only need to ready key buffers and initialize the USB driver.
- */
-void kb_hid::init(void)
-{
-    // clear out the 'previous' key buffer
-    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
-        key_buf.prev[i] = KEY(NOEVT);
-    }
-
-    usb::init();
-
-    auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, kb_hid::task);
-    DBG_ASSERT(status == timeslice::SUCCESS);
-
-    debug::puts("Initialized: USB HID\r\n");
-}
-
-/**
- * @brief Periodically sample key buffer, and send report if necessary
- *
- * We check the currently pressed keys, and if there has been a change then we send a new key HID
- * report.
- */
-void kb_hid::task(void)
-{
-    keymatrix::copy_key_buffer(key_buf.curr);
-
-    // we only want to send a report when keys states change
-    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
-        if (key_buf.curr[i] != key_buf.prev[i]) {
-            send_report();
-            break;
-        }
-    }
-
-    // copy over 'current' keys to 'previous' keys
-    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
-        key_buf.prev[i] = key_buf.curr[i];
-    }
-}
-
 /**
  * @brief Populate HID report and send it off
  *
@@ -163,4 +118,48 @@ static void send_report(void)
     report.key4      = key_buf.curr[4];
     report.key5      = key_buf.curr[5];
     usb::write(INTERRUPT_EPN, reinterpret_cast<uint8_t *>(&report), sizeof(report));
+}
+
+/**
+ * @brief Intialize the USB HID module
+ *
+ * We only need to ready key buffers and initialize the USB driver.
+ */
+void kb_hid::init(void)
+{
+    // clear out the 'previous' key buffer
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
+        key_buf.prev[i] = KEY(NOEVT);
+    }
+
+    usb::init();
+
+    auto status = timeslice::register_task(USB_HID_TASK_PERIOD_MS, kb_hid::task);
+    DBG_ASSERT(status == timeslice::SUCCESS);
+
+    debug::puts("Initialized: USB Keyboard HID\r\n");
+}
+
+/**
+ * @brief Periodically sample key buffer, and send report if necessary
+ *
+ * We check the currently pressed keys, and if there has been a change then we send a new key HID
+ * report.
+ */
+void kb_hid::task(void)
+{
+    keymatrix::copy_key_buffer(key_buf.curr);
+
+    // we only want to send a report when keys states change
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
+        if (key_buf.curr[i] != key_buf.prev[i]) {
+            send_report();
+            break;
+        }
+    }
+
+    // copy over 'current' keys to 'previous' keys
+    for (unsigned i = 0; i < keymatrix::KEY_BUF_SIZE; ++i) {
+        key_buf.prev[i] = key_buf.curr[i];
+    }
 }

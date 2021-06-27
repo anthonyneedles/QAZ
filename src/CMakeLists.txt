@@ -36,6 +36,7 @@ elseif(BSP STREQUAL "QAZ_MEDIA")
         bsp/qaz_media/bsp_qaz_media.cpp
         qaz/buttons.cpp
         qaz/rotary_encoder.cpp
+        usb/consumer_hid.cpp
     )
 else()
     message(FATAL_ERROR "Unknown BSP: '${BSP}'\n")
