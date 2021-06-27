@@ -273,6 +273,18 @@ inline void set_output(Id id)
 }
 
 /**
+ * @brief Toggle the GPIO output
+ *
+ * The output state is toggled.
+ *
+ * @param[in] id  identification for gpio
+ */
+inline void toggle_output(Id id)
+{
+    bitop::toggle_bit(regs(id)->ODR, id.pin);
+}
+
+/**
  * @brief Set the GPIO output state
  *
  * Either set or clear the GPIO state. If the desired state is known at compile-time, `set_output`

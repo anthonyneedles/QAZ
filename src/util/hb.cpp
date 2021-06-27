@@ -48,13 +48,5 @@ void heartbeat::init(void)
  */
 void heartbeat::task(void)
 {
-    static int state = 0;
-
-    state = !state;
-
-    if (state) {
-        gpio::set_output(bsp::HB_LED);
-    } else {
-        gpio::clr_output(bsp::HB_LED);
-    }
+    gpio::toggle_output(bsp::HB_LED);
 }

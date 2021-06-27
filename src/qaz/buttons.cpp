@@ -39,9 +39,20 @@ struct ButtonCtrl {
     void (*callback)(void);
 };
 
-
 /// Collection of control structures for all buttons
 ButtonCtrl button_ctrl[NUM_BUTTONS];
+
+/**
+ * @brief Handles the pressing of the MUTE button (rotary encoder press)
+ *
+ * When the mute button is pressed we need to toggle the MUTE led.
+ *
+ * TODO: maybe the is something the host handles??? (like CAPS lock, etc.)
+ */
+void handle_mute(void)
+{
+    gpio::toggle_output(bsp::MUTE_LED);
+}
 
 }  // namespace
 
@@ -61,8 +72,16 @@ void buttons::init(void)
         button_ctrl[i].callback = nullptr;
     }
 
-    auto status = timeslice::register_task(DEBOUNCE_TASK_PERIOD_MS, buttons::task);
-    DBG_ASSERT(status == timeslice::SUCCESS);
+    // enable MUTE LED GPIO port clock, set as output
+    gpio::enable_port_clock(bsp::MUTE_LED);
+    gpio::set_mode(bsp::MUTE_LED, gpio::OUTPUT);
+
+    // TODO for now, we handle the MUTE led here
+    auto stat1 = buttons::set_callback(bsp::MUTE, handle_mute);
+    DBG_ASSERT(stat1 == buttons::SUCCESS);
+
+    auto stat2 = timeslice::register_task(DEBOUNCE_TASK_PERIOD_MS, buttons::task);
+    DBG_ASSERT(stat2 == timeslice::SUCCESS);
 
     debug::puts("Initialized: Buttons\r\n");
 }
@@ -131,8 +150,8 @@ buttons::Status buttons::set_callback(bsp::ButtonId id, void (*cb)(void))
 {
     if (button_ctrl[id].callback == nullptr) {
         button_ctrl[id].callback = cb;
-        return buttons::OKAY;
+        return buttons::SUCCESS;
     } else {
-        return buttons::FAILED;
+        return buttons::FAILURE;
     }
 }

@@ -48,6 +48,19 @@ inline void clr_bit(T &x, unsigned bitn)
 }
 
 /**
+ * @brief Toggle a specific bit
+ *
+ * @tparam        T     type to use for operations
+ * @param[in,out] x     reference of value to perform bitop on
+ * @param[in]     bitn  bit posiiton
+ */
+template <typename T>
+inline void toggle_bit(T &x, unsigned bitn)
+{
+    x ^= (1u << bitn);
+}
+
+/**
  * @brief Update a specific bit
  *
  * @tparam        T     type to use for operations

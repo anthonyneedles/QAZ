@@ -26,8 +26,8 @@ namespace buttons {
 
 // the status of a buttons routine
 enum Status {
-    OKAY,
-    FAILED,
+    SUCCESS,
+    FAILURE,
 };
 
 /// initializes button inputs and button controls

@@ -30,9 +30,10 @@
 namespace bsp {
 
 // individual gpio pins
-constexpr gpio::Id HB_LED  = { gpio::A, gpio::PIN_5  };
-constexpr gpio::Id MCO     = { gpio::A, gpio::PIN_8  };
-constexpr gpio::Id DBG_TX  = { gpio::A, gpio::PIN_9  };
+constexpr gpio::Id HB_LED   = { gpio::A, gpio::PIN_5  };
+constexpr gpio::Id MCO      = { gpio::A, gpio::PIN_8  };
+constexpr gpio::Id DBG_TX   = { gpio::A, gpio::PIN_9  };
+constexpr gpio::Id MUTE_LED = { gpio::A, gpio::PIN_3  };
 
 // An Id for each button
 enum ButtonId {
