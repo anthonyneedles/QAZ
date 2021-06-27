@@ -13,6 +13,7 @@
 #include "bsp/qaz_media/bsp_qaz_media.hpp"
 
 #include "qaz/buttons.hpp"
+#include "qaz/rotary_encoder.hpp"
 
 /**
  * @brief Board support package initialization
@@ -22,4 +23,5 @@
 void bsp::init(void)
 {
     buttons::init();
+    rotary_encoder::init();
 }

@@ -13,8 +13,6 @@
 #ifndef QAZ_BUTTONS_HPP_
 #define QAZ_BUTTONS_HPP_
 
-#include <cstdint>
-
 #include "bsp/bsp.hpp"
 
 /**
