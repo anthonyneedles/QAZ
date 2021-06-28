@@ -116,11 +116,16 @@ handles all building commands. These are the available commands:
 
 - `help` - Display the above
 
-There are several variables that the user can set in the top level `Makefile`.
+There are several variables that the user can set in the top level
+[Makefile](Makefile).
 
 - `BUILD_TYPE` - Debug or Release (i.e. debug print statements/asserts or not)
 
 - `BOARD` - Which board to build for (dictates BSP)
+
+A dummy marker file `.rebuild-marker` is used to ensure that whenever the top
+level [Makefile](Makefile) is changed the system ALWAYS rebuilds. This ensures
+that partial builds don't occur when changing the above variables.
 
 ### CMake
 

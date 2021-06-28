@@ -4,6 +4,8 @@
 
 /src/version.hpp
 
+.rebuild-marker
+
 *.zip
 *.tar
 *~*

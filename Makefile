@@ -5,12 +5,12 @@ TARGET = QAZ
 # The type of build we want:
 #   Debug   - All print statements
 #   Release - No print statements, greatly reduces .text section size
-BUILD_TYPE = Release
+BUILD_TYPE =
 
 # The board we are using, dictating pinouts
 #   QAZ_65        - QAZ 65% board
 #   QAZ_MEDIA     - QAZ Media Board
-BOARD = QAZ_65
+BOARD =
 
 # Paths and Options  ##########################################################
 
@@ -31,18 +31,28 @@ SF_ADDR = 0x08000000
 
 CLEAN_DIRS = $(BUILD_DIR) $(DOXYGEN_DIR)
 
-hdr_print = "\033[1;38;5;74m"$(1)"\033[0m"
+hdr_print = ">> \033[1;38;5;74m"$(1)"\033[0m"
 
 # Build Rules ##################################################################
 
+# dummy marker file to track when the Makefile changes
+-include .rebuild-marker
+
 .PHONY: $(TARGET)
 $(TARGET): $(BUILD_DIR)/Makefile
+		@echo $(call hdr_print,"BUILD_TYPE = ${BUILD_TYPE}")
+		@echo $(call hdr_print,"     BOARD = ${BOARD}")
 		@bash $(SCRIPT_DIR)/create-version.sh $(VERSION) $(BOARD)
 		@make -C $(BUILD_DIR) --no-print-directory
 		@arm-none-eabi-objcopy -O binary $(EXECUTABLE).elf $(EXECUTABLE).bin
 		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).elf $(BOARD) $(BUILD_TYPE)
 		@bash $(SCRIPT_DIR)/verbose-bin-copy.sh $(EXECUTABLE).bin $(BOARD) $(BUILD_TYPE)
 		@arm-none-eabi-size $(EXECUTABLE).elf
+
+.rebuild-marker: Makefile
+	@echo $(call hdr_print,"Makefile change detected! Rebuilding...")
+	@touch $@
+	@make -s clean
 
 .PHONY: all
 all: $(TARGET) docs lint
@@ -53,7 +63,7 @@ $(BUILD_DIR)/Makefile:
 
 .PHONY: clean
 clean:
-	  @echo "Cleaning: $(CLEAN_DIRS)"
+	  @echo $(call hdr_print,"Cleaning: $(CLEAN_DIRS)")
 		@rm -rf $(CLEAN_DIRS)
 
 .PHONY: docs
