@@ -10,7 +10,7 @@ BUILD_TYPE = Release
 # The board we are using, dictating pinouts
 #   QAZ_65        - QAZ 65% board
 #   QAZ_MEDIA     - QAZ Media Board
-BOARD = QAZ_65
+BOARD = QAZ_MEDIA
 
 # Paths and Options  ##########################################################
 

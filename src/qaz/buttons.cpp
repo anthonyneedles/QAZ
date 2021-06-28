@@ -42,18 +42,6 @@ struct ButtonCtrl {
 /// Collection of control structures for all buttons
 ButtonCtrl button_ctrl[NUM_BUTTONS];
 
-/**
- * @brief Handles the pressing of the MUTE button (rotary encoder press)
- *
- * When the mute button is pressed we need to toggle the MUTE led.
- *
- * TODO: maybe the is something the host handles??? (like CAPS lock, etc.)
- */
-void handle_mute(void)
-{
-    gpio::toggle_output(bsp::MUTE_LED);
-}
-
 }  // namespace
 
 /**
@@ -75,10 +63,6 @@ void buttons::init(void)
     // enable MUTE LED GPIO port clock, set as output
     gpio::enable_port_clock(bsp::MUTE_LED);
     gpio::set_mode(bsp::MUTE_LED, gpio::OUTPUT);
-
-    // TODO for now, we handle the MUTE led here
-    auto stat1 = buttons::set_callback(bsp::MUTE, handle_mute);
-    DBG_ASSERT(stat1 == buttons::SUCCESS);
 
     auto stat2 = timeslice::register_task(DEBOUNCE_TASK_PERIOD_MS, buttons::task);
     DBG_ASSERT(stat2 == timeslice::SUCCESS);

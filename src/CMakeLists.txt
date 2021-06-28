@@ -8,7 +8,6 @@ set(CXX_SOURCES
     qaz/main.cpp
     qaz/persist.cpp
     usb/usb.cpp
-    usb/usb_descriptors.cpp
     util/debug.cpp
     util/hb.cpp
 )
@@ -30,6 +29,7 @@ if(BSP STREQUAL "QAZ_65")
         qaz/key_matrix.cpp
         qaz/lighting.cpp
         usb/kb_hid.cpp
+        usb/kb_usb_desc.cpp
     )
 elseif(BSP STREQUAL "QAZ_MEDIA")
     set(CXX_SOURCES ${CXX_SOURCES}
@@ -37,6 +37,7 @@ elseif(BSP STREQUAL "QAZ_MEDIA")
         qaz/buttons.cpp
         qaz/rotary_encoder.cpp
         usb/consumer_hid.cpp
+        usb/consumer_usb_desc.cpp
     )
 else()
     message(FATAL_ERROR "Unknown BSP: '${BSP}'\n")

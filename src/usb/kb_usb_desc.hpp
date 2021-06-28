@@ -1,5 +1,5 @@
 /**
- * @file      usb_descriptors.hpp
+ * @file      kb_usb_desc.hpp
  * @brief     USB descriptor management
  *
  * @author    Anthony Needles
@@ -10,8 +10,8 @@
  * The information for a descriptor can then be obtained via API.
  */
 
-#ifndef USB_USB_DESCRIPTORS_HPP_
-#define USB_USB_DESCRIPTORS_HPP_
+#ifndef USB_KB_USB_DESC_HPP_
+#define USB_KB_USB_DESC_HPP_
 
 #include <cstdint>
 
@@ -41,4 +41,4 @@ int get_desc(uint16_t desc_id, USBDesc *desc);
 
 }  // namespace usb_desc
 
-#endif  // USB_USB_DESCRIPTORS_HPP_
+#endif  // USB_KB_USB_DESC_HPP_

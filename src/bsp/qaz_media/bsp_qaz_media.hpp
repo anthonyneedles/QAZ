@@ -39,7 +39,7 @@ constexpr gpio::Id ROT_ENC_B = { gpio::B, gpio::PIN_4  };
 
 // An Id for each button
 enum ButtonId {
-    BUTTON_STOP = 0,
+    STOP        = 0,
     PREVIOUS    = 1,
     PLAY_PAUSE  = 2,
     NEXT        = 3,

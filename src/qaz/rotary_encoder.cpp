@@ -17,14 +17,15 @@
 #include "bsp/bsp.hpp"
 #include "core/gpio.hpp"
 #include "core/time_slice.hpp"
+#include "usb/consumer_hid.hpp"
 #include "util/bitop.hpp"
 #include "util/debug.hpp"
 #include "stm32f0xx.h"  // NOLINT
 
 namespace {
 
-/// Task fuction will execute every 50ms
-constexpr unsigned ROT_ENC_TASK_PERIOD_MS = 50;
+/// Task fuction will execute every 20ms
+constexpr unsigned ROT_ENC_TASK_PERIOD_MS = 20;
 
 }  // namespace
 
@@ -50,9 +51,12 @@ void rotary_encoder::init(void)
     // set our timer in encoder mode, counting on input 1/2 (SMS = 0b001)
     bitop::update_msk(TIM3->SMCR,  TIM_SMCR_SMS_Msk,   TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1);
 
-    // input channel 1/2 is mapped to encoder incoder input 1/2. no inversion on either
+    // input channel 1/2 is mapped to encoder incoder input 1/2
     bitop::update_msk(TIM3->CCMR1, TIM_CCMR1_CC1S_Msk, TIM_CCMR1_CC1S_0);
     bitop::update_msk(TIM3->CCMR1, TIM_CCMR1_CC2S_Msk, TIM_CCMR1_CC2S_0);
+
+    // invert just ch1, so we count up when turning clockwise
+    bitop::update_msk(TIM3->CCER,  TIM_CCER_CC1P_Msk | TIM_CCER_CC1NP, TIM_CCER_CC1P);
 
     // we count from 0 - 0xFFFF, so -32768 to 32767 if we interpret the count as an int16
     TIM3->ARR = 0xFFFF;
@@ -76,5 +80,11 @@ void rotary_encoder::init(void)
  */
 void rotary_encoder::task(void)
 {
+    int16_t rotation_val = static_cast<int16_t>(TIM3->CNT);
+    if (rotation_val > 0) {
+        consumer_hid::set_vol_up();
+    } else if (rotation_val < 0) {
+        consumer_hid::set_vol_down();
+    }
     TIM3->CNT = 0;
 }

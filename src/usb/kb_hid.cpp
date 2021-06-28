@@ -17,7 +17,7 @@
 #include "qaz/key_matrix.hpp"
 #include "usb/usb.hpp"
 #include "usb/usb_definitions.hpp"
-#include "usb/usb_descriptors.hpp"
+#include "usb/kb_usb_desc.hpp"
 #include "util/debug.hpp"
 #include "stm32f0xx.h" // NOLINT
 

@@ -18,11 +18,25 @@
 #include <stdbool.h>
 
 #include "usb/usb_definitions.hpp"
-#include "usb/usb_descriptors.hpp"
 #include "util/bitop.hpp"
 #include "util/debug.hpp"
 #include "util/expressions.hpp"
 #include "stm32f0xx.h"  // NOLINT
+
+// TODO: find better way for this
+#if defined(QAZ_65)
+
+#include "usb/kb_usb_desc.hpp"
+
+#elif defined(QAZ_MEDIA)
+
+#include "usb/consumer_usb_desc.hpp"
+
+#else
+
+#error Invalid BSP defined!
+
+#endif
 
 // usb handler needs C linkage
 extern "C" void USB_IRQHandler(void);
@@ -185,8 +199,6 @@ void usb::write(uint16_t ep, const uint8_t *buf, uint16_t len)
         return;
     }
 
-    debug::printf("[write %d] ", len);
-
     BDT->bd_ep[ep].tx_size = len;
 
     for (int i = 0; i < len/2; ++i) {
@@ -217,8 +229,6 @@ void usb::read(uint16_t ep, uint8_t *buf)
     }
 
     int rx_size = BDT->bd_ep[ep].rx_size & RX_CNT_MSK;
-
-    debug::printf("[read %d] ", rx_size);
 
     for (int i = 0; i < rx_size; ++i) {
         buf[i] = reinterpret_cast<uint8_t *>(USB_PMAADDR + ep_ctrl[ep].rx_pma_offset)[i];
@@ -292,15 +302,12 @@ static void ep0_setup(void)
 
     // get the setup packet contents
     usb::read(0, reinterpret_cast<uint8_t *>(&last_setup));
-    debug::printf("%02x %02x %04x %04x %04x ", last_setup.bmRequestType, last_setup.bRequest,
-            last_setup.wValue, last_setup.wIndex, last_setup.wLength);
 
     // determine request type, and proceed accordingly
     switch (REQ(last_setup.bmRequestType, last_setup.bRequest)) {
     // handle both device and interface get descriptor
     case REQ(REQ_IN_STD_DEV, REQ_GET_DESC):
     case REQ(REQ_IN_STD_ITF, REQ_GET_DESC):
-        debug::printf("GET DESC 0x%04x ", last_setup.wValue);
         ret = usb_desc::get_desc(last_setup.wValue, &desc);
         if (ret >= 0) {
             if (last_setup.wLength > desc.size) {
@@ -315,7 +322,6 @@ static void ep0_setup(void)
             usb::write(0, desc.buf_ptr, desc.size);
         } else {
             // Stall for unknown descriptors
-            debug::puts("? (STALLING) ");
             SET_RX_STATUS(0, USB_EP_RX_STALL);
             SET_TX_STATUS(0, USB_EP_TX_STALL);
         }
@@ -323,26 +329,21 @@ static void ep0_setup(void)
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_IDLE):
-        debug::puts("SET IDLE ");
         usb::write(0, 0, 0);
         break;
 
     // this is a class-specific request
     case REQ(REQ_OUT_CLS_ITF, REQ_SET_RPT):
-        debug::puts("SET RPT ");
         break;
 
     // device has been addressed
     case REQ(REQ_OUT_STD_DEV, REQ_SET_ADDR):
-        debug::puts("SET ADDR ");
-
         // Send 0 length packet with address 0
         usb::write(0, 0, 0);
         break;
 
     // our device has now been configured, can use ep1 now
     case REQ(REQ_OUT_STD_DEV, REQ_SET_CFG):
-        debug::printf("SET CFG (%x) ", last_setup.wValue);
         usb::write(0, 0, 0);
         init_ep(1);
         break;
@@ -351,18 +352,15 @@ static void ep0_setup(void)
     case REQ(REQ_IN_STD_DEV, REQ_GET_STAT):
     {
         const uint8_t status[] = { 0x01, 0x00 };  // self powered
-        debug::puts("GET STAT ");
         usb::write(0, status, sizeof(status));
         break;
     }
 
     // clearing an endpoint feature (always ENDPOINT_HALT)
     case REQ(REQ_OUT_STD_EP, REQ_CLR_STAT):
-        debug::puts("CLR STAT ");
         break;
 
     default:
-        debug::puts("UNKNOWN REQUEST ");
         break;
     }
 }
@@ -401,32 +399,25 @@ void USB_IRQHandler(void)
     uint16_t int_reg = USB->ISTR;
     uint16_t int_ep = (int_reg & USB_ISTR_EP_ID);
 
-    debug::printf("> EP%d %s: ", int_ep, (int_reg & USB_ISTR_DIR) ? "IN " : "OUT");
-
     if (int_reg & USB_ISTR_PMAOVR) {
         USB->ISTR = ~USB_ISTR_PMAOVR;
-        debug::puts("PMAOVR ");
     }
 
     if (int_reg & USB_ISTR_ERR) {
         USB->ISTR = ~USB_ISTR_ERR;
-        debug::puts("ERR ");
     }
 
     if (int_reg & USB_ISTR_WKUP) {
         USB->ISTR = ~USB_ISTR_WKUP;
-        debug::puts("WKUP ");
     }
 
     if (int_reg & USB_ISTR_SUSP) {
         USB->ISTR = ~USB_ISTR_SUSP;
-        debug::puts("SUSP ");
     }
 
     if (int_reg & USB_ISTR_RESET) {
         usb_reset();
         USB->ISTR = ~USB_ISTR_RESET;
-        debug::puts("RESET ");
     }
 
     if (int_reg & USB_ISTR_SOF) {
@@ -435,23 +426,17 @@ void USB_IRQHandler(void)
 
     if (int_reg & USB_ISTR_ESOF) {
         USB->ISTR = ~USB_ISTR_ESOF;
-        debug::puts("ESOF ");
     }
 
     if (int_reg & USB_ISTR_L1REQ) {
         USB->ISTR = ~USB_ISTR_L1REQ;
-        debug::puts("L1REQ ");
     }
 
     if (int_reg & USB_ISTR_CTR) {
-        debug::puts("CTR ");
         ep_reg = EP_REG(int_ep);
 
         if (ep_reg & USB_EP_CTR_RX) {
-            debug::puts("RX ");
-
             if (ep_reg & USB_EP_SETUP) {
-                debug::puts("SETUP ");
                 ep0_setup();
             }
 
@@ -459,7 +444,6 @@ void USB_IRQHandler(void)
         }
 
         if (ep_reg & USB_EP_CTR_TX) {
-            debug::puts("TX ");
             EP_REG(int_ep) = ep_reg & USB_EPREG_MASK & ~USB_EP_CTR_TX;
 
             if (int_ep == 0) {
@@ -467,6 +451,4 @@ void USB_IRQHandler(void)
             }
         }
     }
-
-    debug::puts("\r\n");
 }

@@ -1,5 +1,5 @@
 /**
- * @file      usb_descriptors.cpp
+ * @file      consumer_usb_desc.cpp
  * @brief     USB descriptor management
  *
  * @author    Anthony Needles
@@ -10,7 +10,7 @@
  * The information for a descriptor can then be obtained via API.
  */
 
-#include "usb/usb_descriptors.hpp"
+#include "usb/consumer_usb_desc.hpp"
 
 #include "util/debug.hpp"
 #include "util/expressions.hpp"
@@ -27,15 +27,14 @@ constexpr uint8_t DESCRIPTOR_DEVICE[] = {
     0x00,        // bDeviceProtocol
       64,        // bMaxPacketSize         64 bytes
     0x1D, 0xC0,  // idVendor               0xC01D
-    0x22, 0xAA,  // idProduct              0xAA22
-    0x10, 0x01,  // bcdDevice              1.10
+    0x22, 0xAB,  // idProduct              0xAA22
+    0x00, 0x01,  // bcdDevice              1.00
        1,        // iManufacturer          'anthonyneedles'
-       2,        // iProduct               'qaz keyboard'
+       2,        // iProduct               'qaz media'
        0,        // iSerialNumber
        1,        // bNumConfigurations
 };
 
-// TODO: wakeup? 2 interfaces.
 /// Configuration, Interface, HID, and Endpoint  descriptors. These are eventually asked for, all at
 /// once. These define the device interface as USB HID Keyboard, the report size, and the interrupt
 /// endpoint config.
@@ -57,7 +56,7 @@ constexpr uint8_t DESCRIPTOR_CONFIG[] = {
        1,        // bNumEndpoints
     0x03,        // bInterfaceClass        HID
     0x01,        // bInterfaceSubClass     Boot
-    0x01,        // bInterfaceProtocol     Keyboard
+    0x00,        // bInterfaceProtocol     No specific protocol
        0,        // iInterface             No string
 // HID Descriptor
        9,        // bLength
@@ -66,13 +65,13 @@ constexpr uint8_t DESCRIPTOR_CONFIG[] = {
     0x00,        // bCountryCode           Not localized
        1,        // bNumDescriptors
     0x22,        // bDescriptorType        Report
-      64, 0x00,  // wDescriptorLength      64 bytes
+      38, 0x00,  // wDescriptorLength      64 bytes
 // Endpoint 1 In Descriptor
        7,        // bLength
        5,        // bDescriptorType        Endpoint
     0x81,        // bEndpointAddress       1, In
     0x03,        // bmAttributes           Interrupt
-       8, 0x00,  // wMaxPacketSize         4 bytes
+       2, 0x00,  // wMaxPacketSize         2 bytes
       10,        // bInterval              10 ms
 };
 
@@ -105,61 +104,41 @@ constexpr uint8_t DESCRIPTOR_MANUFACT[] = {
 
 /// Product String Descriptor (index 2). In Unicode format.
 constexpr uint8_t DESCRIPTOR_PRODUCT[] = {
-      26,         // bLength                2 + 14*2
+      20,         // bLength                2 + 9*2
        3,         // bDescriptorType        String
       'q', 0x00,  // wString                qaz keyboard
       'a', 0x00,
       'z', 0x00,
       ' ', 0x00,
-      'k', 0x00,
+      'm', 0x00,
       'e', 0x00,
-      'y', 0x00,
-      'b', 0x00,
-      'o', 0x00,
-      'a', 0x00,
-      'r', 0x00,
       'd', 0x00,
+      'i', 0x00,
+      'a', 0x00,
 };
 
 /// HID Report Descriptor. Defines the format of key packets we send.
 constexpr uint8_t DESCRIPTOR_HIDREPORT[] = {
-    0x05, 0x01,  // Usage Page   = Desktop,
-    0x09, 0x06,  // Usage        = Keyboard,
-    0xA1, 0x01,  // Collection   = Application,
-    0x05, 0x07,  // Usage Page   = Keyboard,
-// Keyboard Input, Byte 0: Modifier bitmap (Ctrl, Shift, Alt, etc.)
-    0x19, 0xE0,  // Usage Min    = KB LCtrl,
-    0x29, 0xE7,  // Usage Max    = KB RGui,
-    0x15, 0x00,  // Logical Min  = 0,
-    0x25, 0x01,  // Logical Max  = 1,
-    0x75, 0x01,  // Report Size  = 1,
-    0x95, 0x08,  // Report Count = 8,
-    0x81, 0x02,  // Input        = Data, Var, Abs
-// Keyboard Input, Byte 1: Reserved
-    0x95, 0x01,  // Report Count = 1,
-    0x75, 0x08,  // Report Size  = 8,
-    0x81, 0x01,  // Input        = Cnst, Arr, Abs
-// LED Output Report
-    0x95, 0x05,  // Report Count = 5
-    0x75, 0x01,  // Report Size  = 1
-    0x05, 0x08,  // Usage Page   = LED
-    0x19, 0x01,  // Usage Min    = 1
-    0x29, 0x05,  // Usage Min    = 5
-    0x91, 0x02,  // Output       = Data, Var, Abs
-    0x95, 0x01,  // Report Count = 1
-    0x75, 0x03,  // Report Size  = 3
-    0x91, 0x01,  // Output       = Cnst
-// Keyboard Input, Bytes 2-7: Pressed Key Keycodes
-    0x95, 0x06,  // Report Count = 6
-    0x75, 0x08,  // Report Size  = 8
-    0x15, 0x00,  // Logical Min  = 0
-    0x26, 0x97,  // Logical Max  = 101
-    0x00,
-    0x05, 0x07,  // Usage Page   = Keyboard
-    0x19, 0x00,  // Usage Min    = No Event,
-    0x29, 0x97,  // Usage Max    = Max Keycode,
-    0x81, 0x00,  // Input        = Data, Arr, Abs
-    0xC0,        // End Collection
+    0x05, 0x0C,  //        Usage Page   = Consumer Devices,
+    0x09, 0x01,  //        Usage        = Consumer Control,
+    0xA1, 0x01,  //        Collection   = Application,
+    0x05, 0x0C,  //        Usage Page   = Consumer Devices,
+    0x15, 0x00,  //        Logical Min  = 0
+    0x25, 0x01,  //        Logical Max  = 1
+    0x75, 0x01,  //        Report Size  = 1
+    0x95, 0x07,  //        Report Count = 7
+    0x09, 0xB5,  //        Usage        = Bit 0: Scan Next Track     (0xB5)
+    0x09, 0xB6,  //        Usage        = Bit 1: Scan Previous Track (0xB6)
+    0x09, 0xB7,  //        Usage        = Bit 2: Stop                (0xB7)
+    0x09, 0xCD,  //        Usage        = Bit 3: Play / Pause        (0xCD)
+    0x09, 0xE2,  //        Usage        = Bit 4: Mute                (0xE2)
+    0x09, 0xE9,  //        Usage        = Bit 5: Volume Up           (0xE9)
+    0x0A,        //        Usage        = Bit 6: Volume Down         (0x00EA)
+    0xEA, 0x00,
+    0x81, 0x02,  //        Input        = Data, Var, Abs
+    0x95, 0x09,  //        Report Count = 9, Bits 7-15: N/A
+    0x81, 0x01,  //        Input        = Constant
+    0xC0         // End Collection
 };
 
 /// Descriptor table entry, pairing the desc ID with desc info
@@ -194,8 +173,6 @@ constexpr USBDescTableEntry desc_table[] = {
 int usb_desc::get_desc(uint16_t desc_id, USBDesc *desc)
 {
     int ret = -1;
-
-    debug::printf("<<0x%04x>> ", desc_id);
 
     for (unsigned i = 0; i < COUNT_OF(desc_table); ++i) {
         if (desc_table[i].id == desc_id) {
