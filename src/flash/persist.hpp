@@ -16,8 +16,8 @@
  * There are the last two 2KB of FLASH memory, leaving 30KB for the actual program.
  */
 
-#ifndef QAZ_PERSIST_HPP_
-#define QAZ_PERSIST_HPP_
+#ifndef FLASH_PERSIST_HPP_
+#define FLASH_PERSIST_HPP_
 
 #include <stdint.h>
 
@@ -94,4 +94,4 @@ inline void persist::read_or_create_data(persist::DataId id, uint16_t &buf, uint
     }
 }
 
-#endif  // QAZ_PERSIST_HPP_
+#endif  // FLASH_PERSIST_HPP_

@@ -9,8 +9,8 @@
  * Uses LP500x driver to control the RGB LEDs with backlight coloring profiles.
  */
 
-#ifndef QAZ_LIGHTING_HPP_
-#define QAZ_LIGHTING_HPP_
+#ifndef KEYBOARD_LIGHTING_HPP_
+#define KEYBOARD_LIGHTING_HPP_
 
 /**
  * @brief Lighting namespace
@@ -30,4 +30,4 @@ void task(void);
 
 }  // namespace lighting
 
-#endif  // QAZ_LIGHTING_HPP_
+#endif  // KEYBOARD_LIGHTING_HPP_

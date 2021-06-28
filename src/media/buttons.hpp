@@ -10,8 +10,8 @@
  * pressed, a callback is called for performing a desired action.
  */
 
-#ifndef QAZ_BUTTONS_HPP_
-#define QAZ_BUTTONS_HPP_
+#ifndef MEDIA_BUTTONS_HPP_
+#define MEDIA_BUTTONS_HPP_
 
 #include "bsp/bsp.hpp"
 
@@ -39,4 +39,4 @@ Status set_callback(bsp::ButtonId id, void (*cb)(void));
 
 }  // namespace buttons
 
-#endif  // QAZ_BUTTONS_HPP_
+#endif  // MEDIA_BUTTONS_HPP_

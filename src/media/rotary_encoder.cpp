@@ -12,7 +12,7 @@
  * each read, so the value we read is a relative change in position, rather than an absolute one.
  */
 
-#include "qaz/rotary_encoder.hpp"
+#include "media/rotary_encoder.hpp"
 
 #include "bsp/bsp.hpp"
 #include "core/gpio.hpp"

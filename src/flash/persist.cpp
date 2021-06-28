@@ -16,7 +16,7 @@
  * There are the last two 2KB of flash memory, leaving 30KB for the actual program.
  */
 
-#include "qaz/persist.hpp"
+#include "flash/persist.hpp"
 
 #include "flash/eeprom.h"
 #include "util/debug.hpp"

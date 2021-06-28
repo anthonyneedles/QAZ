@@ -24,8 +24,8 @@
  *   user keys, such as changing the RGB LED color, brightness, etc.
  */
 
-#ifndef QAZ_KEY_MATRIX_HPP_
-#define QAZ_KEY_MATRIX_HPP_
+#ifndef KEYBOARD_KEY_MATRIX_HPP_
+#define KEYBOARD_KEY_MATRIX_HPP_
 
 #include <cstdint>
 
@@ -69,4 +69,4 @@ bool is_idle(void);
 
 }  // namespace keymatrix
 
-#endif  // QAZ_KEY_MATRIX_HPP_
+#endif  // KEYBOARD_KEY_MATRIX_HPP_

@@ -15,7 +15,7 @@
 
 #include "bsp/bsp.hpp"
 #include "core/time_slice.hpp"
-#include "qaz/buttons.hpp"
+#include "media/buttons.hpp"
 #include "usb/usb.hpp"
 #include "usb/usb_definitions.hpp"
 #include "usb/consumer_usb_desc.hpp"

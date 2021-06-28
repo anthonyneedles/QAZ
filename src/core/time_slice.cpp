@@ -48,9 +48,44 @@ unsigned ntasks = 0;
 /// Task registry is just an array of task info, filled with each register
 task_info task_registry[timeslice::MAX_NUM_TASKS] = { };
 
-}  // namespace
+/**
+ * @brief Manages timing loops
+ *
+ * This "task" regulates the timing of the loop to the given loop period. It does this by saving
+ * the previous ms count, and comparing it to the current ms count. It will wait out any remaining
+ * time until the loop period is achieved.
+ *
+ * If the calculated elapsed time is greater than the loop period, some task must have overran. The
+ * function may be hanging, or the loop period must be increased.
+ */
+void manager_task(void)
+{
+    uint32_t elapsed_ms;
 
-static void manager_task(void);
+    // copy value now, it can change at any time
+    uint32_t current_ms = ms_cnt;
+
+    if (current_ms >= last_ms) {
+        // find the time we spent in the loop so far
+        elapsed_ms = current_ms - last_ms;
+    } else {
+        // likely tick overflow
+        elapsed_ms = current_ms + (UINT32_MAX - last_ms);
+        debug::puts("INFO: Likely tick overflow, OK\r\n");
+    }
+
+    if (elapsed_ms <= timeslice::LOOP_PERIOD_MS) {
+        // wait out the remaining time in the loop period
+        while ((ms_cnt - last_ms) < timeslice::LOOP_PERIOD_MS) {}
+        current_ms = ms_cnt;
+    } else {
+        debug::printf("WARNING: Loop overran by %ums\r\n", elapsed_ms - timeslice::LOOP_PERIOD_MS);
+    }
+
+    last_ms = current_ms;
+}
+
+}  // namespace
 
 /**
  * @brief Init TimeSlice loop
@@ -130,43 +165,6 @@ void timeslice::enter_loop(void)
             task_registry[i].loop_cnt++;
         }
     }
-}
-
-/**
- * @brief Manages timing loops
- *
- * This "task" regulates the timing of the loop to the given loop period. It does this by saving
- * the previous ms count, and comparing it to the current ms count. It will wait out any remaining
- * time until the loop period is achieved.
- *
- * If the calculated elapsed time is greater than the loop period, some task must have overran. The
- * function may be hanging, or the loop period must be increased.
- */
-void manager_task(void)
-{
-    uint32_t elapsed_ms;
-
-    // copy value now, it can change at any time
-    uint32_t current_ms = ms_cnt;
-
-    if (current_ms >= last_ms) {
-        // find the time we spent in the loop so far
-        elapsed_ms = current_ms - last_ms;
-    } else {
-        // likely tick overflow
-        elapsed_ms = current_ms + (UINT32_MAX - last_ms);
-        debug::puts("INFO: Likely tick overflow, OK\r\n");
-    }
-
-    if (elapsed_ms <= timeslice::LOOP_PERIOD_MS) {
-        // wait out the remaining time in the loop period
-        while ((ms_cnt - last_ms) < timeslice::LOOP_PERIOD_MS) {}
-        current_ms = ms_cnt;
-    } else {
-        debug::printf("WARNING: Loop overran by %ums\r\n", elapsed_ms - timeslice::LOOP_PERIOD_MS);
-    }
-
-    last_ms = current_ms;
 }
 
 /**

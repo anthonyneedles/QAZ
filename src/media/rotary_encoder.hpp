@@ -12,8 +12,8 @@
  * each read, so the value we read is a relative change in position, rather than an absolute one.
  */
 
-#ifndef QAZ_ROTARY_ENCODER_HPP_
-#define QAZ_ROTARY_ENCODER_HPP_
+#ifndef MEDIA_ROTARY_ENCODER_HPP_
+#define MEDIA_ROTARY_ENCODER_HPP_
 
 /**
  * @brief Rotary Encoder namespace
@@ -30,4 +30,4 @@ void task(void);
 
 }  // namespace rotary_encoder
 
-#endif  // QAZ_ROTARY_ENCODER_HPP_
+#endif  // MEDIA_ROTARY_ENCODER_HPP_

@@ -14,7 +14,7 @@
 #include "bsp/bsp.hpp"
 #include "core/clock.hpp"
 #include "core/time_slice.hpp"
-#include "qaz/persist.hpp"
+#include "flash/persist.hpp"
 #include "util/debug.hpp"
 #include "util/hb.hpp"
 

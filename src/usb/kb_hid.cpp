@@ -14,7 +14,7 @@
 #include <cstdint>
 
 #include "core/time_slice.hpp"
-#include "qaz/key_matrix.hpp"
+#include "keyboard/key_matrix.hpp"
 #include "usb/usb.hpp"
 #include "usb/usb_definitions.hpp"
 #include "usb/kb_usb_desc.hpp"

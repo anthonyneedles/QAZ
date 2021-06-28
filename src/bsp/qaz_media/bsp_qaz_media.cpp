@@ -12,8 +12,8 @@
 #include "bsp/bsp.hpp"
 #include "bsp/qaz_media/bsp_qaz_media.hpp"
 
-#include "qaz/buttons.hpp"
-#include "qaz/rotary_encoder.hpp"
+#include "media/buttons.hpp"
+#include "media/rotary_encoder.hpp"
 #include "usb/consumer_hid.hpp"
 
 /**

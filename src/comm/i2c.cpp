@@ -23,7 +23,7 @@ namespace {
 /// Calculated for 400kHz with 48MHz I2C clock
 constexpr uint32_t TIMING_CONFIG = 0x2010091A;
 
-}
+}  // namespace
 
 /**
  * @brief Initializes I2C module

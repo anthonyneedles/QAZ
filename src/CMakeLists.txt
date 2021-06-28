@@ -4,9 +4,9 @@ set(CXX_SOURCES
     comm/i2c.cpp
     comm/uart.cpp
     core/clock.cpp
+    core/main.cpp
     core/time_slice.cpp
-    qaz/main.cpp
-    qaz/persist.cpp
+    flash/persist.cpp
     usb/usb.cpp
     util/debug.cpp
     util/hb.cpp
@@ -26,16 +26,16 @@ if(BSP STREQUAL "QAZ_65")
     set(CXX_SOURCES ${CXX_SOURCES}
         bsp/qaz_65/bsp_qaz_65.cpp
         is31fl3746a/is31fl3746a.cpp
-        qaz/key_matrix.cpp
-        qaz/lighting.cpp
+        keyboard/key_matrix.cpp
+        keyboard/lighting.cpp
         usb/kb_hid.cpp
         usb/kb_usb_desc.cpp
     )
 elseif(BSP STREQUAL "QAZ_MEDIA")
     set(CXX_SOURCES ${CXX_SOURCES}
         bsp/qaz_media/bsp_qaz_media.cpp
-        qaz/buttons.cpp
-        qaz/rotary_encoder.cpp
+        media/buttons.cpp
+        media/rotary_encoder.cpp
         usb/consumer_hid.cpp
         usb/consumer_usb_desc.cpp
     )

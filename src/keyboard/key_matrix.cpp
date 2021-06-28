@@ -15,11 +15,11 @@
  * where X is the symbol given in KEY_TABLE.
  */
 
-#include "qaz/key_matrix.hpp"
+#include "keyboard/key_matrix.hpp"
 
 #include "core/gpio.hpp"
 #include "core/time_slice.hpp"
-#include "qaz/lighting.hpp"
+#include "keyboard/lighting.hpp"
 #include "usb/usb_definitions.hpp"
 #include "util/debug.hpp"
 #include "util/expressions.hpp"

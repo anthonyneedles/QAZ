@@ -21,7 +21,7 @@ namespace {
 /// Calculated for 115200 baud with 48MHz UART clock
 constexpr uint16_t BAUD_115200 = 0x1A1;
 
-}
+}  // namespace
 
 /**
  * @brief Enables USART for TX at 115200 baud, 8-N-1.

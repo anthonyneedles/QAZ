@@ -9,15 +9,15 @@
  * Uses IS31FL3746A driver to control the RGB LEDs with backlight coloring profiles.
  */
 
-#include "qaz/lighting.hpp"
+#include "keyboard/lighting.hpp"
 
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "qaz/key_matrix.hpp"
-#include "qaz/persist.hpp"
 #include "core/time_slice.hpp"
+#include "flash/persist.hpp"
 #include "is31fl3746a/is31fl3746a.hpp"
+#include "keyboard/key_matrix.hpp"
 #include "util/debug.hpp"
 #include "util/expressions.hpp"
 

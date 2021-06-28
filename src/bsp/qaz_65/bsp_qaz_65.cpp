@@ -12,8 +12,8 @@
 #include "bsp/bsp.hpp"
 #include "bsp/qaz_65/bsp_qaz_65.hpp"
 
-#include "qaz/key_matrix.hpp"
-#include "qaz/lighting.hpp"
+#include "keyboard/key_matrix.hpp"
+#include "keyboard/lighting.hpp"
 #include "usb/kb_hid.hpp"
 
 /**

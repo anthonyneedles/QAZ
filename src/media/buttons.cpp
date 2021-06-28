@@ -10,7 +10,7 @@
  * When the button is validated as pressed, a callback function is called.
  */
 
-#include "qaz/buttons.hpp"
+#include "media/buttons.hpp"
 
 #include "core/gpio.hpp"
 #include "core/time_slice.hpp"
