@@ -83,14 +83,14 @@ void init(void);
 ///     symbol - the symbol for the key. must match with HID_USAGE_KEYBOARD_* define
 #define FN_TABLE(K) \
     K(NONE)  K(F1)    K(F2)    K(F3)    K(F4)    K(F5)    K(F6)    K(F7)    K(F8)    K(F9)    K(F10)   K(F11)   K(F12)   K(NONE)  K(PROF)   /* NOLINT */ \
-    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTUP)  /* NOLINT */ \
-    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTDN)  /* NOLINT */ \
-    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(VOLUP) K(COLOR)  /* NOLINT */ \
-    K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(SPDDN) K(NONE)  K(VOLDN) K(SPDUP)  /* NOLINT */
+    K(NONE)  K(R_UP)  K(G_UP)  K(B_UP)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTUP)  /* NOLINT */ \
+    K(NONE)  K(R_DN)  K(G_DN)  K(B_DN)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(BRTDN)  /* NOLINT */ \
+    K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)   /* NOLINT */ \
+    K(LCTRL) K(LGUI)  K(LALT)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(NONE)  K(RALT)  K(FN)    K(RCTRL) K(SPDDN) K(NONE)  K(NONE)  K(SPDUP)  /* NOLINT */
 
 /// Which keys get a callback function
 #define CALLBACK_KEY_TABLE(K) \
-    K(BRTUP) K(BRTDN) K(COLOR) K(PROF) K(SPDUP) K(SPDDN)
+    K(BRTUP) K(BRTDN) K(PROF) K(SPDUP) K(SPDDN) K(R_UP) K(G_UP) K(B_UP) K(R_DN) K(G_DN) K(B_DN)
 
 /// USART used for sending debug messages
 #define DEBUG_UART    USART1

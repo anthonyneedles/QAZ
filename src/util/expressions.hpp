@@ -70,7 +70,7 @@ constexpr unsigned PREV_CIRCULAR_INDEX(unsigned index, unsigned indicies)
  *
  * Must measure actual delay for "accuracy"
  *
- * @param[in] loops     the current index
+ * @param[in] loops  the current index
  */
 inline void LOOP_DELAY(int loops)
 {
@@ -80,13 +80,62 @@ inline void LOOP_DELAY(int loops)
 /**
  * @brief Find number of elements in an array
  *
- * @tparam    N     number of elements in array
- * @tparam    T     type of array members
+ * @tparam N  number of elements in array
+ * @tparam T  type of array members
  */
 template <unsigned N, class T>
 constexpr unsigned COUNT_OF(T(&)[N])
 {
     return N;
+}
+
+/**
+ * @brief 8-bit RGB values to 24-bit color code
+ *
+ * @param[in] red    8-bit intensity of red   in color
+ * @param[in] green  8-bit intensity of green in color
+ * @param[in] blue   8-bit intensity of blue  in color
+ *
+ * @return RGB code, in lower 24 bits of word
+ */
+constexpr uint32_t RGB_CODE(uint8_t red, uint8_t green, uint8_t blue)
+{
+    return (static_cast<uint32_t>((red   << 16) & 0xFF0000) |
+            static_cast<uint32_t>((green <<  8) & 0x00FF00) |
+            static_cast<uint32_t>((blue)        & 0x0000FF));
+}
+
+/**
+ * @brief Red intensity from 24-bit color code
+ *
+ * @param[in] rgb_code  RGB code, in lower 24 bits
+ *
+ * @return 8-bit red intensity
+ */
+constexpr uint8_t R_RGB(uint32_t rgb_code) {
+    return (rgb_code & 0xFF0000) >> 16;
+}
+
+/**
+ * @brief Green intensity from 24-bit color code
+ *
+ * @param[in] rgb_code  RGB code, in lower 24 bits
+ *
+ * @return 8-bit green intensity
+ */
+constexpr uint8_t G_RGB(uint32_t rgb_code) {
+    return (rgb_code & 0x00FF00) >> 8;
+}
+
+/**
+ * @brief Blue intensity from 24-bit color code
+ *
+ * @param[in] rgb_code  RGB code, in lower 24 bits
+ *
+ * @return 8-bit blue intensity
+ */
+constexpr uint8_t B_RGB(uint32_t rgb_code) {
+    return (rgb_code & 0x0000FF);
 }
 
 #endif  // UTIL_EXPRESSIONS_HPP_

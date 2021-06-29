@@ -29,9 +29,11 @@
     ENTRY(HASH_BYTE1,  0x0002) \
     ENTRY(HASH_BYTE0,  0x0003) \
     ENTRY(BRIGHT_IDX,  0x0004) \
-    ENTRY(COLOR_IDX,   0x0005) \
-    ENTRY(PROFILE_IDX, 0x0006) \
-    ENTRY(SPEED_IDX,   0x0007)
+    ENTRY(PROFILE_IDX, 0x0005) \
+    ENTRY(SPEED_IDX,   0x0006) \
+    ENTRY(RED_IDX,     0x0007) \
+    ENTRY(GREEN_IDX,   0x0008) \
+    ENTRY(BLUE_IDX,    0x0009)
 
 /**
  * @brief Persist data management namespace

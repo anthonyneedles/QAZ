@@ -49,13 +49,18 @@
 
 // User-defined (not sent)
 // HID Usage codes are interpreted as 16-bit unsigned integers, but 0x00E8-0xFFFF is "reserved"
-#define HID_USAGE_KEYBOARD_FN    (-1)  // alt function
-#define HID_USAGE_KEYBOARD_BRTUP (-2)  // brightness up
-#define HID_USAGE_KEYBOARD_BRTDN (-3)  // brightness down
-#define HID_USAGE_KEYBOARD_COLOR (-4)  // cycle colors
-#define HID_USAGE_KEYBOARD_PROF  (-5)  // cycle profiles
-#define HID_USAGE_KEYBOARD_SPDUP (-6)  // profile speed up
-#define HID_USAGE_KEYBOARD_SPDDN (-7)  // profile speed down
+#define HID_USAGE_KEYBOARD_FN    ( -1)  // alt function
+#define HID_USAGE_KEYBOARD_BRTUP ( -2)  // brightness up
+#define HID_USAGE_KEYBOARD_BRTDN ( -3)  // brightness down
+#define HID_USAGE_KEYBOARD_PROF  ( -4)  // cycle profiles
+#define HID_USAGE_KEYBOARD_SPDUP ( -5)  // profile speed up
+#define HID_USAGE_KEYBOARD_SPDDN ( -6)  // profile speed down
+#define HID_USAGE_KEYBOARD_R_UP  ( -7)  // increment red color
+#define HID_USAGE_KEYBOARD_G_UP  ( -8)  // increment green color
+#define HID_USAGE_KEYBOARD_B_UP  ( -9)  // increment blue color
+#define HID_USAGE_KEYBOARD_R_DN  (-10)  // decrement red color
+#define HID_USAGE_KEYBOARD_G_DN  (-11)  // decrement green color
+#define HID_USAGE_KEYBOARD_B_DN  (-12)  // decrement blue color
 
 // Errors
 #define HID_USAGE_KEYBOARD_NOEVT (0x00)

@@ -120,13 +120,13 @@ void set_page(uint8_t page)
 void set_pwm(void)
 {
     uint8_t idx, rpwm, gpwm, bpwm;
-    idx  = DIVIDE_ROUND<uint16_t>(is31fl3746a::R_RGB(color)*brightness, 255);
+    idx  = DIVIDE_ROUND<uint16_t>(R_RGB(color)*brightness, 255);
     rpwm = GAMMA_STEP_LUT[idx];
 
-    idx  = DIVIDE_ROUND<uint16_t>(is31fl3746a::G_RGB(color)*brightness, 255);
+    idx  = DIVIDE_ROUND<uint16_t>(G_RGB(color)*brightness, 255);
     gpwm = GAMMA_STEP_LUT[idx];
 
-    idx  = DIVIDE_ROUND<uint16_t>(is31fl3746a::B_RGB(color)*brightness, 255);
+    idx  = DIVIDE_ROUND<uint16_t>(B_RGB(color)*brightness, 255);
     bpwm = GAMMA_STEP_LUT[idx];
 
     // set all pwm registers

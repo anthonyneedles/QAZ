@@ -30,32 +30,6 @@ constexpr uint8_t BRIGHTNESS_PERCENT_TO_64_STEP(unsigned percent)
     return DIVIDE_ROUND<int>((63*percent), 100);
 }
 
-/// RGB values to 24-bit color code
-constexpr uint32_t RGB_CODE(uint8_t red, uint8_t blue, uint8_t green)
-{
-    return (static_cast<uint32_t>((red   << 16) & 0xFF0000) |
-            static_cast<uint32_t>((green <<  8) & 0x00FF00) |
-            static_cast<uint32_t>((blue)        & 0x0000FF));
-}
-
-/// 24-bit color code to red value
-constexpr uint8_t R_RGB(uint32_t rgb_code) { return (rgb_code & 0xFF0000) >> 16; }
-
-/// 24-bit color code to green value
-constexpr uint8_t G_RGB(uint32_t rgb_code) { return (rgb_code & 0x00FF00) >> 8;  }
-
-/// 24-bit color code to blue value
-constexpr uint8_t B_RGB(uint32_t rgb_code) { return (rgb_code & 0x0000FF);       }
-
-// RGB color codes
-constexpr uint32_t WHITE   = RGB_CODE(0xFF, 0xFF, 0xFF);
-constexpr uint32_t RED     = RGB_CODE(0xFF, 0x00, 0x00);
-constexpr uint32_t GREEN   = RGB_CODE(0x00, 0xFF, 0x00);
-constexpr uint32_t BLUE    = RGB_CODE(0x00, 0x00, 0xFF);
-constexpr uint32_t CYAN    = RGB_CODE(0x00, 0xFF, 0xFF);
-constexpr uint32_t MAGENTA = RGB_CODE(0xFF, 0x00, 0xFF);
-constexpr uint32_t YELLOW  = RGB_CODE(0xFF, 0xFF, 0x00);
-
 /// Init IS31FL3746A, including I2C driver instantiation and pin config
 void init(void);
 

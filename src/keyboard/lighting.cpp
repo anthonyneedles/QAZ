@@ -41,8 +41,15 @@ constexpr unsigned SPEED_LEVELS = 5;
 /// Default value for brightness index, if the last value isn't stored in FLASH
 constexpr uint16_t DEFAULT_BRIGHT_IDX = BRIGHTNESS_LEVELS - 1;
 
-/// Default value for color index, if the last value isn't stored in FLASH
-constexpr uint16_t DEFAULT_COLOR_IDX  = 0;
+/// Values that are cycled for red/green/blue intensities
+constexpr uint8_t RGB_INTENSITIES[] =
+    {
+        0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80,
+        0x90, 0xA0, 0xB0, 0xC0, 0xD0, 0xE0, 0xF0, 0xFF
+    };
+
+/// Default RGB intensity idx, if the last value isn't stored in FLASH
+constexpr uint32_t DEFAULT_INTENSITY_IDX = COUNT_OF(RGB_INTENSITIES) - 1;
 
 /// Default value for profile index, if the last value isn't stored in FLASH
 constexpr uint16_t DEFAULT_PROFIE_IDX = 0;
@@ -56,12 +63,6 @@ constexpr uint8_t BRIGHTNESS_INDEX_TO_64(unsigned idx)
     return is31fl3746a::BRIGHTNESS_PERCENT_TO_64_STEP(
             DIVIDE_ROUND<uint16_t>(idx*100, BRIGHTNESS_LEVELS - 1));
 }
-
-/// Colors to cycle through
-constexpr uint32_t COLORS[] = {
-    is31fl3746a::WHITE, is31fl3746a::RED,     is31fl3746a::GREEN, is31fl3746a::BLUE,
-    is31fl3746a::CYAN,  is31fl3746a::MAGENTA, is31fl3746a::YELLOW
-};
 
 /// The backlight coloring profiles
 enum ColorProfile {
@@ -88,13 +89,29 @@ enum RainbowState{
 /// Our lighting  control structure
 struct LightingCtrl{
     uint16_t bright_idx;
-    uint16_t color_idx;
     uint16_t prof_idx;
     uint16_t speed_idx;
+    uint16_t red_idx;
+    uint16_t green_idx;
+    uint16_t blue_idx;
 };
 
 /// Lighting control structure instantiation
-LightingCtrl lighting_ctrl;
+LightingCtrl lctrl;
+
+/**
+ * @brief Converts RGB indicies to RGB code
+ *
+ * We track the color as indicies into the intensity array.
+ *
+ * @return Current color RGB code
+ */
+uint32_t get_color(void)
+{
+    return RGB_CODE(RGB_INTENSITIES[lctrl.red_idx],
+                    RGB_INTENSITIES[lctrl.green_idx],
+                    RGB_INTENSITIES[lctrl.blue_idx]);
+}
 
 /**
  * @brief Controls LED brightness for "breathing" profile
@@ -108,10 +125,10 @@ void profile_breathing(void)
     static bool     ramp_up    = true;
     static unsigned loop_cnt   = 0;
 
-    is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
+    is31fl3746a::set_color(get_color());
 
     // the lower the speed index, the more loops until we update
-    if (loop_cnt < 4*(((SPEED_LEVELS - 1) - lighting_ctrl.speed_idx) + 1)) {
+    if (loop_cnt < 4*(((SPEED_LEVELS - 1) - lctrl.speed_idx) + 1)) {
         loop_cnt++;
         return;
     } else {
@@ -120,7 +137,7 @@ void profile_breathing(void)
 
     if (ramp_up) {
         // current bright_idx sets maximum brightness
-        if (brightness >= BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx)) {
+        if (brightness >= BRIGHTNESS_INDEX_TO_64(lctrl.bright_idx)) {
             ramp_up = false;
         } else {
             brightness++;
@@ -151,11 +168,11 @@ void profile_rainbow(void)
     static RainbowState rainbow_state = BLUE_UP;
     static unsigned loop_cnt = 0;
 
-    is31fl3746a::set_color(is31fl3746a::RGB_CODE(red, green, blue));
-    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
+    is31fl3746a::set_color(RGB_CODE(red, green, blue));
+    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lctrl.bright_idx));
 
     // the lower the speed index, the more loops until we update
-    if (loop_cnt < ((SPEED_LEVELS - 1) - lighting_ctrl.speed_idx)) {
+    if (loop_cnt < ((SPEED_LEVELS - 1) - lctrl.speed_idx)) {
         loop_cnt++;
         return;
     } else {
@@ -222,15 +239,17 @@ void profile_rainbow(void)
 void lighting::init(void)
 {
     // read our persistent data. if it doesn't exist in flash, define it with the default value
-    persist::read_or_create_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx, DEFAULT_BRIGHT_IDX);
-    persist::read_or_create_data(persist::COLOR_IDX,   lighting_ctrl.color_idx, DEFAULT_COLOR_IDX);
-    persist::read_or_create_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx, DEFAULT_COLOR_IDX);
-    persist::read_or_create_data(persist::SPEED_IDX,   lighting_ctrl.speed_idx, DEFAULT_SPEED_IDX);
+    persist::read_or_create_data(persist::BRIGHT_IDX,  lctrl.bright_idx, DEFAULT_BRIGHT_IDX);
+    persist::read_or_create_data(persist::PROFILE_IDX, lctrl.prof_idx,   DEFAULT_PROFIE_IDX);
+    persist::read_or_create_data(persist::SPEED_IDX,   lctrl.speed_idx,  DEFAULT_SPEED_IDX);
+    persist::read_or_create_data(persist::RED_IDX,     lctrl.red_idx,    DEFAULT_INTENSITY_IDX);
+    persist::read_or_create_data(persist::GREEN_IDX,   lctrl.green_idx,  DEFAULT_INTENSITY_IDX);
+    persist::read_or_create_data(persist::BLUE_IDX,    lctrl.blue_idx,   DEFAULT_INTENSITY_IDX);
 
     is31fl3746a::init();
 
-    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
-    is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
+    is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lctrl.bright_idx));
+    is31fl3746a::set_color(get_color());
 
     auto status = timeslice::register_task(LIGHTING_TASK_PERIOD_MS, lighting::task);
     DBG_ASSERT(status == timeslice::SUCCESS);
@@ -247,7 +266,7 @@ void lighting::init(void)
 void lighting::task(void)
 {
     static bool was_idle = false;
-    bool is_idle = keymatrix::is_idle() || (lighting_ctrl.bright_idx == 0);
+    bool is_idle = keymatrix::is_idle() || (lctrl.bright_idx == 0);
 
     // if transitioning into idle, sleep. if transitioning out of idle, wake
     if (!was_idle && is_idle) {
@@ -258,10 +277,10 @@ void lighting::task(void)
 
     // don't run any coloring profiles if we are idle
     if (!is_idle) {
-        switch (PROFILES[lighting_ctrl.prof_idx]) {
+        switch (PROFILES[lctrl.prof_idx]) {
         case PROFILE_SOLID:
-            is31fl3746a::set_color(COLORS[lighting_ctrl.color_idx]);
-            is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lighting_ctrl.bright_idx));
+            is31fl3746a::set_color(get_color());
+            is31fl3746a::set_brightness(BRIGHTNESS_INDEX_TO_64(lctrl.bright_idx));
             break;
         case PROFILE_BREATHING:
             profile_breathing();
@@ -270,8 +289,8 @@ void lighting::task(void)
             profile_rainbow();
             break;
         default:
-            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lighting_ctrl.prof_idx);
-            lighting_ctrl.prof_idx = 0;
+            debug::printf("ERROR: Invalid RGB LED profile idx (%d)\r\n", lctrl.prof_idx);
+            lctrl.prof_idx = 0;
             break;
         }
     }
@@ -287,34 +306,89 @@ void lighting::task(void)
 /**
  * @brief BRTUP key callback __WEAK override
  *
- * Increases brightness setting up. Saturates at max. Updates persistent data value in FLASH.
+ * Brightness setting up. Saturates at max. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_BRTUP(void)
 {
-    lighting_ctrl.bright_idx = NEXT_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
-    persist::write_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx);
+    lctrl.bright_idx = NEXT_LINEAR_INDEX(lctrl.bright_idx, BRIGHTNESS_LEVELS);
+    persist::write_data(persist::BRIGHT_IDX, lctrl.bright_idx);
 }
 
 /**
  * @brief BRTDN key callback __WEAK override
  *
- * Increases brightness setting down. Saturates at min. Updates persistent data value in FLASH.
+ * Brightness setting down. Saturates at min. Updates persistent data value in FLASH.
  */
 extern void keymatrix::callback_BRTDN(void)
 {
-    lighting_ctrl.bright_idx = PREV_LINEAR_INDEX(lighting_ctrl.bright_idx, BRIGHTNESS_LEVELS);
-    persist::write_data(persist::BRIGHT_IDX, lighting_ctrl.bright_idx);
+    lctrl.bright_idx = PREV_LINEAR_INDEX(lctrl.bright_idx, BRIGHTNESS_LEVELS);
+    persist::write_data(persist::BRIGHT_IDX, lctrl.bright_idx);
 }
 
 /**
- * @brief COLOR key callback __WEAK override
+ * @brief R_UP key callback __WEAK override
  *
- * Cycles through colors. Updates persistent data value in FLASH.
+ * Red intensity index up. Updates persistent data value in FLASH.
  */
-extern void keymatrix::callback_COLOR(void)
+extern void keymatrix::callback_R_UP(void)
 {
-    lighting_ctrl.color_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.color_idx, COUNT_OF(COLORS));
-    persist::write_data(persist::COLOR_IDX, lighting_ctrl.color_idx);
+    lctrl.red_idx = NEXT_LINEAR_INDEX(lctrl.red_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::RED_IDX, lctrl.red_idx);
+}
+
+/**
+ * @brief R_DN key callback __WEAK override
+ *
+ * Red intensity index down. Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_R_DN(void)
+{
+    lctrl.red_idx = PREV_LINEAR_INDEX(lctrl.red_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::RED_IDX, lctrl.red_idx);
+}
+
+/**
+ * @brief G_UP key callback __WEAK override
+ *
+ * Green intensity index up. Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_G_UP(void)
+{
+    lctrl.green_idx = NEXT_LINEAR_INDEX(lctrl.green_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::GREEN_IDX, lctrl.green_idx);
+}
+
+/**
+ * @brief G_DN key callback __WEAK override
+ *
+ * Green intensity index down. Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_G_DN(void)
+{
+    lctrl.green_idx = PREV_LINEAR_INDEX(lctrl.green_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::GREEN_IDX, lctrl.green_idx);
+}
+
+/**
+ * @brief B_UP key callback __WEAK override
+ *
+ * Blue intensity index up. Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_B_UP(void)
+{
+    lctrl.blue_idx = NEXT_LINEAR_INDEX(lctrl.blue_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::BLUE_IDX, lctrl.blue_idx);
+}
+
+/**
+ * @brief B_DN key callback __WEAK override
+ *
+ * Blue intensity index down. Updates persistent data value in FLASH.
+ */
+extern void keymatrix::callback_B_DN(void)
+{
+    lctrl.blue_idx = PREV_LINEAR_INDEX(lctrl.blue_idx, COUNT_OF(RGB_INTENSITIES) - 1);
+    persist::write_data(persist::BLUE_IDX, lctrl.blue_idx);
 }
 
 /**
@@ -324,8 +398,8 @@ extern void keymatrix::callback_COLOR(void)
  */
 extern void keymatrix::callback_PROF(void)
 {
-    lighting_ctrl.prof_idx = NEXT_CIRCULAR_INDEX(lighting_ctrl.prof_idx, COUNT_OF(PROFILES));
-    persist::write_data(persist::PROFILE_IDX, lighting_ctrl.prof_idx);
+    lctrl.prof_idx = NEXT_CIRCULAR_INDEX(lctrl.prof_idx, COUNT_OF(PROFILES));
+    persist::write_data(persist::PROFILE_IDX, lctrl.prof_idx);
 }
 
 /**
@@ -335,8 +409,8 @@ extern void keymatrix::callback_PROF(void)
  */
 extern void keymatrix::callback_SPDUP(void)
 {
-    lighting_ctrl.speed_idx = NEXT_LINEAR_INDEX(lighting_ctrl.speed_idx, SPEED_LEVELS);
-    persist::write_data(persist::SPEED_IDX, lighting_ctrl.speed_idx);
+    lctrl.speed_idx = NEXT_LINEAR_INDEX(lctrl.speed_idx, SPEED_LEVELS);
+    persist::write_data(persist::SPEED_IDX, lctrl.speed_idx);
 }
 
 /**
@@ -346,8 +420,8 @@ extern void keymatrix::callback_SPDUP(void)
  */
 extern void keymatrix::callback_SPDDN(void)
 {
-    lighting_ctrl.speed_idx = PREV_LINEAR_INDEX(lighting_ctrl.speed_idx, SPEED_LEVELS);
-    persist::write_data(persist::SPEED_IDX, lighting_ctrl.speed_idx);
+    lctrl.speed_idx = PREV_LINEAR_INDEX(lctrl.speed_idx, SPEED_LEVELS);
+    persist::write_data(persist::SPEED_IDX, lctrl.speed_idx);
 }
 
 //! @endcond
