@@ -72,7 +72,7 @@ constexpr uint8_t DESCRIPTOR_CONFIG[] = {
        5,        // bDescriptorType        Endpoint
     0x81,        // bEndpointAddress       1, In
     0x03,        // bmAttributes           Interrupt
-       8, 0x00,  // wMaxPacketSize         4 bytes
+       8, 0x00,  // wMaxPacketSize         8 bytes
       10,        // bInterval              10 ms
 };
 

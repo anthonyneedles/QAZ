@@ -84,11 +84,12 @@ void handle_next(void)
 /**
  * @brief Handle a validated MUTE button press.
  *
- * We just want to set the MUTE button bit of the report halfword.
+ * We want to set the MUTE button bit of the report halfword. Also set the MUTE LED.
  */
 void handle_mute(void)
 {
     report |= REPORT_MUTE_MSK;
+    gpio::toggle_output(bsp::MUTE_LED);
 }
 
 }  // namespace
@@ -118,6 +119,10 @@ void consumer_hid::init(void)
     stat1 = buttons::set_callback(bsp::MUTE, handle_mute);
     DBG_ASSERT(stat1 == buttons::SUCCESS);
 
+     // enable MUTE LED GPIO port clock, set as output
+    gpio::enable_port_clock(bsp::MUTE_LED);
+    gpio::set_mode(bsp::MUTE_LED, gpio::OUTPUT);
+
     auto stat2 = timeslice::register_task(USB_HID_TASK_PERIOD_MS, consumer_hid::task);
     DBG_ASSERT(stat2 == timeslice::SUCCESS);
 
@@ -135,7 +140,6 @@ void consumer_hid::task(void)
 {
     static uint16_t last_report = 0;
     if (report != last_report) {
-        debug::printf("%04x\r\n", report);
         usb::write(INTERRUPT_EPN, reinterpret_cast<uint8_t *>(&report), sizeof(report));
         last_report = report;
         report = 0;

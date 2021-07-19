@@ -65,7 +65,7 @@ constexpr uint8_t DESCRIPTOR_CONFIG[] = {
     0x00,        // bCountryCode           Not localized
        1,        // bNumDescriptors
     0x22,        // bDescriptorType        Report
-      38, 0x00,  // wDescriptorLength      64 bytes
+      38, 0x00,  // wDescriptorLength      38 bytes
 // Endpoint 1 In Descriptor
        7,        // bLength
        5,        // bDescriptorType        Endpoint
@@ -119,25 +119,25 @@ constexpr uint8_t DESCRIPTOR_PRODUCT[] = {
 
 /// HID Report Descriptor. Defines the format of key packets we send.
 constexpr uint8_t DESCRIPTOR_HIDREPORT[] = {
-    0x05, 0x0C,  //        Usage Page   = Consumer Devices,
-    0x09, 0x01,  //        Usage        = Consumer Control,
-    0xA1, 0x01,  //        Collection   = Application,
-    0x05, 0x0C,  //        Usage Page   = Consumer Devices,
-    0x15, 0x00,  //        Logical Min  = 0
-    0x25, 0x01,  //        Logical Max  = 1
-    0x75, 0x01,  //        Report Size  = 1
-    0x95, 0x07,  //        Report Count = 7
-    0x09, 0xB5,  //        Usage        = Bit 0: Scan Next Track     (0xB5)
-    0x09, 0xB6,  //        Usage        = Bit 1: Scan Previous Track (0xB6)
-    0x09, 0xB7,  //        Usage        = Bit 2: Stop                (0xB7)
-    0x09, 0xCD,  //        Usage        = Bit 3: Play / Pause        (0xCD)
-    0x09, 0xE2,  //        Usage        = Bit 4: Mute                (0xE2)
-    0x09, 0xE9,  //        Usage        = Bit 5: Volume Up           (0xE9)
-    0x0A,        //        Usage        = Bit 6: Volume Down         (0x00EA)
+    0x05, 0x0C,  // Usage Page   = Consumer Devices,
+    0x09, 0x01,  // Usage        = Consumer Control,
+    0xA1, 0x01,  // Collection   = Application,
+    0x05, 0x0C,  //   Usage Page   = Consumer Devices,
+    0x15, 0x00,  //   Logical Min  = 0
+    0x25, 0x01,  //   Logical Max  = 1
+    0x75, 0x01,  //   Report Size  = 1
+    0x95, 0x07,  //   Report Count = 7
+    0x09, 0xB5,  //   Usage        = Bit 0: Scan Next Track     (0xB5)
+    0x09, 0xB6,  //   Usage        = Bit 1: Scan Previous Track (0xB6)
+    0x09, 0xB7,  //   Usage        = Bit 2: Stop                (0xB7)
+    0x09, 0xCD,  //   Usage        = Bit 3: Play / Pause        (0xCD)
+    0x09, 0xE2,  //   Usage        = Bit 4: Mute                (0xE2)
+    0x09, 0xE9,  //   Usage        = Bit 5: Volume Up           (0xE9)
+    0x0A,        //   Usage        = Bit 6: Volume Down         (0x00EA)
     0xEA, 0x00,
-    0x81, 0x02,  //        Input        = Data, Var, Abs
-    0x95, 0x09,  //        Report Count = 9, Bits 7-15: N/A
-    0x81, 0x01,  //        Input        = Constant
+    0x81, 0x02,  //   Input        = Data, Var, Abs
+    0x95, 0x09,  //   Report Count = 9, Bits 7-15: N/A
+    0x81, 0x01,  //   Input        = Constant
     0xC0         // End Collection
 };
 
