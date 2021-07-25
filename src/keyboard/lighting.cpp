@@ -23,7 +23,7 @@
 
 namespace {
 
-/// Task fuction will execute every 10ms
+/// Task fuction will execute every 5ms
 constexpr unsigned LIGHTING_TASK_PERIOD_MS = 5;
 
 /// Lowest brightness that the breathing profile will go down to
