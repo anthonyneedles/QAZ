@@ -101,5 +101,5 @@ the program, the last two pages are used. Since each page is 1kB, this means tha
 flash in the STM32F042C6 for the program is 30kB, with the last 2kB being reserved.
 
 New data words can be added by adding entries to the `PERSIST_DATA_TABLE` in
-[src/qaz/persist.hpp](../../src/qaz/persist.hpp), and increasing `NB_OF_VAR` in
+[src/qaz/persist.hpp](../../src/flash/persist.hpp), and increasing `NB_OF_VAR` in
 [src/flash/eeprom.h](../../src/flash/eeprom.h).

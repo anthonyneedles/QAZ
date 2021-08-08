@@ -46,7 +46,7 @@ building commands. These are the available commands:
 There are several variables that the user can set in a "user config"
 Makefile. This file is *not* tracked by Git, so that local changes to it don't
 need to be stashed/removed when committing. There exists a template of this
-file [UserConfig.mk.template](../../UserConfig.mk.template) that the user 
+file [UserConfig.mk.template](../../UserConfig.mk.template) that the user
 would ideally copy to `UserConfig.mk`, and make any desired changes.
 
 These are the variables set in the user config:
@@ -66,9 +66,10 @@ When building the output project, `cmake` will be invoked to generate the source
 link the output executable.
 
 The top-level [CMakeLists.txt](../../CMakeLists.txt) expects three variables: `TARGET`,
-`CMAKE_BUILD_TYPE`, and `BSP`, which is nominally passed in by the top-level [Makefile](Makefile)
-from the `TARGET`, `BUILD_TYPE`, and `BOARD` variables (respectively). This file also defines our
-compilers/linkers, as well as all of the flags we pass to them. `src/` is added as a subdirectory.
+`CMAKE_BUILD_TYPE`, and `BSP`, which is nominally passed in by the top-level
+[Makefile](../../Makefile) from the `TARGET`, `BUILD_TYPE`, and `BOARD` variables (respectively).
+This file also defines our compilers/linkers, as well as all of the flags we pass to them. `src/`
+is added as a subdirectory.
 
 The source-level [CMakeLists](../../src/CMakeLists.txt) expects the same variables as above. This
 file defines all C++, C, and Assembly files (paths relative to `src/`), as well as include
