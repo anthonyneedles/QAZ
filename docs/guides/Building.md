@@ -43,8 +43,13 @@ building commands. These are the available commands:
 
 - `help` - Display the above
 
-There are several variables that the user can set in the top level
-[Makefile](../../Makefile).
+There are several variables that the user can set in a "user config"
+Makefile. This file is *not* tracked by Git, so that local changes to it don't
+need to be stashed/removed when committing. There exists a template of this
+file [UserConfig.mk.template](../../UserConfig.mk.template) that the user 
+would ideally copy to `UserConfig.mk`, and make any desired changes.
+
+These are the variables set in the user config:
 
 - `BUILD_TYPE` - Debug or Release (i.e. debug print statements/asserts or not)
 

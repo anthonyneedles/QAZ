@@ -1,0 +1,13 @@
+# Makefile imports `UserConfig.mk`, which is not tracked by Git. The user must 
+# copy `UserConfig.mk.sample` to make this file. This is done so that local
+# changes to the config won't be tracked 
+
+# The type of build we want:
+#   Debug   - All print statements
+#   Release - No print statements, greatly reduces .text section size
+BUILD_TYPE = Debug
+
+# The board we are using, dictating things like pinouts, modules, etc.
+#   QAZ_65    - QAZ 65% board
+#   QAZ_MEDIA - QAZ Media Board
+BOARD = QAZ_65

@@ -1,16 +1,16 @@
-# User Definitions ############################################################
+# Configuration  ##############################################################
 
 TARGET = QAZ
 
-# The type of build we want:
-#   Debug   - All print statements
-#   Release - No print statements, greatly reduces .text section size
-BUILD_TYPE =
+-include UserConfig.mk
 
-# The board we are using, dictating pinouts
-#   QAZ_65        - QAZ 65% board
-#   QAZ_MEDIA     - QAZ Media Board
-BOARD =
+# these should be set in `UserConfig.mk`: see `UserConfig.mk.template`
+ifndef BUILD_TYPE
+$(error "BUILD_TYPE must be defined. Have you created UserConfig.mk yet?")
+endif
+ifndef BOARD
+$(error "BOARD must be defined. Have you created UserConfig.mk yet?")
+endif
 
 # Paths and Options  ##########################################################
 

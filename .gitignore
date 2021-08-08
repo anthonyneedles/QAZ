@@ -6,6 +6,8 @@
 
 .rebuild-marker
 
+UserConfig.mk
+
 *.zip
 *.tar
 *~*
