@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 3
 Title "QAZ 65% Main"
-Date "2021-05-30"
-Rev "v1.1"
+Date "2021-08-29"
+Rev "v1.2"
 Comp "Anthony Needles"
 Comment1 ""
 Comment2 ""
